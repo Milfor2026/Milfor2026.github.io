@@ -66,7 +66,7 @@ window.MILFOR_MENUS = [
 ];
 // ===== MENÚ INFANTIL =====
 window.MILFOR_MENUS_INFANTIL = [
- {num:1, img:"infantil1", w:1080, h:1572, lema:"Crepes de pollo con papa a la francesa y ensalada", lema_en:"Chicken crepes with french fries and salad", platos:[
+ {num:1, img:"infantil1", w:1080, h:1572, video:"infantil1", lema:"Crepes de pollo con papa a la francesa y ensalada", lema_en:"Chicken crepes with french fries and salad", platos:[
   ["Crepes de pollo","suaves crepes rellenos de pollo en una cremosa salsa.","Chicken crepes","soft crepes filled with chicken in a creamy sauce."],
   ["Papa a la francesa","crujientes por fuera, suaves por dentro.","French fries","crispy outside, soft inside."],
   ["Ensalada tropical","frutas de temporada en una cama de lechuga, con aderezo ligero.","Tropical salad","seasonal fruit on a bed of lettuce with a light dressing."]]},
