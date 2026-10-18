@@ -21,7 +21,7 @@
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilo.css?v=1">
+<link rel="stylesheet" href="estilo.css?v=3">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"EventVenue","name":"Milfor Bodas & Eventos","alternateName":"Floristería Milfor",
  "url":"https://eventosmilfor.com/","image":"https://eventosmilfor.com/img/og-milfor.jpg","logo":"https://eventosmilfor.com/img/logo.png",
@@ -38,6 +38,12 @@
 </header>
 
 <section class="hero">
+  <picture class="hero-bg" aria-hidden="true">
+    <source media="(max-width:760px)" type="image/webp" srcset="fotos/hero-alto-1200.webp">
+    <source media="(max-width:760px)" srcset="fotos/hero-alto-1200.jpg">
+    <source type="image/webp" srcset="fotos/hero-ancho-900.webp 900w, fotos/hero-ancho-1600.webp 1600w" sizes="100vw">
+    <img src="fotos/hero-ancho-1600.jpg" srcset="fotos/hero-ancho-900.jpg 900w, fotos/hero-ancho-1600.jpg 1600w" sizes="100vw" alt="" fetchpriority="high" decoding="async">
+  </picture>
   <img class="hero-logo" src="img/logo.svg" alt="Milfor Bodas &amp; Eventos" width="560" height="135">
   <p class="script" data-i18n="h_script">Hacemos de tu fecha especial un recuerdo memorable</p>
   <p class="lead" data-i18n="h_lead">Bodas, quince años, eventos corporativos y celebraciones en Girardot, con lugar propio, montaje completo y decoración floral.</p>
@@ -74,6 +80,13 @@
       <p data-i18n="f_p">Somos también <b>Floristería Milfor</b>: diseñamos los arreglos florales de tu evento, desde el ramo hasta los centros de mesa.</p>
     </div>
   </div>
+  <figure class="lugar-foto">
+    <picture>
+      <source type="image/webp" srcset="fotos/lugar-800.webp 800w, fotos/lugar-1600.webp 1600w" sizes="(max-width:1100px) 100vw, 1100px">
+      <img src="fotos/lugar-1600.jpg" srcset="fotos/lugar-800.jpg 800w, fotos/lugar-1600.jpg 1600w" sizes="(max-width:1100px) 100vw, 1100px" width="1190" height="1600" loading="lazy" decoding="async" alt="Mesa junto a la piscina iluminada" data-i18n-alt="l_foto">
+    </picture>
+    <figcaption data-i18n="l_foto">Mesa junto a la piscina iluminada</figcaption>
+  </figure>
 </section>
 
 <section class="sec qr">
@@ -84,7 +97,13 @@
       <p data-i18n="q_p">Al llegar escanean un código QR, escriben su nombre y ven su mesa y su silla en el plano del salón, en español o en inglés. Sin filas frente al tablero y sin confusiones. También pueden ver el programa de la noche, el menú y subir sus fotos.</p>
       <a class="btn" href="https://eventosmilfor.com/milfor-mesas/?n=Carlos%20G%C3%B3mez%20Demo" target="_blank" rel="noopener" data-i18n="q_btn">Ver la demostración</a>
     </div>
-    <div class="tel"><img src="img/demo-mesas.jpg" alt="Ejemplo del buscador de mesas en el celular" width="440" height="837"></div>
+    <div class="qr-fotos">
+      <picture class="letrero">
+        <source type="image/webp" srcset="fotos/letrero-800.webp 800w, fotos/letrero-1600.webp 1600w" sizes="(max-width:760px) 80vw, 400px">
+        <img src="fotos/letrero-800.jpg" srcset="fotos/letrero-800.jpg 800w, fotos/letrero-1600.jpg 1600w" sizes="(max-width:760px) 80vw, 400px" width="1200" height="1600" loading="lazy" decoding="async" alt="Letrero de bienvenida con código QR para encontrar la mesa" data-i18n-alt="q_letrero">
+      </picture>
+      <div class="tel"><img src="img/demo-mesas.jpg" alt="Ejemplo del buscador de mesas en el celular" width="440" height="837" loading="lazy" decoding="async"></div>
+    </div>
   </div>
 </section>
 
@@ -120,7 +139,7 @@
 </footer>
 
 <a class="wa-flot" data-wa href="https://wa.me/573212721996" target="_blank" rel="noopener" aria-label="WhatsApp"><span class="ico-wa"></span></a>
-<script src="galeria.js?v=1"></script>
-<script src="app.js?v=1"></script>
+<script src="galeria.js?v=3"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>
