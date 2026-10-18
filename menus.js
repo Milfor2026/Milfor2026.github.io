@@ -78,7 +78,7 @@ window.MILFOR_MENUS_INFANTIL = [
   ["Piernas y perniles apanados","jugosos, dorados y crujientes por fuera.","Breaded chicken drumsticks and thighs","juicy, golden and crispy outside."],
   ["Papa chip","delgadas y crocantes, con un toque de sal.","Potato chips","thin and crunchy, with a touch of salt."],
   ["Fruta fresca","colorida selección de frutas de temporada.","Fresh fruit","a colorful selection of seasonal fruit."]]},
- {num:4, img:"infantil4", w:1080, h:1557, lema:"Hamburguesa con papa a la francesa", lema_en:"Burger with french fries", platos:[
+ {num:4, img:"infantil4", w:1080, h:1557, video:"infantil4", lema:"Hamburguesa con papa a la francesa", lema_en:"Burger with french fries", platos:[
   ["Hamburguesa","de res, con queso derretido, lechuga y tomate en un suave pan artesanal.","Burger","beef patty with melted cheese, lettuce and tomato on a soft artisan bun."],
   ["Papa a la francesa","crujientes por fuera, suaves por dentro.","French fries","crispy outside, soft inside."],
   ["Salsa de tomate","el acompañamiento perfecto.","Ketchup","the perfect side."]]}
