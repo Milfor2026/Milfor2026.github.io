@@ -73,8 +73,27 @@ window.MILFOR_MENUS_INFANTIL = [
   ["Croquetas de pollo","doradas y cremosas, de sabor suave.","Chicken croquettes","golden and creamy, with a mild flavor kids love."],
   ["Papa a la francesa","crujientes por fuera, suaves por dentro.","French fries","crispy outside, soft inside."],
   ["Ensalada tropical","frutas de temporada en una cama de lechuga, con aderezo ligero.","Tropical salad","seasonal fruit on a bed of lettuce with a light dressing."]]},
- {num:3, img:"infantil3", w:1068, h:1600, lema:"Piernas y perniles apanados con papa chip y fruta", lema_en:"Breaded chicken drumsticks and thighs with potato chips and fruit", platos:[
+ {num:3, img:"infantil3", w:1080, h:1574, lema:"Piernas y perniles apanados con papa chip y fruta", lema_en:"Breaded chicken drumsticks and thighs with potato chips and fruit", platos:[
   ["Piernas y perniles apanados","jugosos, dorados y crujientes por fuera.","Breaded chicken drumsticks and thighs","juicy, golden and crispy outside."],
   ["Papa chip","delgadas y crocantes, con un toque de sal.","Potato chips","thin and crunchy, with a touch of salt."],
-  ["Fruta fresca","colorida selección de frutas de temporada.","Fresh fruit","a colorful selection of seasonal fruit."]]}
+  ["Fruta fresca","colorida selección de frutas de temporada.","Fresh fruit","a colorful selection of seasonal fruit."]]},
+ {num:4, img:"infantil4", w:1080, h:1557, lema:"Hamburguesa con papa a la francesa", lema_en:"Burger with french fries", platos:[
+  ["Hamburguesa","de res, con queso derretido, lechuga y tomate en un suave pan artesanal.","Burger","beef patty with melted cheese, lettuce and tomato on a soft artisan bun."],
+  ["Papa a la francesa","crujientes por fuera, suaves por dentro.","French fries","crispy outside, soft inside."],
+  ["Salsa de tomate","el acompañamiento perfecto.","Ketchup","the perfect side."]]}
+];
+// ===== ENTRADAS =====
+window.MILFOR_MENUS_ENTRADAS = [
+ {num:1, img:"entrada1", w:1080, h:1574, lema:"Ceviche de pulpo en leche de tigre", lema_en:"Octopus ceviche in leche de tigre", platos:[
+  ["Pulpo fresco","seleccionado y cocido a la perfección, de textura suave.","Fresh octopus","carefully selected and perfectly cooked, with a tender texture."],
+  ["Leche de tigre","mezcla cítrica y aromática con limón, ají y cilantro.","Leche de tigre","a citrusy, aromatic marinade with lime, chili and cilantro."],
+  ["Acompañamientos","cebolla roja, ají, cilantro y chips crujientes.","Garnishes","red onion, chili, cilantro and crispy chips."]]},
+ {num:2, img:"entrada2", w:1080, h:1571, lema:"Ceviche de camarón en leche de tigre", lema_en:"Shrimp ceviche in leche de tigre", platos:[
+  ["Camarón fresco","jugoso y de sabor delicado.","Fresh shrimp","juicy, with a delicate flavor."],
+  ["Leche de tigre","mezcla cítrica y aromática con limón, ají y cilantro.","Leche de tigre","a citrusy, aromatic marinade with lime, chili and cilantro."],
+  ["Acompañamientos","cebolla roja, ají, cilantro y chips crujientes.","Garnishes","red onion, chili, cilantro and crispy chips."]]},
+ {num:3, img:"entrada3", w:1080, h:1566, lema:"Ceviche peruano", lema_en:"Peruvian ceviche", platos:[
+  ["Pescado fresco","cortes de pescado blanco, de textura firme y sabor delicado.","Fresh fish","white fish, firm in texture and delicate in flavor."],
+  ["Leche de tigre","mezcla cítrica peruana con limón, ají y cilantro.","Leche de tigre","a Peruvian-style citrus marinade with lime, chili and cilantro."],
+  ["Acompañamientos","chips crocantes de plátano, camote y maíz.","Garnishes","crunchy plantain, sweet potato and corn chips."]]}
 ];
