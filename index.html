@@ -21,11 +21,13 @@
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilo.css?v=7">
+<link rel="stylesheet" href="estilo.css?v=8">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"EventVenue","name":"Milfor Bodas & Eventos","alternateName":"Floristería Milfor",
  "url":"https://eventosmilfor.com/","image":"https://eventosmilfor.com/img/og-milfor.jpg","logo":"https://eventosmilfor.com/img/logo.png",
  "telephone":"+57 321 272 1996",
+ "geo":{"@type":"GeoCoordinates","latitude":4.2982753,"longitude":-74.808349},
+ "hasMap":"https://www.google.com/maps/search/?api=1&query=4.2982753,-74.808349",
  "address":{"@type":"PostalAddress","streetAddress":"Carrera 14 (Av. del Ferrocarril) # 17-55","addressLocality":"Girardot","addressRegion":"Cundinamarca","addressCountry":"CO"},
  "sameAs":["https://www.instagram.com/eventosmilforgirardot/"]}
 </script>
@@ -124,28 +126,8 @@
 
 <section id="ubicacion" class="sec alt">
   <h2 data-i18n="u_tit">Ubicación</h2>
-  <div class="ubic">
-    <div class="sede">
-      <h3 data-i18n="u_sede">Sede principal</h3>
-      <p class="dir">Carrera 14 (Av. del Ferrocarril) # 17-55, Girardot, Colombia</p>
-      <div class="mapa"><iframe title="Mapa de Milfor, sede principal" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-        src="https://www.google.com/maps?q=Florister%C3%ADa%20Milfor%2C%20Cra.%2014%20%2317-55%2C%20Girardot%2C%20Cundinamarca%2C%20Colombia&output=embed"></iframe></div>
-      <p class="centro"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=Milfor%20Cra.%2014%20%2317-55%20Girardot%20Colombia" target="_blank" rel="noopener" data-i18n="u_btn">Abrir en Google Maps</a></p>
-    </div>
-    <div class="sede">
-      <h3 data-i18n="u_campestre">Cómo llegar a Casa Campestre</h3>
-      <p class="dir" data-i18n="u_campestre_p">Milfor Casa Campestre, uno de nuestros lugares para eventos.</p>
-      <figure class="llegar">
-        <button type="button" id="llegar" aria-label="Ampliar: Cómo llegar a Casa Campestre" data-i18n-aria="u_ampliar">
-          <picture>
-            <source type="image/webp" srcset="fotos/mapa-llegar-480.webp 480w, fotos/mapa-llegar-800.webp 800w, fotos/mapa-llegar-1600.webp 1600w" sizes="(max-width:760px) 92vw, 420px">
-            <img src="fotos/mapa-llegar-800.jpg" srcset="fotos/mapa-llegar-800.jpg 800w, fotos/mapa-llegar-1600.jpg 1600w" sizes="(max-width:760px) 92vw, 420px" width="1259" height="1600" loading="lazy" decoding="async" alt="Mapa ilustrado: cómo llegar a Milfor Casa Campestre" data-i18n-alt="u_mapa_alt">
-          </picture>
-          <span class="lupa" aria-hidden="true">⤢</span>
-        </button>
-        <figcaption data-i18n="u_tocar">Toca el mapa para ampliarlo</figcaption>
-      </figure>
-    </div>
+  <div class="ubic" id="sedes">
+    <noscript><p class="centro">Carrera 14 (Av. del Ferrocarril) # 17-55, Girardot, Colombia</p></noscript>
   </div>
 </section>
 
@@ -168,6 +150,7 @@
 <a class="wa-flot" data-wa href="https://wa.me/573212721996" target="_blank" rel="noopener" aria-label="WhatsApp"><span class="ico-wa"></span></a>
 <script src="galeria.js?v=7"></script>
 <script src="menus.js?v=1"></script>
-<script src="app.js?v=7"></script>
+<script src="sedes.js?v=1"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>
