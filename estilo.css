@@ -75,6 +75,9 @@ h2::after{content:"";display:block;width:70px;height:1px;background:var(--g);mar
 .llegar figcaption{text-align:center;font-style:italic;color:#5a6478;margin-top:8px}
 .ubic .mapa iframe{height:520px}
 .lb.uno .lb-a{display:none}
+.menu-tipo{display:flex;justify-content:center;margin:0 auto 16px;width:max-content;border:1px solid var(--n);border-radius:26px;padding:3px;background:#fff}
+.menu-tipo button{font:500 13px Montserrat,sans-serif;letter-spacing:1.5px;text-transform:uppercase;padding:9px 22px;border:0;border-radius:22px;background:transparent;color:var(--n);cursor:pointer}
+.menu-tipo button[aria-pressed="true"]{background:var(--g);color:#fff}.menu-tipo button:focus-visible{outline:3px solid var(--g);outline-offset:2px}
 .menu-tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0 auto 24px}
 .menu-tabs button{font:500 13px Montserrat,sans-serif;letter-spacing:1px;text-transform:uppercase;padding:9px 16px;border-radius:22px;border:1px solid var(--g);background:#fff;color:var(--n);cursor:pointer;white-space:nowrap;flex:0 0 auto}
 .menu-tabs button[aria-selected="true"]{background:var(--n);border-color:var(--n);color:#fff}.menu-tabs button:focus-visible{outline:3px solid var(--g);outline-offset:2px}
