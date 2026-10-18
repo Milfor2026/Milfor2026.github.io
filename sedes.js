@@ -17,7 +17,8 @@ window.MILFOR_SEDES = [
    lbTit:"Sede Central · Milfor Paraíso · Centro de Girardot", lbTit_en:"Main office · Milfor Paraíso · Downtown Girardot"},
   {id:"gaitan", nombre:"Milfor Gaitán", nombre_en:"Milfor Gaitán",
    texto:"Cra. 17 # 21-20, Girardot, Colombia", texto_en:"Cra. 17 # 21-20, Girardot, Colombia",
-   lat:4.3018893, lng:-74.8077492},
+   lat:4.3018893, lng:-74.8077492, mapaImg:"mapa-gaitan", mapaImg_w:1406, mapaImg_h:1549,
+   lbTit:"Milfor Gaitán · Cómo llegar", lbTit_en:"Milfor Gaitán · How to get there"},
   {id:"campestre", nombre:"Milfor Casa Campestre", nombre_en:"Milfor Casa Campestre", zona:"Ricaurte, Cundinamarca",
    texto:"Cómo llegar a Casa Campestre", texto_en:"How to get to Casa Campestre",
    lat:4.2944097, lng:-74.7907257, mapaImg:"mapa-llegar", mapaImg_w:1259, mapaImg_h:1600}

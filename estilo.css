@@ -65,7 +65,7 @@ h2::after{content:"";display:block;width:70px;height:1px;background:var(--g);mar
 .ubic{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;align-items:start}
 .sede{background:var(--iv);border:1px solid var(--li);border-radius:16px;padding:22px}
 .sede .centro.botones{margin-top:14px}
-.sede.con-mapa{grid-row:span 2;display:flex;flex-direction:column}.con-mapa .mapa{display:flex}.ubic .con-mapa .mapa iframe{height:auto;min-height:440px;flex:1}
+.sede.con-mapa{grid-row:span 2;display:flex;flex-direction:column}.con-mapa .mapa{display:flex;flex:1}.ubic .con-mapa .mapa iframe{height:auto;min-height:440px;flex:1}
 .ubic{align-items:stretch;grid-template-rows:auto 1fr}.sede:not(.con-mapa){align-self:start}
 .sede h3{font-size:28px;font-weight:500;text-align:center;margin:0}.sede .dir{text-align:center;color:#5a6478;font-style:italic;margin:4px 0 16px}.sede .centro{margin-top:18px}.nota-sede{text-align:center;margin:-8px auto 16px;max-width:420px;font-size:17px;color:var(--n);background:#fff;border:1px dashed var(--g);border-radius:10px;padding:6px 12px}
 .sede .mapa+.llegar{margin-top:18px!important}.sede .zona{text-align:center;font:500 12px Montserrat,sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--gd);margin:6px 0 0}.botones{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.btn.waze{background:#33ccff;border-color:#33ccff;color:#0f1f3d}.btn.waze:hover{background:#1fb5e8;border-color:#1fb5e8}
