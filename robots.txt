@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://milfor2026.github.io/sitemap.xml
