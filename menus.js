@@ -9,7 +9,7 @@ window.MILFOR_MENUS = [
   ["Ensalada tropical","hojas verdes baby, frutas frescas de estación (mango, kiwi, fresa y melón), uvas pasas, finas láminas de queso y un sutil toque de crema.","Tropical salad","baby greens, fresh seasonal fruit (mango, kiwi, strawberry and melon), raisins, thin slices of cheese and a subtle touch of cream."],
   ["Puré de papa criolla","de textura aterciopelada.","Creole yellow potato purée","(papa criolla) with a velvety texture."],
   ["Arroz con ajonjolí","de grano suelto y acabado delicado.","Sesame rice","fluffy grains with a delicate finish."]]},
- {num:2, img:"menu2", w:1080, h:1577, lema:"Sabores que inspiran", lema_en:"Flavors that inspire", platos:[
+ {num:2, img:"menu2", w:1080, h:1577, video:"cena2", lema:"Sabores que inspiran", lema_en:"Flavors that inspire", platos:[
   ["Lomito de res en salsa de vino","sellado a la perfección y bañado en una salsa intensa de aromas profundos.","Beef tenderloin in wine sauce","perfectly seared and coated in an intense, deeply aromatic sauce."],
   ["Pollo thai relleno de verduras crocantes","delicadamente especiado y de textura contrastante.","Thai-style chicken stuffed with crisp vegetables","delicately spiced, with contrasting textures."],
   ["Verduras calientes salteadas","seleccionadas y preparadas para resaltar su color y frescura.","Warm sautéed vegetables","selected and prepared to bring out their color and freshness."],
