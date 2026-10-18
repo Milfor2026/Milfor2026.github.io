@@ -62,24 +62,21 @@ h2::after{content:"";display:block;width:70px;height:1px;background:var(--g);mar
 .lb figcaption{color:#fff;margin-top:12px;display:flex;gap:16px;align-items:baseline;font-size:21px}.lb-num{font:500 12px Montserrat,sans-serif;letter-spacing:2px;color:var(--g)}
 .lb button{position:absolute;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:50%;width:48px;height:48px;font:300 32px/1 Georgia,serif;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 0 4px}
 .lb button:hover{background:rgba(201,162,74,.6)}.lb-x{top:12px;right:12px}.lb-prev{left:12px;top:50%;transform:translateY(-50%)}.lb-next{right:12px;top:50%;transform:translateY(-50%)}
-.ubic{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;align-items:start}
+.ubic{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch}.sede{display:flex;flex-direction:column}
 .sede{background:var(--iv);border:1px solid var(--li);border-radius:16px;padding:22px}
-.sede .centro.botones{margin-top:14px}
-.sede.con-mapa{grid-row:span 2;display:flex;flex-direction:column}.con-mapa .mapa{display:flex;flex:1}.ubic .con-mapa .mapa iframe{height:auto;min-height:440px;flex:1}
-.ubic{align-items:stretch;grid-template-rows:auto 1fr}.sede:not(.con-mapa){align-self:start}
+.sede .centro.botones{margin-top:auto;padding-top:14px}
 .sede h3{font-size:28px;font-weight:500;text-align:center;margin:0}.sede .dir{text-align:center;color:#5a6478;font-style:italic;margin:4px 0 16px}.sede .centro{margin-top:18px}.pisos{list-style:none;padding:0;margin:-4px auto 18px;max-width:460px;display:grid;gap:8px}
 .pisos li{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid var(--li);border-left:4px solid var(--g);border-radius:10px;padding:8px 12px;text-align:left}
 .piso-badge{flex:0 0 34px;height:34px;border-radius:8px;background:var(--n);color:#fff;font:600 15px Montserrat,sans-serif;display:flex;align-items:center;justify-content:center;position:relative}
 .piso-badge::after{content:"";position:absolute;left:7px;right:7px;bottom:5px;height:2px;background:var(--g);border-radius:1px}
 .pisos b{display:block;font-weight:600;font-size:18px;color:var(--n)}.pisos span:not(.piso-badge){display:block;font-size:16px;color:#5a6478;line-height:1.35}
 .nota-sede{text-align:center;margin:-8px auto 16px;max-width:420px;font-size:17px;color:var(--n);background:#fff;border:1px dashed var(--g);border-radius:10px;padding:6px 12px}
-.sede .mapa+.llegar{margin-top:18px!important}.sede .zona{text-align:center;font:500 12px Montserrat,sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--gd);margin:6px 0 0}.botones{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.btn.waze{background:#33ccff;border-color:#33ccff;color:#0f1f3d}.btn.waze:hover{background:#1fb5e8;border-color:#1fb5e8}
+.sede .zona{text-align:center;font:500 12px Montserrat,sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--gd);margin:6px 0 0}.botones{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.btn.waze{background:#33ccff;border-color:#33ccff;color:#0f1f3d}.btn.waze:hover{background:#1fb5e8;border-color:#1fb5e8}
 .llegar{max-width:420px;margin:0 auto!important;width:100%}
 .llegar{margin:0;display:flex;flex-direction:column}.llegar button{all:unset;position:relative;display:block;cursor:zoom-in;border-radius:14px;overflow:hidden;border:1px solid var(--li);box-shadow:0 8px 24px rgba(15,31,61,.08)}
 .llegar button:focus-visible{outline:3px solid var(--g);outline-offset:2px}.llegar img{display:block;width:100%;height:auto}
 .llegar .lupa{position:absolute;right:10px;bottom:10px;width:40px;height:40px;border-radius:50%;background:rgba(15,31,61,.8);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px}
 .llegar figcaption{text-align:center;font-style:italic;color:#5a6478;margin-top:8px}
-.ubic .mapa iframe{height:520px}
 .lb.uno .lb-a{display:none}
 .menu-tipo{display:flex;justify-content:center;margin:0 auto 16px;width:max-content;border:1px solid var(--n);border-radius:26px;padding:3px;background:#fff}
 .menu-tipo button{font:500 13px Montserrat,sans-serif;letter-spacing:1.5px;text-transform:uppercase;padding:9px 22px;border:0;border-radius:22px;background:transparent;color:var(--n);cursor:pointer}
@@ -98,8 +95,6 @@ h2::after{content:"";display:block;width:70px;height:1px;background:var(--g);mar
 .platos{list-style:none;padding:0;margin:0}.platos li{position:relative;padding:8px 0 8px 28px;border-bottom:1px dashed var(--li);color:#45516d}.platos li b{color:var(--n);font-weight:600}
 .platos li::before{content:"✦";position:absolute;left:4px;top:9px;color:var(--g);font-size:14px}
 .opcion .nota{font-style:italic;color:#5a6478;margin:16px 0 0;font-size:17px}
-.mapa{border-radius:14px;overflow:hidden;border:1px solid var(--li);box-shadow:0 8px 24px rgba(15,31,61,.08)}
-.mapa iframe{display:block;width:100%;height:380px;border:0}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;max-width:760px;margin:0 auto}.card .mail-dir{overflow-wrap:break-word;text-align:center}.pie-mail a{overflow-wrap:anywhere}
 .card{flex:0 1 300px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:28px;border:1px solid var(--g);border-radius:16px;background:#fff;text-decoration:none;transition:.2s}
 .card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(15,31,61,.1)}.card b{font-size:24px;font-weight:600}.card span{color:#5a6478}
@@ -112,5 +107,5 @@ h2::after{content:"";display:block;width:70px;height:1px;background:var(--g);mar
  .nav nav{order:3;width:100%;margin:0;gap:16px;overflow-x:auto;white-space:nowrap;font-size:11px;padding-bottom:2px;scrollbar-width:none}
  .lang{margin-left:auto}.hero{padding:44px 18px 40px}.lead{font-size:19px}
  .sec{padding:52px 18px}.dos{grid-template-columns:1fr;gap:28px}.dos h2{text-align:center}.dos h2::after{margin-left:auto}
- .mapa iframe{height:300px}.lugar-foto img{aspect-ratio:4/5}.ubic{grid-template-columns:1fr;grid-template-rows:none}.opcion{grid-template-columns:1fr;gap:22px;padding:18px}.menu-tabs{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;margin:0 -18px 18px;padding:2px 18px 6px}.menu-tabs::-webkit-scrollbar{display:none}.poster-wrap{max-width:340px;width:84%;margin:0 auto}.opcion-txt{text-align:left}.opcion-txt h3{font-size:30px}.llegar{max-width:440px;margin:0 auto;width:100%}.ubic .mapa iframe{height:300px}.ubic{gap:18px}.sede{padding:18px 14px}.sede.con-mapa{grid-row:auto}.ubic .con-mapa .mapa iframe{min-height:300px}.qr-fotos{width:72%}.qr-fotos .tel{right:-18%}.lugar-foto figcaption{font-size:17px;padding:10px 14px}
+ .lugar-foto img{aspect-ratio:4/5}.ubic{grid-template-columns:1fr}.opcion{grid-template-columns:1fr;gap:22px;padding:18px}.menu-tabs{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;margin:0 -18px 18px;padding:2px 18px 6px}.menu-tabs::-webkit-scrollbar{display:none}.poster-wrap{max-width:340px;width:84%;margin:0 auto}.opcion-txt{text-align:left}.opcion-txt h3{font-size:30px}.llegar{max-width:440px;margin:0 auto;width:100%}.ubic{gap:18px}.sede{padding:18px 14px}.qr-fotos{width:72%}.qr-fotos .tel{right:-18%}.lugar-foto figcaption{font-size:17px;padding:10px 14px}
  .lb figure{padding:60px 8px 70px}.lb-prev,.lb-next{top:auto!important;bottom:14px;transform:none!important}.lb-prev{left:calc(50% - 60px)!important}.lb-next{right:calc(50% - 60px)!important}html{scroll-padding-top:96px}}
