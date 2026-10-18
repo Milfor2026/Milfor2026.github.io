@@ -89,7 +89,7 @@ window.MILFOR_MENUS_ENTRADAS = [
   ["Pulpo fresco","seleccionado y cocido a la perfección, de textura suave.","Fresh octopus","carefully selected and perfectly cooked, with a tender texture."],
   ["Leche de tigre","mezcla cítrica y aromática con limón, ají y cilantro.","Leche de tigre","a citrusy, aromatic marinade with lime, chili and cilantro."],
   ["Acompañamientos","cebolla roja, ají, cilantro y chips crujientes.","Garnishes","red onion, chili, cilantro and crispy chips."]]},
- {num:2, img:"entrada2", w:1080, h:1571, lema:"Ceviche de camarón en leche de tigre", lema_en:"Shrimp ceviche in leche de tigre", platos:[
+ {num:2, img:"entrada2", w:1080, h:1571, video:"entradas2", lema:"Ceviche de camarón en leche de tigre", lema_en:"Shrimp ceviche in leche de tigre", platos:[
   ["Camarón fresco","jugoso y de sabor delicado.","Fresh shrimp","juicy, with a delicate flavor."],
   ["Leche de tigre","mezcla cítrica y aromática con limón, ají y cilantro.","Leche de tigre","a citrusy, aromatic marinade with lime, chili and cilantro."],
   ["Acompañamientos","cebolla roja, ají, cilantro y chips crujientes.","Garnishes","red onion, chili, cilantro and crispy chips."]]},
