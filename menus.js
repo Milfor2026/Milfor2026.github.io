@@ -57,7 +57,7 @@ window.MILFOR_MENUS = [
   ["Vegetales salteados","vegetales de temporada salteados con aceite de oliva y especias suaves.","Sautéed vegetables","seasonal vegetables lightly sautéed with olive oil and mild spices."],
   ["Ensalada siciliana","lechugas, tomates cherry, maíz tierno y aguacate, con vinagreta ligera de hierbas.","Sicilian salad","mixed lettuces, cherry tomatoes, sweet corn and avocado with a light herb vinaigrette."],
   ["Arroz a elección","variedad de sabores para complementar el plato principal.","Rice of your choice","a variety of flavors to complement the main course."]]},
- {num:10, img:"menu10", w:1072, h:1546, lema:"Sabores que dejan huella", lema_en:"Flavors that leave a mark", platos:[
+ {num:10, img:"menu10", w:1072, h:1546, video:"cena10", lema:"Sabores que dejan huella", lema_en:"Flavors that leave a mark", platos:[
   ["Pernil de cerdo en salsa de ciruela","jugoso y dorado, con una delicada salsa de ciruelas entre dulce y ácida.","Pork leg in plum sauce","juicy and golden, with a delicate sweet-and-tangy plum sauce."],
   ["Pollo teriyaki","pechuga marinada en salsa teriyaki, glaseada, con notas dulces y umami.","Teriyaki chicken","breast marinated in teriyaki sauce and glazed, with sweet and umami notes."],
   ["Lasaña de papa","capas suaves de papa y quesos selectos, horneadas hasta quedar cremosas y doradas.","Potato lasagna","soft layers of potato and select cheeses, baked until creamy and golden."],
