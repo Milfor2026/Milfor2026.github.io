@@ -51,7 +51,7 @@ window.MILFOR_MENUS = [
   ["Ensalada siciliana","lechugas, tomates cherry, maíz tierno y aguacate, con vinagreta ligera de hierbas.","Sicilian salad","mixed lettuces, cherry tomatoes, sweet corn and avocado with a light herb vinaigrette."],
   ["Arroz a elección","variedad de sabores para complementar el plato principal.","Rice of your choice","a variety of flavors to complement the main course."],
   ["Puré de papa blanco","suave y cremoso, con mantequilla y un toque de leche fresca.","Mashed potatoes","smooth and creamy, with butter and a touch of fresh milk."]]},
- {num:9, img:"menu9", w:1078, h:1578, lema:"Tradición con elegancia", lema_en:"Tradition with elegance", platos:[
+ {num:9, img:"menu9", w:1078, h:1578, video:"cena9", lema:"Tradición con elegancia", lema_en:"Tradition with elegance", platos:[
   ["Salmón a la parrilla","filete fresco, crujiente por fuera y jugoso por dentro, con limón y aceite de oliva.","Grilled salmon","fresh fillet, crisp outside and juicy inside, with lemon and olive oil."],
   ["Puré de papa blanco","suave y cremoso, con mantequilla y un toque de leche fresca.","Mashed potatoes","smooth and creamy, with butter and a touch of fresh milk."],
   ["Vegetales salteados","vegetales de temporada salteados con aceite de oliva y especias suaves.","Sautéed vegetables","seasonal vegetables lightly sautéed with olive oil and mild spices."],
