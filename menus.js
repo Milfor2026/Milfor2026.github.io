@@ -15,7 +15,7 @@ window.MILFOR_MENUS = [
   ["Verduras calientes salteadas","seleccionadas y preparadas para resaltar su color y frescura.","Warm sautéed vegetables","selected and prepared to bring out their color and freshness."],
   ["Papa suprema","cremosa y suave, de acabado aterciopelado.","Potato suprême","creamy and smooth, with a velvety finish."],
   ["Arroz con almendras","laminadas tostadas, fragante y delicadamente crujiente.","Rice with almonds","toasted sliced almonds, fragrant and delicately crunchy."]]},
- {num:3, img:"menu3", w:1077, h:1577, lema:"Sabores que conectan", lema_en:"Flavors that connect", platos:[
+ {num:3, img:"menu3", w:1077, h:1577, video:"cena3", lema:"Sabores que conectan", lema_en:"Flavors that connect", platos:[
   ["Lomo de cerdo en salsa de uchuva y piña","glaseado con una salsa agridulce de notas tropicales y delicadamente balanceadas.","Pork loin in goldenberry and pineapple sauce","glazed with a sweet-and-sour sauce with delicately balanced tropical notes."],
   ["Pollo rollito con espinaca","bañado en una cremosa salsa de champiñones de aroma suave y envolvente.","Spinach-stuffed chicken roulade","topped with a creamy mushroom sauce with a soft, rich aroma."],
   ["Puré de papa criolla","de textura sedosa, cuidadosamente decorado con acabados artesanales.","Creole yellow potato purée","silky, carefully finished with an artisanal touch."],
