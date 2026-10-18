@@ -70,7 +70,7 @@ window.MILFOR_MENUS_INFANTIL = [
   ["Crepes de pollo","suaves crepes rellenos de pollo en una cremosa salsa.","Chicken crepes","soft crepes filled with chicken in a creamy sauce."],
   ["Papa a la francesa","crujientes por fuera, suaves por dentro.","French fries","crispy outside, soft inside."],
   ["Ensalada tropical","frutas de temporada en una cama de lechuga, con aderezo ligero.","Tropical salad","seasonal fruit on a bed of lettuce with a light dressing."]]},
- {num:2, img:"infantil2", w:1080, h:1576, lema:"Croquetas de pollo con papa a la francesa y ensalada", lema_en:"Chicken croquettes with french fries and salad", platos:[
+ {num:2, img:"infantil2", w:1080, h:1576, video:"infantil2", lema:"Croquetas de pollo con papa a la francesa y ensalada", lema_en:"Chicken croquettes with french fries and salad", platos:[
   ["Croquetas de pollo","doradas y cremosas, de sabor suave.","Chicken croquettes","golden and creamy, with a mild flavor kids love."],
   ["Papa a la francesa","crujientes por fuera, suaves por dentro.","French fries","crispy outside, soft inside."],
   ["Ensalada tropical","frutas de temporada en una cama de lechuga, con aderezo ligero.","Tropical salad","seasonal fruit on a bed of lettuce with a light dressing."]]},
