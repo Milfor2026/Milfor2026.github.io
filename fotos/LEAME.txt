@@ -1,1 +1,1 @@
-Fotos del sitio (WebP + JPG, 800 y 1600 px). Para agregar: procesar_fotos.py y galeria.js.
+Fotos del sitio: nombre-480.webp, nombre-800/1600 en .webp y .jpg (sin EXIF). Para agregar: /workspace/milfor-web/procesar_fotos.py y galeria.js.
