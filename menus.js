@@ -74,7 +74,7 @@ window.MILFOR_MENUS_INFANTIL = [
   ["Croquetas de pollo","doradas y cremosas, de sabor suave.","Chicken croquettes","golden and creamy, with a mild flavor kids love."],
   ["Papa a la francesa","crujientes por fuera, suaves por dentro.","French fries","crispy outside, soft inside."],
   ["Ensalada tropical","frutas de temporada en una cama de lechuga, con aderezo ligero.","Tropical salad","seasonal fruit on a bed of lettuce with a light dressing."]]},
- {num:3, img:"infantil3", w:1080, h:1574, lema:"Piernas y perniles apanados con papa chip y fruta", lema_en:"Breaded chicken drumsticks and thighs with potato chips and fruit", platos:[
+ {num:3, img:"infantil3", w:1080, h:1574, video:"infantil3", lema:"Piernas y perniles apanados con papa chip y fruta", lema_en:"Breaded chicken drumsticks and thighs with potato chips and fruit", platos:[
   ["Piernas y perniles apanados","jugosos, dorados y crujientes por fuera.","Breaded chicken drumsticks and thighs","juicy, golden and crispy outside."],
   ["Papa chip","delgadas y crocantes, con un toque de sal.","Potato chips","thin and crunchy, with a touch of salt."],
   ["Fruta fresca","colorida selección de frutas de temporada.","Fresh fruit","a colorful selection of seasonal fruit."]]},
