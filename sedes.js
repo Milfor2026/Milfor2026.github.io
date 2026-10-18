@@ -3,18 +3,21 @@
 //   nombre / nombre_en      título del bloque
 //   zona / zona_en          línea corta de ubicación (opcional, ej. municipio)
 //   texto / texto_en        línea bajo el título (dirección o descripción)
-//   nota / nota_en          nota opcional (ej. piso o indicaciones)
+//   nota / nota_en          nota opcional (indicaciones)
+//   pisos                   opcional: lista de pisos del edificio {piso, nombre, desc} (+ _en)
 //   lat, lng                coordenadas del pin (si existen: botones Google Maps y Waze)
 //   embed                   true = mostrar el mapa de Google incrustado (solo en una sede para que la página cargue rápido)
 //   mapaImg                 mapa ilustrado opcional (fotos/<mapaImg>-480/800/1600), se amplía al tocarlo
 //   mapaImg_w, mapaImg_h    tamaño de esa imagen
 // Para agregar una sede nueva, copie un bloque y cambie los datos.
 window.MILFOR_SEDES = [
-  {id:"central", nombre:"Sede Central · Milfor Paraíso", nombre_en:"Main office · Milfor Paraíso",
+  {id:"central", nombre:"Milfor · Carrera 14 # 17-55", nombre_en:"Milfor · Carrera 14 # 17-55", zona:"Centro de Girardot", zona_en:"Downtown Girardot",
    texto:"Carrera 14 (Av. del Ferrocarril) # 17-55, Girardot, Colombia", texto_en:"Carrera 14 (Av. del Ferrocarril) # 17-55, Girardot, Colombia",
-   nota:"Milfor Paraíso queda en el segundo piso del mismo edificio.", nota_en:"Milfor Paraíso is on the second floor of the same building.",
+   pisos:[
+     {piso:"1er piso", piso_en:"1st floor", nombre:"Sede Central", nombre_en:"Main office", desc:"Oficinas de administración, taller y floristería", desc_en:"Administration offices, workshop and flower shop"},
+     {piso:"2do piso", piso_en:"2nd floor", nombre:"Milfor Paraíso", nombre_en:"Milfor Paraíso", desc:"Salón de eventos", desc_en:"Event hall"}],
    lat:4.2982753, lng:-74.808349, embed:true, mapaImg:"mapa-central", mapaImg_w:1266, mapaImg_h:1600,
-   lbTit:"Sede Central · Milfor Paraíso · Centro de Girardot", lbTit_en:"Main office · Milfor Paraíso · Downtown Girardot"},
+   lbTit:"Milfor · Sede Central y Milfor Paraíso", lbTit_en:"Milfor · Main office and Milfor Paraíso"},
   {id:"gaitan", nombre:"Milfor Gaitán", nombre_en:"Milfor Gaitán",
    texto:"Cra. 17 # 21-20, Girardot, Colombia", texto_en:"Cra. 17 # 21-20, Girardot, Colombia",
    lat:4.3018893, lng:-74.8077492, mapaImg:"mapa-gaitan", mapaImg_w:1406, mapaImg_h:1549,
