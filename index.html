@@ -21,7 +21,7 @@
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilo.css?v=4">
+<link rel="stylesheet" href="estilo.css?v=5">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"EventVenue","name":"Milfor Bodas & Eventos","alternateName":"Floristería Milfor",
  "url":"https://eventosmilfor.com/","image":"https://eventosmilfor.com/img/og-milfor.jpg","logo":"https://eventosmilfor.com/img/logo.png",
@@ -33,7 +33,7 @@
 <body>
 <header class="nav" id="top">
   <a href="#top" class="marca" aria-label="Milfor"><img src="img/logo.svg" alt="Milfor Bodas &amp; Eventos" width="150" height="36"></a>
-  <nav><a href="#servicios" data-i18n="n_serv">Servicios</a><a href="#lugar" data-i18n="n_lugar">Nuestro lugar</a><a href="#galeria" data-i18n="n_gal">Galería</a><a href="#ubicacion" data-i18n="n_ubic">Ubicación</a><a href="#contacto" data-i18n="n_cont">Contacto</a></nav>
+  <nav><a href="#servicios" data-i18n="n_serv">Servicios</a><a href="#lugar" data-i18n="n_lugar">Nuestro lugar</a><a href="#menu" data-i18n="n_menu">Menú</a><a href="#galeria" data-i18n="n_gal">Galería</a><a href="#ubicacion" data-i18n="n_ubic">Ubicación</a><a href="#contacto" data-i18n="n_cont">Contacto</a></nav>
   <button class="lang" id="lang" type="button" aria-label="Cambiar idioma">EN</button>
 </header>
 
@@ -87,6 +87,36 @@
     </picture>
     <figcaption data-i18n="l_foto">Mesa junto a la piscina iluminada</figcaption>
   </figure>
+</section>
+
+<section id="menu" class="sec menu">
+  <h2 data-i18n="m_tit">Menú</h2>
+  <p class="sub" data-i18n="m_sub">Propuestas de cena para tu evento.</p>
+  <div class="opciones">
+    <!-- Para agregar la Opción 2 o 3: copie este bloque <article>, cambie la imagen (menu2, menu3) y los platos. -->
+    <article class="opcion">
+      <button type="button" class="poster" data-lb="menu1" data-lb-tit="m1_tit" aria-label="Ampliar menú Opción 1" data-i18n-aria="m1_ampliar">
+        <picture>
+          <source type="image/webp" srcset="fotos/menu1-480.webp 480w, fotos/menu1-800.webp 800w, fotos/menu1-1600.webp 1600w" sizes="(max-width:760px) 80vw, 340px">
+          <img src="fotos/menu1-800.jpg" srcset="fotos/menu1-800.jpg 800w, fotos/menu1-1600.jpg 1600w" sizes="(max-width:760px) 80vw, 340px" width="1079" height="1576" loading="lazy" decoding="async" alt="Menú de cena, Opción 1" data-i18n-alt="m1_alt">
+        </picture>
+        <span class="lupa" aria-hidden="true">⤢</span>
+      </button>
+      <div class="opcion-txt">
+        <p class="tag" data-i18n="m_cena">Menú cena</p>
+        <h3 data-i18n="m1_tit">Opción 1</h3>
+        <p class="lema" data-i18n="m1_lema">Sabores que enamoran</p>
+        <ul class="platos">
+          <li data-i18n="m1_1"><b>Pollo en salsa de maracuyá</b>, jugoso y bañado en una salsa sedosa de notas cítricas y tropicales.</li>
+          <li data-i18n="m1_2"><b>Lomo de cerdo en salsa de vino y uva</b>, delicadamente glaseado, con aromas profundos y un final ligeramente dulce.</li>
+          <li data-i18n="m1_3"><b>Ensalada tropical</b>, con hojas verdes baby, frutas frescas de estación (mango, kiwi, fresa y melón), uvas pasas, finas láminas de queso y un sutil toque de crema.</li>
+          <li data-i18n="m1_4"><b>Puré de papa criolla</b>, de textura aterciopelada.</li>
+          <li data-i18n="m1_5"><b>Arroz con ajonjolí</b>, de grano suelto y acabado delicado.</li>
+        </ul>
+        <p class="nota" data-i18n="m_nota">Pronto más opciones de menú. Escríbenos por WhatsApp para conocerlas.</p>
+      </div>
+    </article>
+  </div>
 </section>
 
 <section class="sec qr">
@@ -151,7 +181,7 @@
 </footer>
 
 <a class="wa-flot" data-wa href="https://wa.me/573212721996" target="_blank" rel="noopener" aria-label="WhatsApp"><span class="ico-wa"></span></a>
-<script src="galeria.js?v=4"></script>
-<script src="app.js?v=4"></script>
+<script src="galeria.js?v=5"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>
