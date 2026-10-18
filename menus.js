@@ -45,7 +45,7 @@ window.MILFOR_MENUS = [
   ["Ensalada griega","con queso feta, aceitunas negras, cebolla morada y verde, tomate cherry y un aderezo ligero.","Greek salad","with feta cheese, black olives, red and green onion, cherry tomatoes and a light dressing."],
   ["Arroz a elección","con variedad de sabores para complementar el plato principal.","Rice of your choice","a variety of flavors to complement the main course."],
   ["Puré de plátano","suave y cremoso, con un delicado toque dulce.","Plantain purée","smooth and creamy, with a delicate sweet touch."]]},
- {num:8, img:"menu8", w:1080, h:1557, lema:"Equilibrio y distinción", lema_en:"Balance and distinction", platos:[
+ {num:8, img:"menu8", w:1080, h:1557, video:"cena8", lema:"Equilibrio y distinción", lema_en:"Balance and distinction", platos:[
   ["Pollo glaseado con miel y mostaza","pechuga jugosa en un glaseado dulce y ligeramente picante, con finas hierbas.","Honey-mustard glazed chicken","juicy breast in a sweet, slightly spicy glaze with fine herbs."],
   ["Posta cartagenera","tierna posta de res cocida lentamente, con la auténtica sazón de la costa Caribe.","Cartagena-style beef (posta cartagenera)","tender slow-cooked beef with authentic Caribbean-coast seasoning."],
   ["Ensalada siciliana","lechugas, tomates cherry, maíz tierno y aguacate, con vinagreta ligera de hierbas.","Sicilian salad","mixed lettuces, cherry tomatoes, sweet corn and avocado with a light herb vinaigrette."],
