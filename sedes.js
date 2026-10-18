@@ -8,6 +8,9 @@
 //   lat, lng                coordenadas del pin (si existen: botones Google Maps y Waze)
 //   mapaImg                 mapa ilustrado opcional (fotos/<mapaImg>-480/800/1600), se amplía al tocarlo
 //   mapaImg_w, mapaImg_h    tamaño de esa imagen
+//   video                   opcional: video de la sede (videos/<video>.mp4 + -poster.webp), se reproduce al tocarlo.
+//                           Crearlo con: python3 /workspace/milfor-web/procesar_video.py <video> sede <id>  ->  video:"sede-<id>"
+//   video_v                 opcional: súbalo (2, 3…) al reemplazar el video, para que los teléfonos no muestren el anterior
 // Para agregar una sede nueva, copie un bloque y cambie los datos.
 window.MILFOR_SEDES = [
   {id:"central", nombre:"Milfor · Carrera 14 # 17-55", nombre_en:"Milfor · Carrera 14 # 17-55", zona:"Centro de Girardot", zona_en:"Downtown Girardot",
@@ -19,7 +22,7 @@ window.MILFOR_SEDES = [
    lbTit:"Milfor · Sede Central y Milfor Paraíso", lbTit_en:"Milfor · Main office and Milfor Paraíso"},
   {id:"gaitan", nombre:"Milfor Gaitán", nombre_en:"Milfor Gaitán",
    texto:"Cra. 17 # 21-20, Girardot, Colombia", texto_en:"Cra. 17 # 21-20, Girardot, Colombia",
-   lat:4.3018893, lng:-74.8077492, mapaImg:"mapa-gaitan", mapaImg_w:1406, mapaImg_h:1549,
+   lat:4.3018893, lng:-74.8077492, video:"sede-gaitan", mapaImg:"mapa-gaitan", mapaImg_w:1406, mapaImg_h:1549,
    lbTit:"Milfor Gaitán · Cómo llegar", lbTit_en:"Milfor Gaitán · How to get there"},
   {id:"campestre", nombre:"Milfor Casa Campestre", nombre_en:"Milfor Casa Campestre", zona:"Ricaurte, Cundinamarca",
    texto:"Cómo llegar a Casa Campestre", texto_en:"How to get to Casa Campestre",
