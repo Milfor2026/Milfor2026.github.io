@@ -93,7 +93,7 @@ window.MILFOR_MENUS_ENTRADAS = [
   ["Camarón fresco","jugoso y de sabor delicado.","Fresh shrimp","juicy, with a delicate flavor."],
   ["Leche de tigre","mezcla cítrica y aromática con limón, ají y cilantro.","Leche de tigre","a citrusy, aromatic marinade with lime, chili and cilantro."],
   ["Acompañamientos","cebolla roja, ají, cilantro y chips crujientes.","Garnishes","red onion, chili, cilantro and crispy chips."]]},
- {num:3, img:"entrada3", w:1080, h:1566, lema:"Ceviche peruano", lema_en:"Peruvian ceviche", platos:[
+ {num:3, img:"entrada3", w:1080, h:1566, video:"entradas3", lema:"Ceviche peruano", lema_en:"Peruvian ceviche", platos:[
   ["Pescado fresco","cortes de pescado blanco, de textura firme y sabor delicado.","Fresh fish","white fish, firm in texture and delicate in flavor."],
   ["Leche de tigre","mezcla cítrica peruana con limón, ají y cilantro.","Leche de tigre","a Peruvian-style citrus marinade with lime, chili and cilantro."],
   ["Acompañamientos","chips crocantes de plátano, camote y maíz.","Garnishes","crunchy plantain, sweet potato and corn chips."]]},
