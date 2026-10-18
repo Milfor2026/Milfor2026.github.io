@@ -97,7 +97,7 @@ window.MILFOR_MENUS_ENTRADAS = [
   ["Pescado fresco","cortes de pescado blanco, de textura firme y sabor delicado.","Fresh fish","white fish, firm in texture and delicate in flavor."],
   ["Leche de tigre","mezcla cítrica peruana con limón, ají y cilantro.","Leche de tigre","a Peruvian-style citrus marinade with lime, chili and cilantro."],
   ["Acompañamientos","chips crocantes de plátano, camote y maíz.","Garnishes","crunchy plantain, sweet potato and corn chips."]]},
- {num:4, img:"entrada4", w:1080, h:1561, lema:"Ceviche de mango y camarón", lema_en:"Mango and shrimp ceviche", platos:[
+ {num:4, img:"entrada4", w:1080, h:1561, video:"entradas4", lema:"Ceviche de mango y camarón", lema_en:"Mango and shrimp ceviche", platos:[
   ["Camarón fresco","seleccionado y cocido al punto, de textura firme y jugosa.","Fresh shrimp","carefully selected and cooked just right, firm and juicy."],
   ["Mango natural","trozos de mango maduro y jugoso, con un toque dulce y tropical.","Fresh mango","chunks of ripe, juicy mango with a sweet, tropical touch."],
   ["Acompañamientos","cebolla roja, ají, cilantro y chip de plátano.","Garnishes","red onion, chili, cilantro and plantain chips."]]},
