@@ -1,6 +1,7 @@
 // ===== SEDES / LUGARES =====
 // Cada sede aparece en "Ubicación". Campos:
 //   nombre / nombre_en      título del bloque
+//   zona / zona_en          línea corta de ubicación (opcional, ej. municipio)
 //   texto / texto_en        línea bajo el título (dirección o descripción)
 //   lat, lng                coordenadas del pin (si existen: botones Google Maps y Waze)
 //   embed                   true = mostrar el mapa de Google incrustado (solo en una sede para que la página cargue rápido)
@@ -14,7 +15,7 @@ window.MILFOR_SEDES = [
   {id:"gaitan", nombre:"Milfor Gaitán", nombre_en:"Milfor Gaitán",
    texto:"Cra. 17 # 21-20, Girardot, Colombia", texto_en:"Cra. 17 # 21-20, Girardot, Colombia",
    lat:4.3018893, lng:-74.8077492},
-  {id:"campestre", nombre:"Milfor Casa Campestre", nombre_en:"Milfor Casa Campestre",
+  {id:"campestre", nombre:"Milfor Casa Campestre", nombre_en:"Milfor Casa Campestre", zona:"Ricaurte, Cundinamarca",
    texto:"Cómo llegar a Casa Campestre", texto_en:"How to get to Casa Campestre",
-   lat:null, lng:null, mapaImg:"mapa-llegar", mapaImg_w:1259, mapaImg_h:1600}
+   lat:4.2944097, lng:-74.7907257, mapaImg:"mapa-llegar", mapaImg_w:1259, mapaImg_h:1600}
 ];

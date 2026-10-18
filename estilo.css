@@ -67,7 +67,7 @@ h2::after{content:"";display:block;width:70px;height:1px;background:var(--g);mar
 .sede .centro.botones{margin-top:14px}
 .sede.con-mapa{grid-row:span 2;display:flex;flex-direction:column}.con-mapa .mapa{flex:1;display:flex}.ubic .con-mapa .mapa iframe{height:auto;min-height:440px;flex:1}
 .ubic{align-items:stretch}.sede:not(.con-mapa){align-self:start}
-.sede h3{font-size:28px;font-weight:500;text-align:center;margin:0}.sede .dir{text-align:center;color:#5a6478;font-style:italic;margin:4px 0 16px}.sede .centro{margin-top:18px}.botones{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.btn.waze{background:#33ccff;border-color:#33ccff;color:#0f1f3d}.btn.waze:hover{background:#1fb5e8;border-color:#1fb5e8}
+.sede h3{font-size:28px;font-weight:500;text-align:center;margin:0}.sede .dir{text-align:center;color:#5a6478;font-style:italic;margin:4px 0 16px}.sede .centro{margin-top:18px}.sede .zona{text-align:center;font:500 12px Montserrat,sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--gd);margin:6px 0 0}.botones{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.btn.waze{background:#33ccff;border-color:#33ccff;color:#0f1f3d}.btn.waze:hover{background:#1fb5e8;border-color:#1fb5e8}
 .llegar{max-width:420px;margin:0 auto!important;width:100%}
 .llegar{margin:0;display:flex;flex-direction:column}.llegar button{all:unset;position:relative;display:block;cursor:zoom-in;border-radius:14px;overflow:hidden;border:1px solid var(--li);box-shadow:0 8px 24px rgba(15,31,61,.08)}
 .llegar button:focus-visible{outline:3px solid var(--g);outline-offset:2px}.llegar img{display:block;width:100%;height:auto}
