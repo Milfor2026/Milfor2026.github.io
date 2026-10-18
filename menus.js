@@ -1,0 +1,46 @@
+// ===== MENÚS =====
+// Cada opción: imagen (fotos/menuN-480/800/1600), lema y platos [nombre, descripción, nombre EN, descripción EN].
+// Para agregar una opción: procese el afiche con procesar_fotos.py (nombre menuN) y copie un bloque.
+window.MILFOR_MENUS = [
+ {img:"menu1", w:1079, h:1576, lema:"Sabores que enamoran", lema_en:"Flavors to fall in love with", platos:[
+  ["Pollo en salsa de maracuyá","jugoso y bañado en una salsa sedosa de notas cítricas y tropicales.","Chicken in passion fruit sauce","juicy and coated in a silky sauce with citrus and tropical notes."],
+  ["Lomo de cerdo en salsa de vino y uva","delicadamente glaseado, con aromas profundos y un final ligeramente dulce.","Pork loin in wine and grape sauce","delicately glazed, with deep aromas and a slightly sweet finish."],
+  ["Ensalada tropical","hojas verdes baby, frutas frescas de estación (mango, kiwi, fresa y melón), uvas pasas, finas láminas de queso y un sutil toque de crema.","Tropical salad","baby greens, fresh seasonal fruit (mango, kiwi, strawberry and melon), raisins, thin slices of cheese and a subtle touch of cream."],
+  ["Puré de papa criolla","de textura aterciopelada.","Creole yellow potato purée","(papa criolla) with a velvety texture."],
+  ["Arroz con ajonjolí","de grano suelto y acabado delicado.","Sesame rice","fluffy grains with a delicate finish."]]},
+ {img:"menu2", w:1080, h:1577, lema:"Sabores que inspiran", lema_en:"Flavors that inspire", platos:[
+  ["Lomito de res en salsa de vino","sellado a la perfección y bañado en una salsa intensa de aromas profundos.","Beef tenderloin in wine sauce","perfectly seared and coated in an intense, deeply aromatic sauce."],
+  ["Pollo thai relleno de verduras crocantes","delicadamente especiado y de textura contrastante.","Thai-style chicken stuffed with crisp vegetables","delicately spiced, with contrasting textures."],
+  ["Verduras calientes salteadas","seleccionadas y preparadas para resaltar su color y frescura.","Warm sautéed vegetables","selected and prepared to bring out their color and freshness."],
+  ["Papa suprema","cremosa y suave, de acabado aterciopelado.","Potato suprême","creamy and smooth, with a velvety finish."],
+  ["Arroz con almendras","laminadas tostadas, fragante y delicadamente crujiente.","Rice with almonds","toasted sliced almonds, fragrant and delicately crunchy."]]},
+ {img:"menu3", w:1077, h:1577, lema:"Sabores que conectan", lema_en:"Flavors that connect", platos:[
+  ["Lomo de cerdo en salsa de uchuva y piña","glaseado con una salsa agridulce de notas tropicales y delicadamente balanceadas.","Pork loin in goldenberry and pineapple sauce","glazed with a sweet-and-sour sauce with delicately balanced tropical notes."],
+  ["Pollo rollito con espinaca","bañado en una cremosa salsa de champiñones de aroma suave y envolvente.","Spinach-stuffed chicken roulade","topped with a creamy mushroom sauce with a soft, rich aroma."],
+  ["Puré de papa criolla","de textura sedosa, cuidadosamente decorado con acabados artesanales.","Creole yellow potato purée","silky, carefully finished with an artisanal touch."],
+  ["Ensalada Waldorf","con manzana fresca, apio crujiente, maní tostado, fresas y un delicado toque de crema.","Waldorf salad","fresh apple, crisp celery, toasted peanuts, strawberries and a delicate touch of cream."],
+  ["Arroz florentino","aromatizado y de presentación refinada.","Florentine rice","aromatic, with a refined presentation."]]},
+ {img:"menu4", w:1080, h:1562, lema:"Sabores que impresionan", lema_en:"Flavors that impress", platos:[
+  ["Lomito de res stroganoff","en una salsa cremosa y aromática, de sabor profundo y envolvente.","Beef stroganoff","in a creamy, aromatic sauce with a deep, rich flavor."],
+  ["Pechuga catalana","rellena de pimentón asado y queso, jugosa y gratinada, con notas dulces y ahumadas.","Catalan-style chicken breast","stuffed with roasted red pepper and cheese, juicy and gratinéed, with sweet and smoky notes."],
+  ["Croquetas de papa con parmesano","doradas y crujientes por fuera, suaves en su interior.","Potato croquettes with parmesan","golden and crisp outside, soft inside."],
+  ["Vegetales salteados","frescos y ligeramente caramelizados para resaltar su sabor natural.","Sautéed vegetables","fresh and lightly caramelized to bring out their natural flavor."],
+  ["Arroz al ajonjolí","perfumado, de grano suelto y acabado delicado.","Sesame rice","fragrant, fluffy grains with a delicate finish."]]},
+ {img:"menu5", w:1080, h:1574, lema:"Sabores que sorprenden", lema_en:"Flavors that surprise", platos:[
+  ["Lomito de cerdo relleno en salsa de champiñón","tierno y jugoso, acompañado de una cremosa salsa de aroma profundo.","Stuffed pork tenderloin in mushroom sauce","tender and juicy, with a creamy, deeply aromatic sauce."],
+  ["Cordon Bleu con reducción de arándanos","crujiente y dorado, con un delicado contraste dulce y salado.","Cordon bleu with cranberry reduction","crisp and golden, with a delicate sweet-and-savory contrast."],
+  ["Espárragos salteados","frescos y ligeramente caramelizados para resaltar su sabor natural.","Sautéed asparagus","fresh and lightly caramelized to bring out their natural flavor."],
+  ["Arroz florentino","aromático y de grano suelto, con un acabado delicado.","Florentine rice","aromatic and fluffy, with a delicate finish."],
+  ["Papa pera","suave y cremosa, presentada con un toque artesanal.","Baby potatoes","soft and creamy, served with an artisanal touch."]]},
+ {img:"menu6", w:1080, h:1564, lema:"Sabores que enamoran", lema_en:"Flavors to fall in love with", platos:[
+  ["Suprema de pollo rellena de espinaca y pasas","tierna y jugosa, con un delicado contraste de sabores dulces y frescos.","Chicken suprême stuffed with spinach and raisins","tender and juicy, with a delicate contrast of sweet and fresh flavors."],
+  ["Lomo de cerdo en salsa de vino tinto, albahaca y tomates secos","glaseado a la perfección, aromático y sofisticado.","Pork loin in red wine, basil and sun-dried tomato sauce","perfectly glazed, aromatic and sophisticated."],
+  ["Arroz perlado","suelto y fragante, con textura delicada.","Pearl rice","fluffy and fragrant, with a delicate texture."],
+  ["Ensalada siciliana","lechuga romana, tomates cherry, pimentones en juliana y perlas de mozzarella fresca, con un toque de frescura mediterránea.","Sicilian salad","romaine lettuce, cherry tomatoes, julienned peppers and fresh mozzarella pearls, with a fresh Mediterranean touch."],
+  ["Duquesas de papa gratinada","crujientes por fuera y suaves por dentro, de presentación refinada.","Gratinéed duchess potatoes","crisp outside and soft inside, with a refined presentation."]]},
+ {img:"menu7", w:1075, h:1567, lema:"Sabores con alma tropical", lema_en:"Flavors with a tropical soul", platos:[
+  ["Lomo de cerdo hawaiano","jugoso y glaseado con una delicada combinación de piña y especias tropicales.","Hawaiian pork loin","juicy and glazed with a delicate blend of pineapple and tropical spices."],
+  ["Ensalada griega","con queso feta, aceitunas negras, cebolla morada y verde, tomate cherry y un aderezo ligero.","Greek salad","with feta cheese, black olives, red and green onion, cherry tomatoes and a light dressing."],
+  ["Arroz a elección","con variedad de sabores para complementar el plato principal.","Rice of your choice","a variety of flavors to complement the main course."],
+  ["Puré de plátano","suave y cremoso, con un delicado toque dulce.","Plantain purée","smooth and creamy, with a delicate sweet touch."]]}
+];
