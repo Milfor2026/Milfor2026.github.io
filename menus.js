@@ -55,13 +55,12 @@ window.MILFOR_MENUS = [
   ["Vegetales salteados","vegetales de temporada salteados con aceite de oliva y especias suaves.","Sautéed vegetables","seasonal vegetables lightly sautéed with olive oil and mild spices."],
   ["Ensalada siciliana","lechugas, tomates cherry, maíz tierno y aguacate, con vinagreta ligera de hierbas.","Sicilian salad","mixed lettuces, cherry tomatoes, sweet corn and avocado with a light herb vinaigrette."],
   ["Arroz a elección","variedad de sabores para complementar el plato principal.","Rice of your choice","a variety of flavors to complement the main course."]]},
- // Opción 10: pendiente. Cuando llegue, insértela aquí con num:10 (las pestañas se ordenan por número).
- {num:11, img:"menu11", w:1080, h:1562, lema:"Mar y tierra en perfecta armonía", lema_en:"Surf and turf in perfect harmony", platos:[
-  ["Filete de res en reducción de vino tinto","tierno y jugoso, con una salsa intensa y aromática.","Beef fillet in red wine reduction","tender and juicy, with an intense, aromatic sauce."],
-  ["Langostinos a la parrilla","marinados con hierbas frescas y un toque de mantequilla de limón.","Grilled prawns","marinated with fresh herbs and a touch of lemon butter."],
-  ["Duquesas de papa","crujientes por fuera y suaves por dentro.","Duchess potatoes","crisp outside and soft inside."],
-  ["Vegetales salteados","vegetales de temporada salteados con aceite de oliva y especias suaves.","Sautéed vegetables","seasonal vegetables lightly sautéed with olive oil and mild spices."],
-  ["Risotto de parmesano","cremoso y delicado, con auténtico queso parmesano y un toque de hierbas.","Parmesan risotto","creamy and delicate, with real parmesan cheese and a hint of herbs."]]}
+ {num:10, img:"menu10", w:1072, h:1546, lema:"Sabores que dejan huella", lema_en:"Flavors that leave a mark", platos:[
+  ["Pernil de cerdo en salsa de ciruela","jugoso y dorado, con una delicada salsa de ciruelas entre dulce y ácida.","Pork leg in plum sauce","juicy and golden, with a delicate sweet-and-tangy plum sauce."],
+  ["Pollo teriyaki","pechuga marinada en salsa teriyaki, glaseada, con notas dulces y umami.","Teriyaki chicken","breast marinated in teriyaki sauce and glazed, with sweet and umami notes."],
+  ["Lasaña de papa","capas suaves de papa y quesos selectos, horneadas hasta quedar cremosas y doradas.","Potato lasagna","soft layers of potato and select cheeses, baked until creamy and golden."],
+  ["Arroz con almendras","esponjoso, con almendras tostadas que aportan textura y un sabor delicado.","Rice with almonds","fluffy, with toasted almonds for texture and a delicate flavor."],
+  ["Ensalada de repollo con frutas y mezcla de yogures","repollo finamente cortado con manzana, uvas pasas y fresas, en un aderezo cremoso de yogures.","Cabbage salad with fruit and yogurt dressing","finely shredded cabbage with apple, raisins and strawberries in a creamy yogurt dressing."]]}
 ];
 // ===== MENÚ INFANTIL =====
 window.MILFOR_MENUS_INFANTIL = [
@@ -95,5 +94,13 @@ window.MILFOR_MENUS_ENTRADAS = [
  {num:3, img:"entrada3", w:1080, h:1566, lema:"Ceviche peruano", lema_en:"Peruvian ceviche", platos:[
   ["Pescado fresco","cortes de pescado blanco, de textura firme y sabor delicado.","Fresh fish","white fish, firm in texture and delicate in flavor."],
   ["Leche de tigre","mezcla cítrica peruana con limón, ají y cilantro.","Leche de tigre","a Peruvian-style citrus marinade with lime, chili and cilantro."],
-  ["Acompañamientos","chips crocantes de plátano, camote y maíz.","Garnishes","crunchy plantain, sweet potato and corn chips."]]}
+  ["Acompañamientos","chips crocantes de plátano, camote y maíz.","Garnishes","crunchy plantain, sweet potato and corn chips."]]},
+ {num:4, img:"entrada4", w:1080, h:1561, lema:"Ceviche de mango y camarón", lema_en:"Mango and shrimp ceviche", platos:[
+  ["Camarón fresco","seleccionado y cocido al punto, de textura firme y jugosa.","Fresh shrimp","carefully selected and cooked just right, firm and juicy."],
+  ["Mango natural","trozos de mango maduro y jugoso, con un toque dulce y tropical.","Fresh mango","chunks of ripe, juicy mango with a sweet, tropical touch."],
+  ["Acompañamientos","cebolla roja, ají, cilantro y chip de plátano.","Garnishes","red onion, chili, cilantro and plantain chips."]]},
+ {num:5, img:"entrada5", w:1080, h:1563, lema:"Ceviche tropical de pescado, camarón o mixto", lema_en:"Tropical ceviche: fish, shrimp or mixed", platos:[
+  ["Pescado, camarón o mixto","seleccionados y cocidos al punto, de textura firme y fresca.","Fish, shrimp or mixed","carefully selected and cooked just right, firm and fresh."],
+  ["Frutas tropicales","mango, piña y un toque de maracuyá.","Tropical fruit","mango, pineapple and a touch of passion fruit."],
+  ["Acompañamientos","chips de plátano y limón.","Garnishes","plantain chips and lime."]]}
 ];
