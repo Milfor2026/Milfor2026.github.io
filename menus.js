@@ -1,8 +1,9 @@
 // ===== MENÚS =====
 // Cada opción: imagen (fotos/menuN-480/800/1600), lema y platos [nombre, descripción, nombre EN, descripción EN].
+// video (opcional): nombre del video en videos/ (crearlo con /workspace/milfor-web/procesar_video.py <video> <categoria> <numero>).
 // Para agregar una opción: procese el afiche con procesar_fotos.py (nombre menuN) y copie un bloque.
 window.MILFOR_MENUS = [
- {num:1, img:"menu1", w:1079, h:1576, lema:"Sabores que enamoran", lema_en:"Flavors to fall in love with", platos:[
+ {num:1, img:"menu1", w:1079, h:1576, video:"cena1", lema:"Sabores que enamoran", lema_en:"Flavors to fall in love with", platos:[
   ["Pollo en salsa de maracuyá","jugoso y bañado en una salsa sedosa de notas cítricas y tropicales.","Chicken in passion fruit sauce","juicy and coated in a silky sauce with citrus and tropical notes."],
   ["Lomo de cerdo en salsa de vino y uva","delicadamente glaseado, con aromas profundos y un final ligeramente dulce.","Pork loin in wine and grape sauce","delicately glazed, with deep aromas and a slightly sweet finish."],
   ["Ensalada tropical","hojas verdes baby, frutas frescas de estación (mango, kiwi, fresa y melón), uvas pasas, finas láminas de queso y un sutil toque de crema.","Tropical salad","baby greens, fresh seasonal fruit (mango, kiwi, strawberry and melon), raisins, thin slices of cheese and a subtle touch of cream."],
