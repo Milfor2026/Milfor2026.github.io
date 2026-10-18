@@ -101,7 +101,7 @@ window.MILFOR_MENUS_ENTRADAS = [
   ["Camarón fresco","seleccionado y cocido al punto, de textura firme y jugosa.","Fresh shrimp","carefully selected and cooked just right, firm and juicy."],
   ["Mango natural","trozos de mango maduro y jugoso, con un toque dulce y tropical.","Fresh mango","chunks of ripe, juicy mango with a sweet, tropical touch."],
   ["Acompañamientos","cebolla roja, ají, cilantro y chip de plátano.","Garnishes","red onion, chili, cilantro and plantain chips."]]},
- {num:5, img:"entrada5", w:1080, h:1563, lema:"Ceviche tropical de pescado, camarón o mixto", lema_en:"Tropical ceviche: fish, shrimp or mixed", platos:[
+ {num:5, img:"entrada5", w:1080, h:1563, video:"entradas5", lema:"Ceviche tropical de pescado, camarón o mixto", lema_en:"Tropical ceviche: fish, shrimp or mixed", platos:[
   ["Pescado, camarón o mixto","seleccionados y cocidos al punto, de textura firme y fresca.","Fish, shrimp or mixed","carefully selected and cooked just right, firm and fresh."],
   ["Frutas tropicales","mango, piña y un toque de maracuyá.","Tropical fruit","mango, pineapple and a touch of passion fruit."],
   ["Acompañamientos","chips de plátano y limón.","Garnishes","plantain chips and lime."]]}
