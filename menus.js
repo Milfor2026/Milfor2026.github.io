@@ -22,7 +22,7 @@ window.MILFOR_MENUS = [
   ["Puré de papa criolla","de textura sedosa, cuidadosamente decorado con acabados artesanales.","Creole yellow potato purée","silky, carefully finished with an artisanal touch."],
   ["Ensalada Waldorf","con manzana fresca, apio crujiente, maní tostado, fresas y un delicado toque de crema.","Waldorf salad","fresh apple, crisp celery, toasted peanuts, strawberries and a delicate touch of cream."],
   ["Arroz florentino","aromatizado y de presentación refinada.","Florentine rice","aromatic, with a refined presentation."]]},
- {num:4, img:"menu4", w:1080, h:1562, lema:"Sabores que impresionan", lema_en:"Flavors that impress", platos:[
+ {num:4, img:"menu4", w:1080, h:1562, video:"cena4", lema:"Sabores que impresionan", lema_en:"Flavors that impress", platos:[
   ["Lomito de res stroganoff","en una salsa cremosa y aromática, de sabor profundo y envolvente.","Beef stroganoff","in a creamy, aromatic sauce with a deep, rich flavor."],
   ["Pechuga catalana","rellena de pimentón asado y queso, jugosa y gratinada, con notas dulces y ahumadas.","Catalan-style chicken breast","stuffed with roasted red pepper and cheese, juicy and gratinéed, with sweet and smoky notes."],
   ["Croquetas de papa con parmesano","doradas y crujientes por fuera, suaves en su interior.","Potato croquettes with parmesan","golden and crisp outside, soft inside."],
