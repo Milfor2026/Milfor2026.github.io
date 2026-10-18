@@ -40,7 +40,7 @@ window.MILFOR_MENUS = [
   ["Arroz perlado","suelto y fragante, con textura delicada.","Pearl rice","fluffy and fragrant, with a delicate texture."],
   ["Ensalada siciliana","lechuga romana, tomates cherry, pimentones en juliana y perlas de mozzarella fresca, con un toque de frescura mediterránea.","Sicilian salad","romaine lettuce, cherry tomatoes, julienned peppers and fresh mozzarella pearls, with a fresh Mediterranean touch."],
   ["Duquesas de papa gratinada","crujientes por fuera y suaves por dentro, de presentación refinada.","Gratinéed duchess potatoes","crisp outside and soft inside, with a refined presentation."]]},
- {num:7, img:"menu7", w:1075, h:1567, lema:"Sabores con alma tropical", lema_en:"Flavors with a tropical soul", platos:[
+ {num:7, img:"menu7", w:1075, h:1567, video:"cena7", lema:"Sabores con alma tropical", lema_en:"Flavors with a tropical soul", platos:[
   ["Lomo de cerdo hawaiano","jugoso y glaseado con una delicada combinación de piña y especias tropicales.","Hawaiian pork loin","juicy and glazed with a delicate blend of pineapple and tropical spices."],
   ["Ensalada griega","con queso feta, aceitunas negras, cebolla morada y verde, tomate cherry y un aderezo ligero.","Greek salad","with feta cheese, black olives, red and green onion, cherry tomatoes and a light dressing."],
   ["Arroz a elección","con variedad de sabores para complementar el plato principal.","Rice of your choice","a variety of flavors to complement the main course."],
