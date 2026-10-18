@@ -85,7 +85,7 @@ window.MILFOR_MENUS_INFANTIL = [
 ];
 // ===== ENTRADAS =====
 window.MILFOR_MENUS_ENTRADAS = [
- {num:1, img:"entrada1", w:1080, h:1574, lema:"Ceviche de pulpo en leche de tigre", lema_en:"Octopus ceviche in leche de tigre", platos:[
+ {num:1, img:"entrada1", w:1080, h:1574, video:"entradas1", lema:"Ceviche de pulpo en leche de tigre", lema_en:"Octopus ceviche in leche de tigre", platos:[
   ["Pulpo fresco","seleccionado y cocido a la perfección, de textura suave.","Fresh octopus","carefully selected and perfectly cooked, with a tender texture."],
   ["Leche de tigre","mezcla cítrica y aromática con limón, ají y cilantro.","Leche de tigre","a citrusy, aromatic marinade with lime, chili and cilantro."],
   ["Acompañamientos","cebolla roja, ají, cilantro y chips crujientes.","Garnishes","red onion, chili, cilantro and crispy chips."]]},
