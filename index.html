@@ -23,7 +23,7 @@
 <meta name="apple-mobile-web-app-title" content="Milfor">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilo.css?v=35">
+<link rel="stylesheet" href="estilo.css?v=36">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"EventVenue","name":"Milfor Bodas & Eventos","alternateName":"Floristería Milfor",
  "url":"https://eventosmilfor.com/","image":"https://eventosmilfor.com/img/og-milfor.jpg","logo":"https://eventosmilfor.com/img/logo.png",
@@ -189,6 +189,11 @@
   <form id="cot-form" class="cot-form" novalidate>
     <div class="campo ancho"><label for="ct-nombre" data-i18n="ct_nombre">Nombre</label>
       <input id="ct-nombre" name="nombre" type="text" autocomplete="name" required maxlength="80"></div>
+    <div class="campo"><label for="ct-tel" data-i18n="ct_tel">Teléfono / WhatsApp</label>
+      <input id="ct-tel" name="telefono" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="+57 300 000 0000" aria-describedby="ct-tel-ayuda">
+      <small class="campo-ayuda" id="ct-tel-ayuda" data-i18n="ct_tel_ayuda">Ejemplo: +57 300 000 0000</small></div>
+    <div class="campo"><label for="ct-mail"><span data-i18n="ct_mail">Correo electrónico</span> <span class="opc" data-i18n="ct_opc">(opcional)</span></label>
+      <input id="ct-mail" name="correo" type="email" inputmode="email" autocomplete="email" maxlength="100" placeholder="nombre@correo.com"></div>
     <div class="campo"><label for="ct-tipo" data-i18n="ct_tipo">Tipo de evento</label>
       <select id="ct-tipo" name="tipo" required>
         <option value="" data-i18n="ct_elige">Elija una opción</option>
@@ -265,6 +270,6 @@
 <script src="sedes.js?v=13"></script>
 <script src="testimonios.js?v=1"></script>
 <script src="eventos.js?v=3"></script>
-<script src="app.js?v=35"></script>
+<script src="app.js?v=36"></script>
 </body>
 </html>
