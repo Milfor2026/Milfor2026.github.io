@@ -320,3 +320,5 @@ img.zoomable:focus-visible{outline:2px solid var(--g);outline-offset:3px}
 .cristaleria{margin-top:34px}
 @media (max-width:760px){.cristaleria .silla:last-child:nth-child(odd){grid-column:1/-1;justify-self:center;width:calc(50% - 6px)}}
 @media (min-width:1001px){.cristaleria .sillas-grid{grid-template-columns:repeat(4,1fr);max-width:720px;margin:0 auto}}
+.platos li.solo{list-style:none;padding-left:0;margin-left:0}
+.platos li.solo::before{display:none}
