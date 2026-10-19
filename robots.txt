@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
+
+# Las páginas de invitados de /milfor-mesas/ llevan <meta name="robots" content="noindex,nofollow">.
+# No se bloquean aquí a propósito: si se bloquearan, los buscadores no podrían leer ese noindex.
+
 Sitemap: https://eventosmilfor.com/sitemap.xml
