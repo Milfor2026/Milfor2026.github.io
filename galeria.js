@@ -3,7 +3,7 @@
 // Para agregar una foto nueva: procésela con /workspace/milfor-web/procesar_fotos.py
 // y agregue una línea aquí con su nombre (sin extensión), su ancho y alto en px, y los títulos.
 window.MILFOR_GALERIA = [
-  {foto:"arbol",     w:1064, h:711,  titulo:"Boda bajo el árbol",      titulo_en:"Wedding under the tree"},
+  {foto:"arbol",     w:1064, h:711,  titulo:"Boda bajo el árbol · Milfor Casa Campestre", titulo_en:"Wedding under the tree · Milfor Casa Campestre"},
   {foto:"ceremonia", w:1287, h:1600, titulo:"Ceremonia",               titulo_en:"Ceremony",           pos:"50% 35%"},
   {foto:"capilla",   w:1074, h:711,  titulo:"Boda en la capilla",      titulo_en:"Chapel wedding"},
   {foto:"quince",    w:1399, h:1419, titulo:"Quince años",             titulo_en:"Quinceañera",        pos:"50% 30%"},
