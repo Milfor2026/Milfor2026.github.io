@@ -48,14 +48,14 @@ window.MILFOR_MENUS = [
  {num:8, img:"menu8", w:1080, h:1557, video:"cena8", lema:"Equilibrio y distinción", lema_en:"Balance and distinction", platos:[
   ["Pollo a la miel mostaza","pechuga jugosa con un glaseado dulce y ligeramente picante, con finas hierbas.","Honey-mustard glazed chicken","juicy breast in a sweet, slightly spicy glaze with fine herbs."],
   ["Posta cartagenera","tierna posta de res cocida lentamente, con la auténtica sazón de la costa Caribe.","Cartagena-style beef (posta cartagenera)","tender slow-cooked beef with authentic Caribbean-coast seasoning."],
-  ["Ensalada siciliana","lechugas, tomates cherry, maíz tierno y aguacate, con vinagreta ligera de hierbas.","Sicilian salad","mixed lettuces, cherry tomatoes, sweet corn and avocado with a light herb vinaigrette."],
+  ["Ensalada fresca de aguacate y maíz","lechugas, tomates cherry, maíz tierno y aguacate, con vinagreta ligera de hierbas.","Fresh avocado and corn salad","mixed lettuces, cherry tomatoes, sweet corn and avocado with a light herb vinaigrette."],
   ["Arroz a elección","variedad de sabores para complementar el plato principal.","Rice of your choice","a variety of flavors to complement the main course."],
   ["Puré de papa blanca","suave y cremoso, con mantequilla y un toque de leche fresca.","Mashed potatoes","smooth and creamy, with butter and a touch of fresh milk."]]},
  {num:9, img:"menu9", w:1078, h:1578, video:"cena9", lema:"Tradición con elegancia", lema_en:"Tradition with elegance", platos:[
   ["Salmón a la parrilla","filete fresco, crujiente por fuera y jugoso por dentro, con limón y aceite de oliva.","Grilled salmon","fresh fillet, crisp outside and juicy inside, with lemon and olive oil."],
   ["Puré de papa blanca","suave y cremoso, con mantequilla y un toque de leche fresca.","Mashed potatoes","smooth and creamy, with butter and a touch of fresh milk."],
   ["Vegetales salteados","de temporada, con aceite de oliva y especias suaves.","Sautéed vegetables","seasonal, lightly sautéed with olive oil and mild spices."],
-  ["Ensalada siciliana","lechugas, tomates cherry, maíz tierno y aguacate, con vinagreta ligera de hierbas.","Sicilian salad","mixed lettuces, cherry tomatoes, sweet corn and avocado with a light herb vinaigrette."],
+  ["Ensalada fresca de aguacate y maíz","lechugas, tomates cherry, maíz tierno y aguacate, con vinagreta ligera de hierbas.","Fresh avocado and corn salad","mixed lettuces, cherry tomatoes, sweet corn and avocado with a light herb vinaigrette."],
   ["Arroz a elección","variedad de sabores para complementar el plato principal.","Rice of your choice","a variety of flavors to complement the main course."]]},
  {num:10, img:"menu10", w:1072, h:1546, video:"cena10", lema:"Sabores que dejan huella", lema_en:"Flavors that leave a mark", platos:[
   ["Pernil de cerdo en salsa de ciruela","jugoso y dorado, con una delicada salsa de ciruelas entre dulce y ácida.","Pork leg in plum sauce","juicy and golden, with a delicate sweet-and-tangy plum sauce."],
