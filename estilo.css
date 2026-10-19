@@ -263,3 +263,22 @@ body.en-cotizar .aviso-ga{display:none}
 .ev-ov video{width:100%;height:100%;object-fit:contain;background:#000}
 .ev-ov-x{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:12px;width:46px;height:46px;border-radius:50%;border:1px solid var(--gl);background:rgba(12,37,65,.85);color:#fff;font-size:30px;line-height:1;cursor:pointer;z-index:1}
 .ev-ov-x:focus-visible{outline:3px solid var(--gl);outline-offset:2px}
+
+/* ===== Testimonios ===== */
+.testimonios{max-width:none;background:var(--n);color:#F3EEE4;border-top:1px solid var(--g);border-bottom:1px solid var(--g)}
+.testi-in{max-width:1100px;margin:auto}
+.testimonios h2{color:#F3EEE4}
+.testimonios .sub{color:var(--tn)}
+.testi{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:30px 0 26px}
+.testi-card{margin:0;position:relative;display:flex;flex-direction:column;background:var(--iv);color:var(--n);border:1px solid var(--gl);border-radius:16px;padding:46px 24px 22px;box-shadow:inset 0 0 0 4px var(--iv),inset 0 0 0 5px var(--li),0 10px 26px rgba(0,0,0,.25)}
+.testi-q{position:absolute;top:2px;left:18px;font-family:"Cormorant Garamond",Georgia,serif;font-size:76px;line-height:1;color:var(--g)}
+.testi-card blockquote{margin:0;flex:1}
+.testi-card blockquote p{margin:0;font-size:18px;line-height:1.55;font-style:italic;color:var(--tx)}
+.testi-card figcaption{margin-top:16px;padding-top:12px;border-top:1px solid var(--li)}
+.testi-card figcaption b{display:block;font-weight:600;font-size:19px;color:var(--n)}
+.testi-card figcaption span{display:block;font-family:Montserrat,sans-serif;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gd);margin-top:3px}
+.testimonios .btn.linea{color:var(--gl);border-color:var(--gl);background:transparent}
+.testimonios .btn.linea:hover{background:var(--gl);color:var(--n)}
+@media (max-width:1000px) and (min-width:761px){.testi{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:760px){.testi{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:24px -22px 20px;padding:4px 22px 14px;gap:14px;scrollbar-width:none}
+ .testi::-webkit-scrollbar{display:none}.testi-card{flex:0 0 82%;scroll-snap-align:center}}
