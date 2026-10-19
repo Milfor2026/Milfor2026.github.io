@@ -1,5 +1,5 @@
 (function(){
-const EN={n_serv:"Services",n_lugar:"Our venue",n_gal:"Gallery",n_ubic:"Location",n_cont:"Contact",
+const EN={n_serv:"Services",n_lugar:"Our venues",n_cot:"Quote",cta_cot:"Get a quote",ct_tit:"Get a quote for your event",ct_sub:"Answer these questions and WhatsApp will open with your message ready to send us.",ct_nombre:"Name",ct_tipo:"Type of event",ct_elige:"Choose an option",ct_t_boda:"Wedding",ct_t_quince:"Quinceañera (sweet fifteen)",ct_t_corp:"Corporate",ct_t_cel:"Birthday / Celebration",ct_t_otro:"Other",ct_fecha:"Approximate date",ct_inv:"Number of guests",ct_sede:"Venue of interest",ct_s_central:"Sede Central / Milfor Paraíso",ct_s_gaitan:"Milfor Gaitán",ct_s_campestre:"Milfor Casa Campestre",ct_s_nose:"Not sure yet",ct_com:"Comment",ct_opc:"(optional)",ct_enviar:"Send via WhatsApp",ct_nota:"We don't store your data: the message opens in your WhatsApp and you decide whether to send it.",n_gal:"Gallery",n_ubic:"Location",n_cont:"Contact",
  h_script:"We turn your special day into a memory to treasure",
  h_lead:"Weddings, quinceañeras, corporate events and celebrations in Girardot, Colombia — with our own venue, full event setup and floral design.",
  cta_wa:"Message us on WhatsApp",cta_serv:"See services",s_tit:"Services",s_sub:"We plan your event from start to finish.",
@@ -7,7 +7,7 @@ const EN={n_serv:"Services",n_lugar:"Our venue",n_gal:"Gallery",n_ubic:"Location
  s2:"Quinceañeras",s2d:"An unforgettable night to celebrate fifteen, styled just the way she dreams.",
  s3:"Corporate events",s3d:"Meetings, launches, company parties and year-end events.",
  s4:"Celebrations",s4d:"Baptisms, first communions, graduations, anniversaries, birthdays and more.",
- l_tit:"Our venue",l_p:"We have our own event space, with <b>pools</b> and <b>guest rooms</b>, so you and your guests can enjoy every moment worry-free.",
+ l_tit:"Our venues",l_p:"We have our own event space, with <b>pools</b> and <b>guest rooms</b>, so you and your guests can enjoy every moment worry-free.",
  e_tit:"Full event setup",e1:"Furniture",e2:"Table linens",e3:"Tableware & glassware",e4:"Sound",e5:"Screens",e6:"Stages",e7:"Dance floors",
  f_tit:"Floral design",f_p:"We are also <b>Floristería Milfor</b>: we design the floral arrangements for your event, from the bouquet to the centerpieces.",
  q_tag:"Only at Milfor",q_tit:"Your guests find their table on their phone",
@@ -100,6 +100,24 @@ function menus(){const M=menuLista(),T=document.getElementById("menu-tabs"),P=do
  <div class="opcion-txt"><p class="tag">${D[mcat().tag]}</p><h3>${D.m_op} ${m.num}</h3><p class="lema">${en&&m.lema_en||m.lema}</p><ul class="platos">${m.platos.map(p=>`<li><b>${en?p[2]:p[0]}</b>, ${en?p[3]:p[1]}</li>`).join("")}</ul></div></article>`;
  const act=T.querySelector('[aria-selected="true"]');if(act&&T.scrollWidth>T.clientWidth)T.scrollTo({left:act.offsetLeft-T.clientWidth/2+act.offsetWidth/2,behavior:"smooth"})}
 function menuIr(i){const M=menuLista();MI=(i+M.length)%M.length;menus()}
+// ===== Cotizar mi evento: arma el mensaje y abre WhatsApp (no se guarda ni se envía nada a un servidor) =====
+const COT={es:{hola:"Hola Milfor, quiero cotizar mi evento:",nombre:"Nombre",tipo:"Tipo de evento",fecha:"Fecha aproximada",inv:"Número de invitados",sede:"Sede de interés",com:"Comentario",falta:"Por favor completa: ",inv_mal:"Escribe un número de invitados válido (1 a 3000)."},
+ en:{hola:"Hello Milfor, I'd like a quote for my event:",nombre:"Name",tipo:"Type of event",fecha:"Approximate date",inv:"Number of guests",sede:"Venue of interest",com:"Comment",falta:"Please fill in: ",inv_mal:"Please enter a valid number of guests (1 to 3000)."}};
+function cotizar(){const f=document.getElementById("cot-form");if(!f)return;const err=document.getElementById("ct-error");
+ f.addEventListener("input",e=>{e.target.removeAttribute("aria-invalid");err.textContent=""});
+ f.addEventListener("submit",e=>{e.preventDefault();const T=COT[L=="en"?"en":"es"],lab=id=>document.querySelector(`label[for="${id}"]`).firstChild.textContent.trim();
+  const req=["ct-nombre","ct-tipo","ct-fecha","ct-inv","ct-sede"].map(id=>document.getElementById(id));req.forEach(x=>x.removeAttribute("aria-invalid"));
+  const mal=req.filter(x=>!x.value.trim());const inv=document.getElementById("ct-inv");
+  if(mal.length){mal.forEach(x=>x.setAttribute("aria-invalid","true"));err.textContent=T.falta+mal.map(x=>lab(x.id)).join(", ")+".";mal[0].focus();return}
+  const n=+inv.value;if(!Number.isInteger(n)||n<1||n>3000){inv.setAttribute("aria-invalid","true");err.textContent=T.inv_mal;inv.focus();return}
+  const txt=id=>{const x=document.getElementById(id);return x.tagName=="SELECT"?x.options[x.selectedIndex].text:x.value.trim()};
+  const fv=document.getElementById("ct-fecha").value,[y,m,d]=fv.split("-").map(Number);
+  let fecha=fv;try{fecha=new Date(Date.UTC(y,m-1,d)).toLocaleDateString(L=="en"?"en-US":"es-CO",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})}catch(_){}
+  const com=txt("ct-com");
+  const msg=[T.hola,"",`• ${T.nombre}: ${txt("ct-nombre")}`,`• ${T.tipo}: ${txt("ct-tipo")}`,`• ${T.fecha}: ${fecha}`,`• ${T.inv}: ${n}`,`• ${T.sede}: ${txt("ct-sede")}`].concat(com?[`• ${T.com}: ${com}`]:[]).join("\n");
+  const u="https://wa.me/573212721996?text="+encodeURIComponent(msg);err.textContent="";
+  const w=window.open(u,"_blank");if(w){try{w.opener=null}catch(_){}}else location.href=u});
+}
 function aplicar(){document.documentElement.lang=L;const D=L=="en"?EN:ES;
  document.querySelectorAll("[data-i18n]").forEach(e=>{const v=D[e.dataset.i18n];if(v!=null)e.innerHTML=v});
  document.querySelectorAll("[data-i18n-alt]").forEach(e=>{const v=D[e.dataset.i18nAlt];if(v!=null)e.alt=v});
@@ -107,5 +125,5 @@ function aplicar(){document.documentElement.lang=L;const D=L=="en"?EN:ES;
  document.querySelectorAll("[data-wa]").forEach(a=>a.href="https://wa.me/573212721996?text="+encodeURIComponent(WA[L]));
  const b=document.getElementById("lang");b.textContent=L=="en"?"ES":"EN";b.setAttribute("aria-label",L=="en"?"Cambiar a español":"Switch to English");gal();menus();sedes();eventos()}
 document.getElementById("lang").onclick=()=>{L=L=="en"?"es":"en";try{localStorage.setItem("milfor-web-lang",L)}catch(e){}aplicar()};
-document.getElementById("anio").textContent=new Date().getFullYear();aplicar();
+document.getElementById("anio").textContent=new Date().getFullYear();aplicar();cotizar();
 })();

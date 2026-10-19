@@ -181,3 +181,24 @@ h2::after{width:180px;height:14px;background:url("data:image/svg+xml,%3Csvg xmln
  .hero-txt{margin-top:-46px;padding:0 18px;z-index:1}
  .hero .script{margin:0 auto 10px}.hero .lead{margin:0 auto}.hero .ctas{justify-content:center}
 }
+
+/* ===== Cotizar mi evento (formulario -> WhatsApp) ===== */
+.ancla{display:block;height:0}
+.btn.cotizar{background:var(--gl);border-color:var(--gl);color:var(--n);font-weight:600}
+.btn.cotizar:hover,.btn.cotizar:focus-visible{background:var(--iv);border-color:var(--iv);color:var(--n)}
+.contacto .btn.cotizar{background:var(--n);border-color:var(--g);color:#fff}
+.contacto .btn.cotizar:hover{background:var(--nd);border-color:var(--gl)}
+.cot-form{max-width:720px;margin:26px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:18px 20px;background:#fff;border:1px solid var(--g);border-radius:16px;padding:28px 26px;box-shadow:inset 0 0 0 5px #fff,inset 0 0 0 6px var(--li)}
+.cot-form .ancho{grid-column:1/-1}
+.campo{display:flex;flex-direction:column;gap:6px;min-width:0}
+.campo label{font:600 12px Montserrat,sans-serif;letter-spacing:1.4px;text-transform:uppercase;color:var(--n)}
+.campo .opc{font-weight:400;text-transform:none;letter-spacing:.3px;color:var(--tx)}
+.campo input,.campo select,.campo textarea{font:inherit;font-size:18px;color:var(--n);background:var(--iv);border:1px solid #CDBB9A;border-radius:10px;padding:11px 12px;min-height:48px;width:100%;box-sizing:border-box}
+.campo textarea{resize:vertical;min-height:90px}
+.campo select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--gd) 50%),linear-gradient(135deg,var(--gd) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:36px}
+.campo input:focus,.campo select:focus,.campo textarea:focus{outline:2px solid var(--g);outline-offset:1px;border-color:var(--g);background:#fff}
+.campo [aria-invalid="true"]{border-color:#B3261E;outline-color:#B3261E}
+.cot-error{margin:0;color:#B3261E;font-size:17px;min-height:0;text-align:center}.cot-error:empty{display:none}
+.cot-form .btn{margin-top:4px;border:0;cursor:pointer;font-size:15px}
+.cot-nota{margin:12px auto 0;max-width:460px;color:var(--tx);font-size:15px;font-style:italic}
+@media (max-width:760px){.cot-form{grid-template-columns:1fr;padding:22px 16px;gap:16px}.hero .ctas .btn{justify-content:center}}

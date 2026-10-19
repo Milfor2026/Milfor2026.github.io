@@ -21,7 +21,7 @@
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilo.css?v=22">
+<link rel="stylesheet" href="estilo.css?v=23">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"EventVenue","name":"Milfor Bodas & Eventos","alternateName":"Floristería Milfor",
  "url":"https://eventosmilfor.com/","image":"https://eventosmilfor.com/img/og-milfor.jpg","logo":"https://eventosmilfor.com/img/logo.png",
@@ -39,7 +39,7 @@
 <body>
 <header class="nav" id="top">
   <a href="#top" class="marca" aria-label="Milfor"><img src="img/logo-claro.svg" alt="Milfor Bodas &amp; Eventos" width="150" height="36"></a>
-  <nav><a href="#servicios" data-i18n="n_serv">Servicios</a><a href="#lugar" data-i18n="n_lugar">Nuestro lugar</a><a href="#menu" data-i18n="n_menu">Menú</a><a href="#galeria" data-i18n="n_gal">Galería</a><a href="#ubicacion" data-i18n="n_ubic">Ubicación</a><a href="#contacto" data-i18n="n_cont">Contacto</a></nav>
+  <nav><a href="#servicios" data-i18n="n_serv">Servicios</a><a href="#lugar" data-i18n="n_lugar">Nuestras sedes</a><a href="#menu" data-i18n="n_menu">Menú</a><a href="#galeria" data-i18n="n_gal">Galería</a><a href="#ubicacion" data-i18n="n_ubic">Ubicación</a><a href="#cotizar" data-i18n="n_cot">Cotizar</a><a href="#contacto" data-i18n="n_cont">Contacto</a></nav>
   <button class="lang" id="lang" type="button" aria-label="Cambiar idioma">EN</button>
 </header>
 
@@ -54,7 +54,7 @@
   <div class="hero-txt">
   <p class="script" data-i18n="h_script">Hacemos de tu fecha especial un recuerdo memorable</p>
   <p class="lead" data-i18n="h_lead">Bodas, quince años, eventos corporativos y celebraciones en Girardot, con lugar propio, montaje completo y decoración floral.</p>
-  <div class="ctas"><a class="btn wa" data-wa href="https://wa.me/573212721996" target="_blank" rel="noopener"><span class="ico-wa"></span><span data-i18n="cta_wa">Escríbenos por WhatsApp</span></a>
+  <div class="ctas"><a class="btn cotizar" href="#cotizar" data-i18n="cta_cot">Cotizar mi evento</a><a class="btn wa" data-wa href="https://wa.me/573212721996" target="_blank" rel="noopener"><span class="ico-wa"></span><span data-i18n="cta_wa">Escríbenos por WhatsApp</span></a>
   <a class="btn linea" href="#servicios" data-i18n="cta_serv">Ver servicios</a></div>
   <div class="orn">✦ ✦ ✦</div>
   </div>
@@ -77,10 +77,10 @@
   </div>
 </section>
 
-<section id="lugar" class="sec alt">
+<section id="lugar" class="sec alt"><span id="nuestras-sedes" class="ancla" aria-hidden="true"></span>
   <div class="dos">
     <div>
-      <h2 data-i18n="l_tit">Nuestro lugar</h2>
+      <h2 data-i18n="l_tit">Nuestras sedes</h2>
       <p data-i18n="l_p">Contamos con un espacio propio para tu evento, con <b>piscinas</b> y <b>habitaciones</b> para que tú y tus invitados disfruten sin preocupaciones.</p>
       <h3 class="h3s" data-i18n="e_tit">Montaje completo</h3>
       <ul class="equipo">
@@ -144,9 +144,45 @@
   </div>
 </section>
 
+<section id="cotizar" class="sec cotizar">
+  <h2 data-i18n="ct_tit">Cotiza tu evento</h2>
+  <p class="sub" data-i18n="ct_sub">Responde estas preguntas y se abrirá WhatsApp con tu mensaje listo para enviarnos.</p>
+  <form id="cot-form" class="cot-form" novalidate>
+    <div class="campo ancho"><label for="ct-nombre" data-i18n="ct_nombre">Nombre</label>
+      <input id="ct-nombre" name="nombre" type="text" autocomplete="name" required maxlength="80"></div>
+    <div class="campo"><label for="ct-tipo" data-i18n="ct_tipo">Tipo de evento</label>
+      <select id="ct-tipo" name="tipo" required>
+        <option value="" data-i18n="ct_elige">Elige una opción</option>
+        <option value="boda" data-i18n="ct_t_boda">Boda</option>
+        <option value="quince" data-i18n="ct_t_quince">Quince años</option>
+        <option value="corporativo" data-i18n="ct_t_corp">Corporativo</option>
+        <option value="celebracion" data-i18n="ct_t_cel">Cumpleaños / Celebración</option>
+        <option value="otro" data-i18n="ct_t_otro">Otro</option>
+      </select></div>
+    <div class="campo"><label for="ct-fecha" data-i18n="ct_fecha">Fecha aproximada</label>
+      <input id="ct-fecha" name="fecha" type="date" required></div>
+    <div class="campo"><label for="ct-inv" data-i18n="ct_inv">Número de invitados</label>
+      <input id="ct-inv" name="invitados" type="number" inputmode="numeric" min="1" max="3000" step="1" required></div>
+    <div class="campo"><label for="ct-sede" data-i18n="ct_sede">Sede de interés</label>
+      <select id="ct-sede" name="sede" required>
+        <option value="" data-i18n="ct_elige">Elige una opción</option>
+        <option value="central" data-i18n="ct_s_central">Sede Central / Milfor Paraíso</option>
+        <option value="gaitan" data-i18n="ct_s_gaitan">Milfor Gaitán</option>
+        <option value="campestre" data-i18n="ct_s_campestre">Milfor Casa Campestre</option>
+        <option value="nose" data-i18n="ct_s_nose">Aún no sé</option>
+      </select></div>
+    <div class="campo ancho"><label for="ct-com"><span data-i18n="ct_com">Comentario</span> <span class="opc" data-i18n="ct_opc">(opcional)</span></label>
+      <textarea id="ct-com" name="comentario" rows="3" maxlength="500"></textarea></div>
+    <p class="cot-error ancho" id="ct-error" role="alert" aria-live="assertive"></p>
+    <div class="ancho centro"><button class="btn wa" type="submit"><span class="ico-wa"></span><span data-i18n="ct_enviar">Enviar por WhatsApp</span></button>
+      <p class="cot-nota" data-i18n="ct_nota">No guardamos tus datos: el mensaje se abre en tu WhatsApp y tú decides si lo envías.</p></div>
+  </form>
+</section>
+
 <section id="contacto" class="sec contacto">
   <h2 data-i18n="c_tit">Hablemos de tu evento</h2>
   <p class="sub" data-i18n="c_sub">Cuéntanos la fecha y el tipo de evento y te respondemos por WhatsApp.</p>
+  <p class="centro"><a class="btn cotizar" href="#cotizar" data-i18n="cta_cot">Cotizar mi evento</a></p>
   <div class="cards">
     <a class="card" data-wa href="https://wa.me/573212721996" target="_blank" rel="noopener"><span class="ico-wa grande"></span><b>WhatsApp</b><span>+57 321 272 1996</span></a>
     <a class="card" href="https://www.instagram.com/eventosmilforgirardot/" target="_blank" rel="noopener"><svg viewBox="0 0 48 48" class="ig"><rect x="9" y="9" width="30" height="30" rx="9"/><circle cx="24" cy="24" r="7"/><circle cx="33" cy="15" r="1.5"/></svg><b>Instagram</b><span>@eventosmilforgirardot</span></a>
@@ -168,6 +204,6 @@
 <script src="menus.js?v=24"></script>
 <script src="sedes.js?v=9"></script>
 <script src="eventos.js?v=1"></script>
-<script src="app.js?v=19"></script>
+<script src="app.js?v=20"></script>
 </body>
 </html>
