@@ -303,3 +303,11 @@ body.en-cotizar .aviso-ga{display:none}
 .silla figcaption{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px 6px;border-top:2px solid var(--g);font-family:Montserrat,sans-serif;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--gl);line-height:1.35}
 @media (max-width:1000px){.sillas-grid{grid-template-columns:repeat(4,1fr)}}
 @media (max-width:760px){.sillas{margin:30px auto 26px}.sillas-grid{grid-template-columns:repeat(2,1fr);gap:12px}.silla figcaption{font-size:10.5px}}
+
+/* ===== Zoom del visor ===== */
+.lb{overflow:hidden;touch-action:none}
+.lb img{transform-origin:center center;will-change:transform;touch-action:none;backface-visibility:hidden;cursor:zoom-in;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;position:relative;z-index:1}
+.lb.zoom img{cursor:grab;border-radius:0;box-shadow:none}
+.lb.zoom.arrastrando img{cursor:grabbing}
+.lb.zoom .lb-a,.lb.zoom figcaption{opacity:0;pointer-events:none;transition:opacity .2s}
+.lb .lb-x{z-index:2}

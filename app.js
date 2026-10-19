@@ -29,9 +29,10 @@ function gal(){const g=window.MILFOR_GALERIA||[];const D=L=="en"?EN:ES;document.
  return `<figure class="foto"><button type="button" data-i="${i}" aria-label="${D.lb_ampliar}: ${t}">${img}</button><figcaption>${t}</figcaption></figure>`}).join("")}
 // ===== Visor de fotos (lightbox) =====
 let lb,lbI=0,lbL=[],lbOrigen=null;
-function lbSrc(x){return /\.\w+$/.test(x.foto)?{j:`fotos/${x.foto}`}:{w:`fotos/${x.foto}-1600.webp`,j:`fotos/${x.foto}-1600.jpg`}}
+function lbSrc(x){ // fotos con hd:1 tienen además fotos/<nombre>-hd.webp (resolución original), que se carga al hacer zoom
+ return /\.\w+$/.test(x.foto)?{j:`fotos/${x.foto}`}:{w:`fotos/${x.foto}-1600.webp`,j:`fotos/${x.foto}-1600.jpg`}}
 function lbVideoStop(){const v=lb&&lb.querySelector(".lb-video");if(!v||v.hidden)return;v.pause();v.removeAttribute("src");v.load();v.hidden=true}
-function lbMostrar(i){const g=lbL;if(!g.length)return;lbI=(i+g.length)%g.length;const x=g[lbI],s=x.video?{}:lbSrc(x),t=(L=="en"&&x.titulo_en)||x.titulo;
+function lbMostrar(i){const g=lbL;if(!g.length)return;zReset();lbI=(i+g.length)%g.length;const x=g[lbI],s=x.video?{}:lbSrc(x),t=(L=="en"&&x.titulo_en)||x.titulo;
  const pic=lb.querySelector("picture"),vid=lb.querySelector(".lb-video");
  if(x.video){pic.hidden=true;vid.hidden=false;vid.muted=true;vid.setAttribute("muted","");const vq=x.vv?`?v=${x.vv}`:"";vid.poster=`videos/${x.video}-poster.webp${vq}`;vid.src=`videos/${x.video}.mp4${vq}`;vid.setAttribute("aria-label",t);const pr=vid.play();if(pr&&pr.catch)pr.catch(()=>{})}
  else{lbVideoStop();pic.hidden=false;lb.querySelector("source").srcset=s.w||"";const im=lb.querySelector("img");im.src=s.j;im.alt=t}
@@ -42,12 +43,46 @@ function lbAbrir(lista,i,origen){lbL=lista;lbOrigen=origen;if(!lb){lb=document.c
  document.body.appendChild(lb);
  lb.querySelector(".lb-x").onclick=lbCerrar;lb.querySelector(".lb-prev").onclick=()=>lbMostrar(lbI-1);lb.querySelector(".lb-next").onclick=()=>lbMostrar(lbI+1);
  lb.addEventListener("click",e=>{if(e.target===lb||e.target.tagName=="FIGURE")lbCerrar()});
- let x0=null,y0=0;lb.addEventListener("touchstart",e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
- lb.addEventListener("touchend",e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;
-  if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)&&lbL.length>1)lbMostrar(lbI+(dx<0?1:-1));else if(dy>90&&Math.abs(dy)>Math.abs(dx))lbCerrar()});}
+ lbGestos();}
  const D=L=="en"?EN:ES;lb.querySelector(".lb-x").setAttribute("aria-label",D.lb_cerrar);lb.querySelector(".lb-prev").setAttribute("aria-label",D.lb_ant);lb.querySelector(".lb-next").setAttribute("aria-label",D.lb_sig);
  lbMostrar(i);lb.classList.add("on");document.body.style.overflow="hidden";lb.querySelector(".lb-x").focus()}
-function lbCerrar(){if(!lb)return;lbVideoStop();lb.classList.remove("on");document.body.style.overflow="";if(lbOrigen)lbOrigen.focus()}
+// ===== Zoom del visor: pellizcar / doble toque (celular), rueda / doble clic / arrastrar (escritorio) =====
+const ZM={s:1,x:0,y:0,hd:false};const ZMAX=5;
+const zImg=()=>lb.querySelector("img"),zFoto=()=>lb&&!lb.querySelector("picture").hidden;
+let zRaf=0,zAnim=false;
+function zPintar(){zRaf=0;const im=zImg();im.style.transition=zAnim?"transform .28s cubic-bezier(.2,.8,.2,1)":"none";im.style.transform=(ZM.s!=1||ZM.x||ZM.y)?`translate3d(${ZM.x}px,${ZM.y}px,0) scale(${ZM.s})`:""}
+function zAplicar(anim){zAnim=!!anim;if(anim){if(zRaf){cancelAnimationFrame(zRaf);zRaf=0}zPintar()}else if(!zRaf)zRaf=requestAnimationFrame(zPintar);lb.classList.toggle("zoom",ZM.s>1);
+ if(ZM.s>1&&!ZM.hd){const x=lbL[lbI];if(x&&x.hd){ZM.hd=true;lb.querySelector("source").srcset=`fotos/${x.foto}-hd.webp`}}}
+function zReset(anim){zParar();ZM.s=1;ZM.x=0;ZM.y=0;ZM.hd=false;if(lb)zAplicar(anim)}
+function zLimitar(){const im=zImg(),w=im.offsetWidth,h=im.offsetHeight,mx=Math.max(0,(w*ZM.s-innerWidth)/2+20),my=Math.max(0,(h*ZM.s-innerHeight)/2+20);
+ ZM.x=Math.max(-mx,Math.min(mx,ZM.x));ZM.y=Math.max(-my,Math.min(my,ZM.y))}
+function zA(s1,px,py,anim,libre){s1=libre?Math.max(.8,Math.min(ZMAX*1.2,s1)):Math.max(1,Math.min(ZMAX,s1));if(!libre&&s1<=1.02){zReset(anim);return}const r=zImg().getBoundingClientRect(),cx=r.left+r.width/2-ZM.x,cy=r.top+r.height/2-ZM.y,dx=px-cx,dy=py-cy,k=s1/ZM.s;
+ ZM.x=dx-(dx-ZM.x)*k;ZM.y=dy-(dy-ZM.y)*k;ZM.s=s1;if(!libre)zLimitar();zAplicar(anim)}
+// inercia del arrastre y zoom suave con la rueda
+let zMov=0,zRueda=null;function zParar(){if(zMov)cancelAnimationFrame(zMov);zMov=0;zRueda=null}
+function zInercia(vx,vy){zParar();const paso=()=>{vx*=.92;vy*=.92;if(Math.hypot(vx,vy)<.3){zMov=0;return}ZM.x+=vx;ZM.y+=vy;const ox=ZM.x,oy=ZM.y;zLimitar();if(ox!=ZM.x)vx=0;if(oy!=ZM.y)vy=0;zAplicar(false);zMov=requestAnimationFrame(paso)};zMov=requestAnimationFrame(paso)}
+function zAsentar(px,py){if(ZM.s<1.05){zReset(true);return}if(ZM.s>ZMAX)zA(ZMAX,px,py,true);else{zLimitar();zAplicar(true)}}
+function zRuedaA(f,px,py){const obj=Math.max(1,Math.min(ZMAX,(zRueda?zRueda.s:ZM.s)*f));if(zMov&&!zRueda)zParar();zRueda={s:obj,px,py};
+ if(!zMov){const paso=()=>{if(!zRueda){zMov=0;return}const r=zRueda,n=ZM.s+(r.s-ZM.s)*.25;if(Math.abs(r.s-n)<.004){zA(r.s,r.px,r.py,false);zRueda=null;zMov=0;return}zA(n,r.px,r.py,false,true);zMov=requestAnimationFrame(paso)};zMov=requestAnimationFrame(paso)}}
+function lbGestos(){const dist=(a,b)=>Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);let t0=null,pin=null,pan=null,multi=false,ultimo=0;
+ lb.addEventListener("touchstart",e=>{if(e.touches.length==2&&zFoto()){zParar();multi=true;pan=null;const[a,b]=e.touches;pin={d:dist(a,b)||1,s:ZM.s,x:ZM.x,y:ZM.y,cx:(a.clientX+b.clientX)/2,cy:(a.clientY+b.clientY)/2};e.preventDefault();return}
+  if(e.touches.length==1){const t=e.touches[0];t0={x:t.clientX,y:t.clientY,ms:Date.now()};zParar();pan=ZM.s>1?{x:t.clientX,y:t.clientY,ox:ZM.x,oy:ZM.y,vx:0,vy:0,lx:t.clientX,ly:t.clientY,lt:performance.now()}:null}},{passive:false});
+ lb.addEventListener("touchmove",e=>{if(pin&&e.touches.length==2){e.preventDefault();const[a,b]=e.touches,cx=(a.clientX+b.clientX)/2,cy=(a.clientY+b.clientY)/2;
+   ZM.s=pin.s;ZM.x=pin.x;ZM.y=pin.y;zA(pin.s*dist(a,b)/pin.d,pin.cx,pin.cy,false,true);ZM.x+=cx-pin.cx;ZM.y+=cy-pin.cy;pin.ux=cx;pin.uy=cy;zAplicar(false);return}
+  if(pan&&e.touches.length==1){e.preventDefault();const t=e.touches[0],ah=performance.now(),dt=Math.max(1,ah-pan.lt);pan.vx=.6*pan.vx+.4*(t.clientX-pan.lx)*16/dt;pan.vy=.6*pan.vy+.4*(t.clientY-pan.ly)*16/dt;pan.lx=t.clientX;pan.ly=t.clientY;pan.lt=ah;ZM.x=pan.ox+t.clientX-pan.x;ZM.y=pan.oy+t.clientY-pan.y;zLimitar();zAplicar(false)}},{passive:false});
+ lb.addEventListener("touchend",e=>{if(pin&&e.touches.length<2){const q=pin;pin=null;zAsentar(q.ux||q.cx,q.uy||q.cy);if(e.touches.length==1){const t=e.touches[0];pan={x:t.clientX,y:t.clientY,ox:ZM.x,oy:ZM.y}}}
+  if(e.touches.length)return;const fueMulti=multi;multi=false;const t=e.changedTouches[0],ini=t0;t0=null;const enPan=pan;pan=null;if(fueMulti||!ini)return;
+  const dx=t.clientX-ini.x,dy=t.clientY-ini.y,toque=Math.abs(dx)<12&&Math.abs(dy)<12&&Date.now()-ini.ms<350;
+  if(toque&&zFoto()&&e.target.tagName=="IMG"){const ahora=Date.now();if(ahora-ultimo<320){ultimo=0;e.preventDefault();if(ZM.s>1)zReset(true);else zA(2.5,t.clientX,t.clientY,true)}else ultimo=ahora;return}
+  if(enPan&&ZM.s>1&&performance.now()-enPan.lt<80)zInercia(enPan.vx||0,enPan.vy||0);if(ZM.s>1||enPan)return; // con zoom: el dedo mueve la foto, no cambia de foto
+  if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)&&lbL.length>1)lbMostrar(lbI+(dx<0?1:-1));else if(dy>90&&Math.abs(dy)>Math.abs(dx))lbCerrar()});
+ lb.addEventListener("wheel",e=>{if(!zFoto())return;e.preventDefault();const d=e.deltaMode==1?e.deltaY*16:e.deltaY;zRuedaA(Math.exp(-Math.max(-300,Math.min(300,d))*0.0022),e.clientX,e.clientY)},{passive:false});
+ lb.addEventListener("dblclick",e=>{if(!zFoto()||e.target.tagName!="IMG")return;e.preventDefault();if(ZM.s>1)zReset(true);else zA(2.5,e.clientX,e.clientY,true)});
+ let arr=null,movio=false;lb.addEventListener("mousedown",e=>{if(ZM.s>1&&e.target.tagName=="IMG"&&e.button==0){e.preventDefault();zParar();arr={x:e.clientX,y:e.clientY,ox:ZM.x,oy:ZM.y};movio=false;lb.classList.add("arrastrando")}});
+ addEventListener("mousemove",e=>{if(!arr)return;ZM.x=arr.ox+e.clientX-arr.x;ZM.y=arr.oy+e.clientY-arr.y;if(Math.abs(e.clientX-arr.x)+Math.abs(e.clientY-arr.y)>3)movio=true;zLimitar();zAplicar(false)});
+ addEventListener("mouseup",()=>{if(arr){arr=null;lb.classList.remove("arrastrando")}});
+ lb.addEventListener("dragstart",e=>{if(e.target.tagName=="IMG")e.preventDefault()})}
+function lbCerrar(){if(!lb)return;zReset();lbVideoStop();lb.classList.remove("on");document.body.style.overflow="";if(lbOrigen)lbOrigen.focus()}
 document.addEventListener("keydown",e=>{if(!lb||!lb.classList.contains("on"))return;if(e.key=="Escape")lbCerrar();else if(lbL.length>1&&e.key=="ArrowRight")lbMostrar(lbI+1);else if(lbL.length>1&&e.key=="ArrowLeft")lbMostrar(lbI-1)});
 document.getElementById("gal").addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(!b)return;
  const g=window.MILFOR_GALERIA||[],i=+b.dataset.i;lbAbrir(g.filter(x=>x.foto),g.slice(0,i).filter(x=>x.foto).length,b)});
