@@ -322,3 +322,9 @@ img.zoomable:focus-visible{outline:2px solid var(--g);outline-offset:3px}
 @media (min-width:1001px){.cristaleria .sillas-grid{grid-template-columns:repeat(4,1fr);max-width:720px;margin:0 auto}}
 .platos li.solo{list-style:none;padding-left:0;margin-left:0}
 .platos li.solo::before{display:none}
+.decoracion{margin-top:34px}
+.deco-grupo+.deco-grupo{margin-top:28px}
+.deco-grupo h4{font:600 13px Montserrat,sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--gd);text-align:center;margin:6px 0 14px}
+.decoracion .sillas-grid{display:flex;flex-wrap:wrap;justify-content:center;max-width:720px;margin:0 auto}
+.decoracion .silla{width:calc(25% - 11px);margin:0}
+@media (max-width:760px){.decoracion .silla{width:calc(50% - 6px)}}
