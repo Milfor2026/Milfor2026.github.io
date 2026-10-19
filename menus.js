@@ -29,7 +29,7 @@ window.MILFOR_MENUS = [
   ["Vegetales salteados","frescos y ligeramente caramelizados para resaltar su sabor natural.","Sautéed vegetables","fresh and lightly caramelized to bring out their natural flavor."],
   ["Arroz al ajonjolí","perfumado y de grano suelto.","Sesame rice","fragrant, with fluffy grains."]]},
  {num:5, img:"menu5", w:1080, h:1574, video:"cena5", video_v:2, lema:"Sabores que sorprenden", lema_en:"Flavors that surprise", platos:[
-  ["Lomito de cerdo relleno en salsa de champiñón","tierno y jugoso, bañado en una salsa cremosa de aroma profundo.","Stuffed pork tenderloin in mushroom sauce","tender and juicy, with a creamy, deeply aromatic sauce."],
+  ["Lomito de cerdo relleno en salsa de champiñones","tierno y jugoso, bañado en una salsa cremosa de aroma profundo.","Stuffed pork tenderloin in mushroom sauce","tender and juicy, with a creamy, deeply aromatic sauce."],
   ["Cordon bleu con reducción de arándanos","crujiente y dorado, con un delicado contraste dulce y salado.","Cordon bleu with cranberry reduction","crisp and golden, with a delicate sweet-and-savory contrast."],
   ["Espárragos salteados","frescos y ligeramente caramelizados para resaltar su sabor natural.","Sautéed asparagus","fresh and lightly caramelized to bring out their natural flavor."],
   ["Arroz florentino","aromático y de grano suelto.","Florentine rice","aromatic and fluffy."],
