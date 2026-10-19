@@ -318,4 +318,4 @@ img.zoomable:focus-visible{outline:2px solid var(--g);outline-offset:3px}
 .campo-ayuda{font-size:13px;color:var(--tx);opacity:.85}
 
 .cristaleria{margin-top:34px}
-@media (min-width:1001px){.cristaleria .sillas-grid{grid-template-columns:repeat(4,1fr);max-width:640px;margin:0 auto}}
+@media (max-width:760px){.cristaleria .silla:last-child:nth-child(odd){grid-column:1/-1;justify-self:center;width:calc(50% - 6px)}}
