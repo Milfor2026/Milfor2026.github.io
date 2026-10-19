@@ -18,7 +18,7 @@ window.MILFOR_SEDES = [
    pisos:[
      {piso:"1er piso", piso_en:"1st floor", nombre:"Sede Central", nombre_en:"Main office", desc:"Oficinas de administración, taller y floristería", desc_en:"Administration offices, workshop and flower shop"},
      {piso:"2do piso", piso_en:"2nd floor", nombre:"Milfor Paraíso", nombre_en:"Milfor Paraíso", desc:"Salón de eventos", desc_en:"Event hall"}],
-   lat:4.2982753, lng:-74.808349, mapaImg:"mapa-central", mapaImg_w:1266, mapaImg_h:1600,
+   lat:4.2982753, lng:-74.808349, video:"sede-central", mapaImg:"mapa-central", mapaImg_w:1266, mapaImg_h:1600,
    lbTit:"Milfor · Sede Central y Milfor Paraíso", lbTit_en:"Milfor · Main office and Milfor Paraíso"},
   {id:"gaitan", nombre:"Milfor Gaitán", nombre_en:"Milfor Gaitán",
    texto:"Cra. 17 # 21-20, Girardot, Colombia", texto_en:"Cra. 17 # 21-20, Girardot, Colombia",
@@ -26,5 +26,5 @@ window.MILFOR_SEDES = [
    lbTit:"Milfor Gaitán · Cómo llegar", lbTit_en:"Milfor Gaitán · How to get there"},
   {id:"campestre", nombre:"Milfor Casa Campestre", nombre_en:"Milfor Casa Campestre", zona:"Ricaurte, Cundinamarca",
    texto:"Cómo llegar a Casa Campestre", texto_en:"How to get to Casa Campestre",
-   lat:4.2944097, lng:-74.7907257, mapaImg:"mapa-llegar", mapaImg_w:1259, mapaImg_h:1600}
+   lat:4.2944097, lng:-74.7907257, video:"sede-campestre", mapaImg:"mapa-llegar", mapaImg_w:1259, mapaImg_h:1600}
 ];

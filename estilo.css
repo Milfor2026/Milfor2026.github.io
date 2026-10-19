@@ -135,7 +135,19 @@ h2::after{width:180px;height:14px;background:url("data:image/svg+xml,%3Csvg xmln
 .sede-video .play::before{content:"";position:absolute;left:22px;top:17px;border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent var(--gl)}
 .sede-video .ver-video{left:auto;right:10px;top:auto;bottom:10px;z-index:1}.sede-video:hover .ver-video{background:var(--gd)}
 .sede-video:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+.eventos{padding-bottom:56px}
+.ev-videos{display:flex;gap:22px;justify-content:center;flex-wrap:wrap}
+.ev-card{margin:0;flex:0 1 300px;background:#fff;border:1px solid var(--g);border-radius:18px;padding:10px;box-shadow:inset 0 0 0 4px #fff,inset 0 0 0 5px var(--li),0 10px 26px rgba(12,37,65,.1)}
+.ev-media{position:relative;border-radius:12px;overflow:hidden;background:var(--n);aspect-ratio:9/16}
+.ev-media video{display:block;width:100%;height:100%;object-fit:cover}
+.ev-pausa{position:absolute;right:10px;bottom:10px;width:40px;height:40px;border-radius:50%;border:1px solid var(--gl);background:rgba(12,37,65,.78);cursor:pointer;padding:0}
+.ev-pausa::before,.ev-pausa::after{content:"";position:absolute;top:13px;width:4px;height:14px;background:var(--gl);border-radius:1px}.ev-pausa::before{left:14px}.ev-pausa::after{left:22px}
+.ev-pausa.en-pausa::after{display:none}.ev-pausa.en-pausa::before{left:15px;top:11px;width:0;height:0;background:none;border-style:solid;border-width:9px 0 9px 14px;border-color:transparent transparent transparent var(--gl);border-radius:0}
+.ev-pausa:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+.ev-card figcaption{text-align:center;padding:12px 4px 4px}.ev-card b{display:block;font-weight:500;font-size:24px;letter-spacing:3px;text-transform:uppercase;color:var(--n)}
+.ev-card b::after{content:"";display:block;width:46px;height:1px;background:var(--g);margin:8px auto 0}
 @media (max-width:760px){
+ .ev-videos{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -18px;padding:4px 18px 12px;gap:14px;scrollbar-width:none}.ev-videos::-webkit-scrollbar{display:none}.ev-card{flex:0 0 74%;scroll-snap-align:center}
  body{font-size:18px}.nav{flex-wrap:wrap;padding:8px 14px;gap:8px}.marca img{height:26px}
  .nav nav{order:3;width:100%;margin:0;gap:16px;overflow-x:auto;white-space:nowrap;font-size:11px;padding-bottom:2px;scrollbar-width:none}
  .lang{margin-left:auto}.hero{padding:44px 18px 40px}.lead{font-size:19px}
