@@ -246,3 +246,10 @@ body.en-cotizar .aviso-ga{display:none}
 .cot-ok .btn.wa{margin-top:16px;background:var(--gl);border-color:var(--gl);color:var(--n)}
 .cot-ok .btn.wa:hover{background:var(--iv)}
 .cot-editar{margin-top:6px;background:none;border:0;color:var(--gl);font:500 13px Montserrat,sans-serif;letter-spacing:.6px;text-decoration:underline;cursor:pointer;padding:8px}
+
+/* ===== Sin saltos al bajar a una sección: el botón del afiche reserva su alto antes de que cargue la imagen ===== */
+.poster,.sede-video,.llegar button{width:100%}
+/* respaldo sin JS: el título de la sección queda cerca del borde del encabezado */
+.sec{scroll-margin-top:-40px}
+/* aviso visible en el celular: espacio extra al final para que no tape nada */
+@media (max-width:760px){body.con-aviso{padding-bottom:140px}}
