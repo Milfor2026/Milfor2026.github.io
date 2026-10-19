@@ -34,7 +34,7 @@ window.MILFOR_MENUS = [
   ["Espárragos salteados","frescos y ligeramente caramelizados para resaltar su sabor natural.","Sautéed asparagus","fresh and lightly caramelized to bring out their natural flavor."],
   ["Arroz florentino","aromático y de grano suelto, con un acabado delicado.","Florentine rice","aromatic and fluffy, with a delicate finish."],
   ["Papa pera","suave y cremosa, presentada con un toque artesanal.","Baby potatoes","soft and creamy, served with an artisanal touch."]]},
- {num:6, img:"menu6", w:1080, h:1564, video:"cena6", lema:"Sabores que enamoran", lema_en:"Flavors to fall in love with", platos:[
+ {num:6, img:"menu6", w:1080, h:1564, video:"cena6", lema:"Sabores que se recuerdan", lema_en:"Flavors to remember", platos:[
   ["Suprema de pollo rellena de espinaca y pasas","tierna y jugosa, con un delicado contraste de sabores dulces y frescos.","Chicken suprême stuffed with spinach and raisins","tender and juicy, with a delicate contrast of sweet and fresh flavors."],
   ["Lomo de cerdo en salsa de vino tinto, albahaca y tomates secos","glaseado a la perfección, aromático y sofisticado.","Pork loin in red wine, basil and sun-dried tomato sauce","perfectly glazed, aromatic and sophisticated."],
   ["Arroz perlado","suelto y fragante, con textura delicada.","Pearl rice","fluffy and fragrant, with a delicate texture."],
