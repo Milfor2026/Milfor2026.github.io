@@ -7,6 +7,6 @@
 // Crear el video:  python3 /workspace/milfor-web/procesar_video.py <video> sede <nombre>  y renombrar a evento-<id>.mp4
 // Para agregar otro tipo (p. ej. corporativos), copie una línea y cambie los datos.
 window.MILFOR_EVENTOS = [
-  {id:"bodas",  titulo:"Bodas",       titulo_en:"Weddings",      video:"evento-bodas"},
-  {id:"quince", titulo:"Quince años", titulo_en:"Sweet fifteen", video:"evento-quince"}
+  {id:"bodas",  titulo:"Bodas",       titulo_en:"Weddings",      video:"evento-bodas", video_v:2},
+  {id:"quince", titulo:"Quince años", titulo_en:"Sweet fifteen", video:"evento-quince", video_v:2}
 ];
