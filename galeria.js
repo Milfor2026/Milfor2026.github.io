@@ -14,7 +14,7 @@ window.MILFOR_GALERIA = [
   {foto:"novia",     w:1070, h:710,  titulo:"La novia",                titulo_en:"The bride"},
   {foto:"mesa",      w:1408, h:1295, titulo:"Montaje de mesa",         titulo_en:"Table setting"},
   {foto:"burdeos",   w:1075, h:1065, titulo:"Recepción en el jardín",  titulo_en:"Garden reception",   pos:"50% 40%"},
-  {foto:"quince15",  w:1080, h:1067, titulo:"Fiesta de quince",        titulo_en:"Sweet fifteen",      pos:"50% 40%"},
+  {foto:"quince15",  w:1080, h:1067, titulo:"Fiesta de quince",        titulo_en:"Quinceañera party",      pos:"50% 40%"},
   {foto:"pasillo",   w:1173, h:1600, titulo:"Pasillo de ceremonia",    titulo_en:"Ceremony aisle",     pos:"50% 45%"},
   {foto:"mesaimperial", w:1395, h:780, titulo:"Mesa imperial",          titulo_en:"Banquet table"},
   {foto:"centro",    w:1197, h:1600, titulo:"Centro de mesa",          titulo_en:"Centerpiece",        pos:"50% 40%"},
