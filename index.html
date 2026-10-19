@@ -21,7 +21,7 @@
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilo.css?v=26">
+<link rel="stylesheet" href="estilo.css?v=27">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"EventVenue","name":"Milfor Bodas & Eventos","alternateName":"Floristería Milfor",
  "url":"https://eventosmilfor.com/","image":"https://eventosmilfor.com/img/og-milfor.jpg","logo":"https://eventosmilfor.com/img/logo.png",
@@ -177,8 +177,14 @@
     <div class="campo ancho"><label for="ct-com"><span data-i18n="ct_com">Comentario</span> <span class="opc" data-i18n="ct_opc">(opcional)</span></label>
       <textarea id="ct-com" name="comentario" rows="3" maxlength="500"></textarea></div>
     <p class="cot-error ancho" id="ct-error" role="alert" aria-live="assertive"></p>
-    <div class="ancho centro"><button class="btn wa" type="submit"><span class="ico-wa"></span><span data-i18n="ct_enviar">Enviar por WhatsApp</span></button>
+    <div class="ancho centro" id="ct-enviar-zona"><button class="btn wa" type="submit"><span class="ico-wa"></span><span data-i18n="ct_enviar">Enviar por WhatsApp</span></button>
       <p class="cot-nota" data-i18n="ct_nota">No guardamos tus datos: el mensaje se abre en tu WhatsApp y tú decides si lo envías. Solo contamos, de forma anónima, que se inició una cotización.</p></div>
+    <div class="cot-ok ancho" id="ct-ok" role="status" aria-live="polite" tabindex="-1" hidden>
+      <p class="cot-ok-tit"><span class="ico-wa" aria-hidden="true"></span> <span data-i18n="ct_abriendo">Abriendo WhatsApp…</span></p>
+      <p class="cot-ok-sub" data-i18n="ct_ok_sub">Tu mensaje ya está escrito: solo tienes que tocar enviar en WhatsApp.</p>
+      <a class="btn wa" id="ct-ok-link" href="https://wa.me/573212721996" rel="noopener" data-i18n="ct_respaldo">Si no se abrió, toque aquí</a>
+      <p><button type="button" class="cot-editar" id="ct-ok-editar" data-i18n="ct_editar">Editar respuestas</button></p>
+    </div>
   </form>
 </section>
 
@@ -223,6 +229,6 @@
 <script src="menus.js?v=24"></script>
 <script src="sedes.js?v=10"></script>
 <script src="eventos.js?v=2"></script>
-<script src="app.js?v=23"></script>
+<script src="app.js?v=24"></script>
 </body>
 </html>
