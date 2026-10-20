@@ -18,7 +18,7 @@ window.MILFOR_MENUS = [
   ["Vegetales calientes salteados al ajillo", "salteados brevemente para conservar su color y frescura.", "Warm vegetables sautéed with garlic", "briefly sautéed to keep their color and freshness."],
   ["Papa suprema", "cremosa y suave, de acabado aterciopelado.", "Papa suprema", "creamy and smooth, with a velvety finish."],
   ["Arroz con almendras laminadas tostadas", "arroz blanco esponjoso con almendras laminadas y tostadas, fragante y ligeramente crujiente.", "Rice with toasted sliced almonds", "fluffy white rice with toasted sliced almonds, fragrant and lightly crunchy."]]},
- {num:3, img:"menu3b", w:1312, h:1426, video:"cena3", lema:"Sabores que conectan", lema_en:"Flavors that connect", platos:[
+ {num:3, img:"menu3c", w:1411, h:1712, video:"cena3", lema:"Sabores que conectan", lema_en:"Flavors that connect", platos:[
   ["Lomo de cerdo en reducción de uchuva y piña", "glaseado con una salsa agridulce de notas tropicales bien balanceadas.", "Pork loin in goldenberry and pineapple reduction", "glazed with a sweet-and-sour sauce with well-balanced tropical notes."],
   ["Rollito de pollo relleno de espinaca", "bañado en una cremosa salsa de champiñones de aroma suave y envolvente.", "Spinach-stuffed chicken roulade", "topped with a creamy mushroom sauce with a soft, enveloping aroma."],
   ["Puré de papa criolla", "de textura sedosa y presentación cuidada.", "Papa criolla purée", "silky in texture, with a careful presentation."],
