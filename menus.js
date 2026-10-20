@@ -58,7 +58,7 @@ window.MILFOR_MENUS = [
   ["Salmón a la parrilla", "filete fresco marcado a la parrilla, de interior jugoso, terminado con limón y aceite de oliva virgen.", "Grilled salmon", "fresh fillet seared on the grill, juicy inside, finished with lemon and virgin olive oil."],
   ["Vegetales de temporada salteados en aceite de oliva", "con una sazón suave que conserva su color y textura.", "Seasonal vegetables sautéed in olive oil", "with mild seasoning that keeps their color and texture."],
   ["Puré de papa blanca", "suave y cremoso, con mantequilla y leche, perfecto para acompañar carnes y pescados.", "Mashed potatoes", "smooth and creamy, with butter and milk, perfect with meat and fish."]]},
- {num:10, img:"menu10", w:1072, h:1546, video:"cena10", lema:"Sabores que dejan huella", lema_en:"Flavors that leave a mark", platos:[
+ {num:10, img:"menu10b", w:1411, h:1429, video:"cena10", lema:"Sabores que dejan huella", lema_en:"Flavors that leave a mark", platos:[
   ["Pernil de cerdo en salsa de ciruela", "jugoso y dorado, con una tersa salsa de ciruelas en balance entre dulzor y acidez.", "Pork leg in plum sauce", "juicy and golden, with a smooth plum sauce balancing sweetness and acidity."],
   ["Pollo teriyaki", "pechuga marinada y glaseada en salsa teriyaki, de perfil dulce y salado con notas umami.", "Teriyaki chicken", "breast marinated and glazed in teriyaki sauce, sweet and savory with umami notes."],
   ["Lasaña de papa", "capas de papa y quesos selectos, horneadas hasta lograr una textura cremosa y una superficie dorada.", "Potato lasagna", "layers of potato and select cheeses, baked until creamy with a golden top."],
