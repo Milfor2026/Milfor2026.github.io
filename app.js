@@ -188,7 +188,7 @@ function menus(){const M=menuLista(),T=document.getElementById("menu-tabs"),P=do
  T.setAttribute("aria-label",D.m_aria);
  T.innerHTML=M.map((m,i)=>`<button type="button" role="tab" aria-selected="${i==MI}" data-m="${i}">${menuNom(m)}</button>`).join("");
  const m=M[MI],en=L=="en",n=m.img;
- P.innerHTML=`<article class="opcion"><div class="poster-wrap"><button type="button" class="poster" data-poster="${MI}" aria-label="${D.lb_ampliar}: ${menuTit(m)}"><picture><source type="image/webp" srcset="fotos/${n}-480.webp 480w, fotos/${n}-800.webp 800w" sizes="(max-width:760px) 80vw, 340px"><img src="fotos/${n}-800.jpg" width="${m.w}" height="${m.h}" loading="lazy" decoding="async" alt="${menuTit(m)}"></picture><span class="lupa" aria-hidden="true">⤢</span></button>${m.video?`<button type="button" class="ver-video" data-video="${m.video}"><span aria-hidden="true">▶</span> ${D.m_video}</button>`:""}</div>
+ P.innerHTML=`<article class="opcion"><div class="poster-wrap"><button type="button" class="poster" data-poster="${MI}" aria-label="${D.lb_ampliar}: ${menuTit(m)}"><picture><source type="image/webp" srcset="fotos/${n}-480.webp 480w, fotos/${n}-800.webp 800w" sizes="(max-width:760px) 80vw, 340px"><img src="fotos/${n}-800.jpg" width="${m.w}" height="${m.h}" loading="lazy" decoding="async" alt="${menuTit(m)}"></picture></button><div class="poster-acc"><button type="button" class="lupa-btn" aria-label="${(L=="en"?EN:ES).lb_ampliar}: ${menuTit(m)}"><span aria-hidden="true">⤢</span></button>${m.video?`<button type="button" class="ver-video" data-video="${m.video}"><span aria-hidden="true">▶</span> ${D.m_video}</button>`:""}</div></div>
  <div class="opcion-txt"><p class="tag">${D[mcat().tag]}</p><h3>${menuNom(m)}</h3><p class="lema">${en&&m.lema_en||m.lema}</p><ul class="platos">${m.platos.map(p=>{const n=en?p[2]:p[0],d=en?p[3]:p[1];return n?`<li><b>${n}:</b> ${d}</li>`:`<li class="solo">${d.charAt(0).toUpperCase()+d.slice(1)}</li>`}).join("")}</ul><p class="wa-ctx izq"><a href="${waUrl(en?`Hello Milfor, I'm interested in ${menuNom(m,"en")}${m.lema_en?` (${m.lema_en})`:""}`:`Hola Milfor, me interesa ${MT=="entradas"?"la":"el"} ${menuNom(m,"es")}${m.lema?` (${m.lema})`:""}`)}" target="_blank" rel="noopener">${WA_ICO}${D.wa_menu}</a></p></div></article>`;
  const act=T.querySelector('[aria-selected="true"]');if(act&&T.scrollWidth>T.clientWidth)T.scrollTo({left:act.offsetLeft-T.clientWidth/2+act.offsetWidth/2,behavior:"smooth"})}
 function menuIr(i){const M=menuLista();MI=(i+M.length)%M.length;menus()}
@@ -257,3 +257,6 @@ function aplicar(){document.documentElement.lang=L;{const ce=document.getElement
 document.getElementById("lang").onclick=()=>{L=L=="en"?"es":"en";try{localStorage.setItem("milfor-web-lang",L)}catch(e){}aplicar();ga("cambio_idioma",{idioma:L})};avisoGA();
 document.getElementById("anio").textContent=new Date().getFullYear();aplicar();cotizar();
 })();
+
+// Botón de ampliar debajo del póster: abre el mismo visor con zoom
+document.addEventListener("click",e=>{const b=e.target.closest(".lupa-btn");if(b){const p=b.closest(".poster-wrap").querySelector(".poster");p&&p.click()}});
