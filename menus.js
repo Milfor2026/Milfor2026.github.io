@@ -48,7 +48,7 @@ window.MILFOR_MENUS = [
   ["Ensalada griega", "queso feta, aceitunas negras, cebolla morada y verde y tomates cherry, con un aderezo ligero de sabores mediterráneos.", "Greek salad", "feta cheese, black olives, red and green onion and cherry tomatoes, with a light dressing of Mediterranean flavors."],
   ["Arroz a elección", "arroz al perejil o arroz perfumado al ajonjolí, para complementar el plato principal.", "Rice of your choice", "parsley rice or fragrant sesame rice, to complement the main course."],
   ["Puré de plátano", "suave y cremoso, con un delicado toque dulce.", "Plantain purée", "smooth and creamy, with a delicate sweet touch."]]},
- {num:8, img:"menu8b", w:1411, h:1736, video:"cena8", lema:"Equilibrio y distinción", lema_en:"Balance and distinction", platos:[
+ {num:8, img:"menu8c", w:1413, h:1747, video:"cena8", lema:"Equilibrio y distinción", lema_en:"Balance and distinction", platos:[
   ["Pollo glaseado con miel y mostaza", "pechuga jugosa en un glaseado dulce y ligeramente picante, terminada con finas hierbas.", "Honey-mustard glazed chicken", "juicy breast in a sweet, slightly spicy glaze, finished with fine herbs."],
   ["Posta cartagenera", "tierna posta de res cocida lentamente, con la auténtica sazón de la costa caribeña y especias tradicionales.", "Cartagena-style beef (posta cartagenera)", "tender, slow-cooked beef with the authentic seasoning of the Caribbean coast and traditional spices."],
   ["Ensalada fresca de aguacate y maíz", "mezcla de lechugas, tomates cherry, maíz tierno y aguacate cremoso, con vinagreta de hierbas frescas.", "Fresh avocado and corn salad", "mixed lettuces, cherry tomatoes, sweet corn and creamy avocado, with a fresh-herb vinaigrette."],
