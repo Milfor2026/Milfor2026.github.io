@@ -71,7 +71,7 @@ window.MILFOR_MENUS_INFANTIL = [
   ["", "crepes rellenos de pollo tierno, con papas a la francesa doradas y crujientes y ensalada tropical en porción infantil.", "", "crepes filled with tender chicken, with golden, crispy french fries and a kid-size tropical salad."]]},
  {num:2, img:"infantil2b", w:1413, h:1728, video:"infantil2", lema:"Croquetas de pollo con papas a la francesa y ensalada tropical", lema_en:"Chicken croquettes with french fries and tropical salad", platos:[
   ["", "croquetas de pollo doradas y suaves en su interior, con papas a la francesa y ensalada tropical en porción infantil.", "", "golden chicken croquettes, soft inside, with french fries and a kid-size tropical salad."]]},
- {num:3, img:"infantil3", w:1080, h:1574, video:"infantil3", lema:"Pierna y pernil de pollo apanados con papas chips y fruta", lema_en:"Breaded chicken drumstick and thigh with potato chips and fruit", platos:[
+ {num:3, img:"infantil3b", w:1412, h:1763, video:"infantil3", lema:"Pierna y pernil de pollo apanados con papas chips y fruta", lema_en:"Breaded chicken drumstick and thigh with potato chips and fruit", platos:[
   ["", "de cubierta dorada y crujiente, acompañados de finas papas chips y fruta fresca de temporada.", "", "with a golden, crispy coating, served with thin potato chips and fresh seasonal fruit."]]},
  {num:4, img:"infantil4b", w:1413, h:1583, video:"infantil4", lema:"Hamburguesa con papas a la francesa", lema_en:"Burger with french fries", platos:[
   ["", "hamburguesa jugosa en pan suave con toppings selectos, acompañada de papas a la francesa doradas.", "", "a juicy burger on a soft bun with select toppings, served with golden french fries."]]}
