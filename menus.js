@@ -15,9 +15,9 @@ window.MILFOR_MENUS = [
  {num:2, img:"menu2b", w:1413, h:1772, video:"cena2", lema:"Sabores que inspiran", lema_en:"Flavors that inspire", platos:[
   ["Lomito de res en reducción de vino", "sellado a la perfección y bañado en una salsa intensa de aromas profundos.", "Beef tenderloin in wine reduction", "perfectly seared and coated in an intense, deeply aromatic sauce."],
   ["Pollo thai relleno de verduras crocantes", "pechuga delicadamente especiada, de inspiración asiática y textura contrastante.", "Thai-style chicken stuffed with crisp vegetables", "delicately spiced chicken breast, Asian-inspired, with contrasting textures."],
+  ["Vegetales calientes salteados al ajillo", "salteados brevemente para conservar su color y frescura.", "Warm vegetables sautéed with garlic", "briefly sautéed to keep their color and freshness."],
   ["Papa suprema", "cremosa y suave, de acabado aterciopelado.", "Papa suprema", "creamy and smooth, with a velvety finish."],
-  ["Arroz con almendras laminadas tostadas", "arroz blanco esponjoso con almendras laminadas y tostadas, fragante y ligeramente crujiente.", "Rice with toasted sliced almonds", "fluffy white rice with toasted sliced almonds, fragrant and lightly crunchy."],
-  ["Vegetales calientes salteados al ajillo", "salteados brevemente para conservar su color y frescura.", "Warm vegetables sautéed with garlic", "briefly sautéed to keep their color and freshness."]]},
+  ["Arroz con almendras laminadas tostadas", "arroz blanco esponjoso con almendras laminadas y tostadas, fragante y ligeramente crujiente.", "Rice with toasted sliced almonds", "fluffy white rice with toasted sliced almonds, fragrant and lightly crunchy."]]},
  {num:3, img:"menu3", w:1077, h:1577, video:"cena3", lema:"Sabores que conectan", lema_en:"Flavors that connect", platos:[
   ["Lomo de cerdo en reducción de uchuva y piña", "glaseado con una salsa agridulce de notas tropicales bien balanceadas.", "Pork loin in goldenberry and pineapple reduction", "glazed with a sweet-and-sour sauce with well-balanced tropical notes."],
   ["Rollito de pollo relleno de espinaca", "bañado en una cremosa salsa de champiñones de aroma suave y envolvente.", "Spinach-stuffed chicken roulade", "topped with a creamy mushroom sauce with a soft, enveloping aroma."],
