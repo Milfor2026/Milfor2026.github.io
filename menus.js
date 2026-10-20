@@ -54,7 +54,7 @@ window.MILFOR_MENUS = [
   ["Ensalada fresca de aguacate y maíz", "mezcla de lechugas, tomates cherry, maíz tierno y aguacate cremoso, con vinagreta de hierbas frescas.", "Fresh avocado and corn salad", "mixed lettuces, cherry tomatoes, sweet corn and creamy avocado, with a fresh-herb vinaigrette."],
   ["Arroz a elección", "arroz al perejil o arroz perfumado al ajonjolí, ideal para cualquier plato principal.", "Rice of your choice", "parsley rice or fragrant sesame rice, ideal for any main course."],
   ["Puré de papa blanca", "suave y cremoso, con mantequilla y un toque de leche fresca.", "Mashed potatoes", "smooth and creamy, with butter and a touch of fresh milk."]]},
- {num:9, img:"menu9", w:1078, h:1578, video:"cena9", lema:"Tradición con elegancia", lema_en:"Tradition with elegance", platos:[
+ {num:9, img:"menu9b", w:1413, h:1737, video:"cena9", lema:"Tradición con elegancia", lema_en:"Tradition with elegance", platos:[
   ["Medallón de res al oporto", "tierno, cocido al punto y bañado en una reducción de vino oporto con hierbas aromáticas que realzan su sabor intenso y elegante.", "Beef medallion in port wine", "tender, cooked just right and coated in a port wine reduction with aromatic herbs that enhance its rich, elegant flavor."],
   ["Salmón a la parrilla", "filete fresco marcado a la parrilla, de interior jugoso, terminado con limón y aceite de oliva virgen.", "Grilled salmon", "fresh fillet seared on the grill, juicy inside, finished with lemon and virgin olive oil."],
   ["Vegetales de temporada salteados en aceite de oliva", "con una sazón suave que conserva su color y textura.", "Seasonal vegetables sautéed in olive oil", "with mild seasoning that keeps their color and texture."],
