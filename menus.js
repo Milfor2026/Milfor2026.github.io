@@ -12,7 +12,7 @@ window.MILFOR_MENUS = [
   ["Ensalada tropical", "hojas baby de lechuga y espinaca con mango, kiwi, fresa y melón, uvas pasas, finas láminas de queso y un sutil toque de crema.", "Tropical salad", "baby lettuce and spinach leaves with mango, kiwi, strawberry and melon, raisins, thin slices of cheese and a subtle touch of cream."],
   ["Puré de papa artesanal", "de textura aterciopelada y presentación de la casa.", "Artisanal mashed potatoes", "with a velvety texture and house-style presentation."],
   ["Arroz perfumado al ajonjolí", "de acabado delicado y aroma tostado.", "Fragrant sesame rice", "with a delicate finish and a toasted aroma."]]},
- {num:2, img:"menu2", w:1080, h:1577, video:"cena2", lema:"Sabores que inspiran", lema_en:"Flavors that inspire", platos:[
+ {num:2, img:"menu2b", w:1413, h:1772, video:"cena2", lema:"Sabores que inspiran", lema_en:"Flavors that inspire", platos:[
   ["Lomito de res en reducción de vino", "sellado a la perfección y bañado en una salsa intensa de aromas profundos.", "Beef tenderloin in wine reduction", "perfectly seared and coated in an intense, deeply aromatic sauce."],
   ["Pollo thai relleno de verduras crocantes", "pechuga delicadamente especiada, de inspiración asiática y textura contrastante.", "Thai-style chicken stuffed with crisp vegetables", "delicately spiced chicken breast, Asian-inspired, with contrasting textures."],
   ["Papa suprema", "cremosa y suave, de acabado aterciopelado.", "Papa suprema", "creamy and smooth, with a velvety finish."],
