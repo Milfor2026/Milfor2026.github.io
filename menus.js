@@ -86,6 +86,6 @@ window.MILFOR_MENUS_ENTRADAS = [
   ["", "pescado fresco marinado en limón, con cebolla morada, ají limo, cilantro y maíz tostado.", "", "fresh fish marinated in lime, with red onion, ají limo chili, cilantro and toasted corn."]]},
  {num:4, img:"entrada4b", w:1414, h:1570, video:"entradas4", lema:"Ceviche de mango y camarón", lema_en:"Mango and shrimp ceviche", platos:[
   ["", "camarones frescos y mango dulce curados en jugo de limón, con un toque de ají.", "", "fresh shrimp and sweet mango cured in lime juice, with a touch of chili."]]},
- {num:5, img:"entrada5", w:1080, h:1563, video:"entradas5", lema:"Ceviche tropical (base a elección)", lema_en:"Tropical ceviche (base of your choice)", platos:[
+ {num:5, img:"entrada5b", w:1413, h:1567, video:"entradas5", lema:"Ceviche tropical (base a elección)", lema_en:"Tropical ceviche (base of your choice)", platos:[
   ["", "pescado, camarón o mixto, curado en jugo de limón y acompañado de frutas tropicales.", "", "fish, shrimp or mixed, cured in lime juice and served with tropical fruit."]]}
 ];
