@@ -78,13 +78,13 @@ window.MILFOR_MENUS_INFANTIL = [
 ];
 // ===== ENTRADAS =====
 window.MILFOR_MENUS_ENTRADAS = [
- {num:1, img:"entrada1", w:1080, h:1574, video:"entradas1", lema:"Ceviche de pulpo en leche de tigre", lema_en:"Octopus ceviche in leche de tigre", platos:[
+ {num:1, img:"entrada1b", w:1417, h:1870, video:"entradas1", lema:"Ceviche de pulpo en leche de tigre", lema_en:"Octopus ceviche in leche de tigre", platos:[
   ["", "tiernos trozos de pulpo en leche de tigre cítrica y especiada, con cebolla morada y hierbas frescas.", "", "tender pieces of octopus in a citrusy, spiced leche de tigre, with red onion and fresh herbs."]]},
- {num:2, img:"entrada2", w:1080, h:1571, video:"entradas2", lema:"Ceviche de camarón", lema_en:"Shrimp ceviche", platos:[
+ {num:2, img:"entrada2b", w:1416, h:1767, video:"entradas2", lema:"Ceviche de camarón", lema_en:"Shrimp ceviche", platos:[
   ["", "camarones frescos curados en jugo de limón, con cebolla, cilantro y un toque suave de ají.", "", "fresh shrimp cured in lime juice, with onion, cilantro and a mild touch of chili."]]},
- {num:3, img:"entrada3", w:1080, h:1566, video:"entradas3", lema:"Ceviche peruano", lema_en:"Peruvian ceviche", platos:[
+ {num:3, img:"entrada3b", w:1418, h:1764, video:"entradas3", lema:"Ceviche peruano", lema_en:"Peruvian ceviche", platos:[
   ["", "pescado fresco marinado en limón, con cebolla morada, ají limo, cilantro y maíz tostado.", "", "fresh fish marinated in lime, with red onion, ají limo chili, cilantro and toasted corn."]]},
- {num:4, img:"entrada4", w:1080, h:1561, video:"entradas4", lema:"Ceviche de mango y camarón", lema_en:"Mango and shrimp ceviche", platos:[
+ {num:4, img:"entrada4b", w:1414, h:1570, video:"entradas4", lema:"Ceviche de mango y camarón", lema_en:"Mango and shrimp ceviche", platos:[
   ["", "camarones frescos y mango dulce curados en jugo de limón, con un toque de ají.", "", "fresh shrimp and sweet mango cured in lime juice, with a touch of chili."]]},
  {num:5, img:"entrada5", w:1080, h:1563, video:"entradas5", lema:"Ceviche tropical (base a elección)", lema_en:"Tropical ceviche (base of your choice)", platos:[
   ["", "pescado, camarón o mixto, curado en jugo de limón y acompañado de frutas tropicales.", "", "fish, shrimp or mixed, cured in lime juice and served with tropical fruit."]]}
