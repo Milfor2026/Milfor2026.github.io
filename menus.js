@@ -45,7 +45,7 @@ window.MILFOR_MENUS = [
  {num:7, img:"menu7b", w:1413, h:1555, video:"cena7", lema:"Sabores con alma tropical", lema_en:"Flavors with a tropical soul", platos:[
   ["Lomo de cerdo hawaiano", "jugoso, con piña y especias tropicales y un glaseado suave.", "Hawaiian pork loin", "juicy, with pineapple and tropical spices and a gentle glaze."],
   ["Pollo a la naranja", "tierno y aromático, en una salsa de naranja de sabor cítrico y equilibrado.", "Orange chicken", "tender and aromatic, in an orange sauce with a balanced citrus flavor."],
-  ["Ensalada griega de la casa", "queso feta, aceitunas negras, cebolla morada y verde y tomates cherry, con un aderezo ligero de sabores mediterráneos.", "House Greek salad", "feta cheese, black olives, red and green onion and cherry tomatoes, with a light dressing of Mediterranean flavors."],
+  ["Ensalada griega", "queso feta, aceitunas negras, cebolla morada y verde y tomates cherry, con un aderezo ligero de sabores mediterráneos.", "Greek salad", "feta cheese, black olives, red and green onion and cherry tomatoes, with a light dressing of Mediterranean flavors."],
   ["Arroz a elección", "arroz al perejil o arroz perfumado al ajonjolí, para complementar el plato principal.", "Rice of your choice", "parsley rice or fragrant sesame rice, to complement the main course."],
   ["Puré de plátano", "suave y cremoso, con un delicado toque dulce.", "Plantain purée", "smooth and creamy, with a delicate sweet touch."]]},
  {num:8, img:"menu8", w:1080, h:1557, video:"cena8", lema:"Equilibrio y distinción", lema_en:"Balance and distinction", platos:[
