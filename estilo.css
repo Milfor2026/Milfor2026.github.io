@@ -340,3 +340,30 @@ img.zoomable:focus-visible{outline:2px solid var(--g);outline-offset:3px}
 .poster-acc .ver-video{margin:0}
 .lupa-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--g);background:rgba(12,37,65,.88);color:#fff;font-size:20px;line-height:1;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
 .lupa-btn:hover{background:var(--gd)}.lupa-btn:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+
+/* ===== Ajustes móviles: menú hamburguesa, aviso compacto, áreas táctiles ===== */
+.menu-btn{display:none}
+@media (max-width:760px){
+ .nav{flex-wrap:nowrap;padding:6px 10px 6px 14px;gap:8px;min-height:56px}
+ .marca img{height:28px;width:auto}
+ .lang{order:2;margin-left:auto;min-width:44px;min-height:44px;padding:0 12px;border-radius:22px;font-size:13px}
+ .menu-btn{order:3;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;padding:0;background:transparent;border:1px solid var(--g);border-radius:10px;cursor:pointer}
+ .menu-btn span{display:block;width:20px;height:2px;border-radius:2px;background:var(--gl);transition:transform .2s,opacity .2s}
+ .nav.abierto .menu-btn span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+ .nav.abierto .menu-btn span:nth-child(2){opacity:0}
+ .nav.abierto .menu-btn span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+ .nav nav{display:none;position:absolute;top:100%;left:0;right:0;order:0;width:auto;margin:0;flex-direction:column;gap:0;overflow:visible;white-space:normal;padding:4px 0 10px;background:var(--n);border-bottom:2px solid var(--g);box-shadow:0 10px 24px rgba(0,0,0,.3);font-size:13px}
+ .nav.abierto nav{display:flex}
+ .nav nav a{display:flex;align-items:center;min-height:48px;padding:0 22px;border-top:1px solid rgba(201,169,97,.25)}
+ .nav nav a:first-child{border-top:0}
+ .aviso-ga{left:8px;right:84px;bottom:10px;display:block;padding:7px 10px;font-size:12px;line-height:1.35;border-radius:12px}
+ .aviso-ga[hidden]{display:none}
+ .aviso-ga p{display:inline}
+ .aviso-acc{display:inline-flex;align-items:center;gap:10px;margin:0 0 0 6px;vertical-align:middle}
+ .aviso-ok{position:relative;padding:5px 12px;font-size:11px}
+ .aviso-ok::after,.aviso-acc a::after{content:"";position:absolute;inset:-8px -4px}
+ .aviso-acc a{position:relative;font-size:11px}
+ body.con-aviso{padding-bottom:90px}
+ .equipo li:has(a){padding:0}
+ .equipo li a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px}
+}
