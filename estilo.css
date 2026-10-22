@@ -356,14 +356,17 @@ img.zoomable:focus-visible{outline:2px solid var(--g);outline-offset:3px}
  .nav.abierto nav{display:flex}
  .nav nav a{display:flex;align-items:center;min-height:48px;padding:0 22px;border-top:1px solid rgba(201,169,97,.25)}
  .nav nav a:first-child{border-top:0}
- .aviso-ga{left:8px;right:84px;bottom:10px;display:block;padding:7px 10px;font-size:12px;line-height:1.35;border-radius:12px}
- .aviso-ga[hidden]{display:none}
- .aviso-ga p{display:inline}
- .aviso-acc{display:inline-flex;align-items:center;gap:10px;margin:0 0 0 6px;vertical-align:middle}
- .aviso-ok{position:relative;padding:5px 12px;font-size:11px}
- .aviso-ok::after,.aviso-acc a::after{content:"";position:absolute;inset:-8px -4px}
- .aviso-acc a{position:relative;font-size:11px}
- body.con-aviso{padding-bottom:90px}
  .equipo li:has(a){padding:0}
  .equipo li a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px}
+}
+
+/* aviso de Analytics en el flujo de la página (debajo del menú): no tapa ningún botón */
+.aviso-ga{position:static;left:auto;right:auto;bottom:auto;max-width:none;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 14px;margin:0;border:0;border-bottom:1px solid var(--g);border-radius:0;box-shadow:none;padding:8px 16px;font-size:14px;line-height:1.35;text-align:center}
+.aviso-ga[hidden]{display:none}
+.aviso-acc{margin:0;gap:14px}
+body.con-aviso{padding-bottom:0}
+@media (max-width:760px){
+ .aviso-ga{padding:8px 12px;font-size:12.5px}
+ .aviso-ok{min-height:40px;padding:0 16px}
+ .aviso-acc a{display:inline-flex;align-items:center;min-height:40px}
 }

@@ -245,7 +245,7 @@ document.addEventListener("click",e=>{const a=e.target.closest&&e.target.closest
  if(!id||id=="top"||!document.getElementById(id))return;e.preventDefault();if(location.hash!="#"+id)history.pushState(null,"","#"+id);irA(id,true)});
 addEventListener("load",()=>{const id=location.hash.slice(1);if(id&&document.getElementById(id))irA(id,false)});
 // Aviso de Google Analytics: discreto, no bloquea, se recuerda en localStorage
-function avisoGA(){const A=document.getElementById("aviso-ga");if(!A)return;let visto=false;try{visto=localStorage.getItem("milfor-aviso-ga")=="1"}catch(_){}if(visto)return;A.hidden=false;document.body.classList.add("con-aviso");
+function avisoGA(){const A=document.getElementById("aviso-ga");if(!A)return;{const H=document.querySelector(".nav");if(H)H.after(A)}let visto=false;try{visto=localStorage.getItem("milfor-aviso-ga")=="1"}catch(_){}if(visto)return;A.hidden=false;document.body.classList.add("con-aviso");
  const cerrar=()=>{A.hidden=true;document.body.classList.remove("con-aviso");try{localStorage.setItem("milfor-aviso-ga","1")}catch(_){}};document.getElementById("aviso-ok").addEventListener("click",cerrar);A.querySelector('a[href="#privacidad"]').addEventListener("click",cerrar)}
 function aplicar(){document.documentElement.lang=L;{const ce=document.getElementById("ct-error");if(ce)ce.textContent=""}const D=L=="en"?EN:ES;
  document.querySelectorAll("[data-i18n]").forEach(e=>{const v=D[e.dataset.i18n];if(v!=null)e.innerHTML=v});
