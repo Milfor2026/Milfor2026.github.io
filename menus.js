@@ -28,7 +28,7 @@ window.MILFOR_MENUS = [
   ["Lomito de res estilo stroganoff", "en una salsa cremosa y aromática, de sabor profundo y envolvente.", "Beef tenderloin stroganoff", "in a creamy, aromatic sauce with a deep, rich flavor."],
   ["Pechuga catalana rellena de pimentón asado y queso", "jugosa y terminada al gratín, con notas dulces y ahumadas.", "Catalan-style chicken breast stuffed with roasted red pepper and cheese", "juicy and finished au gratin, with sweet and smoky notes."],
   ["Croquetas de papa con parmesano", "doradas y crujientes por fuera, suaves en su interior.", "Potato croquettes with parmesan", "golden and crisp outside, soft inside."],
-  ["Vegetales glaseados al balsámico", "de temporada, con un brillo agridulce de reducción balsámica y una textura firme.", "Balsamic-glazed vegetables", "seasonal vegetables with a sweet-and-sour sheen of balsamic reduction and a firm texture."],
+  ["Vegetales salteados", "de temporada, salteados al punto para conservar su color, frescura y textura crujiente.", "Sautéed vegetables", "seasonal vegetables, sautéed just right to keep their color, freshness and crisp texture."],
   ["Arroz perfumado al ajonjolí", "de acabado delicado y aroma tostado.", "Fragrant sesame rice", "with a delicate finish and a toasted aroma."]]},
  {num:5, img:"menu5c", w:1440, h:1894, video:"cena5", video_v:2, lema:"Sabores que sorprenden", lema_en:"Flavors that surprise", platos:[
   ["Lomito de cerdo relleno en salsa de champiñones", "tierno y jugoso, de aroma profundo y textura cremosa.", "Stuffed pork tenderloin in mushroom sauce", "tender and juicy, with a deep aroma and a creamy texture."],
