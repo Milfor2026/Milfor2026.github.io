@@ -6,7 +6,7 @@
 // video_v (opcional): súbalo (2, 3…) al reemplazar un video ya publicado, para que los teléfonos no muestren el anterior.
 // Para agregar una opción: procese el afiche con procesar_fotos.py (nombre menuN) y copie un bloque.
 window.MILFOR_MENUS = [
- {num:1, img:"menu1c", w:1440, h:1681, video:"cena1", lema:"Sabores que enamoran", lema_en:"Flavors to fall in love with", platos:[
+ {num:1, img:"menu1c", w:1440, h:1681, video:"cena1", lema:"Aroma de encanto", lema_en:"A touch of enchantment", platos:[
   ["Suprema de pollo en emulsión de maracuyá", "pechuga bañada en una salsa sedosa de maracuyá, de notas cítricas y tropicales.", "Chicken suprême in passion fruit emulsion", "breast coated in a silky passion fruit sauce with citrus and tropical notes."],
   ["Medallón de lomo de cerdo en reducción de vino y uvas", "suavemente glaseado, de sabor equilibrado entre lo dulce y lo intenso.", "Pork loin medallion in wine and grape reduction", "lightly glazed, with a balanced sweet and intense flavor."],
   ["Ensalada tropical", "hojas baby de lechuga y espinaca con mango, kiwi, fresa y melón, uvas pasas, finas láminas de queso y un sutil toque de crema.", "Tropical salad", "baby lettuce and spinach leaves with mango, kiwi, strawberry and melon, raisins, thin slices of cheese and a subtle touch of cream."],
@@ -36,7 +36,7 @@ window.MILFOR_MENUS = [
   ["Espárragos salteados", "frescos, salteados al punto para conservar su color y firmeza.", "Sautéed asparagus", "fresh, sautéed just right to keep their color and firmness."],
   ["Arroz florentino", "aromatizado y de presentación refinada.", "Florentine rice", "aromatic, with a refined presentation."],
   ["Papa pera decorada", "suave y cremosa, presentada con un toque artesanal.", "Decorated baby potatoes", "soft and creamy, served with an artisanal touch."]]},
- {num:6, img:"menu6c", w:1142, h:1351, video:"cena6", lema:"Sabores que se recuerdan", lema_en:"Flavors to remember", platos:[
+ {num:6, img:"menu6c", w:1142, h:1351, video:"cena6", lema:"Sabores que enamoran", lema_en:"Flavors to fall in love with", platos:[
   ["Suprema de pollo rellena de espinaca y pasas", "tierna y jugosa, con un agradable contraste de sabores dulces y frescos.", "Chicken suprême stuffed with spinach and raisins", "tender and juicy, with a pleasant contrast of sweet and fresh flavors."],
   ["Lomo de cerdo en salsa de vino tinto, albahaca y tomates secos", "brillantemente glaseado, aromático y sofisticado.", "Pork loin in red wine, basil and sun-dried tomato sauce", "beautifully glazed, aromatic and sophisticated."],
   ["Arroz perlado", "de grano definido, fragante y de textura suave.", "Pearl rice", "with well-defined grains, fragrant and soft in texture."],
