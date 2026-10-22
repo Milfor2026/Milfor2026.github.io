@@ -54,12 +54,12 @@ window.MILFOR_MENUS = [
   ["Ensalada fresca de aguacate y maíz", "mezcla de lechugas, tomates cherry, maíz tierno y aguacate cremoso, con vinagreta de hierbas frescas.", "Fresh avocado and corn salad", "mixed lettuces, cherry tomatoes, sweet corn and creamy avocado, with a fresh-herb vinaigrette."],
   ["Arroz a elección", "arroz al perejil o arroz perfumado al ajonjolí, ideal para cualquier plato principal.", "Rice of your choice", "parsley rice or fragrant sesame rice, ideal for any main course."],
   ["Puré de papa blanca", "suave y cremoso, con mantequilla y un toque de leche fresca.", "Mashed potatoes", "smooth and creamy, with butter and a touch of fresh milk."]]},
- {num:9, img:"menu9b", w:1413, h:1737, video:"cena9", lema:"Tradición con elegancia", lema_en:"Tradition with elegance", platos:[
+ {num:9, img:"menu9c", w:1086, h:1448, video:"cena9", lema:"Tradición con elegancia", lema_en:"Tradition with elegance", platos:[
   ["Medallones de res al oporto", "tiernos, cocidos al punto y bañados en una reducción de vino oporto con hierbas aromáticas que realzan su sabor intenso y elegante.", "Beef medallions in port wine", "tender, cooked just right and coated in a port wine reduction with aromatic herbs that enhance their rich, elegant flavor."],
   ["Salmón a la parrilla", "filete fresco marcado a la parrilla, de interior jugoso, terminado con limón y aceite de oliva virgen.", "Grilled salmon", "fresh fillet seared on the grill, juicy inside, finished with lemon and virgin olive oil."],
   ["Vegetales de temporada salteados en aceite de oliva", "con una sazón suave que conserva su color y textura.", "Seasonal vegetables sautéed in olive oil", "with mild seasoning that keeps their color and texture."],
   ["Puré de papa blanca", "suave y cremoso, con mantequilla y leche, perfecto para acompañar carnes y pescados.", "Mashed potatoes", "smooth and creamy, with butter and milk, perfect with meat and fish."]]},
- {num:10, img:"menu10b", w:1411, h:1429, video:"cena10", lema:"Sabores que dejan huella", lema_en:"Flavors that leave a mark", platos:[
+ {num:10, img:"menu10c", w:1086, h:1448, video:"cena10", lema:"Sabores que dejan huella", lema_en:"Flavors that leave a mark", platos:[
   ["Pernil de cerdo en salsa de ciruela", "jugoso y dorado, con una tersa salsa de ciruelas en balance entre dulzor y acidez.", "Pork leg in plum sauce", "juicy and golden, with a smooth plum sauce balancing sweetness and acidity."],
   ["Pollo teriyaki", "pechuga marinada y glaseada en salsa teriyaki, de perfil dulce y salado con notas umami.", "Teriyaki chicken", "breast marinated and glazed in teriyaki sauce, sweet and savory with umami notes."],
   ["Lasaña de papa", "capas de papa y quesos selectos, horneadas hasta lograr una textura cremosa y una superficie dorada.", "Potato lasagna", "layers of potato and select cheeses, baked until creamy with a golden top."],
@@ -68,25 +68,25 @@ window.MILFOR_MENUS = [
 ];
 // ===== MENÚ INFANTIL =====
 window.MILFOR_MENUS_INFANTIL = [
- {num:1, img:"infantil1b", w:1412, h:1734, video:"infantil1", lema:"Crepes de pollo con papas a la francesa y ensalada tropical", lema_en:"Chicken crepes with french fries and tropical salad", platos:[
+ {num:1, img:"infantil1c", w:1122, h:1402, video:"infantil1", lema:"Crepes de pollo con papas a la francesa y ensalada tropical", lema_en:"Chicken crepes with french fries and tropical salad", platos:[
   ["", "crepes rellenos de pollo tierno, con papas a la francesa doradas y crujientes y ensalada tropical en porción infantil.", "", "crepes filled with tender chicken, with golden, crispy french fries and a kid-size tropical salad."]]},
  {num:2, img:"infantil2b", w:1413, h:1728, video:"infantil2", lema:"Croquetas de pollo con papas a la francesa y ensalada tropical", lema_en:"Chicken croquettes with french fries and tropical salad", platos:[
   ["", "croquetas de pollo doradas y suaves en su interior, con papas a la francesa y ensalada tropical en porción infantil.", "", "golden chicken croquettes, soft inside, with french fries and a kid-size tropical salad."]]},
  {num:3, img:"infantil3b", w:1412, h:1763, video:"infantil3", lema:"Pierna y pernil de pollo apanados con papas chips y fruta", lema_en:"Breaded chicken drumstick and thigh with potato chips and fruit", platos:[
   ["", "de cubierta dorada y crujiente, acompañados de finas papas chips y fruta fresca de temporada.", "", "with a golden, crispy coating, served with thin potato chips and fresh seasonal fruit."]]},
- {num:4, img:"infantil4b", w:1413, h:1583, video:"infantil4", lema:"Hamburguesa con papas a la francesa", lema_en:"Burger with french fries", platos:[
+ {num:4, img:"infantil4c", w:1068, h:1448, video:"infantil4", lema:"Hamburguesa con papas a la francesa", lema_en:"Burger with french fries", platos:[
   ["", "hamburguesa jugosa en pan suave con toppings selectos, acompañada de papas a la francesa doradas.", "", "a juicy burger on a soft bun with select toppings, served with golden french fries."]]}
 ];
 // ===== ENTRADAS =====
 window.MILFOR_MENUS_ENTRADAS = [
- {num:1, img:"entrada1b", w:1417, h:1870, video:"entradas1", lema:"Ceviche de pulpo en leche de tigre", lema_en:"Octopus ceviche in leche de tigre", platos:[
+ {num:1, img:"entrada1c", w:1122, h:1402, video:"entradas1", lema:"Ceviche de pulpo en leche de tigre", lema_en:"Octopus ceviche in leche de tigre", platos:[
   ["", "tiernos trozos de pulpo en leche de tigre cítrica y especiada, con cebolla morada y hierbas frescas.", "", "tender pieces of octopus in a citrusy, spiced leche de tigre, with red onion and fresh herbs."]]},
- {num:2, img:"entrada2b", w:1416, h:1767, video:"entradas2", lema:"Ceviche de camarón", lema_en:"Shrimp ceviche", platos:[
+ {num:2, img:"entrada2c", w:1187, h:1325, video:"entradas2", lema:"Ceviche de camarón", lema_en:"Shrimp ceviche", platos:[
   ["", "camarones frescos curados en jugo de limón, con cebolla, cilantro y un toque suave de ají.", "", "fresh shrimp cured in lime juice, with onion, cilantro and a mild touch of chili."]]},
  {num:3, img:"entrada3b", w:1418, h:1764, video:"entradas3", lema:"Ceviche peruano", lema_en:"Peruvian ceviche", platos:[
   ["", "pescado fresco marinado en limón, con cebolla morada, ají limo, cilantro y maíz tostado.", "", "fresh fish marinated in lime, with red onion, ají limo chili, cilantro and toasted corn."]]},
  {num:4, img:"entrada4b", w:1414, h:1570, video:"entradas4", lema:"Ceviche de mango y camarón", lema_en:"Mango and shrimp ceviche", platos:[
   ["", "camarones frescos y mango dulce curados en jugo de limón, con un toque de ají.", "", "fresh shrimp and sweet mango cured in lime juice, with a touch of chili."]]},
- {num:5, img:"entrada5b", w:1413, h:1567, video:"entradas5", lema:"Ceviche tropical (base a elección)", lema_en:"Tropical ceviche (base of your choice)", platos:[
+ {num:5, img:"entrada5c", w:1199, h:1312, video:"entradas5", lema:"Ceviche tropical (base a elección)", lema_en:"Tropical ceviche (base of your choice)", platos:[
   ["", "pescado, camarón o mixto, curado en jugo de limón y acompañado de frutas tropicales.", "", "fish, shrimp or mixed, cured in lime juice and served with tropical fruit."]]}
 ];
