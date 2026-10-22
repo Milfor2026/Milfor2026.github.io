@@ -42,13 +42,13 @@ window.MILFOR_MENUS = [
   ["Arroz perlado", "de grano definido, fragante y de textura suave.", "Pearl rice", "with well-defined grains, fragrant and soft in texture."],
   ["Ensalada siciliana", "mezcla de lechuga romana, tomates cherry, pimentón en julianas y perlas de mozzarella fresca, con un toque mediterráneo.", "Sicilian salad", "a mix of romaine lettuce, cherry tomatoes, julienned peppers and fresh mozzarella pearls, with a Mediterranean touch."],
   ["Duquesas de papa gratinadas", "de superficie dorada e interior suave, de presentación refinada.", "Gratinéed duchess potatoes", "golden on the surface and soft inside, with a refined presentation."]]},
- {num:7, img:"menu7b", w:1413, h:1555, video:"cena7", lema:"Sabores con alma tropical", lema_en:"Flavors with a tropical soul", platos:[
+ {num:7, img:"menu7c", w:1092, h:1440, video:"cena7", lema:"Sabores con alma tropical", lema_en:"Flavors with a tropical soul", platos:[
   ["Lomo de cerdo hawaiano", "jugoso, con piña y especias tropicales y un glaseado suave.", "Hawaiian pork loin", "juicy, with pineapple and tropical spices and a gentle glaze."],
   ["Pollo a la naranja", "tierno y aromático, en una salsa de naranja de sabor cítrico y equilibrado.", "Orange chicken", "tender and aromatic, in an orange sauce with a balanced citrus flavor."],
   ["Ensalada griega", "queso feta, aceitunas negras, cebolla morada y verde y tomates cherry, con un aderezo ligero de sabores mediterráneos.", "Greek salad", "feta cheese, black olives, red and green onion and cherry tomatoes, with a light dressing of Mediterranean flavors."],
   ["Arroz a elección", "arroz al perejil o arroz perfumado al ajonjolí, para complementar el plato principal.", "Rice of your choice", "parsley rice or fragrant sesame rice, to complement the main course."],
   ["Puré de plátano", "suave y cremoso, con un delicado toque dulce.", "Plantain purée", "smooth and creamy, with a delicate sweet touch."]]},
- {num:8, img:"menu8c", w:1413, h:1747, video:"cena8", lema:"Equilibrio y distinción", lema_en:"Balance and distinction", platos:[
+ {num:8, img:"menu8d", w:1427, h:1555, video:"cena8", lema:"Equilibrio y distinción", lema_en:"Balance and distinction", platos:[
   ["Pollo glaseado con miel y mostaza", "pechuga jugosa en un glaseado dulce y ligeramente picante, terminada con finas hierbas.", "Honey-mustard glazed chicken", "juicy breast in a sweet, slightly spicy glaze, finished with fine herbs."],
   ["Posta cartagenera", "tierna posta de res cocida lentamente, con la auténtica sazón de la costa caribeña y especias tradicionales.", "Cartagena-style beef (posta cartagenera)", "tender, slow-cooked beef with the authentic seasoning of the Caribbean coast and traditional spices."],
   ["Ensalada fresca de aguacate y maíz", "mezcla de lechugas, tomates cherry, maíz tierno y aguacate cremoso, con vinagreta de hierbas frescas.", "Fresh avocado and corn salad", "mixed lettuces, cherry tomatoes, sweet corn and creamy avocado, with a fresh-herb vinaigrette."],
