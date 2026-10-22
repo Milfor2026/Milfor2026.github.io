@@ -268,3 +268,7 @@ document.addEventListener("click",e=>{const b=e.target.closest(".lupa-btn");if(b
  N.addEventListener("click",e=>{if(e.target.closest("a"))set(false)});
  document.addEventListener("keydown",e=>{if(e.key=="Escape")set(false)});
  document.addEventListener("click",e=>{if(!H.contains(e.target))set(false)})})();
+
+/* WhatsApp flotante oculto mientras los botones de la portada están en pantalla */
+(()=>{const F=document.querySelector(".wa-flot"),C=document.querySelector(".hero .ctas")||document.querySelector(".ctas");if(!F||!C||!("IntersectionObserver" in window))return;
+ new IntersectionObserver(es=>{for(const e of es)F.classList.toggle("oculto-hero",e.isIntersecting)}).observe(C)})();

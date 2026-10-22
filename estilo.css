@@ -370,3 +370,7 @@ body.con-aviso{padding-bottom:0}
  .aviso-ok{min-height:40px;padding:0 16px}
  .aviso-acc a{display:inline-flex;align-items:center;min-height:40px}
 }
+
+/* WhatsApp flotante: se oculta con transición suave mientras se ven los botones de la portada */
+.wa-flot{transition:opacity .35s ease,visibility .35s ease,transform .35s ease}
+.wa-flot.oculto-hero{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(10px)}
