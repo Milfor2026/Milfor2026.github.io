@@ -24,13 +24,13 @@ window.MILFOR_MENUS = [
   ["Puré de papa criolla", "de textura sedosa y presentación cuidada.", "Papa criolla purée", "silky in texture, with a careful presentation."],
   ["Ensalada Waldorf de la casa", "manzana fresca, apio crujiente, maní tostado y fresas, unidos por un aderezo cremoso.", "House Waldorf salad", "fresh apple, crisp celery, toasted peanuts and strawberries, brought together by a creamy dressing."],
   ["Arroz florentino", "aromatizado y de presentación refinada.", "Florentine rice", "aromatic, with a refined presentation."]]},
- {num:4, img:"menu4b", w:1409, h:1486, video:"cena4", lema:"Sabores que impresionan", lema_en:"Flavors that impress", platos:[
+ {num:4, img:"menu4c", w:1122, h:1402, video:"cena4", lema:"Sabores que impresionan", lema_en:"Flavors that impress", platos:[
   ["Lomito de res estilo stroganoff", "en una salsa cremosa y aromática, de sabor profundo y envolvente.", "Beef tenderloin stroganoff", "in a creamy, aromatic sauce with a deep, rich flavor."],
   ["Pechuga catalana rellena de pimentón asado y queso", "jugosa y terminada al gratín, con notas dulces y ahumadas.", "Catalan-style chicken breast stuffed with roasted red pepper and cheese", "juicy and finished au gratin, with sweet and smoky notes."],
   ["Croquetas de papa con parmesano", "doradas y crujientes por fuera, suaves en su interior.", "Potato croquettes with parmesan", "golden and crisp outside, soft inside."],
   ["Vegetales glaseados al balsámico", "de temporada, con un brillo agridulce de reducción balsámica y una textura firme.", "Balsamic-glazed vegetables", "seasonal vegetables with a sweet-and-sour sheen of balsamic reduction and a firm texture."],
   ["Arroz perfumado al ajonjolí", "de acabado delicado y aroma tostado.", "Fragrant sesame rice", "with a delicate finish and a toasted aroma."]]},
- {num:5, img:"menu5b", w:1413, h:1752, video:"cena5", video_v:2, lema:"Sabores que sorprenden", lema_en:"Flavors that surprise", platos:[
+ {num:5, img:"menu5c", w:1440, h:1894, video:"cena5", video_v:2, lema:"Sabores que sorprenden", lema_en:"Flavors that surprise", platos:[
   ["Lomito de cerdo relleno en salsa de champiñones", "tierno y jugoso, de aroma profundo y textura cremosa.", "Stuffed pork tenderloin in mushroom sauce", "tender and juicy, with a deep aroma and a creamy texture."],
   ["Cordon bleu con reducción de arándanos", "de cubierta dorada y crujiente, con un contraste frutal entre lo dulce y lo salado.", "Cordon bleu with cranberry reduction", "with a golden, crispy coating and a fruity sweet-and-savory contrast."],
   ["Espárragos salteados", "frescos, salteados al punto para conservar su color y firmeza.", "Sautéed asparagus", "fresh, sautéed just right to keep their color and firmness."],
