@@ -4,7 +4,7 @@
 // cat:"boda" o cat:"quince" hace que la foto se abra desde la tarjeta de Servicios correspondiente.
 // y agregue una línea aquí con su nombre (sin extensión), su ancho y alto en px, y los títulos.
 window.MILFOR_GALERIA = [
-  {foto:"arbol", cat:"boda",     w:1064, h:711,  titulo:"Boda bajo el árbol · Milfor Casa Campestre", titulo_en:"Wedding under the tree · Milfor Casa Campestre"},
+  {foto:"arbol", cat:"boda",     w:1064, h:711,  titulo:"Boda bajo el samán · Milfor Casa Campestre", titulo_en:"Wedding under the saman tree · Milfor Casa Campestre"},
   {foto:"ceremonia", cat:"boda", hd:1, w:1287, h:1600, titulo:"Ceremonia",               titulo_en:"Ceremony",           pos:"50% 35%"},
   {foto:"capilla", cat:"boda",   w:1074, h:711,  titulo:"Boda en la capilla",      titulo_en:"Chapel wedding"},
   {foto:"quince", cat:"quince",    w:1399, h:1419, titulo:"Quince años",             titulo_en:"Quinceañera",        pos:"50% 30%"},
@@ -20,7 +20,7 @@ window.MILFOR_GALERIA = [
   {foto:"mesaimperial", w:1395, h:780, titulo:"Mesa imperial",          titulo_en:"Banquet table"},
   {foto:"centro", hd:1,    w:1197, h:1600, titulo:"Centro de mesa",          titulo_en:"Centerpiece",        pos:"50% 40%"},
   {foto:"lounge",    w:1407, h:1102, titulo:"Zona lounge",             titulo_en:"Lounge area"},
-  {foto:"pf-arbol",  w:1066, h:1600, titulo:"Noche bajo el árbol · Milfor Casa Campestre", titulo_en:"Night under the tree · Milfor Casa Campestre", pos:"50% 35%"},
+  {foto:"pf-arbol",  w:1066, h:1600, titulo:"Noche bajo el samán · Milfor Casa Campestre", titulo_en:"Night under the saman tree · Milfor Casa Campestre", pos:"50% 35%"},
   {foto:"pf-gaitan", w:1200, h:1600, titulo:"Salón Milfor Gaitán",     titulo_en:"Milfor Gaitán hall",  pos:"50% 50%"},
   {foto:"pf-iglesia", cat:"boda", w:1024, h:682, titulo:"Ceremonia en la iglesia", titulo_en:"Church ceremony"},
   {foto:"pf-mesainglesa", w:1024, h:682, titulo:"Mesa inglesa",        titulo_en:"English-style table"},

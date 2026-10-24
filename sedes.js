@@ -27,6 +27,6 @@ window.MILFOR_SEDES = [
    lat:4.3018893, lng:-74.8077492, video:"sede-gaitan", video_v:2, mapaImg:"mapa-gaitan", mapaImg_w:1406, mapaImg_h:1549,
    lbTit:"Milfor Gaitán · Cómo llegar", lbTit_en:"Milfor Gaitán · How to get there"},
   {id:"campestre", nombre:"Milfor Casa Campestre", nombre_en:"Milfor Casa Campestre", zona:"Ricaurte, Cundinamarca",
-   texto:"Cómo llegar a Milfor Casa Campestre", texto_en:"How to get to Milfor Casa Campestre", nota:"Su majestuoso árbol central, iluminado con más de cien luces en lluvia, crea un ambiente mágico y romántico", nota_en:"Its majestic central tree, lit with more than a hundred cascading lights, creates a magical, romantic setting",
+   texto:"Cómo llegar a Milfor Casa Campestre", texto_en:"How to get to Milfor Casa Campestre", nota:"Su majestuoso samán central, iluminado con más de cien luces en lluvia, crea un ambiente mágico y romántico", nota_en:"Its majestic central saman tree, lit with more than a hundred cascading lights, creates a magical, romantic setting",
    lat:4.2944097, lng:-74.7907257, video:"sede-campestre", video_v:2, mapaImg:"mapa-llegar", mapaImg_w:1259, mapaImg_h:1600}
 ];
