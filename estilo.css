@@ -410,3 +410,9 @@ h2::after{filter:saturate(.75) brightness(1.02)}
 .testimonios .btn.linea{color:var(--gd);border-color:var(--g)}.testimonios .btn.linea:hover{background:var(--gb);color:#fff}
 .card-mail .mail-principal+.mail-principal{margin-top:10px}
 #galeria h2+.gal{margin-top:34px}
+
+/* Tarjetas tocables (Servicios y Decoración floral) */
+a.srv-link{display:block;color:inherit;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s}
+a.srv-link:hover,a.srv-link:focus-visible{transform:translateY(-2px)}
+.srv-ver{display:inline-block;margin-top:14px;font:500 12px Montserrat,sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:var(--gd);border-bottom:1px solid var(--g);padding-bottom:2px}
+.equipo li.fijo{align-self:center;border-color:transparent;background:none;padding-left:6px;padding-right:6px}
