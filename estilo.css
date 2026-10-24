@@ -403,3 +403,8 @@ h2::after{filter:saturate(.75) brightness(1.02)}
 .aviso-ga{background:var(--gb);color:#fff;border-color:var(--gd)}
 .aviso-ok{background:#fff;color:var(--gd)}.aviso-ok:hover,.aviso-ok:focus-visible{background:var(--iv)}
 .aviso-acc a{color:#fff}
+/* testimonios: también en crema */
+.testimonios{background:var(--iv);color:var(--n)}
+.testimonios h2{color:var(--gb)}.testimonios .sub{color:var(--tx)}
+.testi-card{background:var(--cr2);border-color:var(--g);box-shadow:inset 0 0 0 4px var(--cr2),inset 0 0 0 5px var(--li)}
+.testimonios .btn.linea{color:var(--gd);border-color:var(--g)}.testimonios .btn.linea:hover{background:var(--gb);color:#fff}
