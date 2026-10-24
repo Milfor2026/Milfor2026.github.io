@@ -409,3 +409,4 @@ h2::after{filter:saturate(.75) brightness(1.02)}
 .testi-card{background:var(--cr2);border-color:var(--g);box-shadow:inset 0 0 0 4px var(--cr2),inset 0 0 0 5px var(--li)}
 .testimonios .btn.linea{color:var(--gd);border-color:var(--g)}.testimonios .btn.linea:hover{background:var(--gb);color:#fff}
 .card-mail .mail-principal+.mail-principal{margin-top:10px}
+#galeria h2+.gal{margin-top:34px}
