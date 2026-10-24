@@ -374,3 +374,32 @@ body.con-aviso{padding-bottom:0}
 /* WhatsApp flotante: se oculta con transición suave mientras se ven los botones de la portada */
 .wa-flot{transition:opacity .35s ease,visibility .35s ease,transform .35s ease}
 .wa-flot.oculto-hero{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(10px)}
+
+/* ===== Paleta crema y dorado (muestra de Ricardo, oct 2026): crema #EEEAE1, dorado #B39557 ===== */
+:root{--iv:#EEEAE1;--g:#B39557;--gd:#7D6330;--gb:#8F7239;--gl:#C9AD72;--li:#DDD3C1;--cr2:#F6F3EC;--tx:#4A4334}
+/* la portada y la barra superior en azul se mantienen exactamente como estaban */
+.nav,.hero{--iv:#FBF8F1;--g:#AF7F49;--gd:#8C6232;--gb:#8C6232;--gl:#D5A66E;--li:#E6DAC4;--tx:#4A5670}
+body{background:var(--iv);color:var(--n)}
+.sec.alt{background:var(--cr2)}
+.srv,.opcion,.card,.ev-card,.menu-tipo,.menu-tabs button,.pisos li,.nota-sede{background:var(--cr2)}
+.srv,.opcion,.card{box-shadow:inset 0 0 0 5px var(--cr2),inset 0 0 0 6px var(--li)}
+.ev-card{box-shadow:inset 0 0 0 4px var(--cr2),inset 0 0 0 5px var(--li),0 10px 26px rgba(12,37,65,.08)}
+/* secciones que eran azules pasan a crema */
+.banda,.qr{background:var(--iv);color:var(--n);border-color:var(--g);box-shadow:none}
+.banda h2,.qr h2{color:var(--gb)}.banda .sub,.qr p{color:var(--tx)}.banda .tag,.qr .tag{color:var(--gd)!important}
+/* títulos, etiquetas y textos destacados en dorado */
+h2{color:var(--gb)}
+h2::after{filter:saturate(.75) brightness(1.02)}
+.tag,.opcion-txt .tag,.sede .zona,.lema,.script:not(.hero .script){color:var(--gd)!important}
+.srv h3,.sede h3,.floral h3,.opcion-txt h3{color:var(--n)}
+/* botones dorados con texto blanco */
+.btn,.qr .btn.wa,.banda .btn.wa{background:var(--gb);border-color:var(--gb);color:#fff}
+.btn:hover{background:var(--gd);border-color:var(--gd);color:#fff}
+.btn.linea{background:transparent;color:var(--gd);border-color:var(--g)}.btn.linea:hover{background:var(--gb);color:#fff}
+.btn.wa{background:var(--n);border-color:var(--n)}
+.menu-tabs button[aria-selected="true"],.menu-tipo button[aria-pressed="true"]{background:var(--gb);border-color:var(--gb);color:#fff}
+.ver-video{background:var(--gb);color:#fff}.ver-video span{color:#fff}.ver-video:hover{background:var(--gd)}
+/* aviso de Analytics: barra dorada con texto blanco, como la muestra */
+.aviso-ga{background:var(--gb);color:#fff;border-color:var(--gd)}
+.aviso-ok{background:#fff;color:var(--gd)}.aviso-ok:hover,.aviso-ok:focus-visible{background:var(--iv)}
+.aviso-acc a{color:#fff}
