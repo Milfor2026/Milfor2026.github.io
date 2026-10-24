@@ -376,7 +376,7 @@ body.con-aviso{padding-bottom:0}
 .wa-flot.oculto-hero{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(10px)}
 
 /* ===== Paleta crema y dorado (muestra de Ricardo, oct 2026): crema #EEEAE1, dorado #B39557 ===== */
-:root{--iv:#EEEAE1;--g:#B39557;--gd:#7D6330;--gb:#8F7239;--gl:#C9AD72;--li:#DDD3C1;--cr2:#F6F3EC;--tx:#4A4334}
+:root{--iv:#EEEAE1;--g:#B39557;--gd:#7D6330;--gb:#B39557;--gl:#C9AD72;--li:#DDD3C1;--cr2:#F6F3EC;--tx:#4A4334}
 /* la portada y la barra superior en azul se mantienen exactamente como estaban */
 .nav,.hero{--iv:#FBF8F1;--g:#AF7F49;--gd:#8C6232;--gb:#8C6232;--gl:#D5A66E;--li:#E6DAC4;--tx:#4A5670}
 body{background:var(--iv);color:var(--n)}
