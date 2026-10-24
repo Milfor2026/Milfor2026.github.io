@@ -15,7 +15,7 @@
 // Para agregar una sede nueva, copie un bloque y cambie los datos.
 window.MILFOR_SEDES = [
   {id:"central", nombre:"Milfor Sede Central y Milfor Paraíso", nombre_en:"Milfor Sede Central and Milfor Paraíso", zona:"Centro de Girardot", zona_en:"Downtown Girardot",
-   texto:"Carrera 14 (Av. del Ferrocarril) # 17-55, Girardot, Colombia", texto_en:"Carrera 14 (Av. del Ferrocarril) # 17-55, Girardot, Colombia",
+   texto:"Carrera 14 (Av. del Ferrocarril) # 17-57, Girardot, Colombia", texto_en:"Carrera 14 (Av. del Ferrocarril) # 17-57, Girardot, Colombia",
    pisos:[
      {piso:"Primer piso", piso_en:"First floor", nombre:"Milfor Sede Central", nombre_en:"Milfor Sede Central (main office)", desc:"Oficinas de administración, taller y floristería", desc_en:"Administration offices, workshop and flower shop"},
      {piso:"Segundo piso", piso_en:"Second floor", nombre:"Milfor Paraíso", nombre_en:"Milfor Paraíso", desc:"Salón de eventos", desc_en:"Event hall"}],
