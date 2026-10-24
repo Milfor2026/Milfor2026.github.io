@@ -18,5 +18,13 @@ window.MILFOR_GALERIA = [
   {foto:"pasillo", hd:1,   w:1173, h:1600, titulo:"Pasillo de ceremonia",    titulo_en:"Ceremony aisle",     pos:"50% 45%"},
   {foto:"mesaimperial", w:1395, h:780, titulo:"Mesa imperial",          titulo_en:"Banquet table"},
   {foto:"centro", hd:1,    w:1197, h:1600, titulo:"Centro de mesa",          titulo_en:"Centerpiece",        pos:"50% 40%"},
-  {foto:"lounge",    w:1407, h:1102, titulo:"Zona lounge",             titulo_en:"Lounge area"}
+  {foto:"lounge",    w:1407, h:1102, titulo:"Zona lounge",             titulo_en:"Lounge area"},
+  {foto:"pf-arbol",  w:1066, h:1600, titulo:"Noche bajo el árbol · Milfor Casa Campestre", titulo_en:"Night under the tree · Milfor Casa Campestre", pos:"50% 35%"},
+  {foto:"pf-gaitan", w:1200, h:1600, titulo:"Salón Milfor Gaitán",     titulo_en:"Milfor Gaitán hall",  pos:"50% 50%"},
+  {foto:"pf-iglesia", w:1024, h:682, titulo:"Ceremonia en la iglesia", titulo_en:"Church ceremony"},
+  {foto:"pf-mesainglesa", w:1024, h:682, titulo:"Mesa inglesa",        titulo_en:"English-style table"},
+  {foto:"pf-novios", w:1280, h:852,  titulo:"Los novios",              titulo_en:"The couple"},
+  {foto:"pf-mesablanca", w:1280, h:854, titulo:"Mesa con flores blancas", titulo_en:"Table with white flowers"},
+  {foto:"pf-pista15", w:1600, h:1066, titulo:"Pista iluminada de quince años", titulo_en:"Lit-up quinceañera dance floor"},
+  {foto:"pf-quince", w:1600, h:1066, titulo:"Fiesta de quince años",   titulo_en:"Quinceañera celebration"}
 ];
