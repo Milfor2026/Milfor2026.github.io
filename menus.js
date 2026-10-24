@@ -70,7 +70,7 @@ window.MILFOR_MENUS = [
 window.MILFOR_MENUS_INFANTIL = [
  {num:1, img:"infantil1c", w:1122, h:1402, lema:"Crepes de pollo con papas a la francesa y ensalada tropical", lema_en:"Chicken crepes with french fries and tropical salad", platos:[
   ["", "crepes rellenos de pollo tierno, con papas a la francesa doradas y crujientes y ensalada tropical en porción infantil.", "", "crepes filled with tender chicken, with golden, crispy french fries and a kid-size tropical salad."]]},
- {num:2, img:"infantil2b", w:1413, h:1728, lema:"Croquetas de pollo con papas a la francesa y ensalada tropical", lema_en:"Chicken croquettes with french fries and tropical salad", platos:[
+ {num:2, img:"infantil2d", w:1024, h:1536, lema:"Croquetas de pollo con papas a la francesa y ensalada tropical", lema_en:"Chicken croquettes with french fries and tropical salad", platos:[
   ["", "croquetas de pollo doradas y suaves en su interior, con papas a la francesa y ensalada tropical en porción infantil.", "", "golden chicken croquettes, soft inside, with french fries and a kid-size tropical salad."]]},
  {num:3, img:"infantil3b", w:1412, h:1763, lema:"Pierna y pernil de pollo apanados con papas chips y fruta", lema_en:"Breaded chicken drumstick and thigh with potato chips and fruit", platos:[
   ["", "de cubierta dorada y crujiente, acompañados de finas papas chips y fruta fresca de temporada.", "", "with a golden, crispy coating, served with thin potato chips and fresh seasonal fruit."]]},
@@ -81,8 +81,8 @@ window.MILFOR_MENUS_INFANTIL = [
 window.MILFOR_MENUS_ENTRADAS = [
  {num:1, img:"entrada1c", w:1122, h:1402, lema:"Ceviche de pulpo en leche de tigre", lema_en:"Octopus ceviche in leche de tigre", platos:[
   ["", "tiernos trozos de pulpo en leche de tigre cítrica y especiada, con cebolla morada y hierbas frescas.", "", "tender pieces of octopus in a citrusy, spiced leche de tigre, with red onion and fresh herbs."]]},
- {num:2, img:"entrada2c", w:1187, h:1325, lema:"Ceviche de camarón", lema_en:"Shrimp ceviche", platos:[
-  ["", "camarones frescos curados en jugo de limón, con cebolla, cilantro y un toque suave de ají.", "", "fresh shrimp cured in lime juice, with onion, cilantro and a mild touch of chili."]]},
+ {num:2, img:"entrada2d", w:1187, h:1325, lema:"Ceviche de camarón en leche de tigre", lema_en:"Shrimp ceviche in leche de tigre", platos:[
+  ["", "camarones frescos en leche de tigre cítrica, con cebolla morada, cilantro y un toque suave de ají.", "", "fresh shrimp in a citrusy leche de tigre, with red onion, cilantro and a mild touch of chili."]]},
  {num:3, img:"entrada3b", w:1418, h:1764, lema:"Ceviche peruano", lema_en:"Peruvian ceviche", platos:[
   ["", "pescado fresco marinado en limón, con cebolla morada, ají limo, cilantro y maíz tostado.", "", "fresh fish marinated in lime, with red onion, ají limo chili, cilantro and toasted corn."]]},
  {num:4, img:"entrada4b", w:1414, h:1570, lema:"Ceviche de mango y camarón", lema_en:"Mango and shrimp ceviche", platos:[
