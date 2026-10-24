@@ -83,7 +83,7 @@ window.MILFOR_MENUS_ENTRADAS = [
   ["", "tiernos trozos de pulpo en leche de tigre cítrica y especiada, con cebolla morada y hierbas frescas.", "", "tender pieces of octopus in a citrusy, spiced leche de tigre, with red onion and fresh herbs."]]},
  {num:2, img:"entrada2d", w:1187, h:1325, lema:"Ceviche de camarón en leche de tigre", lema_en:"Shrimp ceviche in leche de tigre", platos:[
   ["", "camarones frescos en leche de tigre cítrica, con cebolla morada, cilantro y un toque suave de ají.", "", "fresh shrimp in a citrusy leche de tigre, with red onion, cilantro and a mild touch of chili."]]},
- {num:3, img:"entrada3b", w:1418, h:1764, lema:"Ceviche peruano", lema_en:"Peruvian ceviche", platos:[
+ {num:3, img:"entrada3d", w:1122, h:1402, lema:"Ceviche peruano", lema_en:"Peruvian ceviche", platos:[
   ["", "pescado fresco marinado en limón, con cebolla morada, ají limo, cilantro y maíz tostado.", "", "fresh fish marinated in lime, with red onion, ají limo chili, cilantro and toasted corn."]]},
  {num:4, img:"entrada4b", w:1414, h:1570, lema:"Ceviche de mango y camarón", lema_en:"Mango and shrimp ceviche", platos:[
   ["", "camarones frescos y mango dulce curados en jugo de limón, con un toque de ají.", "", "fresh shrimp and sweet mango cured in lime juice, with a touch of chili."]]},
