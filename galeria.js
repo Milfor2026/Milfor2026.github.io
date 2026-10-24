@@ -7,7 +7,7 @@ window.MILFOR_GALERIA = [
   {foto:"ceremonia", hd:1, w:1287, h:1600, titulo:"Ceremonia",               titulo_en:"Ceremony",           pos:"50% 35%"},
   {foto:"capilla",   w:1074, h:711,  titulo:"Boda en la capilla",      titulo_en:"Chapel wedding"},
   {foto:"quince",    w:1399, h:1419, titulo:"Quince años",             titulo_en:"Quinceañera",        pos:"50% 30%"},
-  {foto:"piscina",   w:1409, h:1055, titulo:"Cena junto a la piscina", titulo_en:"Poolside dinner"},
+  {foto:"piscina",   w:1409, h:1055, titulo:"Cena al aire libre", titulo_en:"Outdoor dinner"},
   {foto:"arco",      w:1078, h:1067, titulo:"Arco floral",             titulo_en:"Floral arch",        pos:"50% 30%"},
   {foto:"jardin", hd:1,    w:1184, h:1600, titulo:"Jardín y tarima",         titulo_en:"Garden & stage",     pos:"50% 40%"},
   {foto:"novios",    w:712,  h:958,  titulo:"Mesa de novios",          titulo_en:"Sweetheart table",   pos:"50% 55%"},
