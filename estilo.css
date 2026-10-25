@@ -448,6 +448,10 @@ a.srv-link:hover,a.srv-link:focus-visible{transform:translateY(-2px)}
 #lounge .sillas-grid{display:grid;grid-template-columns:1fr;max-width:720px;margin:0 auto}
 #lounge .silla{width:auto}
 #lounge .silla img{aspect-ratio:1522/978;object-fit:contain;background:#f6efe6}
+/* Pista de baile y pantalla: una foto horizontal a todo el ancho del bloque */
+#pista .sillas-grid{display:grid;grid-template-columns:1fr;max-width:720px;margin:0 auto}
+#pista .silla{width:auto}
+#pista .silla img{aspect-ratio:900/598;object-fit:cover}
 
 /* Tarjeta Decoración floral al final de Muebles y dotación */
 .floral-fin{display:block;max-width:560px;margin:46px auto 0;scroll-margin-top:90px}
