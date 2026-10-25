@@ -426,16 +426,13 @@ a.srv-link:hover,a.srv-link:focus-visible{transform:translateY(-2px)}
 @media (max-width:600px){.loza .sillas-grid{gap:12px}.loza .silla,.loza .silla:last-child:nth-child(odd){width:calc(50% - 6px)}}
 
 /* Sillas: 8 modelos en 4 columnas */
-#sillas .sillas-grid{display:grid;grid-template-columns:repeat(4,1fr);max-width:720px;margin:0 auto}
-#sillas .silla{width:auto}
-@media (max-width:600px){#sillas .sillas-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
+#sillas .sillas-grid,#mesas .sillas-grid{display:grid;grid-template-columns:repeat(4,1fr);max-width:720px;margin:0 auto}
+#sillas .silla,#mesas .silla{width:auto}
+@media (max-width:600px){#sillas .sillas-grid,#mesas .sillas-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
 
 /* Cubiertos */
 .cubiertos .silla,.cubiertos .silla:last-child:nth-child(odd){width:240px}
 @media (max-width:600px){.cubiertos .silla,.cubiertos .silla:last-child:nth-child(odd){width:calc(50% - 6px)}}
 
 /* Mesas: fotos horizontales 4:3 */
-#mesas .sillas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:960px;margin:0 auto}
-#mesas .silla{width:auto}
-#mesas .silla img{aspect-ratio:4/3;object-fit:contain;background:#f6efe6}
-@media (max-width:600px){#mesas .sillas-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
+/* #mesas usa la misma rejilla que #sillas */
