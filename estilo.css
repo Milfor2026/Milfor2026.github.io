@@ -486,3 +486,5 @@ a.srv-link:hover,a.srv-link:focus-visible{transform:translateY(-2px)}
 .catov-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:10px 0 30px}
 .catov-body picture,.catov-body img{display:block;width:100%;height:auto;max-width:1200px;margin:0 auto}
 body.catov-abierto{overflow:hidden}
+.catov-sub{max-width:900px;margin:6px auto 14px;padding:0 18px;text-align:center;font-style:italic;font-size:18px;color:#1f2a44}
+.catov-body>div img{border-radius:0}

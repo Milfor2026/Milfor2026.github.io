@@ -292,7 +292,7 @@ b.addEventListener("click",async()=>{b.disabled=true;try{
  document.body.appendChild(ov);
  const tit=ov.querySelector(".catov-t"),body=ov.querySelector(".catov-body"),x=ov.querySelector(".catov-x");let origen=null,conHist=false;
  const en=()=>document.documentElement.lang=="en";
- function abrir(k,btn){const src=document.getElementById(k);if(!src)return;const pic=src.querySelector("picture");if(!pic)return;
+ function abrir(k,btn){const src=document.getElementById(k);if(!src)return;let pic=src.querySelector("picture");if(!pic){const i0=src.querySelector("img");if(!i0)return;pic=document.createElement("div");const ni=i0.cloneNode(true);if(i0.dataset.hd)ni.src=i0.dataset.hd;ni.removeAttribute("srcset");pic.appendChild(ni);const sub=src.querySelector(".sillas-sub");if(sub){const q=document.createElement("p");q.className="catov-sub";q.textContent=sub.textContent;pic.prepend(q)}}
   origen=btn;tit.textContent=src.querySelector("h3").textContent;x.setAttribute("aria-label",en()?"Close":"Cerrar");
   const c=pic.cloneNode(true);c.querySelectorAll("source").forEach(s=>s.sizes="100vw");const im=c.querySelector("img");im.removeAttribute("loading");im.sizes="(max-width:1200px) 100vw, 1200px";im.alt=src.querySelector("img").alt;
   body.replaceChildren(c);body.scrollTop=0;ov.hidden=false;document.body.classList.add("catov-abierto");x.focus();
