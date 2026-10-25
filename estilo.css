@@ -416,3 +416,11 @@ a.srv-link{display:block;color:inherit;text-decoration:none;cursor:pointer;trans
 a.srv-link:hover,a.srv-link:focus-visible{transform:translateY(-2px)}
 .srv-ver{display:inline-block;margin-top:14px;font:500 12px Montserrat,sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:var(--gd);border-bottom:1px solid var(--g);padding-bottom:2px}
 .equipo li.fijo{align-self:center;border-color:transparent;background:none;padding-left:6px;padding-right:6px}
+
+/* Loza */
+.loza .silla img{aspect-ratio:1/1}
+.loza-linea{text-align:center;font-size:19px;font-weight:600;color:var(--n);margin:22px 0 12px}
+.loza .sillas-grid+.loza-linea{margin-top:28px}
+.loza .sillas-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;max-width:900px;margin:0 auto}
+.loza .silla,.loza .silla:last-child:nth-child(odd){width:160px;grid-column:auto}
+@media (max-width:600px){.loza .sillas-grid{gap:12px}.loza .silla,.loza .silla:last-child:nth-child(odd){width:calc(50% - 6px)}}
