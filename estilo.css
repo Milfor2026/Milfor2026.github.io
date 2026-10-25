@@ -441,3 +441,8 @@ a.srv-link:hover,a.srv-link:focus-visible{transform:translateY(-2px)}
 #mesas .mesa-ancha img{aspect-ratio:4/3;object-fit:contain;background:#f6efe6}
 #mesas .mesa-par1{grid-column:2}
 @media (max-width:600px){#mesas .sillas-grid{grid-template-columns:repeat(2,1fr);gap:12px}#mesas .mesa-par1{grid-column:auto}}
+
+/* Salas lounge: una foto horizontal a todo el ancho del bloque */
+#lounge .sillas-grid{display:grid;grid-template-columns:1fr;max-width:720px;margin:0 auto}
+#lounge .silla{width:auto}
+#lounge .silla img{aspect-ratio:1522/978;object-fit:contain;background:#f6efe6}
