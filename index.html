@@ -31,8 +31,10 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="Milfor">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilo.css?v=67">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap"></noscript>
+<link rel="preload" as="image" type="image/webp" href="img/portada2-alto-800.webp" imagesrcset="img/portada2-alto-800.webp 800w, img/portada2-alto-922.webp 922w" imagesizes="100vw" media="(max-width:760px)" fetchpriority="high">
+<link rel="preload" as="image" type="image/webp" href="img/portada2-ancho-1408.webp" imagesrcset="img/portada2-ancho-900.webp 900w, img/portada2-ancho-1408.webp 1408w" imagesizes="100vw" media="(min-width:761px)" fetchpriority="high">
+<link rel="stylesheet" href="estilo.css?v=68">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":["EventVenue","LocalBusiness"],"@id":"https://eventosmilfor.com/#milfor","name":"Milfor Bodas & Eventos","alternateName":"Floristería Milfor",
  "url":"https://eventosmilfor.com/","image":"https://eventosmilfor.com/img/og-milfor2.jpg","logo":"https://eventosmilfor.com/img/logo.png",
@@ -56,11 +58,16 @@
   <a href="#top" class="marca" aria-label="Milfor"><img src="img/logo-claro.svg" alt="Milfor Bodas &amp; Eventos" width="150" height="36"></a>
   <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Abrir menú" data-i18n-aria="nav_aria"><span></span><span></span><span></span></button>
   <nav id="nav-menu"><a href="#servicios" data-i18n="n_serv">Servicios</a><a href="#lugar" data-i18n="n_lugar">Nuestras sedes</a><a href="#dotacion" data-i18n="n_dot">Muebles y dotación</a><a href="#menu" data-i18n="n_menu">Menú</a><a href="#galeria" data-i18n="n_gal">Galería</a><a href="#cotizar" data-i18n="n_cot">Cotizar</a><a href="#contacto" data-i18n="n_cont">Contacto</a></nav>
-  <button class="lang" id="lang" type="button" aria-label="Cambiar idioma">EN</button>
+  <button class="lang" id="lang" type="button" aria-label="EN · Cambiar a inglés">EN</button>
 </header>
+<div class="aviso-ga" id="aviso-ga" role="region" aria-label="Aviso de privacidad" data-i18n-aria="pv_aria" hidden>
+  <p data-i18n="pv_aviso">Usamos Google Analytics para contar visitas de forma anónima. Al seguir navegando, aceptas su uso.</p>
+  <div class="aviso-acc"><button type="button" class="aviso-ok" id="aviso-ok" data-i18n="pv_ok">Entendido</button><a href="#privacidad" data-i18n="pv_mas">Más información</a></div>
+</div>
+<script>try{if(localStorage.getItem("milfor-aviso-ga")!="1"){document.getElementById("aviso-ga").hidden=false;document.body.classList.add("con-aviso")}}catch(e){}</script>
 
 <section class="hero">
-  <picture class="hero-bg" aria-hidden="true">
+  <picture class="hero-bg">
     <source media="(max-width:760px)" type="image/webp" srcset="img/portada2-alto-800.webp 800w, img/portada2-alto-922.webp 922w" sizes="100vw">
     <source media="(max-width:760px)" srcset="img/portada2-alto-800.jpg 800w, img/portada2-alto-922.jpg 922w" sizes="100vw">
     <source type="image/webp" srcset="img/portada2-ancho-900.webp 900w, img/portada2-ancho-1408.webp 1408w" sizes="100vw">
@@ -147,21 +154,21 @@
     </div>
   </div>
   <div id="loza" class="sillas cristaleria loza">
-    <h3 data-i18n="lz_tit">Loza</h3>
-    <p class="sillas-sub" data-i18n="lz_sub">Loza blanca en línea redonda y línea cuadrada para vestir la mesa de tu evento.</p>
+    <h3 data-i18n="lz_tit">Vajilla</h3>
+    <p class="sillas-sub" data-i18n="lz_sub">Vajilla blanca en línea redonda y línea cuadrada para vestir la mesa de tu evento.</p>
     <h4 class="loza-linea" data-i18n="lz_red">Línea redonda</h4>
     <div class="sillas-grid">
-    <figure class="silla"><img src="img/loza/plato-base-redondo.webp" data-hd="img/loza/plato-base-redondo-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Plato pando redondo de loza blanca con ala" data-i18n-alt="lz_1_alt"><figcaption data-i18n="lz_1">Plato pando</figcaption></figure>
-    <figure class="silla"><img src="img/loza/plato-postre-redondo.webp" data-hd="img/loza/plato-postre-redondo-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Plato tortero redondo de loza blanca con ala" data-i18n-alt="lz_2_alt"><figcaption data-i18n="lz_2">Plato tortero</figcaption></figure>
-    <figure class="silla"><img src="img/loza/plato-pocillo-redondo.webp" data-hd="img/loza/plato-pocillo-redondo-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Plato de café redondo de loza blanca" data-i18n-alt="lz_3_alt"><figcaption data-i18n="lz_3">Plato de café</figcaption></figure>
-    <figure class="silla"><img src="img/loza/consome.webp" data-hd="img/loza/consome-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Consomé de loza blanca con dos asas" data-i18n-alt="lz_4_alt"><figcaption data-i18n="lz_4">Consomé de dos asas</figcaption></figure>
-    <figure class="silla"><img src="img/loza/pocillo.webp" data-hd="img/loza/pocillo-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Pocillo de loza blanca" data-i18n-alt="lz_5_alt"><figcaption data-i18n="lz_5">Pocillo</figcaption></figure>
+    <figure class="silla"><img src="img/loza/plato-base-redondo.webp" data-hd="img/loza/plato-base-redondo-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Plato pando redondo blanco con ala" data-i18n-alt="lz_1_alt"><figcaption data-i18n="lz_1">Plato pando</figcaption></figure>
+    <figure class="silla"><img src="img/loza/plato-postre-redondo.webp" data-hd="img/loza/plato-postre-redondo-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Plato tortero redondo blanco con ala" data-i18n-alt="lz_2_alt"><figcaption data-i18n="lz_2">Plato tortero</figcaption></figure>
+    <figure class="silla"><img src="img/loza/plato-pocillo-redondo.webp" data-hd="img/loza/plato-pocillo-redondo-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Plato de café redondo blanco" data-i18n-alt="lz_3_alt"><figcaption data-i18n="lz_3">Plato de café</figcaption></figure>
+    <figure class="silla"><img src="img/loza/consome.webp" data-hd="img/loza/consome-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Consomé blanco con dos asas" data-i18n-alt="lz_4_alt"><figcaption data-i18n="lz_4">Consomé de dos asas</figcaption></figure>
+    <figure class="silla"><img src="img/loza/pocillo.webp" data-hd="img/loza/pocillo-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Pocillo blanco" data-i18n-alt="lz_5_alt"><figcaption data-i18n="lz_5">Pocillo</figcaption></figure>
     </div>
     <h4 class="loza-linea" data-i18n="lz_cua">Línea cuadrada</h4>
     <div class="sillas-grid">
-    <figure class="silla"><img src="img/loza/plato-base-cuadrado.webp" data-hd="img/loza/plato-base-cuadrado-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Plato pando de loza blanca de bordes cuadrados suaves" data-i18n-alt="lz_6_alt"><figcaption data-i18n="lz_6">Plato pando</figcaption></figure>
-    <figure class="silla"><img src="img/loza/plato-postre-cuadrado.webp" data-hd="img/loza/plato-postre-cuadrado-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Plato tortero de loza blanca de bordes cuadrados suaves" data-i18n-alt="lz_7_alt"><figcaption data-i18n="lz_7">Plato tortero</figcaption></figure>
-    <figure class="silla"><img src="img/loza/plato-pocillo-cuadrado.webp" data-hd="img/loza/plato-pocillo-cuadrado-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Plato de café de loza blanca de bordes cuadrados suaves" data-i18n-alt="lz_8_alt"><figcaption data-i18n="lz_8">Plato de café</figcaption></figure>
+    <figure class="silla"><img src="img/loza/plato-base-cuadrado.webp" data-hd="img/loza/plato-base-cuadrado-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Plato pando blanco de bordes cuadrados suaves" data-i18n-alt="lz_6_alt"><figcaption data-i18n="lz_6">Plato pando</figcaption></figure>
+    <figure class="silla"><img src="img/loza/plato-postre-cuadrado.webp" data-hd="img/loza/plato-postre-cuadrado-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Plato tortero blanco de bordes cuadrados suaves" data-i18n-alt="lz_7_alt"><figcaption data-i18n="lz_7">Plato tortero</figcaption></figure>
+    <figure class="silla"><img src="img/loza/plato-pocillo-cuadrado.webp" data-hd="img/loza/plato-pocillo-cuadrado-hd.webp" width="600" height="600" loading="lazy" decoding="async" alt="Plato de café blanco de bordes cuadrados suaves" data-i18n-alt="lz_8_alt"><figcaption data-i18n="lz_8">Plato de café</figcaption></figure>
     </div>
   </div>
   <div id="cristaleria" class="sillas cristaleria">
@@ -337,7 +344,7 @@
   <div class="testi-in">
   <h2 data-i18n="t_tit">Lo que dicen nuestros clientes</h2>
   <p class="sub" data-i18n="t_sub">Mensajes reales que nos han enviado después de su evento.</p>
-  <div class="testi" id="testi" role="list"></div>
+  <div class="testi" id="testi"></div>
   <p class="centro"><a class="btn linea" href="https://www.instagram.com/eventosmilforgirardot/" target="_blank" rel="noopener"><span data-i18n="t_ig">Ver más en Instagram</span></a></p>
   </div>
 </section>
@@ -417,10 +424,6 @@
   <p class="peq">© <span id="anio">2026</span> Milfor Bodas &amp; Eventos · <a href="#privacidad" data-i18n="pv_tit">Privacidad</a></p>
 </footer>
 
-<div class="aviso-ga" id="aviso-ga" role="region" aria-label="Aviso de privacidad" data-i18n-aria="pv_aria" hidden>
-  <p data-i18n="pv_aviso">Usamos Google Analytics para contar visitas de forma anónima. Al seguir navegando, aceptas su uso.</p>
-  <div class="aviso-acc"><button type="button" class="aviso-ok" id="aviso-ok" data-i18n="pv_ok">Entendido</button><a href="#privacidad" data-i18n="pv_mas">Más información</a></div>
-</div>
 <!-- TEMPORAL: botón Actualizar — quitar al terminar cambios (también CSS .refrescar en estilo.css y JS/EN "rf" en app.js) -->
 <button type="button" class="refrescar" id="refrescar"><span aria-hidden="true">↻</span> <span data-i18n="rf">Actualizar</span></button>
 <a class="wa-flot" data-wa href="https://wa.me/573212721996" target="_blank" rel="noopener" aria-label="WhatsApp"><span class="ico-wa"></span></a>
@@ -429,6 +432,6 @@
 <script src="sedes.js?v=18"></script>
 <script src="testimonios.js?v=1"></script>
 <script src="eventos.js?v=3"></script>
-<script src="app.js?v=79"></script>
+<script src="app.js?v=80"></script>
 </body>
 </html>
