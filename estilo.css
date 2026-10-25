@@ -471,3 +471,6 @@ a.srv-link:hover,a.srv-link:focus-visible{transform:translateY(-2px)}
 .menu-tabs button[aria-selected="true"],.menu-tipo button[aria-pressed="true"]{background:#8A6D35;border-color:#8A6D35}
 /* sin desplazamiento horizontal por el carrusel de videos en el celular */
 .eventos,.testimonios{overflow-x:clip}
+
+.catalogo{margin:0 auto;max-width:960px}
+.catalogo img{display:block;width:100%;height:auto;border-radius:14px;cursor:zoom-in}
