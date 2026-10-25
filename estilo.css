@@ -474,3 +474,15 @@ a.srv-link:hover,a.srv-link:focus-visible{transform:translateY(-2px)}
 
 .catalogo{margin:0 auto;max-width:960px}
 .catalogo img{display:block;width:100%;height:auto;border-radius:14px;cursor:zoom-in}
+/* Catálogos en visor al tocar el botón */
+.equipo li .cat-btn{font:inherit;color:inherit;background:none;border:0;border-bottom:1px dotted var(--g);padding:0;margin:0;cursor:pointer;line-height:inherit}
+@media(max-width:760px){.equipo li:has(.cat-btn){padding:0}.equipo li .cat-btn{display:inline-flex;align-items:center;min-height:44px;padding:0 16px}}
+.catov{position:fixed;inset:0;z-index:9999;background:#EEEAE1;display:flex;flex-direction:column}
+.catov[hidden]{display:none}
+.catov-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px 8px 16px;background:#1f2a44;color:#EEEAE1;flex:none}
+.catov-t{margin:0;font-size:22px;color:#EEEAE1;font-family:inherit}
+.catov-x{font:inherit;font-size:30px;line-height:1;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;cursor:pointer}
+.catov-x:focus-visible{outline:3px solid #B39557;outline-offset:2px}
+.catov-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:10px 0 30px}
+.catov-body picture,.catov-body img{display:block;width:100%;height:auto;max-width:1200px;margin:0 auto}
+body.catov-abierto{overflow:hidden}

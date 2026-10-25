@@ -34,7 +34,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap"></noscript>
 <link rel="preload" as="image" type="image/webp" href="img/portada2-alto-800.webp" imagesrcset="img/portada2-alto-800.webp 800w, img/portada2-alto-922.webp 922w" imagesizes="100vw" media="(max-width:760px)" fetchpriority="high">
 <link rel="preload" as="image" type="image/webp" href="img/portada2-ancho-1408.webp" imagesrcset="img/portada2-ancho-900.webp 900w, img/portada2-ancho-1408.webp 1408w" imagesizes="100vw" media="(min-width:761px)" fetchpriority="high">
-<link rel="stylesheet" href="estilo.css?v=69">
+<link rel="stylesheet" href="estilo.css?v=70">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":["EventVenue","LocalBusiness"],"@id":"https://eventosmilfor.com/#milfor","name":"Milfor Bodas & Eventos","alternateName":"Floristería Milfor",
  "url":"https://eventosmilfor.com/","image":"https://eventosmilfor.com/img/og-milfor2.jpg","logo":"https://eventosmilfor.com/img/logo.png",
@@ -115,12 +115,12 @@
     <div>
       <h3 class="h3s" data-i18n="e_tit">Montaje completo</h3>
       <ul class="equipo">
-        <li><a href="#sillas" data-i18n="e8">Sillas</a></li><li><a href="#mesas" data-i18n="e_me">Mesas</a></li><li><a href="#lounge" data-i18n="e_lo">Salas lounge</a></li><li><a href="#loza" data-i18n="e3">Vajilla</a></li><li><a href="#cristaleria" data-i18n="e9">Cristalería</a></li><li><a href="#cubiertos" data-i18n="e_cub">Cubertería</a></li><li><a href="#pista" data-i18n="e_pi">Pista de baile y pantalla</a></li><li><a href="#floral" data-i18n="e10">Decoración floral</a></li>
+        <li><button type="button" class="cat-btn" data-cat="sillas" aria-haspopup="dialog" data-i18n="e8">Sillas</button></li><li><button type="button" class="cat-btn" data-cat="mesas" aria-haspopup="dialog" data-i18n="e_me">Mesas</button></li><li><a href="#lounge" data-i18n="e_lo">Salas lounge</a></li><li><button type="button" class="cat-btn" data-cat="loza" aria-haspopup="dialog" data-i18n="e3">Vajilla</button></li><li><button type="button" class="cat-btn" data-cat="cristaleria" aria-haspopup="dialog" data-i18n="e9">Cristalería</button></li><li><button type="button" class="cat-btn" data-cat="cubiertos" aria-haspopup="dialog" data-i18n="e_cub">Cubertería</button></li><li><a href="#pista" data-i18n="e_pi">Pista de baile y pantalla</a></li><li><a href="#floral" data-i18n="e10">Decoración floral</a></li>
         <li class="fijo" data-i18n="e2">Mantelería</li><li class="fijo" data-i18n="e4">Sonido</li><li class="fijo" data-i18n="e6">Tarimas</li>
       </ul>
     </div>
   </div>
-  <div id="sillas" class="sillas">
+  <div id="sillas" hidden class="cat-src sillas">
     <h3 data-i18n="si_tit">Sillas</h3>
     <p class="sillas-sub" data-i18n="si_sub">Conoce algunos de los modelos de sillas que podemos incluir en el montaje de tu evento.</p>
     <figure class="catalogo"><picture>
@@ -128,7 +128,7 @@
       <img src="img/catalogos/sillas-d-1600.webp" srcset="img/catalogos/sillas-d-1600.webp 1600w, img/catalogos/sillas-d-2400.webp 2400w" sizes="(max-width:1000px) 94vw, 960px" width="2400" height="1982" loading="lazy" decoding="async" alt="Catálogo de sillas: Crossback, Crossback alta, Tiffany madera natural, Tiffany transparente, Phoenix dorada, Phoenix transparente, Isabelina, Rimax" data-i18n-alt="si_cat_alt">
     </picture></figure>
   </div>
-  <div id="mesas" class="sillas mesas">
+  <div id="mesas" hidden class="cat-src sillas mesas">
     <h3 data-i18n="me_tit">Mesas</h3>
     <p class="sillas-sub" data-i18n="me_sub">Mesas plegables y de madera para cada tipo de montaje.</p>
     <figure class="catalogo"><picture>
@@ -143,7 +143,7 @@
     <figure class="silla mesa-ancha"><img src="img/lounge/set-lounge-blanco-g.webp" data-hd="img/lounge/set-lounge-blanco-hd.webp" width="1200" height="771" loading="lazy" decoding="async" alt="Set lounge blanco con medidas: sofá de dos plazas 120 x 70 x 80 cm, silla individual 60 x 70 x 80 cm, mesa central 100 x 50 x 40 cm y dos pufs de 40 x 40 x 40 cm" data-i18n-alt="lo_1_alt"><figcaption data-i18n="lo_1">Set lounge blanco</figcaption></figure>
     </div>
   </div>
-  <div id="loza" class="sillas cristaleria loza">
+  <div id="loza" hidden class="cat-src sillas cristaleria loza">
     <h3 data-i18n="lz_tit">Vajilla</h3>
     <p class="sillas-sub" data-i18n="lz_sub">Vajilla blanca en línea redonda y línea cuadrada para vestir la mesa de tu evento.</p>
     <figure class="catalogo"><picture>
@@ -151,7 +151,7 @@
       <img src="img/catalogos/vajilla-d-1600.webp" srcset="img/catalogos/vajilla-d-1600.webp 1600w, img/catalogos/vajilla-d-2400.webp 2400w" sizes="(max-width:1000px) 94vw, 960px" width="2400" height="1424" loading="lazy" decoding="async" alt="Catálogo de vajilla blanca. Línea redonda: Plato pando, Plato tortero, Plato de café, Consomé de dos asas, Pocillo. Línea cuadrada: Plato pando, Plato tortero, Plato de café" data-i18n-alt="lz_cat_alt">
     </picture></figure>
   </div>
-  <div id="cristaleria" class="sillas cristaleria">
+  <div id="cristaleria" hidden class="cat-src sillas cristaleria">
     <h3 data-i18n="cr_tit">Cristalería</h3>
     <p class="sillas-sub" data-i18n="cr_sub">Copas vintage de vidrio tallado en colores y copas clásicas de cristal transparente para dar un toque especial a la mesa de tu evento.</p>
     <figure class="catalogo"><picture>
@@ -159,7 +159,7 @@
       <img src="img/catalogos/cristaleria-d-1600.webp" srcset="img/catalogos/cristaleria-d-1600.webp 1600w, img/catalogos/cristaleria-d-2400.webp 2400w" sizes="(max-width:1000px) 94vw, 960px" width="2400" height="1982" loading="lazy" decoding="async" alt="Catálogo de cristalería: Copa tallada verde, Copa tallada morada, Copa tallada gris humo, Copa tallada ámbar, Copa pompadour de cristal, Copa balón de cristal, Copa tulipán de cristal, Copa de cóctel de cristal" data-i18n-alt="cr_cat_alt">
     </picture></figure>
   </div>
-  <div id="cubiertos" class="sillas cristaleria loza cubiertos">
+  <div id="cubiertos" hidden class="cat-src sillas cristaleria loza cubiertos">
     <h3 data-i18n="cu_tit">Cubertería</h3>
     <p class="sillas-sub" data-i18n="cu_sub">Cubertería plateada y dorada para completar la mesa de tu evento.</p>
     <figure class="catalogo"><picture>
@@ -406,6 +406,6 @@
 <script src="sedes.js?v=18"></script>
 <script src="testimonios.js?v=1"></script>
 <script src="eventos.js?v=3"></script>
-<script src="app.js?v=81"></script>
+<script src="app.js?v=82"></script>
 </body>
 </html>

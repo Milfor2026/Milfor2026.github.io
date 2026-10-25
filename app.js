@@ -285,3 +285,22 @@ b.addEventListener("click",async()=>{b.disabled=true;try{
  if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}
 }catch(e){}
  const u=new URL(location.href);u.searchParams.set("nc",Date.now());location.replace(u.toString())})})();
+// ===== Catálogos: se abren en un visor al tocar el botón (Sillas, Mesas, Vajilla, Cristalería, Cubertería) =====
+(function(){
+ const ov=document.createElement("div");ov.className="catov";ov.hidden=true;ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");ov.setAttribute("aria-labelledby","catov-t");
+ ov.innerHTML='<div class="catov-bar"><p id="catov-t" class="catov-t"></p><button type="button" class="catov-x">×</button></div><div class="catov-body" tabindex="-1"></div>';
+ document.body.appendChild(ov);
+ const tit=ov.querySelector(".catov-t"),body=ov.querySelector(".catov-body"),x=ov.querySelector(".catov-x");let origen=null,conHist=false;
+ const en=()=>document.documentElement.lang=="en";
+ function abrir(k,btn){const src=document.getElementById(k);if(!src)return;const pic=src.querySelector("picture");if(!pic)return;
+  origen=btn;tit.textContent=src.querySelector("h3").textContent;x.setAttribute("aria-label",en()?"Close":"Cerrar");
+  const c=pic.cloneNode(true);c.querySelectorAll("source").forEach(s=>s.sizes="100vw");const im=c.querySelector("img");im.removeAttribute("loading");im.sizes="(max-width:1200px) 100vw, 1200px";im.alt=src.querySelector("img").alt;
+  body.replaceChildren(c);body.scrollTop=0;ov.hidden=false;document.body.classList.add("catov-abierto");x.focus();
+  try{history.pushState({catov:k},"","#catalogo-"+k);conHist=true}catch(e){conHist=false}}
+ function cerrar(desdeHist){if(ov.hidden)return;ov.hidden=true;body.replaceChildren();document.body.classList.remove("catov-abierto");
+  if(!desdeHist&&conHist){conHist=false;history.back()}conHist=false;if(origen)origen.focus({preventScroll:true})}
+ x.onclick=()=>cerrar(false);
+ addEventListener("popstate",()=>{if(!ov.hidden)cerrar(true)});
+ ov.addEventListener("keydown",e=>{if(e.key=="Escape"){e.preventDefault();cerrar(false)}else if(e.key=="Tab"){e.preventDefault();x.focus()}});
+ document.querySelectorAll(".cat-btn[data-cat]").forEach(b=>b.addEventListener("click",()=>abrir(b.dataset.cat,b)));
+})();
