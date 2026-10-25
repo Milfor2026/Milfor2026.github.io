@@ -22,6 +22,7 @@ window.MILFOR_GALERIA = [
   {foto:"lounge",    w:1407, h:1102, titulo:"Zona lounge",             titulo_en:"Lounge area"},
   {foto:"pf-arbol",  w:1066, h:1600, titulo:"Noche bajo el samán · Milfor Casa Campestre", titulo_en:"Night under the saman tree · Milfor Casa Campestre", pos:"50% 35%"},
   {foto:"pf-gaitan", w:1200, h:1600, titulo:"Salón Milfor Gaitán",     titulo_en:"Milfor Gaitán hall",  pos:"50% 50%"},
+  {foto:"pf-mesainglesa", w:1024, h:682, titulo:"Mesa inglesa",        titulo_en:"English-style table"},
   {foto:"pf-novios", cat:"boda", w:1280, h:852,  titulo:"Los novios",              titulo_en:"The couple"},
   {foto:"pf-mesablanca", w:1280, h:854, titulo:"Mesa con flores blancas", titulo_en:"Table with white flowers"},
   {foto:"pf-quince", cat:"quince", w:1600, h:1066, titulo:"Fiesta de quince años",   titulo_en:"Quinceañera celebration"},
