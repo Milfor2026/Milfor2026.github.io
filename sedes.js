@@ -18,7 +18,7 @@ window.MILFOR_SEDES = [
    texto:"Carrera 14 (Av. del Ferrocarril) # 17-57, Girardot, Colombia", texto_en:"Carrera 14 (Av. del Ferrocarril) # 17-57, Girardot, Colombia",
    pisos:[
      {piso:"Primer piso", piso_en:"First floor", nombre:"Milfor Sede Central", nombre_en:"Milfor Sede Central (main office)", desc:"Oficinas de administración, taller y floristería", desc_en:"Administration offices, workshop and flower shop"},
-     {piso:"Segundo piso", piso_en:"Second floor", nombre:"Milfor Paraíso", nombre_en:"Milfor Paraíso", desc:"Salón de eventos cubierto y climatizado, con capacidad para 100 invitados", desc_en:"Covered, air-conditioned event hall for up to 100 guests"}],
+     {piso:"Segundo piso", piso_en:"Second floor", nombre:"Milfor Paraíso", nombre_en:"Milfor Paraíso", desc:"Salón cubierto y climatizado, con capacidad para 100 invitados", desc_en:"Covered, air-conditioned hall for up to 100 guests"}],
    lat:4.2982753, lng:-74.808349, video:"sede-central", video_v:2, mapaImg:"mapa-central", mapaImg_w:1266, mapaImg_h:1600,
    wa:"Milfor Sede Central y Milfor Paraíso (Carrera 14)", wa_en:"Milfor Sede Central and Milfor Paraíso (Carrera 14)",
    lbTit:"Milfor Sede Central y Milfor Paraíso", lbTit_en:"Milfor Sede Central and Milfor Paraíso"},
