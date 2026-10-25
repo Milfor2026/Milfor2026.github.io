@@ -33,6 +33,5 @@ window.MILFOR_GALERIA = [
   {foto:"pf-xv-entrada", cat:"quince", w:1600, h:1066, titulo:"Entrada floral de quince años", titulo_en:"Floral quinceañera entrance"},
   {foto:"pf-ev-50", cat:"evento", w:1179, h:1465, titulo:"Celebración de 50 años", titulo_en:"50th birthday celebration", pos:"50% 70%"},
   {foto:"pf-ev-80", cat:"evento", w:1179, h:1467, titulo:"Celebración de 80 años", titulo_en:"80th birthday celebration", pos:"50% 65%"},
-  {foto:"pf-ev-globos1", cat:"evento", w:1600, h:1066, titulo:"Decoración con globos", titulo_en:"Balloon décor"},
   {foto:"pf-ev-globos2", cat:"evento", w:1600, h:1066, titulo:"Mesa de dulces con globos", titulo_en:"Dessert table with balloons"}
 ];
