@@ -25,7 +25,6 @@ window.MILFOR_GALERIA = [
   {foto:"pf-mesainglesa", w:1024, h:682, titulo:"Mesa inglesa",        titulo_en:"English-style table"},
   {foto:"pf-novios", cat:"boda", w:1280, h:852,  titulo:"Los novios",              titulo_en:"The couple"},
   {foto:"pf-mesablanca", w:1280, h:854, titulo:"Mesa con flores blancas", titulo_en:"Table with white flowers"},
-  {foto:"pf-pista15", cat:"quince", w:1600, h:1066, titulo:"Pista iluminada de quince años", titulo_en:"Lit-up quinceañera dance floor"},
   {foto:"pf-quince", cat:"quince", w:1600, h:1066, titulo:"Fiesta de quince años",   titulo_en:"Quinceañera celebration"},
   {foto:"pf-xv-vanesa", cat:"quince", w:1600, h:1200, titulo:"Montaje de quince años con alas y letras XV", titulo_en:"Quinceañera setup with wings and XV letters", pos:"60% 60%"},
   {foto:"pf-xv-alas", cat:"quince", w:1600, h:1066, titulo:"Sala de quince años con alas iluminadas", titulo_en:"Quinceañera lounge with lit-up wings"},
