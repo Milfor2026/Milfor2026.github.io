@@ -424,3 +424,8 @@ a.srv-link:hover,a.srv-link:focus-visible{transform:translateY(-2px)}
 .loza .sillas-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;max-width:900px;margin:0 auto}
 .loza .silla,.loza .silla:last-child:nth-child(odd){width:160px;grid-column:auto}
 @media (max-width:600px){.loza .sillas-grid{gap:12px}.loza .silla,.loza .silla:last-child:nth-child(odd){width:calc(50% - 6px)}}
+
+/* Sillas: 8 modelos en 4 columnas */
+#sillas .sillas-grid{display:grid;grid-template-columns:repeat(4,1fr);max-width:720px;margin:0 auto}
+#sillas .silla{width:auto}
+@media (max-width:600px){#sillas .sillas-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
