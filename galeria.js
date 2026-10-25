@@ -1,7 +1,7 @@
 // ===== GALERÍA =====
 // Las fotos están en la carpeta fotos/ en tres tamaños (nombre-480 .webp, nombre-800 y nombre-1600 en .webp y .jpg).
 // Para agregar una foto nueva: procésela con /workspace/milfor-web/procesar_fotos.py
-// cat:"boda" o cat:"quince" hace que la foto se abra desde la tarjeta de Servicios correspondiente.
+// cat:"boda", "quince" o "evento" hace que la foto se abra desde la tarjeta de Servicios correspondiente.
 // y agregue una línea aquí con su nombre (sin extensión), su ancho y alto en px, y los títulos.
 window.MILFOR_GALERIA = [
   {foto:"arbol", cat:"boda",     w:1064, h:711,  titulo:"Boda bajo el samán · Milfor Casa Campestre", titulo_en:"Wedding under the saman tree · Milfor Casa Campestre"},
@@ -27,5 +27,12 @@ window.MILFOR_GALERIA = [
   {foto:"pf-novios", cat:"boda", w:1280, h:852,  titulo:"Los novios",              titulo_en:"The couple"},
   {foto:"pf-mesablanca", w:1280, h:854, titulo:"Mesa con flores blancas", titulo_en:"Table with white flowers"},
   {foto:"pf-pista15", cat:"quince", w:1600, h:1066, titulo:"Pista iluminada de quince años", titulo_en:"Lit-up quinceañera dance floor"},
-  {foto:"pf-quince", cat:"quince", w:1600, h:1066, titulo:"Fiesta de quince años",   titulo_en:"Quinceañera celebration"}
+  {foto:"pf-quince", cat:"quince", w:1600, h:1066, titulo:"Fiesta de quince años",   titulo_en:"Quinceañera celebration"},
+  {foto:"pf-xv-vanesa", cat:"quince", w:1600, h:1200, titulo:"Montaje de quince años con alas y letras XV", titulo_en:"Quinceañera setup with wings and XV letters", pos:"60% 60%"},
+  {foto:"pf-xv-alas", cat:"quince", w:1600, h:1066, titulo:"Sala de quince años con alas iluminadas", titulo_en:"Quinceañera lounge with lit-up wings"},
+  {foto:"pf-xv-entrada", cat:"quince", w:1600, h:1066, titulo:"Entrada floral de quince años", titulo_en:"Floral quinceañera entrance"},
+  {foto:"pf-ev-50", cat:"evento", w:1179, h:1465, titulo:"Celebración de 50 años", titulo_en:"50th birthday celebration", pos:"50% 70%"},
+  {foto:"pf-ev-80", cat:"evento", w:1179, h:1467, titulo:"Celebración de 80 años", titulo_en:"80th birthday celebration", pos:"50% 65%"},
+  {foto:"pf-ev-globos1", cat:"evento", w:1600, h:1066, titulo:"Decoración con globos", titulo_en:"Balloon décor"},
+  {foto:"pf-ev-globos2", cat:"evento", w:1600, h:1066, titulo:"Mesa de dulces con globos", titulo_en:"Dessert table with balloons"}
 ];
