@@ -38,16 +38,34 @@ tr.tot td{font-weight:700;border-top:2px solid #333}.small{font-size:12px;color:
 dialog{border:0;border-radius:14px;width:min(94vw,480px);padding:14px}dialog::backdrop{background:#0006}
 .warn{background:#fdecea;color:#7a1c1c;border-radius:10px;padding:10px;font-size:13px}.hide{display:none!important}
 .colors button{width:40px;height:40px;border-radius:50%;border:3px solid #fff;margin-right:6px;box-shadow:0 0 0 1px #999}.colors button.sel{box-shadow:0 0 0 3px #222}
+
+#toast{position:fixed;left:12px;right:12px;bottom:90px;background:#1d2430;color:#fff;border-radius:12px;padding:12px;z-index:20;display:none;align-items:center;gap:10px;box-shadow:0 4px 16px #0005}
+#toast.show{display:flex}#toast button{background:#fff;color:#111;border:0;border-radius:8px;padding:8px 12px;font-weight:700}
+.banner{background:#fff3cd;border:1px solid #e6c200;border-radius:10px;padding:10px;margin-bottom:12px;font-size:14px}
+.banner.alert{background:#fdecea;border-color:#e57373}
+body.lg{font-size:19px}body.lg input,body.lg select,body.lg textarea,body.lg button,body.lg table{font-size:18px}
+body.hc{--bg:#000;--card:#111;--tx:#fff;--mut:#ccc;background:#000;color:#fff}
+body.hc .card,body.hc nav,body.hc #micbar,body.hc header{background:#111;color:#fff;border-color:#444}
+body.hc input,body.hc select,body.hc textarea{background:#000;color:#fff;border-color:#666}
+body.hc .btn.sec{background:#333;color:#fff}body.hc .pend{background:#332;border-color:#aa0}
+body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--ok)}
+@media print{header,nav,#micbar,#toast,.banner,button.btn,#instBanner,#banners,#featExtra{display:none!important}main{padding:0}body{background:#fff;color:#000}}
 </style>
 </head>
 <body>
 <header><h1>Notas y Gastos</h1><button id="instBtn" class="btn sec hide" style="margin:0;padding:6px 10px">Instalar app</button><select id="profSel" aria-label="Perfil"></select></header>
 <div id="instBanner" class="hide" style="background:#fff3cd;padding:8px 12px;font-size:14px">Puede instalar esta app en su pantalla principal. <button class="btn" id="instBanGo" style="padding:6px 10px">Instalar</button> <button class="btn sec" id="instBanX" style="padding:6px 10px">Ahora no</button></div>
 <nav><button data-tab="fin" class="on">Finanzas</button><button data-tab="notas">Notas</button><button data-tab="mant">Mantenimiento</button><button data-tab="aj">Ajustes</button></nav>
+<div id="banners"></div>
 <main>
 <section id="tab-fin">
  <div class="card"><div class="row"><div><label>Mes</label><input type="month" id="mes"></div></div></div>
  <div id="pendBox"></div>
+ <div id="featExtra">
+ <div class="card"><h2>Comparación y gráfica</h2><canvas id="chart" width="720" height="220" style="width:100%;height:auto;background:#fafafa;border-radius:8px"></canvas><div id="cmpBox" class="small" style="margin-top:8px;color:var(--tx)"></div>
+  <div class="row" style="margin-top:8px"><button class="btn sec" id="expImg">Guardar resumen (PNG)</button><button class="btn sec" id="expPdf">Imprimir / PDF</button><button class="btn sec" id="expShare">Compartir resumen</button></div></div>
+ <div class="card"><h2>Buscar gastos</h2><div class="row"><input id="histQ" placeholder="Nota o monto (ej. arena o 20.50)"><button class="btn" id="histGo" style="flex:0 0 auto">Buscar</button></div><div id="histRes"></div></div>
+ </div>
  <div class="card hide" id="setup"></div>
  <div class="card" id="presCard"><h2>Presupuesto del mes</h2><table id="tabla"></table><p class="small">Toque una categoría para ver, editar o borrar sus gastos.</p></div>
  <div class="card"><h2>Resumen del mes</h2><div id="resumen"></div><p class="small">Fijos y variables deben quedar en cero al pagarse; solo gastos y ciegos pueden terminar por encima o por debajo.</p></div>
@@ -81,12 +99,25 @@ dialog{border:0;border-radius:14px;width:min(94vw,480px);padding:14px}dialog::ba
   <label>Ingreso / total mensual (USD)</label><input id="pIncome" inputmode="decimal"><button class="btn" id="pSave">Guardar perfil</button></div>
  <div class="card"><h2>Categorías</h2><div id="catEd"></div><button class="btn sec" id="catAdd">+ Agregar categoría</button></div>
  <div class="card"><h2>Voz</h2><label><input type="checkbox" id="mute" style="width:auto"> Silenciar respuestas en voz alta</label>
+  <label><input type="checkbox" id="wakeOn" style="width:auto"> Escuchar solo con palabra clave</label>
+  <label>Palabra clave</label><input id="wakeWord" placeholder="oye app">
+  <p class="small">Con la palabra clave activada, diga «oye app» y luego el comando. Así evita que anote conversaciones de fondo.</p>
   <label>Dictado con teclado (si el micrófono no funciona, dicte aquí con el micrófono del teclado y toque Enviar)</label><div class="row"><input id="kbd"><button class="btn" id="kbdGo" style="flex:0 0 auto">Enviar</button></div></div>
+ <div class="card"><h2>Pantalla y seguridad</h2>
+  <label><input type="checkbox" id="lgTxt" style="width:auto"> Letra grande</label>
+  <label><input type="checkbox" id="hiCon" style="width:auto"> Alto contraste</label>
+  <label>Bloqueo automático (minutos; 0 = desactivado)</label><input id="lockMin" inputmode="numeric" placeholder="5">
+  <button class="btn sec" id="lockNow">Bloquear ahora</button></div>
+ <div class="card"><h2>Copiar presupuesto a otro perfil</h2>
+  <label>Copiar las categorías de este perfil a</label><select id="copyTo"></select>
+  <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
+  <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card"><h2>Aplicación</h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card"><h2>Respaldo</h2><div class="warn">Todo se guarda solo en este navegador de este teléfono. No hay conexión con bancos ni nube. Si borra los datos del navegador o cambia de teléfono, se pierde todo. Haga copias de respaldo seguido.</div>
   <button class="btn" id="bExp">Exportar respaldo (JSON)</button><button class="btn sec" id="bCsv">Exportar gastos (CSV)</button><button class="btn sec" id="bImp">Importar respaldo</button><input type="file" id="bFile" accept=".json,application/json" class="hide"></div>
 </section>
 </main>
+<div id="toast"><span id="toastMsg"></span><button type="button" id="toastUndo">Deshacer</button></div>
 <div id="micbar"><div class="row" style="align-items:center"><button id="mic" aria-label="Micrófono">🎤</button><div style="flex:1"><div id="micstate">Micrófono apagado — toque para escuchar</div><div id="interim"></div></div></div></div>
 <dialog id="dlg"><form method="dialog" id="dlgForm"></form></dialog>
 <script>
@@ -377,11 +408,117 @@ $('ajShare').onclick=doShare;
 /* ---------- tabs ---------- */
 document.querySelector('nav').onclick=e=>{const t=e.target.dataset.tab;if(t)setTab(t)};
 function setTab(t){tab=t;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));['fin','notas','mant','aj'].forEach(x=>$('tab-'+x).classList.toggle('hide',x!==t))}
+/* ===== v5 features ===== */
+if(S.wakeOn==null)S.wakeOn=true;if(!S.wakeWord)S.wakeWord='oye app';if(S.lockMin==null)S.lockMin=5;if(S.lastActivity==null)S.lastActivity=Date.now();
+let undoStack=null,undoTimer=null,locked=false,armed=false;
+function dueDays(c){return String(c.due||'').match(/\d+/g)?.map(Number).filter(d=>d>=1&&d<=31)||[]}
+function prevMonth(m){const[y,x]=m.split('-').map(Number);const d=new Date(y,x-2,1);return d.getFullYear()+'-'+pad(d.getMonth()+1)}
+function pushUndo(label,fn){undoStack={label,fn};clearTimeout(undoTimer);const t=$('toast');$('toastMsg').textContent=label;t.classList.add('show');undoTimer=setTimeout(()=>{undoStack=null;t.classList.remove('show')},10000)}
+function doUndo(){if(!undoStack)return 'No hay nada que deshacer.';const L=undoStack.label;undoStack.fn();undoStack=null;clearTimeout(undoTimer);$('toast').classList.remove('show');save();render();return 'Deshecho: '+L}
+$('toastUndo').onclick=()=>speak(doUndo());
+function dueSoon(p){const now=new Date(),m=today().slice(0,7),out=[];
+ for(const c of p.cats){if(!(c.type==='fijo'||c.type==='variable'))continue;if(catStat(p,c,m).paid)continue;
+  for(const day of dueDays(c)){const due=new Date(now.getFullYear(),now.getMonth(),day);const diff=Math.round((due-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/864e5);
+   if(diff>=0&&diff<=3)out.push({c,day,diff})}}return out}
+function runAutoPays(p){const m=today().slice(0,7),d=new Date().getDate();let n=0;
+ for(const c of p.cats){if(!c.auto||c.type!=='fijo')continue;const days=dueDays(c);if(!days.length)continue;const due=days.filter(x=>x<=d);if(!due.length)continue;
+  if(catStat(p,c,m).paid)continue;const exp=(c.monthAmt&&c.monthAmt[m]!=null)?+c.monthAmt[m]:(+c.budget||0);if(!(exp>0))continue;
+  const dt=m+'-'+pad(Math.max(...due));addExpense(p,c.id,exp,dt,'automático');n++}return n}
+function searchHist(q){const p=P();q=String(q||'').trim();if(!q)return[];const nq=norm(q);const amt=parseFloat(q.replace(/[$,]/g,''));
+ return p.expenses.filter(e=>{if(nq&&norm(e.note||'').includes(nq))return true;if(!isNaN(amt)&&Math.abs(e.amount-amt)<0.009)return true;const cn=(p.cats.find(c=>c.id===e.catId)||{}).name||'';return nq&&norm(cn).includes(nq)}).sort((a,b)=>b.date.localeCompare(a.date))}
+function showHist(list,q){const p=P();$('histQ').value=q||$('histQ').value;$('histRes').innerHTML=list.length?list.slice(0,40).map(e=>`<div class="card" style="box-shadow:none;border:1px solid #eee"><b>${money(e.amount)}</b> · ${esc((p.cats.find(c=>c.id===e.catId)||{}).name||'')} · ${fmtDate(e.date)}<br><span class="small">${esc(e.note)}</span></div>`).join(''):'<p class="small">Sin resultados.</p>'}
+function drawChart(p){const cv=$('chart');if(!cv)return;const ctx=cv.getContext('2d');const W=cv.width,H=cv.height;ctx.clearRect(0,0,W,H);ctx.fillStyle='#fafafa';ctx.fillRect(0,0,W,H);
+ const months=[];for(let i=5;i>=0;i--){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);months.push(d.getFullYear()+'-'+pad(d.getMonth()+1))}
+ const vals=months.map(m=>r2(p.expenses.filter(e=>e.month===m).reduce((a,e)=>a+e.amount,0)));const max=Math.max(1,...vals);
+ ctx.strokeStyle='#ccc';ctx.beginPath();ctx.moveTo(40,10);ctx.lineTo(40,H-30);ctx.lineTo(W-10,H-30);ctx.stroke();
+ const bw=(W-60)/months.length*0.7,gap=(W-60)/months.length;
+ vals.forEach((v,i)=>{const h=(H-50)*(v/max),x=50+i*gap,y=H-30-h;ctx.fillStyle=COLORS[p.color]||'#1f5fbf';ctx.fillRect(x,y,bw,h);ctx.fillStyle='#666';ctx.font='12px system-ui';ctx.fillText(months[i].slice(5),x,H-12);if(v)ctx.fillText('$'+Math.round(v),x,y-4)})}
+function buildSummaryCanvas(){const p=P(),cv=document.createElement('canvas');cv.width=720;cv.height=Math.max(400,120+p.cats.length*28);const ctx=cv.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,cv.width,cv.height);ctx.fillStyle='#1f3a5f';ctx.font='bold 22px system-ui';ctx.fillText('Resumen '+month+' — '+p.name,24,36);ctx.font='14px system-ui';ctx.fillStyle='#333';let y=70;p.cats.forEach(c=>{const s=catStat(p,c,month);ctx.fillText(c.name,24,y);ctx.fillText(money(s.b),300,y);ctx.fillText(money(s.g),420,y);ctx.fillText(money(s.s),540,y);y+=28});const x=totals(p,month);ctx.font='bold 14px system-ui';ctx.fillText('Total '+money(x.b)+' / '+money(x.g)+' / '+money(x.s),24,y+10);return cv}
+function renderBanners(){const el=$('banners');if(!el)return;let h='';const days=S.lastExport?((Date.now()-S.lastExport)/864e5):999;
+ if(days>7)h+=`<div class="banner" id="bakBan">Hace más de 7 días que no exporta un respaldo. <button class="btn" id="bakGo" style="padding:6px 10px">Exportar ahora</button> <button class="btn sec" id="bakImp" style="padding:6px 10px">Importar</button></div>`;
+ const soon=dueSoon(P());if(soon.length)h+=`<div class="banner alert" id="dueBan">Pagos que vencen en 3 días o menos: ${soon.map(x=>esc(x.c.name)+' (día '+x.day+')').join(', ')}.</div>`;
+ el.innerHTML=h;const bg=$('bakGo');if(bg)bg.onclick=()=>$('bExp').click();const bi=$('bakImp');if(bi)bi.onclick=()=>$('bFile').click()}
+function touch(){S.lastActivity=Date.now()}
+['pointerdown','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,touch,{passive:true}));
+function lockProfile(){locked=true;micOn=false;if(rec)try{rec.abort()}catch(e){}setMic();
+ dlg(`<h2>Perfil bloqueado</h2><p>Por seguridad, la app se bloqueó. Elija un perfil para continuar.</p><label>Perfil</label><select id="lkP">${S.profiles.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('')}</select><label>PIN (si tiene)</label><input id="lkPin" inputmode="numeric"><button type="button" class="btn" id="lkOk">Entrar</button>`,
+ ()=>{$('lkOk').onclick=()=>{const np=S.profiles.find(p=>p.id===$('lkP').value);if(np.pin&&$('lkPin').value!==np.pin)return alert('PIN incorrecto');S.current=np.id;locked=false;S.lastActivity=Date.now();save();$('dlg').close();render()}})}
+setInterval(()=>{if(locked||!(S.lockMin>0))return;if(Date.now()-(S.lastActivity||0)>S.lockMin*60*1000)lockProfile()},15000);
+function notifyDues(){const soon=dueSoon(P());if(!soon.length||!('Notification' in window))return;
+ if(Notification.permission==='granted'){try{new Notification('Pagos próximos',{body:soon.map(x=>x.c.name+' el '+x.day).join(', ')})}catch(e){}}
+ else if(Notification.permission!=='denied')Notification.requestPermission().then(p=>{if(p==='granted')notifyDues()}).catch(()=>{})}
+
+/* wrap addExpense to return id */
+const _addExpense=addExpense; addExpense=function(p,catId,amount,date,note){const d=date||today();const e={id:uid(),catId,amount:r2(amount),date:d,month:(date?d.slice(0,7):month),note:note||'',created:new Date().toISOString()};p.expenses.push(e);return e};
+
+/* wrap savePending for undo */
+const _savePending=savePending; savePending=function(){if(!pending.length)return 'No hay gastos pendientes.';const before=P().expenses.map(e=>e.id);const msg=_savePending();const ids=P().expenses.filter(e=>!before.includes(e.id)).map(e=>e.id);if(ids.length)pushUndo('Gasto guardado',()=>{P().expenses=P().expenses.filter(e=>!ids.includes(e.id))});return msg};
+
+/* wrap handleFinance */
+const _handleFinance=handleFinance; handleFinance=function(text){const t=norm(text);
+ if(/\bdeshacer\b/.test(t))return doUndo();
+ if(/\bbusca\b|\bbuscar\b/.test(t)){const q=t.replace(/.*\bbusc(?:a|ar)\b/,'').trim();const r=searchHist(q);showHist(r,q);return r.length?'Encontré '+r.length+' gasto'+(r.length>1?'s':'')+' con '+q+'.':'No encontré gastos con '+q+'.'}
+ return _handleFinance(text)};
+
+/* wrap answerQuery for due soon */
+const _answerQuery=answerQuery; answerQuery=function(text,p){const t=norm(text).replace(/[¿?¡!.,]/g,' ').replace(/\s+/g,' ');
+ if(/que pagos faltan|que me falta pagar|pagos pendientes|que falta por pagar|que vence|que me vence/.test(t)){const L=pendingPays(p,month);const soon=dueSoon(p);let msg=L.length?'Faltan '+L.length+' pagos: '+L.map(c=>c.name+(c.due?', vence el '+c.due:'')).join('; ')+'.':'Todos los pagos fijos del mes están confirmados.';if(soon.length)msg+=' Atención: en los próximos 3 días vence '+soon.map(x=>x.c.name+' el '+x.day).join(', ')+'.';return msg}
+ return _answerQuery(text,p)};
+
+/* wake word: wrap setMic + recognition result via patching startRec */
+const _setMic=setMic; setMic=function(){_setMic();if(!micOn||speaking||!SR)return;const st=$('micstate');if(S.wakeOn&&!armed&&micOn&&!speaking)st.textContent='🟡 Esperando «'+(S.wakeWord||'oye app')+'»…'};
+const _startRec=startRec; startRec=function(){if(!SR||!micOn||speaking)return;try{rec=new SR();rec.lang='es-US';rec.continuous=true;rec.interimResults=true;
+ rec.onresult=e=>{let im='';for(let i=e.resultIndex;i<e.results.length;i++){const r=e.results[i];if(r.isFinal){let tx=r[0].transcript;if(S.wakeOn){const ww=norm(S.wakeWord||'oye app');const nt=norm(tx);const ix=nt.indexOf(ww);if(!armed){if(ix<0)continue;armed=true;setMic();const raw=(S.wakeWord||'oye app');const ri=nt.indexOf(ww);tx=tx.trim().split(/\s+/).slice(norm(tx.trim()).split(/\s+/).indexOf(ww.split(/\s+/)[0])+(ww.split(/\s+/).length-1)+1).join(' ');if(!tx.trim()){$('interim').textContent='Le escucho…';continue}} }handleTranscript(tx);if(S.wakeOn){armed=false;setMic()}}else im+=r[0].transcript}if(im)$('interim').textContent='… '+im};
+ rec.onerror=e=>{if(e.error==='not-allowed'||e.error==='service-not-allowed'){micOn=false;setMic();$('interim').textContent='Permiso de micrófono negado. Ábralo desde https o use el dictado con teclado.'}};
+ rec.onend=()=>{rec=null;if(micOn&&!speaking)setTimeout(startRec,300)};rec.start()}catch(e){setTimeout(startRec,800)}};
+$('mic').onclick=()=>{micOn=!micOn;armed=false;if(micOn)startRec();else if(rec)try{rec.abort()}catch(e){}setMic()};
+
+/* wrap renderFin for chart + deltas */
+const _renderFin=renderFin; renderFin=function(){_renderFin();const p=P();drawChart(p);const pm=prevMonth(month);
+ if($('cmpBox'))$('cmpBox').innerHTML='Comparado con '+pm+': '+p.cats.slice(0,8).map(c=>{const g=spentIn(p,c.id,month),pv=spentIn(p,c.id,pm),d=r2(g-pv);return esc(c.name)+' '+(d>0?'▲':d<0?'▼':'=')+' '+money(Math.abs(d))}).join(' · ');
+ document.querySelectorAll('#tabla tr.cat').forEach(tr=>{const c=p.cats.find(x=>x.id===tr.dataset.cat);if(!c)return;const s=catStat(p,c,month),prev=spentIn(p,c.id,pm),dlt=r2(s.g-prev);
+  if(prev||s.g){const d=document.createElement('div');d.className='small';d.innerHTML=`<span class="delta ${dlt>0?'up':dlt<0?'down':''}">${dlt>0?'▲':dlt<0?'▼':'='} ${money(Math.abs(dlt))} vs mes ant.</span>`;tr.cells[0].appendChild(d)}
+  if(c.auto){const d=document.createElement('span');d.className='due';d.textContent='pago automático';tr.cells[0].appendChild(d)}
+  const e=p.expenses.find(e=>e.catId===c.id&&e.month===month&&/automático/.test(e.note||''));if(e){const t=document.createElement('span');t.className='tag';t.textContent='automático';tr.cells[0].appendChild(t)}})};
+
+/* wrap gAdd for undo */
+const _gAdd=$('gAdd').onclick; $('gAdd').onclick=()=>{const p=P(),before=p.expenses.map(e=>e.id);_gAdd();const neu=p.expenses.filter(e=>!before.includes(e.id));if(neu.length)pushUndo('Gasto guardado',()=>{P().expenses=P().expenses.filter(e=>!neu.some(n=>n.id===e.id))})};
+
+/* wrap renderAj for new settings + auto checkbox */
+const _renderAj=renderAj; renderAj=function(){_renderAj();const p=P();
+ if($('wakeOn')){$('wakeOn').checked=!!S.wakeOn;$('wakeWord').value=S.wakeWord||'oye app';$('lgTxt').checked=!!S.largeText;$('hiCon').checked=!!S.hiContrast;$('lockMin').value=S.lockMin??5;$('copyTo').innerHTML=S.profiles.filter(x=>x.id!==p.id).map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');document.body.classList.toggle('lg',!!S.largeText);document.body.classList.toggle('hc',!!S.hiContrast)}
+ // inject auto checkbox into category editors if missing
+ $('catEd').querySelectorAll('[data-x]').forEach(x=>{if(x.querySelector('[data-f=auto]'))return;const c=p.cats.find(c=>c.id===x.dataset.x);const lab=document.createElement('label');lab.style.cssText='flex:0 0 auto;margin:0';lab.innerHTML=`<input type="checkbox" style="width:auto" data-f="auto"${c&&c.auto?' checked':''}> automático`;x.appendChild(lab)});
+ const btn=$('catSave');if(btn&&!btn._autoHook){btn._autoHook=true;const prev=btn.onclick; $('catEd').addEventListener('click',e=>{if(e.target.id==='catSave'){setTimeout(()=>{$('catEd').querySelectorAll('[data-x]').forEach(x=>{const c=P().cats.find(c=>c.id===x.dataset.x);if(c&&x.querySelector('[data-f=auto]'))c.auto=x.querySelector('[data-f=auto]').checked});save()},0)}})}};
+
+$('wakeOn').onchange=e=>{S.wakeOn=e.target.checked;armed=false;save();setMic()};
+$('wakeWord').onchange=e=>{S.wakeWord=(e.target.value.trim()||'oye app');save();setMic()};
+$('lgTxt').onchange=e=>{S.largeText=e.target.checked;save();document.body.classList.toggle('lg',S.largeText)};
+$('hiCon').onchange=e=>{S.hiContrast=e.target.checked;save();document.body.classList.toggle('hc',S.hiContrast);drawChart(P())};
+$('lockMin').onchange=e=>{S.lockMin=Math.max(0,parseInt(e.target.value)||0);save()};
+$('lockNow').onclick=()=>lockProfile();
+$('copyBudget').onclick=()=>{const to=S.profiles.find(x=>x.id===$('copyTo').value);if(!to)return;if(!confirm('¿Copiar las categorías de '+P().name+' a '+to.name+'? Se reemplazan las categorías destino (no los gastos).'))return;
+ to.cats=P().cats.map(c=>({id:uid(),name:c.name,budget:c.budget,due:c.due,aliases:[...(c.aliases||[])],type:c.type||'gasto',carry:!!c.carry,cycle:c.cycle||0,capOn:!!c.capOn,auto:!!c.auto,monthAmt:{},carryStart:c.carry?today().slice(0,7):undefined}));to.income=P().income;save();alert('Categorías copiadas a '+to.name+'.')};
+$('histGo').onclick=()=>{const q=$('histQ').value;showHist(searchHist(q),q)};$('histQ').onkeydown=e=>{if(e.key==='Enter')$('histGo').click()};
+$('expImg').onclick=()=>{const cv=buildSummaryCanvas();cv.toBlob(b=>{if(!b)return;const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='resumen-'+month+'.png';a.click()})};
+$('expPdf').onclick=()=>window.print();
+$('expShare').onclick=async()=>{const cv=buildSummaryCanvas();const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const file=new File([blob],'resumen-'+month+'.png',{type:'image/png'});
+ if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:'Resumen '+month,text:'Resumen de gastos '+month})}catch(e){}}
+ else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='resumen-'+month+'.png';a.click()}};
+const _bExp=$('bExp').onclick;$('bExp').onclick=()=>{S.lastExport=Date.now();save();_bExp();renderBanners()};
+
+/* wrap render */
+const _render=render; render=function(){const an=runAutoPays(P());if(an)save();_render();renderBanners()};
+
+notifyDues();
+
+
 function render(){applyAccent();renderProfiles();renderFin();renderSetup();renderInstall();renderShare([...$('nShare').querySelectorAll('input:checked')].map(i=>i.value));renderNotes();renderMaint();renderAj();setMic()}
-render();fmtChange();firstRun();
+render();fmtChange();firstRun();renderBanners();
 if('speechSynthesis' in window)speechSynthesis.onvoiceschanged=()=>{};
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});
-window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name)};
+
+window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo};
 })();
 </script>
 </body>
