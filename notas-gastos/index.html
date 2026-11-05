@@ -41,13 +41,15 @@ dialog{border:0;border-radius:14px;width:min(94vw,480px);padding:14px}dialog::ba
 </style>
 </head>
 <body>
-<header><h1>Notas y Gastos</h1><select id="profSel" aria-label="Perfil"></select></header>
+<header><h1>Notas y Gastos</h1><button id="instBtn" class="btn sec hide" style="margin:0;padding:6px 10px">Instalar app</button><select id="profSel" aria-label="Perfil"></select></header>
+<div id="instBanner" class="hide" style="background:#fff3cd;padding:8px 12px;font-size:14px">Puede instalar esta app en su pantalla principal. <button class="btn" id="instBanGo" style="padding:6px 10px">Instalar</button> <button class="btn sec" id="instBanX" style="padding:6px 10px">Ahora no</button></div>
 <nav><button data-tab="fin" class="on">Finanzas</button><button data-tab="notas">Notas</button><button data-tab="mant">Mantenimiento</button><button data-tab="aj">Ajustes</button></nav>
 <main>
 <section id="tab-fin">
  <div class="card"><div class="row"><div><label>Mes</label><input type="month" id="mes"></div></div></div>
  <div id="pendBox"></div>
- <div class="card"><h2>Presupuesto del mes</h2><table id="tabla"></table><p class="small">Toque una categoría para ver, editar o borrar sus gastos.</p></div>
+ <div class="card hide" id="setup"></div>
+ <div class="card" id="presCard"><h2>Presupuesto del mes</h2><table id="tabla"></table><p class="small">Toque una categoría para ver, editar o borrar sus gastos.</p></div>
  <div class="card"><h2>Resumen del mes</h2><div id="resumen"></div><p class="small">Fijos y variables deben quedar en cero al pagarse; solo gastos y ciegos pueden terminar por encima o por debajo.</p></div>
  <div class="card"><h2>Agregar gasto o pago</h2>
   <div class="row"><div><label>Categoría</label><select id="gCat"></select></div><div><label>Monto (USD)</label><input id="gMonto" inputmode="decimal" placeholder="0.00"></div></div>
@@ -80,6 +82,7 @@ dialog{border:0;border-radius:14px;width:min(94vw,480px);padding:14px}dialog::ba
  <div class="card"><h2>Categorías</h2><div id="catEd"></div><button class="btn sec" id="catAdd">+ Agregar categoría</button></div>
  <div class="card"><h2>Voz</h2><label><input type="checkbox" id="mute" style="width:auto"> Silenciar respuestas en voz alta</label>
   <label>Dictado con teclado (si el micrófono no funciona, dicte aquí con el micrófono del teclado y toque Enviar)</label><div class="row"><input id="kbd"><button class="btn" id="kbdGo" style="flex:0 0 auto">Enviar</button></div></div>
+ <div class="card"><h2>Aplicación</h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card"><h2>Respaldo</h2><div class="warn">Todo se guarda solo en este navegador de este teléfono. No hay conexión con bancos ni nube. Si borra los datos del navegador o cambia de teléfono, se pierde todo. Haga copias de respaldo seguido.</div>
   <button class="btn" id="bExp">Exportar respaldo (JSON)</button><button class="btn sec" id="bCsv">Exportar gastos (CSV)</button><button class="btn sec" id="bImp">Importar respaldo</button><input type="file" id="bFile" accept=".json,application/json" class="hide"></div>
 </section>
@@ -107,7 +110,7 @@ function seedCats(){return [['Mercado',600],['Gatitos',150],['IA',110,'',['intel
 function newProfile(name,color,seed){return {id:uid(),name,color,pin:'',income:seed?5392.48:0,cats:seed?seedCats():[],expenses:[],books:[{id:uid(),name:'Carro'}],maint:[]}}
 function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.profiles)return d}catch(e){}
  const p=[newProfile('Ricardo','azul',true),newProfile('Esposa','rojo'),newProfile('Hija 1','amarillo'),newProfile('Hija 2','verde')];
- return {profiles:p,notes:[],current:p[0].id,mute:false}}
+ return {profiles:p,notes:[],current:p[0].id,mute:false,firstRun:true}}
 let S=load();const save=()=>localStorage.setItem(KEY,JSON.stringify(S));save();
 const P=()=>S.profiles.find(p=>p.id===S.current)||S.profiles[0];
 let tab='fin',month=today().slice(0,7),pending=[],noteDraftEdit=null,maintEdit=null;
@@ -342,11 +345,40 @@ $('bCsv').onclick=()=>{const p=P(),q=s=>'"'+String(s).replace(/"/g,'""')+'"';con
 $('bImp').onclick=()=>$('bFile').click();
 $('bFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!d.profiles)throw 0;if(confirm('Esto reemplaza TODOS los datos de este teléfono con el respaldo. ¿Continuar?')){S=d;save();render()}}catch(x){alert('Archivo de respaldo no válido.')}e.target.value=''};
 
+/* ---------- setup wizard ---------- */
+function setupRow(){return `<div class="row su" style="margin-bottom:6px;flex-wrap:wrap"><input placeholder="Nombre (ej. Mercado)" data-f="n" style="flex:2 1 140px"><input placeholder="Monto" inputmode="decimal" data-f="b" style="flex:1 1 70px"><select data-f="t" style="flex:1 1 110px">${Object.entries(TYPES).map(([k,v])=>`<option value="${k}"${k==='gasto'?' selected':''}>${v}</option>`).join('')}</select><input placeholder="Vence (día)" data-f="d" style="flex:1 1 70px"></div>`}
+function renderSetup(){const p=P(),el=$('setup'),empty=!p.cats.length;el.classList.toggle('hide',!empty);$('presCard').classList.toggle('hide',empty);if(!empty){el.innerHTML='';return}
+ if(el.dataset.pid===p.id&&el.innerHTML)return;el.dataset.pid=p.id;
+ el.innerHTML=`<h2>Arme su presupuesto, ${esc(p.name)}</h2><p class="small">Escriba sus categorías con el monto mensual. Solo usted las ve en este perfil.</p><div id="suRows">${setupRow()}${setupRow()}${setupRow()}</div><button class="btn sec" id="suAdd">+ Agregar otra</button><label>Total mensual (opcional, para ver lo sin distribuir)</label><input id="suTot" inputmode="decimal"><button class="btn" id="suSave">Guardar presupuesto</button>${p.id!==S.profiles[0].id?'<button class="btn sec" id="suCopy">Usar las 16 categorías de ejemplo</button>':''}`;
+ $('suAdd').onclick=()=>$('suRows').insertAdjacentHTML('beforeend',setupRow());
+ const cp=$('suCopy');if(cp)cp.onclick=()=>{if(confirm('¿Empezar con las 16 categorías de ejemplo? Luego puede cambiarlas.')){p.cats=seedCats();p.income=5392.48;save();render()}};
+ $('suSave').onclick=()=>{const L=[...$('suRows').querySelectorAll('.su')].map(r=>({n:r.querySelector('[data-f=n]').value.trim(),b:parseFloat(String(r.querySelector('[data-f=b]').value).replace(/[$,]/g,''))||0,t:r.querySelector('[data-f=t]').value,d:r.querySelector('[data-f=d]').value.trim()})).filter(x=>x.n);
+  if(!L.length)return alert('Escriba al menos una categoría.');L.forEach(x=>p.cats.push({id:uid(),name:x.n,budget:r2(x.b),due:x.d,aliases:[],type:x.t,carry:false,cycle:0,capOn:false,monthAmt:{}}));p.income=r2(parseFloat($('suTot').value)||0);el.innerHTML='';save();render()}}
+/* ---------- first run ---------- */
+function firstRun(){if(!S.firstRun)return;dlg(`<h2>Bienvenido</h2><p>¿Quién va a usar la app en este teléfono?</p><label>Perfil</label><select id="frP">${S.profiles.map((p,i)=>`<option value="${p.id}">${esc(p.name)}${i===0?' (dueño)':''}</option>`).join('')}</select><label>Su nombre</label><input id="frN" value="${esc(S.profiles[0].name)}"><label id="frCL"><input type="checkbox" id="frC" style="width:auto" checked> Empezar con las 16 categorías de ejemplo</label><button type="button" class="btn" id="frOk">Empezar</button>`,
+ ()=>{const sync=()=>{const p=S.profiles.find(x=>x.id===$('frP').value),own=p.id===S.profiles[0].id;$('frN').value=p.name;$('frC').checked=own};$('frP').onchange=sync;
+  $('frOk').onclick=()=>{const p=S.profiles.find(x=>x.id===$('frP').value),own=p.id===S.profiles[0].id,want=$('frC').checked;p.name=$('frN').value.trim()||p.name;
+   if(own&&!want){p.cats=[];p.income=0}if(!own&&want&&!p.cats.length){p.cats=seedCats();p.income=5392.48}
+   S.current=p.id;S.firstRun=false;save();$('dlg').close();render()}})}
+/* ---------- install & share ---------- */
+let deferredPrompt=null;const APPURL='https://eventosmilfor.com/notas-gastos/';
+const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true||!!S.installed;
+function renderInstall(){const st=isStandalone();$('instBtn').classList.toggle('hide',st||!deferredPrompt);$('ajInst').classList.toggle('hide',st);$('instBanner').classList.toggle('hide',st||!deferredPrompt||!!S.bannerSeen);$('instState').textContent=st?'La app ya está instalada en este teléfono.':''}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;renderInstall()});
+window.addEventListener('appinstalled',()=>{deferredPrompt=null;S.installed=true;save();renderInstall()});
+async function doInstall(){S.bannerSeen=true;save();if(deferredPrompt){deferredPrompt.prompt();try{const c=await deferredPrompt.userChoice;if(c&&c.outcome==='accepted'){S.installed=true;save()}}catch(e){}deferredPrompt=null;renderInstall();return}
+ renderInstall();dlg(`<h2>Instalar la app</h2><p>En Chrome: toque los <b>tres puntos ⋮</b> arriba a la derecha y elija <b>Agregar a pantalla principal</b> o <b>Instalar app</b>.</p><p>En Samsung Internet: toque el menú <b>☰</b> y elija <b>Agregar página a</b> → <b>Pantalla de inicio</b>.</p><p class="small">Debe abrirla desde ${APPURL}</p><button class="btn">Entendido</button>`)}
+$('instBtn').onclick=doInstall;$('ajInst').onclick=doInstall;$('instBanGo').onclick=doInstall;$('instBanX').onclick=()=>{S.bannerSeen=true;save();renderInstall()};
+const SHARETXT='Le comparto la app Notas y Gastos por voz. Ábrala en su teléfono e instálela en la pantalla principal. Cada persona la instala en su propio teléfono y sus datos quedan privados solo en ese teléfono.';
+async function doShare(){if(navigator.share){try{await navigator.share({title:'Notas y Gastos',text:SHARETXT,url:APPURL});return}catch(e){if(e&&e.name==='AbortError')return}}
+ dlg(`<h2>Compartir app</h2><p class="small">${SHARETXT}</p><a class="btn" id="shWa" href="https://wa.me/?text=${encodeURIComponent(SHARETXT+' '+APPURL)}" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">Enviar por WhatsApp</a><button type="button" class="btn sec" id="shCp">Copiar enlace</button><p class="small" id="shMsg"></p><button class="btn sec">Cerrar</button>`,
+ ()=>{$('shCp').onclick=async()=>{const t=SHARETXT+' '+APPURL;let ok=false;try{await navigator.clipboard.writeText(t);ok=true}catch(e){try{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();ok=document.execCommand('copy');ta.remove()}catch(x){}}$('shMsg').textContent=ok?'Enlace copiado.':'No se pudo copiar; mantenga presionado el enlace: '+APPURL}})}
+$('ajShare').onclick=doShare;
 /* ---------- tabs ---------- */
 document.querySelector('nav').onclick=e=>{const t=e.target.dataset.tab;if(t)setTab(t)};
 function setTab(t){tab=t;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));['fin','notas','mant','aj'].forEach(x=>$('tab-'+x).classList.toggle('hide',x!==t))}
-function render(){applyAccent();renderProfiles();renderFin();renderShare([...$('nShare').querySelectorAll('input:checked')].map(i=>i.value));renderNotes();renderMaint();renderAj();setMic()}
-render();fmtChange();
+function render(){applyAccent();renderProfiles();renderFin();renderSetup();renderInstall();renderShare([...$('nShare').querySelectorAll('input:checked')].map(i=>i.value));renderNotes();renderMaint();renderAj();setMic()}
+render();fmtChange();firstRun();
 if('speechSynthesis' in window)speechSynthesis.onvoiceschanged=()=>{};
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});
 window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name)};
