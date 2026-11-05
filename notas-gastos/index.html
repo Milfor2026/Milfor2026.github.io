@@ -7,22 +7,25 @@
 <meta name="theme-color" content="#1f3a5f">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Gastos Voz">
 <title>Notas y Gastos por Voz</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231f3a5f'/%3E%3Crect x='24' y='10' width='16' height='28' rx='8' fill='%23EEEAE1'/%3E%3Cpath d='M16 30a16 16 0 0 0 32 0' stroke='%23B39557' stroke-width='4' fill='none'/%3E%3Cpath d='M32 46v8' stroke='%23B39557' stroke-width='4'/%3E%3C/svg%3E">
 <style>
 :root{--acc:#1f5fbf;--bg:#f4f2ec;--card:#fff;--tx:#1d2430;--mut:#667;--red:#c62828;--ok:#2e7d32}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,Roboto,"Segoe UI",sans-serif;background:var(--bg);color:var(--tx);font-size:16px;padding-bottom:120px}
+*{box-sizing:border-box}html{height:100%}body{margin:0;min-height:100vh;min-height:100dvh;font-family:system-ui,-apple-system,BlinkMacSystemFont,Roboto,"Segoe UI",sans-serif;background:var(--bg);color:var(--tx);font-size:16px;padding-top:env(safe-area-inset-top);padding-bottom:calc(120px + env(safe-area-inset-bottom));padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
 header{background:var(--acc);color:#fff;padding:10px 12px;position:sticky;top:0;z-index:5;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-header h1{font-size:17px;margin:0;flex:1}header select{font-size:15px;padding:6px;border-radius:8px;border:0}
+header{padding-top:calc(10px + env(safe-area-inset-top))}header h1{font-size:17px;margin:0;flex:1}header select{font-size:16px;padding:8px;border-radius:8px;border:0;min-height:44px}
 nav{display:flex;background:#fff;border-bottom:1px solid #ddd;position:sticky;top:52px;z-index:4}
-nav button{flex:1;padding:12px 4px;border:0;background:none;font-size:14px;color:var(--mut);border-bottom:3px solid transparent}
+nav button{flex:1;padding:14px 4px;min-height:44px;border:0;background:none;font-size:14px;color:var(--mut);border-bottom:3px solid transparent}
 nav button.on{color:var(--acc);border-color:var(--acc);font-weight:700}
 main{padding:12px;max-width:760px;margin:auto}.card{background:var(--card);border-radius:12px;padding:12px;margin-bottom:12px;box-shadow:0 1px 3px #0002}
 h2{font-size:17px;margin:0 0 8px}label{display:block;font-size:13px;color:var(--mut);margin-top:8px}
-input,select,textarea{width:100%;font-size:16px;padding:8px;border:1px solid #ccc;border-radius:8px;background:#fff;color:var(--tx)}textarea{min-height:80px}
-.btn{background:var(--acc);color:#fff;border:0;border-radius:10px;padding:10px 14px;font-size:15px;margin:6px 6px 0 0;cursor:pointer}
+input,select,textarea{width:100%;font-size:16px;padding:10px;border:1px solid #ccc;border-radius:8px;background:#fff;color:var(--tx);min-height:44px}textarea{min-height:80px}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:10px;padding:12px 14px;font-size:16px;margin:6px 6px 0 0;cursor:pointer;min-height:44px}
 .btn.sec{background:#e6e6e6;color:#222}.btn.del{background:var(--red)}.row{display:flex;gap:8px}.row>*{flex:1}
 table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:7px 4px;text-align:right;border-bottom:1px solid #eee}th:first-child,td:first-child{text-align:left}
 tr.cat{cursor:pointer}td .due{display:block;font-size:11px;color:var(--mut)}.neg{color:var(--red);font-weight:700}
@@ -113,12 +116,16 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card"><h2>Aplicación</h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
- <div class="card"><h2>Respaldo</h2><div class="warn">Todo se guarda solo en este navegador de este teléfono. No hay conexión con bancos ni nube. Si borra los datos del navegador o cambia de teléfono, se pierde todo. Haga copias de respaldo seguido.</div>
+ <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
+ <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
+ <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
+ <div class="card"><h2>Respaldo</h2><div class="warn">Todo se guarda solo en este navegador de este teléfono. No hay conexión con bancos ni nube. Si borra los datos del navegador o cambia de teléfono, se pierde todo. Haga copias de respaldo seguido. En iPhone no instalada, Safari puede borrar datos tras ~7 días sin usarla.</div>
   <button class="btn" id="bExp">Exportar respaldo (JSON)</button><button class="btn sec" id="bCsv">Exportar gastos (CSV)</button><button class="btn sec" id="bImp">Importar respaldo</button><input type="file" id="bFile" accept=".json,application/json" class="hide"></div>
 </section>
 </main>
 <div id="toast"><span id="toastMsg"></span><button type="button" id="toastUndo">Deshacer</button></div>
-<div id="micbar"><div class="row" style="align-items:center"><button id="mic" aria-label="Micrófono">🎤</button><div style="flex:1"><div id="micstate">Micrófono apagado — toque para escuchar</div><div id="interim"></div></div></div></div>
+<div id="micbar"><div class="row" style="align-items:center"><button id="mic" aria-label="Micrófono">🎤</button><div style="flex:1"><div id="micstate">Micrófono apagado — toque para escuchar</div><div id="interim"></div></div></div>
+<p id="iosMicHint" class="hide small" style="margin:4px 0 0;color:var(--mut)">En iPhone: toque el micrófono, hable y toque de nuevo para parar. O use el dictado del teclado en Ajustes.</p></div>
 <dialog id="dlg"><form method="dialog" id="dlgForm"></form></dialog>
 <script>
 (function(){
@@ -518,7 +525,92 @@ render();fmtChange();firstRun();renderBanners();
 if('speechSynthesis' in window)speechSynthesis.onvoiceschanged=()=>{};
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});
 
-window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo};
+
+/* ===== v6 iOS / Safari ===== */
+const isIOS=(()=>{const ua=navigator.userAgent||'';const iOSDevice=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);return iOSDevice})();
+const isSafari=/Safari/.test(navigator.userAgent||'')&&!/CriOS|FxiOS|EdgiOS|OPiOS|Chrome/.test(navigator.userAgent||'');
+if(isIOS){if(S.iosInit==null){S.wakeOn=false;S.iosInit=true;save()}document.body.classList.add('ios');if($('iosMicHint'))$('iosMicHint').classList.remove('hide');if($('iosDictBox'))$('iosDictBox').classList.remove('hide')}
+let voiceUnlocked=false;
+function unlockVoice(){if(voiceUnlocked||!('speechSynthesis' in window))return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u);voiceUnlocked=true}catch(e){}}
+document.addEventListener('pointerdown',unlockVoice,{once:true,passive:true});
+document.addEventListener('touchstart',unlockVoice,{once:true,passive:true});
+
+const _speak=speak; speak=function(t){if(S.mute||!('speechSynthesis' in window))return;unlockVoice();
+ try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='es-US';
+  const voices=speechSynthesis.getVoices();const v=voices.find(x=>/es[-_]US/i.test(x.lang))||voices.find(x=>/es[-_]MX/i.test(x.lang))||voices.find(x=>/es[-_]ES/i.test(x.lang))||voices.find(x=>/^es/i.test(x.lang));
+  if(v)u.voice=v;speaking=true;if(rec)try{rec.abort()}catch(e){}setMic();
+  u.onend=u.onerror=()=>{speaking=false;setMic();if(!isIOS&&micOn)startRec()};speechSynthesis.speak(u)}catch(e){speaking=false}};
+
+/* push-to-talk on iOS: mic toggles one shot, no aggressive continuous restart */
+if(isIOS){
+ startRec=function(){if(!SR||!micOn||speaking)return;try{rec=new SR();rec.lang='es-US';rec.continuous=false;rec.interimResults=true;
+  rec.onresult=e=>{let im='',final='';for(let i=e.resultIndex;i<e.results.length;i++){const r=e.results[i];if(r.isFinal)final+=r[0].transcript;else im+=r[0].transcript}if(im)$('interim').textContent='… '+im;if(final)handleTranscript(final)};
+  rec.onerror=e=>{const err=e.error||'';if(err==='not-allowed'||err==='service-not-allowed'){micOn=false;setMic();$('interim').textContent='Micrófono no permitido. En iPhone: Ajustes → Safari → Micrófono → Permitir. También Ajustes → General → Teclado → Dictado. Puede dictar con el teclado abajo en Ajustes.';}
+   else if(err!=='aborted'&&err!=='no-speech'){$('interim').textContent='No se pudo oír ('+err+'). Pruebe el dictado del teclado en Ajustes.'}};
+  rec.onend=()=>{rec=null;micOn=false;setMic()};
+  rec.start()}catch(e){micOn=false;setMic();$('interim').textContent='Este iPhone no pudo iniciar el micrófono. Use el dictado del teclado en Ajustes.'}};
+ $('mic').onclick=()=>{unlockVoice();armed=false;if(micOn){micOn=false;if(rec)try{rec.abort()}catch(e){}setMic()}else{micOn=true;setMic();startRec()}};
+ const _setMic2=setMic; setMic=function(){_setMic2();if(!isIOS)return;const st=$('micstate');
+  if(!SR)st.textContent='Use el dictado del teclado (Ajustes). En iPhone el micrófono de la página a veces no está disponible.';
+  else if(!micOn)st.textContent='Micrófono listo — toque, hable y toque de nuevo para parar';
+  else if(speaking)st.textContent='Hablando…';
+  else st.textContent='🔴 Escuchando… toque para parar'};
+}
+
+/* Install: iOS guide */
+const _doInstall=doInstall; doInstall=async function(){S.bannerSeen=true;save();
+ if(deferredPrompt){return _doInstall()}
+ if(isStandalone()){renderInstall();return}
+ if(isIOS){dlg(`<h2>Instalar en iPhone o iPad</h2>
+  <ol style="padding-left:20px;line-height:1.5">
+   <li>Abra esta página en <b>Safari</b> (el navegador azul de Apple). En Chrome de iOS 16.4 o superior también puede usar Compartir.</li>
+   <li>Toque el botón <b>Compartir</b> <span style="font-size:18px">□↑</span> (cuadrado con flecha hacia arriba) abajo en Safari o arriba en iPad.</li>
+   <li>Deslice y elija <b>Agregar a pantalla de inicio</b>.</li>
+   <li>Toque <b>Agregar</b>.</li>
+  </ol>
+  <p class="small">Importante: los datos de Safari y los del ícono de pantalla de inicio son independientes. Si ya usó la app en Safari, exporte un respaldo e impórtelo en la app instalada.</p>
+  <button class="btn">Entendido</button>`);renderInstall();return}
+ return _doInstall()};
+
+const _renderInstall=renderInstall; renderInstall=function(){
+ const st=isStandalone();
+ if(isIOS){
+  $('instBtn').classList.toggle('hide',st);
+  $('ajInst').classList.toggle('hide',st);
+  $('instBanner').classList.toggle('hide',st||!!S.bannerSeen);
+  if($('instBanner')&&!st){const t=$('instBanner');if(!t.dataset.ios){t.dataset.ios='1';t.innerHTML='En iPhone: Safari → Compartir (□↑) → <b>Agregar a pantalla de inicio</b>. <button class="btn" id="instBanGo" style="padding:6px 10px">Ver pasos</button> <button class="btn sec" id="instBanX" style="padding:6px 10px">Ahora no</button>';$('instBanGo').onclick=doInstall;$('instBanX').onclick=()=>{S.bannerSeen=true;save();renderInstall()}}}
+  $('instState').textContent=st?'La app ya está en su pantalla de inicio.':'En iPhone no aparece el botón de instalar de Android; use Compartir → Agregar a pantalla de inicio.';
+  return}
+ _renderInstall()};
+
+/* Safe download / share helpers for iOS */
+async function saveBlob(blob,filename,title){
+ const file=new File([blob],filename,{type:blob.type||'application/octet-stream'});
+ if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:title||filename,text:title||filename});return}catch(e){if(e&&e.name==='AbortError')return}}
+ const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove();
+ if(isIOS){setTimeout(()=>{try{window.open(url,'_blank')}catch(e){}},300);setTimeout(()=>URL.revokeObjectURL(url),60000)}
+ else setTimeout(()=>URL.revokeObjectURL(url),2000)}
+dl=function(name,data,type){saveBlob(new Blob([data],{type:type||'application/octet-stream'}),name,name)}
+
+$('expImg').onclick=()=>{const cv=buildSummaryCanvas();cv.toBlob(b=>{if(b)saveBlob(b,'resumen-'+month+'.png','Resumen '+month)},'image/png')};
+$('expShare').onclick=async()=>{const cv=buildSummaryCanvas();const blob=await new Promise(r=>cv.toBlob(r,'image/png'));if(blob)await saveBlob(blob,'resumen-'+month+'.png','Resumen '+month)};
+
+/* Notifications: only if supported and (on iOS) likely standalone */
+const _notifyDues=notifyDues; notifyDues=function(){try{if(!('Notification' in window))return;if(isIOS&&!isStandalone())return;_notifyDues()}catch(e){}};
+
+if($('iosKbdGo')){$('iosKbdGo').onclick=()=>{const v=$('iosKbd').value;$('iosKbd').value='';unlockVoice();handleTranscript(v)};$('iosKbd').onkeydown=e=>{if(e.key==='Enter')$('iosKbdGo').click()}}
+
+/* tip visibility */
+if($('iosTips'))$('iosTips').classList.toggle('hide',!isIOS);
+
+
+$('instBtn').onclick=doInstall;$('ajInst').onclick=doInstall;$('instBanGo').onclick=doInstall;
+if($('iosTips'))$('iosTips').classList.toggle('hide',!isIOS);
+if($('iosDictBox'))$('iosDictBox').classList.toggle('hide',!isIOS);
+if($('iosMicHint'))$('iosMicHint').classList.toggle('hide',!isIOS);
+renderInstall();
+
+window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall};
 })();
 </script>
 </body>
