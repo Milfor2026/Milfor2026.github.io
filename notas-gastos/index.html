@@ -117,7 +117,10 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
    <li>«ya pagué el agua el 3 de noviembre, fueron ciento cuarenta» · «ya se pagó Netflix»</li>
    <li>«pago automático Netflix 21.61 el día 24» · «quitar pago automático Netflix» · «¿qué pagos automáticos tengo?»</li></ul></details>
   <details><summary><b>Notas y listas (manos libres)</b></summary><ul class="small" style="color:var(--tx)">
-   <li>Toque <b>Notas</b> o diga «crear nota»: la app pregunta el tipo (verificación, numerada, viñetas o normal) y luego el nombre. Con «crear nota viaje» solo pregunta el tipo.</li>
+   <li>Toque <b>Notas</b> o diga «notas» o «crear nota»: la app pregunta si quiere crear una nota nueva, abrir, borrar o cambiar el nombre de una guardada.</li>
+   <li>Nueva: pregunta el tipo (verificación, numerada, viñetas o normal) y luego el nombre. Con «crear nota viaje» solo pregunta el tipo.</li>
+   <li>Abrir: diga el nombre o de qué trata («lo de la bicicleta») o toque la nota. Si hay varias parecidas, le pregunta cuál.</li>
+   <li>«borrar nota paseos» (pide confirmar; «deshacer» la recupera) · «cambiar nombre de la nota paseos»</li>
    <li>Después dicte (en listas, un elemento por frase) → «guardar nota» o «cancelar nota». Si el nombre ya existe, le pregunta si la abre (sí / no).</li>
    <li>«título …» · «compartir con esposa» (privada si no lo dice)</li>
    <li>«crear lista de compras» → cada frase es un elemento («leche», «pan») → «guardar lista»</li>
@@ -803,6 +806,75 @@ document.querySelector('nav').onclick=e=>{const t=e.target.dataset.tab;if(!t)ret
 $('nList').addEventListener('click',e=>{if(e.target.closest('button,[data-n],a,input'))return;const c=e.target.closest('.note');if(!c||vd||nf)return;const n=S.notes.find(x=>x.id===c.dataset.id);if(!n)return;
  if(n.owner!==S.current){const r='Esa nota es compartida por otra persona; solo puede leerla.';$('interim').textContent=r;speak(r);return}unlockVoice();const r=openForAppend(n);$('interim').textContent=r;speak(r);micOnAuto()});
 const _setMic8=setMic;setMic=function(){_setMic8();if(nf&&micOn&&!speaking)$('micstate').textContent='🔴 Escuchando su respuesta…'};
+
+/* ===== v9 elegir, abrir, borrar y renombrar notas ===== */
+const QCHOOSE='¿Quiere crear una nota nueva, abrir, borrar o cambiar el nombre de una nota guardada?';
+const QP={open:'¿Cuál nota quiere abrir? Dígame el nombre o de qué trata.',del:'¿Cuál nota quiere borrar? Dígame el nombre o de qué trata.',ren:'¿A cuál nota le cambio el nombre? Dígame el nombre o de qué trata.'};
+const VERB={open:'abrir',del:'borrar',ren:'cambiarle el nombre'};
+const NFS=['choose','pick','which','none','delconf','renname'];
+const STOPW=new Set('a al y o u e de del el la lo los las un una unos unas mi mis su sus que cual trata habla dice tiene tenia sobre nota notas lista listas se llama es era esa ese esta este eso esto abrir abre abra borrar borra eliminar quiero quisiera en con para por me le guardada guardadas cosa'.split(' '));
+const SYN=[['bici','bicicleta','ciclismo','ciclovia','ciclista','pedalear','pedal','cicla','ciclo'],['mercado','compras','comprar','supermercado','super','viveres','mandado'],['tareas','pendientes','hacer','quehaceres','tarea','pendiente'],['viaje','paseo','ruta','excursion','vacaciones','salida']];
+function lev(a,b){const m=a.length,n=b.length;if(Math.abs(m-n)>1)return 2;const d=[];for(let i=0;i<=m;i++){d[i]=[i];for(let j=1;j<=n;j++)d[i][j]=i?Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1)):j}return d[m][n]}
+const toks=x=>nrm(x).split(/\s+/).filter(Boolean);
+function w1(w,k){return k===w||(w.length>=4&&k.length>=4&&(k.startsWith(w.slice(0,Math.max(4,w.length-2)))||w.startsWith(k.slice(0,Math.max(4,k.length-2)))))||(w.length>=5&&lev(w,k)<=1)}
+function wHit(w,L){if(L.some(k=>w1(w,k)))return true;const g=SYN.filter(G=>G.some(m=>w1(w,m))).flat();return g.some(s=>L.some(k=>w1(s,k)))}
+function scoreNote(n,q){const nq=toks(q).join(' '),ti=toks(n.title).join(' ');if(!nq)return 0;if(ti===nq)return 100;let s=0;if(ti.startsWith(nq))s=85;else if(ti.includes(nq))s=75;else if(ti&&(' '+nq+' ').includes(' '+ti+' '))s=70;
+ const W=toks(q).filter(w=>!STOPW.has(w)&&w.length>1);if(!W.length)return s;const T=toks(n.title),C=toks((n.body||'')+' '+(n.items||[]).map(i=>i.t).join(' '));let th=0,ch=0;W.forEach(w=>{if(wHit(w,T))th++;else if(wHit(w,C))ch++});return Math.max(s,Math.round(60*th/W.length+40*ch/W.length))}
+const poolFor=act=>act==='open'?visibleNotes():S.notes.filter(n=>n.owner===S.current);
+function rankNotes(q,L){return L.map(n=>({n,s:scoreNote(n,q)})).filter(x=>x.s>=20).sort((a,b)=>b.s-a.s||b.n.updated.localeCompare(a.n.updated))}
+const joinO=a=>a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' o '+a[a.length-1];
+const recentOf=(L,k)=>L.slice().sort((a,b)=>b.updated.localeCompare(a.updated)).slice(0,k);
+function openPicked(n){if(n.owner===S.current)return openForAppend(n);nf=null;nfUI();return 'La nota '+n.title+' es compartida por otra persona; se la leo. '+readNote(n)}
+function actOn(n,act){if(act==='open')return openPicked(n);if(n.owner!==S.current){nf=null;nfUI();return 'Esa nota es de otra persona; no puedo '+VERB[act]+'.'}
+ if(act==='del'){nf={step:'delconf',act,target:n.id,title:n.title};nfUI();return '¿Seguro que borro la nota “'+n.title+'”? Diga sí o no.'}
+ nf={step:'renname',act,target:n.id,title:n.title};nfUI();return 'La nota se llama '+n.title+'. ¿Qué nombre nuevo le pone?'}
+function startChoose(){nf={step:'choose',title:'',fmt:null};nfUI();return QCHOOSE}
+function noNotes(){nf={step:'none',title:'',fmt:null};nfUI();return 'Todavía no tiene notas guardadas. ¿Quiere crear una nueva? Diga sí o no.'}
+function startPick(act){if(!poolFor(act).length)return noNotes();nf={step:'pick',act};if(tab!=='notas')setTab('notas');nfUI();return QP[act]}
+function pickFrom(raw,act){const q=clean(String(raw).replace(/^\s*(abrir|abra|abre|quiero abrir|borrar|borra|eliminar|elimine|quitar|renombrar|cambiar(le)?\s+(el\s+)?nombre\s+(de|a))\s+(la\s+|una\s+)?(nota\s+|lista\s+)?/i,''));const L=poolFor(act);if(!L.length)return noNotes();
+ const R=rankNotes(q,L);if(!R.length){nf={step:'pick',act};if(tab!=='notas')setTab('notas');nfUI();return 'No encontré esa nota. Sus notas son: '+joinO(recentOf(L,3).map(n=>n.title))+'. ¿Cuál quiere '+VERB[act]+'?'}
+ const close=R.filter(x=>x.s>=R[0].s-8);if(R[0].s<100&&close.length>1){const C=close.slice(0,3).map(x=>x.n);nf={step:'which',act,cands:C.map(n=>n.id)};nfUI();return 'Encontré varias: '+joinO(C.map(n=>n.title))+'. ¿Cuál quiere '+VERB[act]+'?'}
+ return actOn(R[0].n,act)}
+const DELRE=/^(borrar|borra|borre|eliminar|elimina|elimine|quitar)( la| una)? (nota|lista)\b/,RENRE=/^(renombrar( la)? (nota|lista)|cambiar(le)? (el )?nombre (de|a) (la )?(nota|lista))\b/;
+function cmdDelRen(raw,t){let m;if(m=t.match(DELRE)){const q=clean(raw.replace(/^\s*\S+\s+(la\s+|una\s+)?(nota|lista)\b/i,''));return toks(q).length?pickFrom(q,'del'):startPick('del')}
+ if(m=t.match(RENRE)){const q=clean(raw.replace(/^\s*(renombrar(\s+la)?\s+(nota|lista)|cambiar(le)?\s+(el\s+)?nombre\s+(de|a)\s+(la\s+)?(nota|lista))\b/i,''));return toks(q).length?pickFrom(q,'ren'):startPick('ren')}return null}
+const ORD=[/\b(primera|primero|uno|1)\b/,/\b(segunda|segundo|dos|2)\b/,/\b(tercera|tercero|tres|3)\b/];
+const _fs8=flowStep;flowStep=function(raw){const t=nrm(raw).replace(/\s+/g,' ').trim();if(!t)return null;if(!nf||!NFS.includes(nf.step))return _fs8(raw);
+ if(/^(cancelar|cancela|olvidalo|salir|nada|ninguna)( nota)?$/.test(t)){nf=null;nfUI();return 'Cancelado.'}
+ if(nf.step==='delconf'){const n=S.notes.find(x=>x.id===nf.target);if(/^(si|claro|dale|ok|okay|borrala|borrar|seguro)\b/.test(t)){nf=null;nfUI();if(!n)return 'Esa nota ya no existe.';const i=S.notes.indexOf(n);S.notes.splice(i,1);save();render();pushUndo('Nota borrada',()=>{S.notes.splice(Math.min(i,S.notes.length),0,n)});return 'Listo, borré la nota '+n.title+'. Si fue un error diga deshacer.'}
+  if(/^no\b/.test(t)){nf=null;nfUI();return 'Está bien, no la borré.'}return 'Diga sí para borrar la nota '+nf.title+' o no para dejarla.'}
+ if(nf.step==='renname'){const n=S.notes.find(x=>x.id===nf.target);let name=cap(clean(raw.replace(/^\s*(se llama|se va a llamar|ll[aá]mela|el nombre nuevo es|nombre nuevo|nombre|t[ií]tulo)\s+/i,'')));if(!name)return '¿Qué nombre nuevo le pone?';if(!n){nf=null;nfUI();return 'Esa nota ya no existe.'}
+  const ex=ownByName(name);if(ex&&ex.id!==n.id)return 'Ya existe una nota llamada '+ex.title+'. Diga otro nombre.';const old=n.title;n.title=name;save();render();nf=null;nfUI();pushUndo('Nombre cambiado',()=>{n.title=old});return 'Listo, la nota '+old+' ahora se llama '+name+'.'}
+ if(['choose','pick','which'].includes(nf.step)){const r=cmdDelRen(raw,t);if(r)return r}
+ if(nf.step==='choose'){if(/\b(borrar|borra|borre|eliminar|elimine|quitar)\b/.test(t))return startPick('del');if(/\b(nombre|renombrar|cambiar)\b/.test(t))return startPick('ren');
+  if(/\b(abrir|abre|abra|guardada|guardadas|existente|vieja|anterior)\b/.test(t)){const rest=toks(raw).filter(w=>!STOPW.has(w)&&!/^(guardad|existent|viej|anterior)/.test(w));return rest.length&&visibleNotes().length?pickFrom(raw,'open'):startPick('open')}
+  if(/\b(nueva|nuevo|crear|crea|cree|otra)\b/.test(t))return startFlow('');return 'No entendí. '+QCHOOSE}
+ if(nf.step==='none'){if(/^(si|claro|dale|ok|okay|crear|nueva|bueno)\b/.test(t))return startFlow('');if(/^no\b/.test(t)){nf=null;nfUI();return 'Está bien.'}return 'Diga sí para crear una nota nueva o no para salir.'}
+ if(nf.step==='which'){const C=nf.cands.map(id=>S.notes.find(n=>n.id===id)).filter(Boolean);let n=null;const R=rankNotes(raw,C);if(R.length&&(R.length<2||R[0].s>R[1].s))n=R[0].n;if(!n)for(let i=0;i<C.length;i++)if(ORD[i].test(t)){n=C[i];break}
+  return n?actOn(n,nf.act):'No entendí. ¿Cuál: '+joinO(C.map(n=>n.title))+'?'}
+ return pickFrom(raw,nf.act)};
+const _nfUI8=nfUI;nfUI=function(){if(!nf||!NFS.includes(nf.step))return _nfUI8();const b=$('nfBan');b.classList.remove('hide');const X='<button type="button" class="btn sec" data-nfx="1">Cancelar</button>',esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+ const nb=L=>L.map(n=>`<button type="button" class="btn" data-nfo="${n.id}">${esc(n.title||'(sin nombre)')}</button>`).join('');
+ if(nf.step==='choose'){$('nfQ').textContent=QCHOOSE;$('nfOpts').innerHTML='<button type="button" class="btn" data-nfc="new">Crear nota nueva</button><button type="button" class="btn" data-nfc="open">Abrir</button><button type="button" class="btn" data-nfc="del">Borrar</button><button type="button" class="btn" data-nfc="ren">Cambiar nombre</button>'+X}
+ else if(nf.step==='none'){$('nfQ').textContent='Todavía no tiene notas guardadas. ¿Quiere crear una nueva?';$('nfOpts').innerHTML='<button type="button" class="btn" data-nfc="new">Sí, crear nota</button>'+X}
+ else if(nf.step==='pick'){$('nfQ').textContent=QP[nf.act];$('nfOpts').innerHTML=nb(recentOf(poolFor(nf.act),8))+X}
+ else if(nf.step==='which'){$('nfQ').textContent='¿Cuál quiere '+VERB[nf.act]+'?';$('nfOpts').innerHTML=nb(nf.cands.map(id=>S.notes.find(n=>n.id===id)).filter(Boolean))+X}
+ else if(nf.step==='delconf'){$('nfQ').textContent='¿Seguro que borro la nota “'+nf.title+'”?';$('nfOpts').innerHTML='<button type="button" class="btn" data-nfdy="1">Sí, borrar</button><button type="button" class="btn sec" data-nfx="1">No</button>'}
+ else{$('nfQ').textContent='Nombre nuevo para «'+nf.title+'»:';$('nfOpts').innerHTML='<input id="nfName" placeholder="Nombre nuevo"><button type="button" class="btn" data-nfrn="1">Aceptar</button>'+X}
+ setMic()};
+const _nfClick8=$('nfOpts').onclick;$('nfOpts').onclick=e=>{const d=e.target.dataset;if(!nf)return;let r=null;
+ if(d.nfc){unlockVoice();r=d.nfc==='new'?startFlow(''):startPick(d.nfc)}else if(d.nfo){unlockVoice();const n=S.notes.find(x=>x.id===d.nfo);if(n)r=actOn(n,nf.act||'open')}
+ else if(d.nfdy){r=flowStep('sí')}else if(d.nfrn){const v=$('nfName').value.trim();if(!v)return;r=flowStep(v)}else return _nfClick8(e);
+ if(r){$('interim').textContent=r;speak(r)}};
+const _hNV8=handleNoteVoice;handleNoteVoice=function(raw){const t=nrm(raw).replace(/\s+/g,' ').trim();
+ if(!vd&&!nf){if(/^((crear|nueva|hacer)( una)? nota( nueva)?|nota nueva|(mis |ver |abrir )?notas)$/.test(t))return startChoose();
+  const dr=cmdDelRen(raw,t);if(dr)return dr;
+  if(/^abrir( una| la)? (nota|lista)( guardada)?$/.test(t))return startPick('open');
+  if(/^abrir (la |una )?(nota|lista) /.test(t)){const q=clean(raw.replace(/^\s*abrir\s+(la\s+|una\s+)?(nota|lista)\s+/i,''));if(!findNote(q)&&visibleNotes().length)return pickFrom(q,'open')}}
+ return _hNV8(raw)};
+$('nList').addEventListener('click',e=>{if(!nf||!['choose','pick','which','none'].includes(nf.step))return;const c=e.target.closest('.note');if(!c||e.target.closest('button,[data-n],a,input'))return;
+ if(nf.act==='del'||nf.act==='ren'){e.stopPropagation();const n=S.notes.find(x=>x.id===c.dataset.id);if(n){const r=actOn(n,nf.act);$('interim').textContent=r;speak(r)}return}nf=null;nfUI()},true);
+document.querySelector('nav').onclick=e=>{const t=e.target.dataset.tab;if(!t)return;setTab(t);if(t==='notas'&&!nf&&!vd){unlockVoice();const q=startChoose();$('interim').textContent=q;speak(q);micOnAuto()}};
 
 window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn},get noteFlow(){return nf}};
 })();
