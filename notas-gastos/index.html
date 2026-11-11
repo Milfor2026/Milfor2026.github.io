@@ -53,6 +53,7 @@ body.hc input,body.hc select,body.hc textarea{background:#000;color:#fff;border-
 body.hc .btn.sec{background:#333;color:#fff}body.hc .pend{background:#332;border-color:#aa0}
 body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--ok)}
 @media print{header,nav,#micbar,#toast,.banner,button.btn,#instBanner,#banners,#featExtra{display:none!important}main{padding:0}body{background:#fff;color:#000}}
+#draftBan{position:fixed;left:8px;right:8px;bottom:calc(96px + env(safe-area-inset-bottom));background:#2e7d32;color:#fff;border-radius:12px;padding:10px;z-index:19;display:flex;gap:8px;align-items:center;box-shadow:0 4px 14px #0004}#draftBan>div{flex:1}#draftBan.hide{display:none!important}#draftBan .btn{margin:0;padding:8px 10px}
 </style>
 </head>
 <body>
@@ -97,15 +98,37 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
  <div class="card"><h2>Historial</h2><div id="mList"></div></div>
 </section>
 <section id="tab-aj" class="hide">
+ <div class="card" id="ayuda"><h2>Ayuda: comandos de voz</h2>
+  <p class="small">Toque el micrófono una vez y hable con naturalidad; no hace falta decir ninguna palabra de activación. La app le responde en voz alta.</p>
+  <details open><summary><b>Gastos</b></summary><ul class="small" style="color:var(--tx)">
+   <li>«mercado veinte» → luego «guardar» (o «corregir»)</li>
+   <li>«mercado veinte y gatitos quince con cincuenta guardar»</li>
+   <li>«gatitos treinta comida seca» (la nota va después del monto) · «nota arena»</li>
+   <li>Gasto hormiga (se guarda solo): «gasto helado cinco», «gasté cuatro en un café», «gasto de gatitos diez arena». Si falta el monto le pregunta «¿cuánto fue?»</li>
+   <li>«deshacer» · «busca arena»</li></ul></details>
+  <details><summary><b>Preguntas</b></summary><ul class="small" style="color:var(--tx)">
+   <li>«¿cuánto me queda en mercado?» · «¿cuánto gasté en otros?» · «porcentaje de mercado»</li>
+   <li>«¿cuánto me queda en total?» · «¿cómo voy?» · «¿qué me falta pagar?» · «¿cuánto gasté en arena?»</li></ul></details>
+  <details><summary><b>Presupuesto y pagos</b></summary><ul class="small" style="color:var(--tx)">
+   <li>«presupuesto de mercado 600» · «cambiar presupuesto de gatitos a 180»</li>
+   <li>«crear categoría farmacia con 80»</li>
+   <li>«ya pagué el agua el 3 de noviembre, fueron ciento cuarenta» · «ya se pagó Netflix»</li>
+   <li>«pago automático Netflix 21.61 el día 24» · «quitar pago automático Netflix» · «¿qué pagos automáticos tengo?»</li></ul></details>
+  <details><summary><b>Notas y listas (manos libres)</b></summary><ul class="small" style="color:var(--tx)">
+   <li>«crear nota» o «nueva nota viaje» → dicte; todo se agrega a la nota → «guardar nota» o «cancelar nota»</li>
+   <li>«título …» · «compartir con esposa» (privada si no lo dice)</li>
+   <li>«crear lista de compras» → cada frase es un elemento («leche», «pan») → «guardar lista»</li>
+   <li>«abrir nota viaje» o «agregar a la nota viaje» → dicte → «guardar nota»</li>
+   <li>«leer nota viaje»</li></ul></details>
+  <details><summary><b>Carro</b></summary><ul class="small" style="color:var(--tx)"><li>En Mantenimiento: «carro cambio de aceite 45000 millas 60 dólares»</li></ul></details>
+  <p class="small">Si el micrófono no responde: use Google Chrome (en Samsung Internet suele fallar), permita el micrófono y verifique que tenga internet.</p></div>
  <div class="card"><h2>Perfil</h2><label>Nombre</label><input id="pName"><label>Color</label><div class="colors" id="pColors"></div>
   <label>PIN (opcional, 4 dígitos)</label><input id="pPin" inputmode="numeric" maxlength="6"><p class="small">El PIN solo evita miradas casuales; no es seguridad real. Cualquiera con acceso al teléfono puede leer los datos del navegador.</p>
   <label>Ingreso / total mensual (USD)</label><input id="pIncome" inputmode="decimal"><button class="btn" id="pSave">Guardar perfil</button></div>
  <div class="card"><h2>Categorías</h2><div id="catEd"></div><button class="btn sec" id="catAdd">+ Agregar categoría</button></div>
  <div class="card"><h2>Voz</h2><label><input type="checkbox" id="mute" style="width:auto"> Silenciar respuestas en voz alta</label>
-  <label><input type="checkbox" id="wakeOn" style="width:auto"> Escuchar solo con palabra clave</label>
-  <label>Palabra clave</label><input id="wakeWord" placeholder="oye app">
-  <p class="small">Con la palabra clave activada, diga «oye app» y luego el comando. Así evita que anote conversaciones de fondo.</p>
-  <label>Dictado con teclado (si el micrófono no funciona, dicte aquí con el micrófono del teclado y toque Enviar)</label><div class="row"><input id="kbd"><button class="btn" id="kbdGo" style="flex:0 0 auto">Enviar</button></div></div>
+  <div id="wakeBox" class="hide"><input type="checkbox" id="wakeOn"><input id="wakeWord"></div>
+    <label>Dictado con teclado (si el micrófono no funciona, dicte aquí con el micrófono del teclado y toque Enviar)</label><div class="row"><input id="kbd"><button class="btn" id="kbdGo" style="flex:0 0 auto">Enviar</button></div></div>
  <div class="card"><h2>Pantalla y seguridad</h2>
   <label><input type="checkbox" id="lgTxt" style="width:auto"> Letra grande</label>
   <label><input type="checkbox" id="hiCon" style="width:auto"> Alto contraste</label>
@@ -123,6 +146,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
   <button class="btn" id="bExp">Exportar respaldo (JSON)</button><button class="btn sec" id="bCsv">Exportar gastos (CSV)</button><button class="btn sec" id="bImp">Importar respaldo</button><input type="file" id="bFile" accept=".json,application/json" class="hide"></div>
 </section>
 </main>
+<div id="draftBan" class="hide"><div><b id="draftTitle">Dictando nota</b><div class="small" id="draftInfo" style="color:#fff"></div></div><button type="button" class="btn" id="draftSave">Guardar</button><button type="button" class="btn sec" id="draftCancel">Cancelar</button></div>
 <div id="toast"><span id="toastMsg"></span><button type="button" id="toastUndo">Deshacer</button></div>
 <div id="micbar"><div class="row" style="align-items:center"><button id="mic" aria-label="Micrófono">🎤</button><div style="flex:1"><div id="micstate">Micrófono apagado — toque para escuchar</div><div id="interim"></div></div></div>
 <p id="iosMicHint" class="hide small" style="margin:4px 0 0;color:var(--mut)">En iPhone: toque el micrófono, hable y toque de nuevo para parar. O use el dictado del teclado en Ajustes.</p></div>
@@ -406,6 +430,7 @@ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPro
 window.addEventListener('appinstalled',()=>{deferredPrompt=null;S.installed=true;save();renderInstall()});
 async function doInstall(){S.bannerSeen=true;save();if(deferredPrompt){deferredPrompt.prompt();try{const c=await deferredPrompt.userChoice;if(c&&c.outcome==='accepted'){S.installed=true;save()}}catch(e){}deferredPrompt=null;renderInstall();return}
  renderInstall();dlg(`<h2>Instalar la app</h2><p>En Chrome: toque los <b>tres puntos ⋮</b> arriba a la derecha y elija <b>Agregar a pantalla principal</b> o <b>Instalar app</b>.</p><p>En Samsung Internet: toque el menú <b>☰</b> y elija <b>Agregar página a</b> → <b>Pantalla de inicio</b>.</p><p class="small">Debe abrirla desde ${APPURL}</p><button class="btn">Entendido</button>`)}
+
 $('instBtn').onclick=doInstall;$('ajInst').onclick=doInstall;$('instBanGo').onclick=doInstall;$('instBanX').onclick=()=>{S.bannerSeen=true;save();renderInstall()};
 const SHARETXT='Le comparto la app Notas y Gastos por voz. Ábrala en su teléfono e instálela en la pantalla principal. Cada persona la instala en su propio teléfono y sus datos quedan privados solo en ese teléfono.';
 async function doShare(){if(navigator.share){try{await navigator.share({title:'Notas y Gastos',text:SHARETXT,url:APPURL});return}catch(e){if(e&&e.name==='AbortError')return}}
@@ -610,7 +635,131 @@ if($('iosDictBox'))$('iosDictBox').classList.toggle('hide',!isIOS);
 if($('iosMicHint'))$('iosMicHint').classList.toggle('hide',!isIOS);
 renderInstall();
 
-window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall};
+/* ===== v7 manos libres ===== */
+S.wakeOn=false;S.wakeWord='';save();armed=true;
+const isSamsung=/SamsungBrowser/i.test(navigator.userAgent||'');
+let recBackoff=300,stuckTimer=null,vd=null,awaitAmt=null;
+function voiceProblem(msg){$('interim').textContent=msg;const was=S.mute;try{_speakRaw(msg)}catch(e){}}
+function _speakRaw(t){if(S.mute||!('speechSynthesis' in window))return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='es-US';const vs=speechSynthesis.getVoices();const v=vs.find(x=>/es[-_]US/i.test(x.lang))||vs.find(x=>/es[-_]MX/i.test(x.lang))||vs.find(x=>/^es/i.test(x.lang));if(v)u.voice=v;speechSynthesis.speak(u)}catch(e){}}
+const UNSUP='Este navegador no reconoce la voz. Abra la app en Google Chrome'+(isIOS?' o use el dictado del teclado en Ajustes.':'.');
+/* speak: pause mic, always resume even if onend never fires */
+speak=function(t){if(!t)return;if(S.mute||!('speechSynthesis' in window)){return}unlockVoice();
+ try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='es-US';const vs=speechSynthesis.getVoices();const v=vs.find(x=>/es[-_]US/i.test(x.lang))||vs.find(x=>/es[-_]MX/i.test(x.lang))||vs.find(x=>/es[-_]ES/i.test(x.lang))||vs.find(x=>/^es/i.test(x.lang));if(v)u.voice=v;
+  speaking=true;if(rec){const r=rec;rec=null;try{r.abort()}catch(e){}}setMic();
+  const done=()=>{if(!speaking)return;speaking=false;clearTimeout(stuckTimer);setMic();if(!isIOS&&micOn)setTimeout(startRec,150)};
+  u.onend=u.onerror=done;clearTimeout(stuckTimer);stuckTimer=setTimeout(done,Math.max(3000,t.length*95)+2500);speechSynthesis.speak(u)}catch(e){speaking=false;if(!isIOS&&micOn)startRec()}};
+if(!isIOS){
+ startRec=function(){if(!SR||!micOn||speaking||rec)return;let r;try{r=new SR()}catch(e){voiceProblem(UNSUP);micOn=false;setMic();return}
+  rec=r;r.lang='es-US';r.continuous=true;r.interimResults=true;r.maxAlternatives=1;
+  r.onstart=()=>{setMic()};
+  r.onresult=e=>{recBackoff=300;S.lastActivity=Date.now();let im='';for(let i=e.resultIndex;i<e.results.length;i++){const x=e.results[i];if(x.isFinal)handleTranscript(x[0].transcript);else im+=x[0].transcript}if(im)$('interim').textContent='… '+im};
+  r.onerror=e=>{const er=e.error||'';
+   if(er==='not-allowed'||er==='service-not-allowed'){micOn=false;setMic();voiceProblem('El micrófono no está permitido'+(isSamsung?'. Samsung Internet suele bloquear el reconocimiento de voz; abra la app en Google Chrome.':'. Toque el candado junto a la dirección y permita el micrófono, o use Google Chrome.'))}
+   else if(er==='audio-capture'){micOn=false;setMic();voiceProblem('No encuentro el micrófono. Puede estar en uso por otra app.')}
+   else if(er==='network'){recBackoff=Math.min(recBackoff*2,10000);$('interim').textContent='Sin conexión para reconocer la voz; reintentando…'}
+   else if(er==='language-not-supported'){r.lang='es-MX'}};
+  r.onend=()=>{if(rec===r)rec=null;if(micOn&&!speaking)setTimeout(startRec,recBackoff)};
+  try{r.start()}catch(e){rec=null;recBackoff=Math.min(recBackoff*2,10000);if(micOn)setTimeout(startRec,recBackoff)}};
+ $('mic').onclick=()=>{unlockVoice();if(!SR){voiceProblem(UNSUP);setMic();return}micOn=!micOn;if(micOn){recBackoff=300;if(isSamsung&&!S.samsungTip){S.samsungTip=true;save();$('interim').textContent='Consejo: si no le responde, abra la app en Google Chrome.'}startRec()}else if(rec){const r=rec;rec=null;try{r.abort()}catch(e){}}setMic()};
+}
+setMic=function(){const b=$('mic'),st=$('micstate');b.classList.toggle('on',micOn);
+ st.textContent=!SR?'⚠ Este navegador no reconoce la voz. Use Google Chrome'+(isIOS?' o el dictado del teclado.':'.'):!micOn?(isIOS?'Micrófono listo — toque, hable y toque de nuevo para parar':'Micrófono apagado — toque para escuchar'):speaking?'Hablando… (micrófono en pausa)':(vd?'🟢 Dictando '+(vd.fmt==='normal'?'nota':'lista')+'…':(awaitAmt?'🔴 ¿Cuánto fue?':'🔴 Escuchando… hable cuando quiera'))};
+/* no auto-lock while the mic is on (driving) */
+setInterval(()=>{if(micOn)S.lastActivity=Date.now()},5000);
+/* ---------- notas por voz ---------- */
+const nrm=x=>norm(x).replace(/[¿?¡!.,;:]/g,' ');
+const clean=x=>String(x||'').replace(/^[\s,.;:]+|[\s,.;:]+$/g,'').trim();
+const cap=x=>x?x.charAt(0).toUpperCase()+x.slice(1):x;
+function findNote(q){const nq=nrm(q).replace(/\s+/g,' ').trim();if(!nq)return null;const L=visibleNotes().slice().sort((a,b)=>b.updated.localeCompare(a.updated));
+ return L.find(n=>nrm(n.title).trim()===nq)||L.find(n=>nrm(n.title).trim().startsWith(nq))||L.find(n=>nrm(n.title).includes(nq))||L.find(n=>nq.includes(nrm(n.title).trim())&&n.title)}
+function draftUI(){const b=$('draftBan');if(!vd){b.classList.add('hide');setMic();return}b.classList.remove('hide');
+ $('draftTitle').textContent=(vd.noteId?'Agregando a: ':vd.fmt==='normal'?'Nota: ':'Lista: ')+(vd.title||'(sin título)');
+ $('draftInfo').textContent=(vd.fmt==='normal'?(vd.body.split(/\s+/).filter(Boolean).length+' palabras'):(vd.items.length+' elementos'))+(vd.shared.length?' · compartida':' · privada')+' — diga «guardar nota» o «cancelar nota»';setMic()}
+function startDraft(fmt,title){vd={fmt,title:clean(title),body:'',items:[],shared:[],noteId:null};draftUI()}
+function addToDraft(raw){raw=clean(raw);if(!raw)return'';if(vd.fmt==='normal'){vd.body=(vd.body?vd.body+' ':'')+cap(raw);draftUI();return 'Anotado.'}
+ const parts=raw.split(/\b(?:siguiente|punto|otro elemento)\b/i).map(clean).filter(Boolean);parts.forEach(x=>vd.items.push(cap(x)));draftUI();return 'Agregado: '+parts.join(', ')+'.'}
+function shareFromText(rest){const t=' '+nrm(rest).replace(/\buno\b/g,'1').replace(/\bdos\b/g,'2').replace(/\btres\b/g,'3')+' ';const ids=[];
+ if(/\btodos\b/.test(t))S.profiles.forEach(p=>{if(p.id!==S.current)ids.push(p.id)});
+ S.profiles.forEach(p=>{if(p.id!==S.current&&t.includes(' '+nrm(p.name).trim()+' '))ids.push(p.id)});return [...new Set(ids)]}
+function saveDraft(){if(!vd)return 'No hay ninguna nota abierta.';const now=new Date().toISOString();let n;
+ if(vd.noteId){n=S.notes.find(x=>x.id===vd.noteId);if(n){if(n.fmt==='normal')n.body=(n.body?n.body+'\n':'')+vd.body;else n.items.push(...vd.items.map(t=>({t,done:false})));if(vd.shared.length)n.shared=[...new Set([...(n.shared||[]),...vd.shared])];n.updated=now}}
+ else{if(!vd.body&&!vd.items.length&&!vd.title){vd=null;draftUI();return 'La nota estaba vacía; no la guardé.'}
+  n={id:uid(),owner:S.current,fmt:vd.fmt,title:vd.title||(vd.fmt==='normal'?vd.body.split(/\s+/).slice(0,5).join(' '):'Lista'),body:vd.fmt==='normal'?vd.body:'',items:vd.items.map(t=>({t,done:false})),shared:vd.shared,created:now,updated:now};S.notes.push(n)}
+ const who=vd.shared.length?' Compartida con '+vd.shared.map(id=>S.profiles.find(p=>p.id===id).name).join(' y ')+'.':'';vd=null;save();renderNotes();draftUI();return 'Nota guardada: '+(n?n.title:'')+'.'+who}
+function readNote(n){if(!n)return 'No encontré esa nota.';let x=n.title+'. ';if(n.fmt==='normal')x+=n.body||'Está vacía.';else x+=n.items.length?n.items.map((it,i)=>(n.fmt==='num'?(i+1)+': ':'')+it.t+(it.done?', listo':'')).join('. '):'La lista está vacía.';return x}
+function handleNoteVoice(raw){const t=nrm(raw).replace(/\s+/g,' ').trim(),rr=raw.replace(/\s+/g,' ').trim();let m;
+ const after=re=>{const mm=nrm(rr).replace(/\s+/g,' ').match(re);return mm?clean(rr.slice(mm.index+mm[0].length)):''};
+ if(m=t.match(/^leer (la )?(nota|lista)\b/)){return readNote(findNote(after(/^leer (la )?(nota|lista)\b/)))}
+ if(m=t.match(/^(crear|nueva|hacer) lista( numerada| de vinetas)?\b/)){const fmt=m[2]===' numerada'?'num':m[2]===' de vinetas'?'bullet':'check';let rest=after(/^(crear|nueva|hacer) lista( numerada| de vinetas)?\b/);
+  let title=rest;if(/^titulo\b/i.test(norm(rest)))title=clean(rest.replace(/^t[ií]tulo/i,''));else if(/^de\s/i.test(rest))title='Lista '+rest;
+  startDraft(fmt,title);return (fmt==='check'?'Lista':'Lista '+(fmt==='num'?'numerada':'de viñetas'))+' nueva'+(vd.title?': '+vd.title:'')+'. Diga cada elemento. Al terminar diga guardar lista.'}
+ if(m=t.match(/^(crear|nueva|hacer) nota\b/)){let rest=after(/^(crear|nueva|hacer) nota\b/);if(/^titulo\b/i.test(norm(rest)))rest=rest.replace(/^t[ií]tulo/i,'');startDraft('normal',rest);
+  return vd.title?'Nota nueva: '+vd.title+'. Dicte el texto. Al terminar diga guardar nota.':'Nota nueva. Diga título y el nombre, o empiece a dictar. Al terminar diga guardar nota.'}
+ if(m=t.match(/^(agregar|anadir|sumar) a la (nota|lista)\b|^abrir (la )?(nota|lista)\b/)){const q=after(/^(agregar|anadir|sumar) a la (nota|lista)\b|^abrir (la )?(nota|lista)\b/);const n=findNote(q);if(!n)return 'No encontré la nota '+q+'. Diga crear nota para hacer una nueva.';
+  if(n.owner!==S.current)return 'Esa nota es compartida por otra persona; solo puede leerla.';vd={fmt:n.fmt,title:n.title,body:'',items:[],shared:[],noteId:n.id};draftUI();return 'Abrí '+n.title+'. Dicte lo que quiera agregar y diga guardar nota.'}
+ if(!vd){if(/^(guardar|cancelar) (la )?(nota|lista)\b/.test(t))return 'No hay ninguna nota abierta.';return null}
+ if(/^(cancelar|borrar|descartar) (la )?(nota|lista)\b/.test(t)){vd=null;draftUI();return 'Nota cancelada.'}
+ const sv=nrm(rr).replace(/\s+/g,' ').match(/\b(guardar|guarda|terminar) (la )?(nota|lista)\s*$|^(guardar|listo|terminar)\s*$/);
+ let body=rr;if(sv)body=clean(rr.slice(0,sv.index));
+ const tm=nrm(body).match(/^titulo\b/);if(tm){vd.title=clean(body.slice(6));draftUI();body=''}
+ const sh=nrm(body).match(/^compartir con\b/);if(sh){vd.shared=shareFromText(body.slice(13));draftUI();const msg=vd.shared.length?'La compartiré con '+vd.shared.map(id=>S.profiles.find(p=>p.id===id).name).join(' y ')+'.':'No encontré ese nombre. Sigue privada.';if(!sv)return msg;body=''}
+ let ack=body?addToDraft(body):(tm&&!sv?'Título: '+vd.title+'.':'');
+ if(sv)return saveDraft();return ack||null}
+$('draftSave').onclick=()=>speak(saveDraft());$('draftCancel').onclick=()=>{vd=null;draftUI();speak('Nota cancelada.')};
+/* ---------- presupuesto, pagos automáticos, gastos hormiga ---------- */
+function newCat(p,name,budget,type){const c={id:uid(),name:cap(clean(name)),budget:r2(budget||0),due:'',aliases:[],type:type||'gasto',carry:false,cycle:0,capOn:false,auto:false,monthAmt:{}};p.cats.push(c);return c}
+function catAt(p,T,i){return matchCat(T,i,catKeys(p))}
+function firstAmount(T,from,skip){for(let i=from||0;i<T.length;i++){if(skip&&skip.has(i))continue;const a=parseAmount(T,i);if(a&&a.v>0)return {...a,i}}return null}
+function autoSave(p,c,amount,note){const e=addExpense(p,c.id,amount,month===today().slice(0,7)?today():month+'-01',note||'');save();render();pushUndo('Gasto guardado',()=>{const pr=P();pr.expenses=pr.expenses.filter(x=>x.id!==e.id)});
+ const s=catStat(p,c,month);let m='Guardado: '+c.name+(note?', '+note:'')+', '+say$(amount)+'.';if(!s.noCap&&s.type==='gasto'){m+=' Le quedan '+say$(s.s)+'.';if(s.g>s.b)m+=' Atención: se pasó del presupuesto.';else if(s.pct>=80)m+=' Ya pasó del 80 por ciento.'}return m+' Si está mal diga deshacer.'}
+function hormigaCat(p){return p.cats.find(c=>norm(c.name)==='gastos hormiga')||newCat(p,'Gastos hormiga',0,'ciego')}
+function handleHormiga(raw){const p=P();const T=tokenize(raw);if(!/^(gaste|gasto|compre)$/.test(T[0]||''))return null;let W=tokenizeRaw(raw);if(W.length!==T.length)W=T;
+ if(T[0]==='gasto'&&(T[1]==='hormiga'))T.splice(1,1),W.splice(1,1);
+ const used=new Set([0]);let cat=null;for(let i=1;i<T.length;i++){const m=catAt(p,T,i);if(m&&norm(m.c.name)!=='gastos hormiga'){cat=m.c;for(let k=i;k<m.n;k++)used.add(k);break}}
+ const a=firstAmount(T,1,used);if(a)for(let k=a.i;k<a.n;k++)used.add(k);
+ const FILLW=['de','en','un','una','el','la','los','las','por','con','y','fue','fueron','dolares','dolar'];let nt=W.filter((w,i)=>!used.has(i));
+ while(nt.length&&FILLW.includes(norm(nt[0])))nt.shift();while(nt.length&&FILLW.includes(norm(nt[nt.length-1])))nt.pop();const note=nt.join(' ');
+ if(!cat&&!note&&!a)return null;
+ const c=cat||hormigaCat(p);if(!a){awaitAmt={catId:c.id,note};setMic();return '¿Cuánto fue'+(note?' '+note:'')+'?'}
+ return autoSave(p,c,a.v,note)}
+function handleAwaitAmt(raw){if(!awaitAmt)return null;const t=nrm(raw);if(/\b(cancelar|olvidalo|nada)\b/.test(t)){awaitAmt=null;setMic();return 'Cancelado.'}
+ const T=tokenize(raw);const a=firstAmount(T,0);if(!a){awaitAmt.tries=(awaitAmt.tries||0)+1;if(awaitAmt.tries>=2){awaitAmt=null;setMic();return 'No entendí el monto; lo dejo sin guardar.'}return 'No entendí. ¿Cuánto fue? Diga por ejemplo cinco dólares.'}
+ const p=P(),c=p.cats.find(x=>x.id===awaitAmt.catId),note=awaitAmt.note;awaitAmt=null;setMic();return c?autoSave(p,c,a.v,note):null}
+function handleBudget(raw){const p=P(),T=tokenize(raw),t=T.join(' ');let m;
+ if(/^(como voy|como vamos|resumen del mes|como va el mes)$/.test(t)){const x=totals(p,month);const hot=p.cats.filter(c=>{const s=catStat(p,c,month);return s.type==='gasto'&&s.b>0&&s.pct>=80});const pp=pendingPays(p,month);
+  return 'Este mes lleva gastado '+say$(x.g)+' de '+say$(x.b)+', le quedan '+say$(x.s)+'.'+(hot.length?' Cuidado con '+hot.map(c=>c.name+' al '+catStat(p,c,month).pct+' por ciento').join(', ')+'.':'')+(pp.length?' Faltan '+pp.length+' pagos fijos.':' Todos los pagos fijos están hechos.')}
+ if(/^(que|cuales) pagos automaticos/.test(t)||/^pagos automaticos$/.test(t)){const L=p.cats.filter(c=>c.auto);return L.length?'Tiene '+L.length+' pagos automáticos: '+L.map(c=>c.name+', '+say$(c.budget)+(c.due?', el día '+c.due:'')).join('; ')+'.':'No tiene pagos automáticos.'}
+ if(/^(quitar|desactivar|cancelar|eliminar) (el )?pago automatico\b/.test(t)){const c=findCatIn(T.slice(2),p);if(!c)return 'No encontré esa categoría.';c.auto=false;save();render();return 'Listo, '+c.name+' ya no se registra automáticamente.'}
+ if(/^(pago automatico|activar pago automatico|poner pago automatico)\b/.test(t)){let k=T.indexOf('automatico')+1;if(T[k]==='de'||T[k]==='para')k++;let U=T.slice(k);let day=null;
+  const di=U.findIndex((w,i)=>w==='dia'||(w==='el'&&i>0&&parseNum(U,i+1)));if(di>=0){const st=U[di]==='dia'?di:di;let j=U[di]==='el'&&U[di+1]==='dia'?di+2:di+1;const d=parseNum(U,j);if(d&&d.v>=1&&d.v<=31){day=d.v;let s0=di>0&&U[di-1]==='el'?di-1:di;U=U.slice(0,s0).concat(U.slice(d.n))}}
+  let c=null,ci=-1;for(let i=0;i<U.length;i++){const mm=catAt(p,U,i);if(mm){c=mm.c;ci=i;U=U.slice(0,i).concat(U.slice(mm.n));break}}
+  const a=firstAmount(U,0);let created=false;
+  if(!c){let W=U.filter(w=>!isNumTok(w)&&!['con','de','dolares','dolar','y','el','la'].includes(w));if(!W.length)return 'Diga el nombre del pago, por ejemplo: pago automático Netflix 21.61 el día 24.';c=newCat(p,W.join(' '),a?a.v:0,'fijo');created=true}
+  c.type='fijo';c.auto=true;if(a)c.budget=r2(a.v);if(day)c.due=String(day);save();render();
+  return (created?'Creé '+c.name+' y lo dejé':c.name+' quedó')+' como pago automático'+(c.budget?' de '+say$(c.budget):'')+(c.due?' el día '+c.due:'. Diga también el día, por ejemplo el día 24')+'. Se registrará solo cada mes.'}
+ if(m=t.match(/^(crear|nueva|agregar|anadir) (una )?categoria\b/)){const RW=tokenizeRaw(raw);let W=RW.length===T.length?RW:T;let k=T.indexOf('categoria')+1;let U=T.slice(k),UW=W.slice(k);
+  const type=['fijo','variable','ciego','gasto'].find(x=>U.includes(x));const ci=U.indexOf('con');const a=firstAmount(U,ci>=0?ci+1:0);let end=ci>=0?ci:(a?a.i:U.length);
+  let nameW=UW.slice(0,end).filter((w,i)=>!['fijo','variable','ciego','de','tipo'].includes(norm(U[i]))||i===0);const name=clean(nameW.join(' '));if(!name)return 'Diga el nombre, por ejemplo: crear categoría farmacia con 80.';
+  if(p.cats.some(c=>norm(c.name)===norm(name)))return 'Ya existe la categoría '+name+'. Para cambiar el monto diga: presupuesto de '+name+' y el monto.';
+  const c=newCat(p,name,a?a.v:0,type||'gasto');save();render();return 'Creé la categoría '+c.name+(a?' con '+say$(a.v)+' al mes':' sin monto todavía')+'.'}
+ if(/^(cambiar |poner |subir |bajar )?(el )?presupuesto (de|para|del)\b/.test(t)){let k=T.indexOf('presupuesto')+1;if(['de','para','del'].includes(T[k]))k++;let c=null,j=k;
+  for(let i=k;i<T.length;i++){const mm=catAt(p,T,i);if(mm){c=mm.c;j=mm.n;break}}if(!c)return 'No encontré esa categoría. Diga: crear categoría y el nombre con el monto.';
+  while(['a','en','de','por'].includes(T[j]))j++;const a=parseAmount(T,j)||firstAmount(T,j);if(!a)return 'Diga el monto, por ejemplo: presupuesto de '+c.name+' 600.';
+  const old=c.budget;c.budget=r2(a.v);save();render();return 'Presupuesto de '+c.name+': '+say$(c.budget)+' al mes (antes '+say$(old)+').'}
+ return null}
+/* ---------- router ---------- */
+handleTranscript=function(text){if(!text||!String(text).trim())return null;S.lastActivity=Date.now();
+ let raw=String(text).replace(/^\s*(oye|hey|oiga|ok)[\s,]+app\b[\s,.:]*/i,'').trim();if(!raw)return null;let r=null;
+ r=handleNoteVoice(raw);
+ if(r==null&&!vd){r=handleAwaitAmt(raw);
+  if(r==null&&tab!=='mant'){r=handleBudget(raw);if(r==null)r=handleHormiga(raw)}
+  if(r==null){if(tab==='mant')r=handleMaint(raw)||answerQuery(raw,P());else{r=handleFinance(raw);if(r==null&&tab==='notas')r=handleNotes(raw)}}}
+ if(r){$('interim').textContent=r;speak(r)}return r};
+if(!SR)setTimeout(()=>{$('interim').textContent=UNSUP},0);
+navigator.serviceWorker&&navigator.serviceWorker.getRegistration&&navigator.serviceWorker.getRegistration().then(g=>g&&g.update()).catch(()=>{});
+setMic();
+
+window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn}};
 })();
 </script>
 </body>
