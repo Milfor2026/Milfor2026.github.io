@@ -54,6 +54,8 @@ body.hc .btn.sec{background:#333;color:#fff}body.hc .pend{background:#332;border
 body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--ok)}
 @media print{header,nav,#micbar,#toast,.banner,button.btn,#instBanner,#banners,#featExtra{display:none!important}main{padding:0}body{background:#fff;color:#000}}
 #draftBan{position:fixed;left:8px;right:8px;bottom:calc(96px + env(safe-area-inset-bottom));background:#2e7d32;color:#fff;border-radius:12px;padding:10px;z-index:19;display:flex;gap:8px;align-items:center;box-shadow:0 4px 14px #0004}#draftBan>div{flex:1}#draftBan.hide{display:none!important}#draftBan .btn{margin:0;padding:8px 10px}
+#nfBan{position:fixed;left:8px;right:8px;bottom:calc(96px + env(safe-area-inset-bottom));background:#1f3a5f;color:#fff;border-radius:12px;padding:10px;z-index:21;box-shadow:0 4px 14px #0005}#nfBan.hide{display:none!important}#nfBan .btn{margin:4px 4px 0 0;padding:8px 10px}#nfBan input{margin-top:4px}
+.note{cursor:pointer}
 </style>
 </head>
 <body>
@@ -115,10 +117,11 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
    <li>«ya pagué el agua el 3 de noviembre, fueron ciento cuarenta» · «ya se pagó Netflix»</li>
    <li>«pago automático Netflix 21.61 el día 24» · «quitar pago automático Netflix» · «¿qué pagos automáticos tengo?»</li></ul></details>
   <details><summary><b>Notas y listas (manos libres)</b></summary><ul class="small" style="color:var(--tx)">
-   <li>«crear nota» o «nueva nota viaje» → dicte; todo se agrega a la nota → «guardar nota» o «cancelar nota»</li>
+   <li>Toque <b>Notas</b> o diga «crear nota»: la app pregunta el tipo (verificación, numerada, viñetas o normal) y luego el nombre. Con «crear nota viaje» solo pregunta el tipo.</li>
+   <li>Después dicte (en listas, un elemento por frase) → «guardar nota» o «cancelar nota». Si el nombre ya existe, le pregunta si la abre (sí / no).</li>
    <li>«título …» · «compartir con esposa» (privada si no lo dice)</li>
    <li>«crear lista de compras» → cada frase es un elemento («leche», «pan») → «guardar lista»</li>
-   <li>«abrir nota viaje» o «agregar a la nota viaje» → dicte → «guardar nota»</li>
+   <li>«abrir nota viaje» o «agregar a la nota viaje», o toque la nota en la lista → dicte → «guardar nota»</li>
    <li>«leer nota viaje»</li></ul></details>
   <details><summary><b>Carro</b></summary><ul class="small" style="color:var(--tx)"><li>En Mantenimiento: «carro cambio de aceite 45000 millas 60 dólares»</li></ul></details>
   <p class="small">Si el micrófono no responde: use Google Chrome (en Samsung Internet suele fallar), permita el micrófono y verifique que tenga internet.</p></div>
@@ -146,6 +149,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
   <button class="btn" id="bExp">Exportar respaldo (JSON)</button><button class="btn sec" id="bCsv">Exportar gastos (CSV)</button><button class="btn sec" id="bImp">Importar respaldo</button><input type="file" id="bFile" accept=".json,application/json" class="hide"></div>
 </section>
 </main>
+<div id="nfBan" class="hide"><div id="nfQ" style="font-weight:700;margin-bottom:6px"></div><div id="nfOpts"></div></div>
 <div id="draftBan" class="hide"><div><b id="draftTitle">Dictando nota</b><div class="small" id="draftInfo" style="color:#fff"></div></div><button type="button" class="btn" id="draftSave">Guardar</button><button type="button" class="btn sec" id="draftCancel">Cancelar</button></div>
 <div id="toast"><span id="toastMsg"></span><button type="button" id="toastUndo">Deshacer</button></div>
 <div id="micbar"><div class="row" style="align-items:center"><button id="mic" aria-label="Micrófono">🎤</button><div style="flex:1"><div id="micstate">Micrófono apagado — toque para escuchar</div><div id="interim"></div></div></div>
@@ -759,7 +763,48 @@ if(!SR)setTimeout(()=>{$('interim').textContent=UNSUP},0);
 navigator.serviceWorker&&navigator.serviceWorker.getRegistration&&navigator.serviceWorker.getRegistration().then(g=>g&&g.update()).catch(()=>{});
 setMic();
 
-window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn}};
+
+/* ===== v8 flujo de notas ===== */
+let nf=null;
+const QTYPE='¿Qué tipo de nota quiere? Lista de verificación, lista numerada, lista de viñetas o texto normal.',QNAME='¿Qué nombre le pone a la nota?';
+const FMTN={check:'lista de verificación',num:'lista numerada',bullet:'lista de viñetas',normal:'nota de texto'};
+function typeFrom(t){t=nrm(t);if(/\b(verificacion|checklist|check list|chequeo|chequear|check|tareas|marcar)\b/.test(t))return'check';if(/\b(numerada|numerado|numeros|numerica|enumerada)\b/.test(t))return'num';if(/\b(vinetas|vineta|puntos|bullet|bolitas)\b/.test(t))return'bullet';if(/\b(normal|texto|parrafo|libre)\b/.test(t))return'normal';return null}
+function ownByName(name){const q=nrm(name).replace(/\s+/g,' ').trim();return S.notes.find(n=>n.owner===S.current&&nrm(n.title).replace(/\s+/g,' ').trim()===q)}
+function nfUI(){const b=$('nfBan');if(!nf){b.classList.add('hide');setMic();return}b.classList.remove('hide');
+ if(nf.step==='type'){$('nfQ').textContent=QTYPE+(nf.title?' (Nombre: '+nf.title+')':'');$('nfOpts').innerHTML=['check','num','bullet','normal'].map(f=>`<button type="button" class="btn" data-nft="${f}">${cap(FMTN[f])}</button>`).join('')+'<button type="button" class="btn sec" data-nfx="1">Cancelar</button>'}
+ else if(nf.step==='name'){$('nfQ').textContent=QNAME+' ('+FMTN[nf.fmt]+')';$('nfOpts').innerHTML='<input id="nfName" placeholder="Nombre de la nota"><button type="button" class="btn" data-nfn="1">Aceptar</button><button type="button" class="btn sec" data-nfx="1">Cancelar</button>'}
+ else if(nf.step==='exists'){$('nfQ').textContent='Ya existe la nota «'+nf.title+'». ¿La abro?';$('nfOpts').innerHTML='<button type="button" class="btn" data-nfy="1">Sí, abrirla</button><button type="button" class="btn sec" data-nfno="1">No</button>'}
+ setMic()}
+function openForAppend(n){vd={fmt:n.fmt,title:n.title,body:'',items:[],shared:[],noteId:n.id};nf=null;nfUI();draftUI();return 'Abrí '+n.title+'. '+(n.fmt==='normal'?'Dicte el texto':'Diga cada elemento, uno por frase')+'. Al terminar diga guardar nota.'}
+function beginDraft(){const f=nf.fmt,t=nf.title;nf=null;nfUI();startDraft(f,t);return cap(FMTN[f])+' «'+t+'» lista. '+(f==='normal'?'Dicte el texto':'Diga cada elemento, uno por frase')+'. Al terminar diga guardar nota.'}
+function afterName(){const ex=ownByName(nf.title);if(ex){nf.step='exists';nf.existing=ex.id;nfUI();return 'Ya existe una nota llamada '+nf.title+'. ¿La abro? Diga sí o no.'}return beginDraft()}
+function startFlow(title){nf={step:'type',title:clean(title||''),fmt:null};nfUI();return QTYPE}
+function flowStep(raw){const t=nrm(raw).replace(/\s+/g,' ').trim();if(!t)return null;
+ if(/^(cancelar|cancela|olvidalo|salir)( nota)?$/.test(t)){nf=null;nfUI();return 'Cancelado.'}
+ if(nf.step==='type'){const f=typeFrom(t);if(!f)return 'No entendí. '+QTYPE;nf.fmt=f;if(nf.title)return afterName();nf.step='name';nfUI();return QNAME}
+ if(nf.step==='name'){let name=clean(raw.replace(/^\s*(se llama|llamada|el nombre es|nombre|t[ií]tulo)\s+/i,''));if(!name)return QNAME;nf.title=cap(name);return afterName()}
+ if(nf.step==='exists'){if(/^(si|claro|dale|abrela|abrir|ok|okay)\b/.test(t)){const n=S.notes.find(x=>x.id===nf.existing);return n?openForAppend(n):beginDraft()}
+  if(/^no\b/.test(t)){nf.step='name';nf.title='';nfUI();return 'Entonces diga otro nombre para la nota.'}return 'Diga sí para abrirla o no para elegir otro nombre.'}
+ return null}
+$('nfOpts').onclick=e=>{const d=e.target.dataset;let r=null;if(!nf)return;unlockVoice();
+ if(d.nft){nf.fmt=d.nft;if(nf.title)r=afterName();else{nf.step='name';nfUI();r=QNAME}}
+ else if(d.nfn){const v=$('nfName').value.trim();if(!v)return;nf.title=cap(v);r=afterName()}
+ else if(d.nfy){r=flowStep('sí')}else if(d.nfno){r=flowStep('no')}else if(d.nfx){nf=null;nfUI();r='Cancelado.'}
+ if(r){$('interim').textContent=r;speak(r)}};
+function micOnAuto(){if(!SR||micOn||isIOS)return;$('mic').click()}
+const _hNV=handleNoteVoice;handleNoteVoice=function(raw){const t=nrm(raw).replace(/\s+/g,' ').trim();
+ const mn=t.match(/^(crear|nueva|hacer) nota\b/);if(mn){if(vd)return 'Tiene una nota abierta. Primero diga guardar nota o cancelar nota.';
+  let rest=clean(raw.replace(/^\s*\S+\s+nota\b/i,''));rest=clean(rest.replace(/^t[ií]tulo\s*/i,''));return startFlow(cap(rest))}
+ const ml=t.match(/^(crear|nueva|hacer) lista( numerada| de vinetas)?\b/);if(ml&&!vd){const r0=_hNV(raw);if(vd&&vd.title){const ex=ownByName(vd.title);if(ex){const f=vd.fmt,ti=vd.title;vd=null;draftUI();nf={step:'exists',title:ti,fmt:f,existing:ex.id};nfUI();return 'Ya existe una nota llamada '+ti+'. ¿La abro? Diga sí o no.'}}return r0}
+ const mo=t.match(/^(agregar|anadir|sumar) a la (nota|lista)\b|^abrir (la )?(nota|lista)\b/);if(mo&&!vd){const q=clean(raw.replace(/^\s*(agregar|añadir|anadir|sumar)\s+a\s+la\s+(nota|lista)|^\s*abrir\s+(la\s+)?(nota|lista)/i,''));const n=findNote(q);if(n&&n.owner===S.current)return openForAppend(n)}
+ return _hNV(raw)};
+const _hT7=handleTranscript;handleTranscript=function(text){if(nf){let raw=String(text||'').replace(/^\s*(oye|hey|oiga|ok)[\s,]+app\b[\s,.:]*/i,'').trim();S.lastActivity=Date.now();const r=flowStep(raw);if(r){$('interim').textContent=r;speak(r)}return r}return _hT7(text)};
+document.querySelector('nav').onclick=e=>{const t=e.target.dataset.tab;if(!t)return;setTab(t);if(t==='notas'&&!nf&&!vd){unlockVoice();const q=startFlow('');$('interim').textContent=q;speak(q);micOnAuto()}};
+$('nList').addEventListener('click',e=>{if(e.target.closest('button,[data-n],a,input'))return;const c=e.target.closest('.note');if(!c||vd||nf)return;const n=S.notes.find(x=>x.id===c.dataset.id);if(!n)return;
+ if(n.owner!==S.current){const r='Esa nota es compartida por otra persona; solo puede leerla.';$('interim').textContent=r;speak(r);return}unlockVoice();const r=openForAppend(n);$('interim').textContent=r;speak(r);micOnAuto()});
+const _setMic8=setMic;setMic=function(){_setMic8();if(nf&&micOn&&!speaking)$('micstate').textContent='🔴 Escuchando su respuesta…'};
+
+window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn},get noteFlow(){return nf}};
 })();
 </script>
 </body>
