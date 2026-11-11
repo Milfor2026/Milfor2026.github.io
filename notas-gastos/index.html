@@ -129,6 +129,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
    <li>Tachar: «ya compré los huevos», «ya tengo las uvas», «ya hice X», «listo X», «tache X» → «¿qué más?» o «¿qué me falta?» para oír lo que queda. Desmarcar: «todavía no tengo los huevos». Con monto («ya compré leche por 5 dólares») pregunta si lo anota como gasto.</li>
    <li>Agregar a la nota activa (abierta o la última que leyó): «agregar leche», «agregue pan y huevos», «también café», «ponga arroz a la lista tareas». Si no hay nota activa le pregunta a cuál. Lo repetido no se duplica.</li>
    <li>Con una nota abierta: «¿qué queda?», «¿qué me falta?», «¿qué llevo?», «léame la lista» le lee lo pendiente; las preguntas nunca se anotan como texto.</li>
+   <li>«quiero eliminar algo» → la app pregunta «¿Qué quiere borrar?» y le lee lo pendiente; conteste el nombre o «el segundo». «quiero agregar algo» → «¿Qué quiere agregar?». También entiende «quiero…», «necesito…», «me gustaría…», «voy a…».</li>
    <li>Borrar un elemento (con la nota abierta o después de leerla): «elimine hacer mercado», «quite las uvas», «podría eliminar …», «saque X de la lista tareas». Si hay varios parecidos le pregunta cuál; «deshacer» lo recupera.</li>
    <li>En una lista de verificación, el botón <b>Pegar lista</b> agrega el mensaje de WhatsApp (una línea, coma o viñeta por elemento).</li></ul></details>
   <details><summary><b>Carro</b></summary><ul class="small" style="color:var(--tx)"><li>En Mantenimiento: «carro cambio de aceite 45000 millas 60 dólares»</li></ul></details>
@@ -934,7 +935,7 @@ $('nList').addEventListener('click',e=>{const b=e.target.closest('[data-paste]')
 renderNotes();
 
 /* ===== v11 borrar elementos por voz, cortesía y nunca silencio ===== */
-const POLITE=/^\s*(?:(?:por\s+favor|porfa|favor\s+de|me\s+hace\s+el\s+favor\s+de|h[aá]game\s+el\s+favor\s+de|hazme\s+el\s+favor\s+de|me\s+podr[ií]a|me\s+puede|podr[ií]as?|puedes?|pudiera|pudieras|quisiera\s+que|usted\s+puede)[\s,]+)+/i;
+const POLITE=/^\s*(?:(?:quiero|quisiera|necesito|deseo|me\s+gustar[ií]a|voy\s+a|vamos\s+a|d[eé]j[ae]me|d[eé]jeme|por\s+favor|porfa|favor\s+de|me\s+hace\s+el\s+favor\s+de|h[aá]game\s+el\s+favor\s+de|hazme\s+el\s+favor\s+de|me\s+podr[ií]a|me\s+puede|podr[ií]as?|puedes?|pudiera|pudieras|quisiera\s+que|usted\s+puede)[\s,]+)+/i;
 const WAKE=/^\s*(oye|hey|oiga|ok)[\s,]+app\b[\s,.:]*/i;
 const stripPolite=x=>String(x||'').replace(WAKE,'').replace(POLITE,'').replace(/[\s,]+por\s+favor[\s.!]*$/i,'').trim();
 const IDEL=/^(elimine|elimina|eliminar|eliminame|elimineme|borre|borra|borrar|borrame|borreme|quite|quita|quitar|quitame|quiteme|saque|saca|sacar|sacame|saqueme)\s+(.+)$/;
@@ -1007,6 +1008,32 @@ const _hT11=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  r=addCmd(st);if(r)return out(r);
  if(vd&&isQuestion(st)){const V=vd;vd=null;try{r=_hT11(st)}finally{if(!vd)vd=V}return r}
  return _hT11(text)};
+
+/* ===== v13 «quiero eliminar algo»: preguntar qué borrar o agregar ===== */
+let askDel=null,askAdd=null;
+const DVERB='elimine|elimina|eliminar|eliminame|elimineme|borre|borra|borrar|borrame|borreme|quite|quita|quitar|quitame|quiteme|saque|saca|sacar|sacame|saqueme';
+const AVERB='agregar|agrega|agregue|agregale|agreguele|anadir|anade|anada|pon|ponga|poner|anota|anote|anotar|apunta|apunte';
+const VAGUE='(?:algo|algo mas|una cosa|otra cosa|cosa|cosas|algo de la lista|algo de la nota|un renglon|renglon|un item|item|un elemento|elemento|un producto|una linea|un articulo|alguno|alguna|uno|una)';
+const VDEL=new RegExp('^(?:'+DVERB+')(?: '+VAGUE+')?$'),VADD=new RegExp('^(?:'+AVERB+')(?: '+VAGUE+')?$'),IDELV=new RegExp('^(?:'+DVERB+')\\s+(.+)$');
+const ORDN=[['primer','primero','primera','uno','1'],['segundo','segunda','dos','2'],['tercer','tercero','tercera','tres','3'],['cuarto','cuarta','cuatro','4'],['quinto','quinta','cinco','5'],['sexto','sexta','seis','6'],['septimo','septima','siete','7'],['octavo','octava','ocho','8'],['noveno','novena','nueve','9'],['decimo','decima','diez','10']];
+function ordIdx(t,len){const m=t.match(/^(?:el |la |lo )?(\S+)(?: (?:de la lista|elemento|renglon))?$/);if(!m)return -1;if(/^(ultimo|ultima)$/.test(m[1]))return len-1;return ORDN.findIndex(g=>g.includes(m[1]))}
+function delList(){const L=[];
+ if(vd){const n=vd.noteId&&S.notes.find(x=>x.id===vd.noteId);if(n)n.items.forEach((it,i)=>{if(!it.done)L.push({kind:'note',n,i,t:it.t})});vd.items.forEach((t,i)=>L.push({kind:'draft',n:null,i,t}))}
+ else{const a=activeNote();if(a&&a.n)a.n.items.forEach((it,i)=>{if(!it.done)L.push({kind:'note',n:a.n,i,t:it.t})})}return L}
+function askDelete(pre){const L=delList();askDel={list:L,tries:0};const names=L.map(c=>lc(c.t));
+ return (pre?pre+' ':'')+'¿Qué quiere borrar?'+(names.length?' Tiene: '+(names.length>8?names.slice(0,8).join(', ')+' y '+(names.length-8)+' más':joinY(names))+'.':(activeNote()?' La lista está vacía.':' Dígame el elemento y la lista.'))}
+function askDelStep(st){const t=nrm(st).replace(/\s+/g,' ').trim(),A=askDel;if(/^(cancelar|cancela|nada|ninguno|ninguna|olvidalo|no)$/.test(t)){askDel=null;return 'Cancelado.'}
+ const k=ordIdx(t,A.list.length);if(k>=0&&A.list[k]){askDel=null;return delItem(A.list[k])}
+ askDel=null;const r=itemDelCmd('eliminar '+st);if(typeof r==='string')return r;if(A.tries>=1)return 'No encontré “'+lc(clean(st))+'”. Cancelado.';const r2=askDelete('No encontré “'+lc(clean(st))+'”.');askDel.tries=A.tries+1;return r2}
+function askAddStep(st){const t=nrm(st).replace(/\s+/g,' ').trim();askAdd=null;if(/^(cancelar|cancela|nada|olvidalo|no)$/.test(t))return 'Cancelado.';return addCmd('agregar '+st)||'No le entendí. Diga, por ejemplo, agregar leche.'}
+const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(text).trim())return null;if(nf)return _hT12(text);
+ const base=String(text).replace(WAKE,'').trim(),st=stripPolite(text);if(!st)return null;const t=nrm(st).replace(/\s+/g,' ').trim();
+ const out=x=>{S.lastActivity=Date.now();$('interim').textContent=x;speak(x);return x};
+ if(askDel)return out(askDelStep(st));if(askAdd)return out(askAddStep(st));
+ if(VDEL.test(t))return out(askDelete(''));
+ if(VADD.test(t)){askAdd=true;const a=activeNote();return out('¿Qué quiere agregar?'+(a&&a.n&&!a.draft?' Lo pongo en '+a.n.title+'.':''))}
+ if(vd&&st!==base){const m=t.match(IDELV);if(m&&!DELRE.test(t)){const r=itemDelCmd(st);if(typeof r==='string')return out(r);return out(askDelete('No encontré “'+lc(clean(st.replace(/^\s*\S+\s+/,'')))+'” en la nota.'))}}
+ return _hT12(text)};
 
 window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn},get noteFlow(){return nf},get curNote(){return curNote},splitPasted};
 })();
