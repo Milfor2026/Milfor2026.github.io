@@ -127,6 +127,8 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
    <li>«abrir nota viaje» o «agregar a la nota viaje», o toque la nota en la lista → dicte → «guardar nota»</li>
    <li>Leer sin editar: «léame la nota del mercado», «¿qué tengo en cosas por hacer?», «¿qué tengo pendiente?». En listas de verificación lee solo lo que falta.</li>
    <li>Tachar: «ya compré los huevos», «ya tengo las uvas», «ya hice X», «listo X», «tache X» → «¿qué más?» o «¿qué me falta?» para oír lo que queda. Desmarcar: «todavía no tengo los huevos». Con monto («ya compré leche por 5 dólares») pregunta si lo anota como gasto.</li>
+   <li>Agregar a la nota activa (abierta o la última que leyó): «agregar leche», «agregue pan y huevos», «también café», «ponga arroz a la lista tareas». Si no hay nota activa le pregunta a cuál. Lo repetido no se duplica.</li>
+   <li>Con una nota abierta: «¿qué queda?», «¿qué me falta?», «¿qué llevo?», «léame la lista» le lee lo pendiente; las preguntas nunca se anotan como texto.</li>
    <li>Borrar un elemento (con la nota abierta o después de leerla): «elimine hacer mercado», «quite las uvas», «podría eliminar …», «saque X de la lista tareas». Si hay varios parecidos le pregunta cuál; «deshacer» lo recupera.</li>
    <li>En una lista de verificación, el botón <b>Pegar lista</b> agrega el mensaje de WhatsApp (una línea, coma o viñeta por elemento).</li></ul></details>
   <details><summary><b>Carro</b></summary><ul class="small" style="color:var(--tx)"><li>En Mantenimiento: «carro cambio de aceite 45000 millas 60 dólares»</li></ul></details>
@@ -963,6 +965,48 @@ const _hT10=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  let miss=null;if(!nf){const r0=itemDelCmd(st);if(typeof r0==='string'){S.lastActivity=Date.now();$('interim').textContent=r0;speak(r0);return r0}if(r0&&r0.miss)miss=r0.miss}
  let pass=st;if(vd&&!nf){const base=String(text).replace(WAKE,'').trim();pass=(st!==base&&/^(guardar|guarda|terminar|listo|cancelar|borrar|descartar|compartir|t[ií]tulo)\b/i.test(st))?st:text}
  const r=_hT10(pass);if(r==null&&!vd){const msg=miss||'No le entendí. ¿Me lo repite, por favor?';$('interim').textContent=msg;speak(msg);return msg}return r};
+
+/* ===== v12 agregar elementos y preguntas con nota activa ===== */
+const ADDRE=/^(agregar|agrega|agregue|agregale|agreguele|agregame|agregueme|anadir|anade|anada|anadele|pon|ponga|poner|ponle|pongale|anota|anote|anotar|apunta|apunte|apuntar|tambien)\s+(.+)$/;
+const QPEND=/^(que mas queda|que queda|que mas me queda|que me queda|que falta|que me falta|que mas falta|que mas me falta|que llevo|que mas llevo|que mas|que tengo|que mas tengo|que hay|que mas hay|leame la lista|leame la nota|lea la lista|lea la nota|leer la lista|leer la nota|leeme la lista|leame|que tengo en la lista|que hay en la lista)( que comprar| por comprar| para comprar| por hacer| que hacer| en la lista)?$/;
+let addQ=null;
+function activeNote(){if(vd){const n=vd.noteId&&S.notes.find(x=>x.id===vd.noteId);return {draft:true,n}}const n=curNote&&S.notes.find(x=>x.id===curNote&&visibleNotes().includes(x));return n?{draft:false,n}:null}
+function draftView(){const n=vd.noteId&&S.notes.find(x=>x.id===vd.noteId);return {id:n?n.id:null,title:vd.title||(n&&n.title)||'Nota',fmt:vd.fmt,body:((n&&n.body)||'')+(vd.body?' '+vd.body:''),items:(n?n.items:[]).concat(vd.items.map(t=>({t,done:false})))}}
+function pendCount(v){return v.items.filter(i=>!i.done).length}
+function splitAdd(q){return q.split(/\s*[,;]\s*|\s+y\s+|\s+e\s+/i).map(x=>clean(x.replace(/^(y|e|tambien|también)\s+/i,''))).filter(Boolean).map(cap)}
+function addItems(target,list){const isDraft=target==='draft';const n=isDraft?null:target;const v=isDraft?draftView():n;
+ if(v.fmt==='normal'){const txt=list.join(', ');if(isDraft)vd.body=(vd.body?vd.body+' ':'')+txt;else{const old=n.body;n.body=(n.body?n.body+'\n':'')+txt;n.updated=new Date().toISOString();save();renderNotes();pushUndo('Agregado: '+txt,()=>{n.body=old})}if(isDraft){const V=vd;draftUI();}return 'Listo, agregué “'+lc(txt)+'”'+(isDraft?'':' a '+n.title)+'.'}
+ const have=new Set(v.items.map(i=>norm(i.t))),added=[],dup=[];list.forEach(x=>{const k=norm(x);if(have.has(k))dup.push((v.items.find(i=>norm(i.t)===k)||{t:x}).t);else{have.add(k);added.push(x)}});
+ if(added.length){if(isDraft){const V=vd;added.forEach(x=>V.items.push(x));draftUI();pushUndo('Agregado: '+added.join(', '),()=>{V.items=V.items.filter(x=>!added.includes(x));if(vd===V)draftUI()})}
+  else{const objs=added.map(t=>({t,done:false}));n.items.push(...objs);n.updated=new Date().toISOString();save();renderNotes();pushUndo('Agregado: '+added.join(', '),()=>{n.items=n.items.filter(o=>!objs.includes(o))})}}
+ const v2=isDraft?draftView():n;const cnt=v2.fmt==='check'?(c=>c===1?'Le falta 1.':'Le faltan '+c+'.')(pendCount(v2)):(c=>c===1?'Es 1.':'Son '+c+'.')(v2.items.length);
+ const q=a=>joinY(a.map(x=>'“'+lc(x)+'”'));const dmsg=dup.length?(dup.length===1?'“'+cap(dup[0])+'” ya está en la lista.':'Ya están en la lista: '+q(dup)+'.'):'';
+ if(!added.length)return dmsg;const curT=activeNote();const other=!isDraft&&!(curT&&!curT.draft&&curT.n===n);return 'Listo, agregué '+q(added)+(other?' a '+n.title:'')+'. '+(dmsg?dmsg+' ':'')+cnt}
+function addCmd(st){const t=nrm(st).replace(/\s+/g,' ').trim();const m=t.match(ADDRE);if(!m)return null;
+ if(/^(gasto|gastos|un gasto|el gasto|presupuesto|el presupuesto|categoria|una categoria|pago|un pago|el pago|a la (nota|lista)|a mi (nota|lista)|nota|lista)\b/.test(m[2]))return null;
+ let q=clean(st.replace(/^\s*\S+\s+/,'')),n0=null;const sp=q.match(/^(.*?)\s+(?:a|en)\s+(?:la\s+|mi\s+)?(?:lista|nota)\s+(?:de\s+|del\s+)?(.+)$/i);
+ if(sp){const R=rankNotes(sp[2],visibleNotes());if(R.length&&R[0].s>=40){n0=R[0].n;q=clean(sp[1])}}
+ if(!n0){try{if(parseExpenses(q).length&&/\d|\b(uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|veinte|treinta|cuarenta|cincuenta|cien|ciento|mil)\b/.test(nrm(q)))return null}catch(_){}}
+ const list=splitAdd(q);if(!list.length)return null;
+ if(n0)return addItems(n0,list);const a=activeNote();if(a)return addItems(a.draft?'draft':a.n,list);
+ if(!visibleNotes().length)return 'No tiene notas guardadas. Diga crear nota para hacer una.';addQ={list,tries:0};return '¿A qué nota lo agrego?'}
+function addQStep(st){const t=nrm(st).replace(/\s+/g,' ').trim();const Q=addQ;if(/^(cancelar|cancela|ninguna|nada|olvidalo)\b/.test(t)){addQ=null;return 'Cancelado.'}
+ const R=rankNotes(st,visibleNotes());if(R.length){addQ=null;return addItems(R[0].n,Q.list)}if(Q.tries++>=1){addQ=null;return null}
+ return 'No encontré esa nota. Sus notas son: '+joinO(recentOf(visibleNotes(),3).map(n=>n.title))+'. ¿A cuál lo agrego?'}
+function pendRead(t){const a=activeNote();if(!a)return null;const v=a.draft?draftView():a.n;if(!a.draft)curNote=a.n.id;
+ if(v.fmt!=='check')return v.fmt==='normal'?(v.title+'. '+(v.body||'Está vacía.')):readNote(v);
+ const P0=v.items.filter(i=>!i.done).map(i=>lc(i.t));if(!P0.length)return v.items.length?'Ya tiene todo.':'La lista está vacía.';
+ if(/^(que tengo|que hay|lea|leame|leer|leeme)/.test(t)){const D=v.items.length-P0.length;return v.title+'. '+(isShop(v)?'Tiene que comprar: ':'Tiene pendiente: ')+joinY(P0)+'.'+(D?' Ya tachó '+D+'.':'')}
+ return (isShop(v)?'Le falta comprar ':'Le falta: ')+joinY(P0)+'.'}
+const isQuestion=x=>/^\s*¿/.test(x)||/\?\s*$/.test(x)||/^(que|cuanto|cuanta|cuantos|cuantas|cual|cuales|como|donde|cuando)\b/.test(nrm(x).trim());
+const _hT11=handleTranscript;handleTranscript=function(text){if(!text||!String(text).trim())return null;if(nf)return _hT11(text);
+ const st=stripPolite(text);if(!st)return null;const t=nrm(st).replace(/\s+/g,' ').trim();let r=null;
+ const out=x=>{S.lastActivity=Date.now();$('interim').textContent=x;speak(x);return x};
+ if(addQ){r=addQStep(st);if(r)return out(r)}
+ if(QPEND.test(t)){r=pendRead(t);if(r)return out(r)}
+ r=addCmd(st);if(r)return out(r);
+ if(vd&&isQuestion(st)){const V=vd;vd=null;try{r=_hT11(st)}finally{if(!vd)vd=V}return r}
+ return _hT11(text)};
 
 window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn},get noteFlow(){return nf},get curNote(){return curNote},splitPasted};
 })();
