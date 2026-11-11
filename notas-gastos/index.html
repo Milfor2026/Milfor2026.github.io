@@ -117,7 +117,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
    <li>«ya pagué el agua el 3 de noviembre, fueron ciento cuarenta» · «ya se pagó Netflix»</li>
    <li>«pago automático Netflix 21.61 el día 24» · «quitar pago automático Netflix» · «¿qué pagos automáticos tengo?»</li></ul></details>
   <details><summary><b>Notas y listas (manos libres)</b></summary><ul class="small" style="color:var(--tx)">
-   <li>Toque <b>Notas</b> o diga «notas» o «crear nota»: la app pregunta si quiere crear una nota nueva, abrir, borrar o cambiar el nombre de una guardada.</li>
+   <li>Toque <b>Notas</b> o diga «notas» o «crear nota»: la app pregunta si quiere crear una nota nueva, abrir, leer, borrar o cambiar el nombre de una guardada.</li>
    <li>Nueva: pregunta el tipo (verificación, numerada, viñetas o normal) y luego el nombre. Con «crear nota viaje» solo pregunta el tipo.</li>
    <li>Abrir: diga el nombre o de qué trata («lo de la bicicleta») o toque la nota. Si hay varias parecidas, le pregunta cuál.</li>
    <li>«borrar nota paseos» (pide confirmar; «deshacer» la recupera) · «cambiar nombre de la nota paseos»</li>
@@ -125,7 +125,9 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
    <li>«título …» · «compartir con esposa» (privada si no lo dice)</li>
    <li>«crear lista de compras» → cada frase es un elemento («leche», «pan») → «guardar lista»</li>
    <li>«abrir nota viaje» o «agregar a la nota viaje», o toque la nota en la lista → dicte → «guardar nota»</li>
-   <li>«leer nota viaje»</li></ul></details>
+   <li>Leer sin editar: «léame la nota del mercado», «¿qué tengo en cosas por hacer?», «¿qué tengo pendiente?». En listas de verificación lee solo lo que falta.</li>
+   <li>Tachar: «ya compré los huevos», «ya tengo las uvas», «ya hice X», «listo X», «tache X» → «¿qué más?» o «¿qué me falta?» para oír lo que queda. Desmarcar: «todavía no tengo los huevos». Con monto («ya compré leche por 5 dólares») pregunta si lo anota como gasto.</li>
+   <li>En una lista de verificación, el botón <b>Pegar lista</b> agrega el mensaje de WhatsApp (una línea, coma o viñeta por elemento).</li></ul></details>
   <details><summary><b>Carro</b></summary><ul class="small" style="color:var(--tx)"><li>En Mantenimiento: «carro cambio de aceite 45000 millas 60 dólares»</li></ul></details>
   <p class="small">Si el micrófono no responde: use Google Chrome (en Samsung Internet suele fallar), permita el micrófono y verifique que tenga internet.</p></div>
  <div class="card"><h2>Perfil</h2><label>Nombre</label><input id="pName"><label>Color</label><div class="colors" id="pColors"></div>
@@ -808,7 +810,7 @@ $('nList').addEventListener('click',e=>{if(e.target.closest('button,[data-n],a,i
 const _setMic8=setMic;setMic=function(){_setMic8();if(nf&&micOn&&!speaking)$('micstate').textContent='🔴 Escuchando su respuesta…'};
 
 /* ===== v9 elegir, abrir, borrar y renombrar notas ===== */
-const QCHOOSE='¿Quiere crear una nota nueva, abrir, borrar o cambiar el nombre de una nota guardada?';
+const QCHOOSE='¿Quiere crear una nota nueva, abrir, leer, borrar o cambiar el nombre de una nota guardada?';
 const QP={open:'¿Cuál nota quiere abrir? Dígame el nombre o de qué trata.',del:'¿Cuál nota quiere borrar? Dígame el nombre o de qué trata.',ren:'¿A cuál nota le cambio el nombre? Dígame el nombre o de qué trata.'};
 const VERB={open:'abrir',del:'borrar',ren:'cambiarle el nombre'};
 const NFS=['choose','pick','which','none','delconf','renname'];
@@ -817,10 +819,10 @@ const SYN=[['bici','bicicleta','ciclismo','ciclovia','ciclista','pedalear','peda
 function lev(a,b){const m=a.length,n=b.length;if(Math.abs(m-n)>1)return 2;const d=[];for(let i=0;i<=m;i++){d[i]=[i];for(let j=1;j<=n;j++)d[i][j]=i?Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1)):j}return d[m][n]}
 const toks=x=>nrm(x).split(/\s+/).filter(Boolean);
 function w1(w,k){return k===w||(w.length>=4&&k.length>=4&&(k.startsWith(w.slice(0,Math.max(4,w.length-2)))||w.startsWith(k.slice(0,Math.max(4,k.length-2)))))||(w.length>=5&&lev(w,k)<=1)}
-function wHit(w,L){if(L.some(k=>w1(w,k)))return true;const g=SYN.filter(G=>G.some(m=>w1(w,m))).flat();return g.some(s=>L.some(k=>w1(s,k)))}
-function scoreNote(n,q){const nq=toks(q).join(' '),ti=toks(n.title).join(' ');if(!nq)return 0;if(ti===nq)return 100;let s=0;if(ti.startsWith(nq))s=85;else if(ti.includes(nq))s=75;else if(ti&&(' '+nq+' ').includes(' '+ti+' '))s=70;
- const W=toks(q).filter(w=>!STOPW.has(w)&&w.length>1);if(!W.length)return s;const T=toks(n.title),C=toks((n.body||'')+' '+(n.items||[]).map(i=>i.t).join(' '));let th=0,ch=0;W.forEach(w=>{if(wHit(w,T))th++;else if(wHit(w,C))ch++});return Math.max(s,Math.round(60*th/W.length+40*ch/W.length))}
-const poolFor=act=>act==='open'?visibleNotes():S.notes.filter(n=>n.owner===S.current);
+function wHit(w,L){if(L.some(k=>w1(w,k)))return 1;const g=SYN.filter(G=>G.some(m=>w1(w,m))).flat();return g.some(s=>L.some(k=>w1(s,k)))?0.7:0}
+function scoreNote(n,q){const q0=toks(q);while(q0.length>1&&STOPW.has(q0[0]))q0.shift();const nq=q0.join(' '),ti=toks(n.title).join(' ');if(!nq)return 0;if(ti===nq)return 100;let s=0;if(ti.startsWith(nq))s=85;else if(ti.includes(nq))s=75;else if(ti&&(' '+nq+' ').includes(' '+ti+' '))s=70;
+ const W=toks(q).filter(w=>!STOPW.has(w)&&w.length>1);if(!W.length)return s;const T=toks(n.title),C=toks((n.body||'')+' '+(n.items||[]).map(i=>i.t).join(' '));let th=0,ch=0;if(W.join(' ')===T.filter(w=>(!STOPW.has(w)||/^(nota|notas|lista|listas)$/.test(w))&&w.length>1).join(' '))return 100;W.forEach(w=>{const a=wHit(w,T);if(a)th+=a;else ch+=wHit(w,C)});if(W.every(w=>T.some(k=>w1(w,k))))s=Math.max(s,90);return Math.max(s,Math.round(60*th/W.length+40*ch/W.length))}
+const poolFor=act=>(act==='open'||act==='read')?visibleNotes():S.notes.filter(n=>n.owner===S.current);
 function rankNotes(q,L){return L.map(n=>({n,s:scoreNote(n,q)})).filter(x=>x.s>=20).sort((a,b)=>b.s-a.s||b.n.updated.localeCompare(a.n.updated))}
 const joinO=a=>a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' o '+a[a.length-1];
 const recentOf=(L,k)=>L.slice().sort((a,b)=>b.updated.localeCompare(a.updated)).slice(0,k);
@@ -831,7 +833,7 @@ function actOn(n,act){if(act==='open')return openPicked(n);if(n.owner!==S.curren
 function startChoose(){nf={step:'choose',title:'',fmt:null};nfUI();return QCHOOSE}
 function noNotes(){nf={step:'none',title:'',fmt:null};nfUI();return 'Todavía no tiene notas guardadas. ¿Quiere crear una nueva? Diga sí o no.'}
 function startPick(act){if(!poolFor(act).length)return noNotes();nf={step:'pick',act};if(tab!=='notas')setTab('notas');nfUI();return QP[act]}
-function pickFrom(raw,act){const q=clean(String(raw).replace(/^\s*(abrir|abra|abre|quiero abrir|borrar|borra|eliminar|elimine|quitar|renombrar|cambiar(le)?\s+(el\s+)?nombre\s+(de|a))\s+(la\s+|una\s+)?(nota\s+|lista\s+)?/i,''));const L=poolFor(act);if(!L.length)return noNotes();
+function pickFrom(raw,act){const q=clean(String(raw).replace(/^\s*(abrir|abra|abre|quiero abrir|leer|lea|l[eé]ame|borrar|borra|eliminar|elimine|quitar|renombrar|cambiar(le)?\s+(el\s+)?nombre\s+(de|a))\s+(la\s+|una\s+)?(nota\s+|lista\s+)?/i,''));const L=poolFor(act);if(!L.length)return noNotes();
  const R=rankNotes(q,L);if(!R.length){nf={step:'pick',act};if(tab!=='notas')setTab('notas');nfUI();return 'No encontré esa nota. Sus notas son: '+joinO(recentOf(L,3).map(n=>n.title))+'. ¿Cuál quiere '+VERB[act]+'?'}
  const close=R.filter(x=>x.s>=R[0].s-8);if(R[0].s<100&&close.length>1){const C=close.slice(0,3).map(x=>x.n);nf={step:'which',act,cands:C.map(n=>n.id)};nfUI();return 'Encontré varias: '+joinO(C.map(n=>n.title))+'. ¿Cuál quiere '+VERB[act]+'?'}
  return actOn(R[0].n,act)}
@@ -855,7 +857,7 @@ const _fs8=flowStep;flowStep=function(raw){const t=nrm(raw).replace(/\s+/g,' ').
  return pickFrom(raw,nf.act)};
 const _nfUI8=nfUI;nfUI=function(){if(!nf||!NFS.includes(nf.step))return _nfUI8();const b=$('nfBan');b.classList.remove('hide');const X='<button type="button" class="btn sec" data-nfx="1">Cancelar</button>',esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
  const nb=L=>L.map(n=>`<button type="button" class="btn" data-nfo="${n.id}">${esc(n.title||'(sin nombre)')}</button>`).join('');
- if(nf.step==='choose'){$('nfQ').textContent=QCHOOSE;$('nfOpts').innerHTML='<button type="button" class="btn" data-nfc="new">Crear nota nueva</button><button type="button" class="btn" data-nfc="open">Abrir</button><button type="button" class="btn" data-nfc="del">Borrar</button><button type="button" class="btn" data-nfc="ren">Cambiar nombre</button>'+X}
+ if(nf.step==='choose'){$('nfQ').textContent=QCHOOSE;$('nfOpts').innerHTML='<button type="button" class="btn" data-nfc="new">Crear nota nueva</button><button type="button" class="btn" data-nfc="open">Abrir</button><button type="button" class="btn" data-nfc="read">Leer</button><button type="button" class="btn" data-nfc="del">Borrar</button><button type="button" class="btn" data-nfc="ren">Cambiar nombre</button>'+X}
  else if(nf.step==='none'){$('nfQ').textContent='Todavía no tiene notas guardadas. ¿Quiere crear una nueva?';$('nfOpts').innerHTML='<button type="button" class="btn" data-nfc="new">Sí, crear nota</button>'+X}
  else if(nf.step==='pick'){$('nfQ').textContent=QP[nf.act];$('nfOpts').innerHTML=nb(recentOf(poolFor(nf.act),8))+X}
  else if(nf.step==='which'){$('nfQ').textContent='¿Cuál quiere '+VERB[nf.act]+'?';$('nfOpts').innerHTML=nb(nf.cands.map(id=>S.notes.find(n=>n.id===id)).filter(Boolean))+X}
@@ -876,7 +878,59 @@ $('nList').addEventListener('click',e=>{if(!nf||!['choose','pick','which','none'
  if(nf.act==='del'||nf.act==='ren'){e.stopPropagation();const n=S.notes.find(x=>x.id===c.dataset.id);if(n){const r=actOn(n,nf.act);$('interim').textContent=r;speak(r)}return}nf=null;nfUI()},true);
 document.querySelector('nav').onclick=e=>{const t=e.target.dataset.tab;if(!t)return;setTab(t);if(t==='notas'&&!nf&&!vd){unlockVoice();const q=startChoose();$('interim').textContent=q;speak(q);micOnAuto()}};
 
-window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn},get noteFlow(){return nf}};
+/* ===== v10 leer y tachar notas por voz ===== */
+QP.read='¿Cuál nota quiere que le lea? Dígame el nombre o de qué trata.';VERB.read='leer';
+let curNote=null,itemQ=null,askExp=null;
+const lc=x=>x?x.charAt(0).toLowerCase()+x.slice(1):x;const joinY=a=>a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' y '+a[a.length-1];
+const isShop=n=>toks(n.title).some(k=>SYN[1].some(m=>w1(m,k)));
+function readOut(n){curNote=n.id;if(n.fmt!=='check')return readNote(n);const P0=n.items.filter(i=>!i.done).map(i=>lc(i.t)),D=n.items.length-P0.length;
+ if(!n.items.length)return 'La lista '+n.title+' está vacía.';if(!P0.length)return n.title+': ya tiene todo.';
+ return n.title+'. '+(isShop(n)?'Tiene que comprar: ':'Tiene pendiente: ')+joinY(P0)+'.'+(D?' Ya '+(D===1?'tachó 1.':'tachó '+D+'.'):'')}
+function readAgain(n){curNote=n.id;if(n.fmt!=='check')return readNote(n);const P0=n.items.filter(i=>!i.done).map(i=>lc(i.t));if(!P0.length)return 'Ya tiene todo.';return (isShop(n)?'Le falta comprar ':'Le falta: ')+joinY(P0)+'.'}
+const _actOn9=actOn;actOn=function(n,act){if(act==='read'){nf=null;nfUI();return readOut(n)}return _actOn9(n,act)};
+const _fs9=flowStep;flowStep=function(raw){const t=nrm(raw).replace(/\s+/g,' ').trim();if(nf&&nf.step==='choose'&&/\b(leer|lea|leame|lee|leeme|escuchar)\b/.test(t)){const rest=toks(raw).filter(w=>!STOPW.has(w)&&!/^(lee|lea|escuch|guardad)/.test(w));return rest.length&&visibleNotes().length?pickFrom(raw,'read'):startPick('read')}return _fs9(raw)};
+const IFILL=new Set('ya los las el la lo un una unos unas de del al a y por en con tambien dolares dolar pesos esos esas ese esa todo todos'.split(' '));
+function itemWords(raw){const T=tokenize(raw);const a=firstAmount(T,0,new Set());const used=new Set();if(a)for(let k=a.i;k<a.n;k++)used.add(k);return {W:T.filter((w,i)=>!used.has(i)&&!IFILL.has(w)),amount:a?a.v:null}}
+function itemScore(W,it){const K=toks(it.t);if(!W.length||!K.length)return 0;const h=W.filter(w=>K.some(k=>w1(w,k))).length;return h/W.length+(h===K.length&&h===W.length?0.5:0)}
+function findItems(W,done){const cur=curNote&&S.notes.find(n=>n.id===curNote&&n.fmt==='check'&&visibleNotes().includes(n));
+ const pools=cur?[cur]:visibleNotes().filter(n=>n.fmt==='check').sort((a,b)=>b.updated.localeCompare(a.updated));
+ for(const n of pools){const R=n.items.map((it,i)=>({n,i,s:itemScore(W,it)})).filter(x=>x.s>=0.5&&!!n.items[x.i].done===done).sort((a,b)=>b.s-a.s);if(R.length)return R.filter(x=>x.s===R[0].s)}return []}
+function leftMsg(n){const L=n.items.filter(i=>!i.done);return !L.length?'Ya tiene todo.':L.length===1?'Le falta 1: '+lc(L[0].t)+'.':'Le faltan '+L.length+'.'}
+function setItem(n,i,done,amount){const it=n.items[i];it.done=done;n.updated=new Date().toISOString();curNote=n.id;save();renderNotes();pushUndo(done?'Tachado: '+it.t:'Desmarcado: '+it.t,()=>{it.done=!done});
+ let r=done?'Listo, '+lc(it.t)+' tachado. '+leftMsg(n):'Listo, desmarqué '+lc(it.t)+'. '+leftMsg(n);if(done&&amount){askExp={amount,item:it.t,noteId:n.id};r+=' ¿Lo anoto también como gasto de '+amount+' dólares?'}return r}
+function expCat(n,item){const p=P();let c=findCatIn(tokenize((n?n.title:'')+' '+item),p);if(c&&norm(c.name)!=='gastos hormiga')return c;return p.cats.find(c=>toks(c.name).some(k=>SYN[1].some(m=>w1(m,k))))||null}
+const MKRE=/^(?:(ya) )?(compre|tengo|hice|consegui|eche|meti|agarre|recogi|termine|llame|lleve|encontre|puse)\s+(.+)$|^(listo|tache|tacha|tachar|tachame|tacheme|marque|marca|marcar|marcame)\s+(.+)$/;
+const UNRE=/^(?:desmarcar|desmarque|desmarca|destachar|destache|quitar la marca (?:de|a)|no,? todavia no (?:tengo|compre|hice|consegui)|todavia no (?:tengo|compre|hice|consegui))\s+(.+)$/;
+const _hNV9=handleNoteVoice;handleNoteVoice=function(raw){const t=nrm(raw).replace(/\s+/g,' ').trim();if(vd||nf)return _hNV9(raw);
+ if(askExp){const A=askExp;askExp=null;if(/^(si|claro|dale|ok|okay|anotelo|anotalo|bueno|por favor)\b/.test(t)){const n=S.notes.find(x=>x.id===A.noteId),c=expCat(n,A.item);if(c){autoSave(P(),c,A.amount,A.item);return 'Anotado: '+c.name+', '+A.amount+' dólares.'}return handleHormiga('gasté '+A.amount+' '+A.item)||'No pude anotarlo.'}
+  if(/^no\b/.test(t))return 'Está bien, no lo anoto.'}
+ if(itemQ){const Q=itemQ;itemQ=null;const n=S.notes.find(x=>x.id===Q.noteId);if(n){const {W}=itemWords(raw);let best=null,bs=0;Q.idx.forEach(i=>{const s=itemScore(W,n.items[i]);if(s>bs){bs=s;best=i}});
+  if(bs<0.5||Q.idx.filter(i=>itemScore(W,n.items[i])===bs).length>1){best=null;for(let k=0;k<Q.idx.length&&k<3;k++)if(ORD[k].test(t)){best=Q.idx[k];break}}if(best!=null)return setItem(n,best,Q.done)}}
+ let m=t.match(UNRE),done=false,q=null,strong=true;if(m){q=m[1]}else if(m=t.match(MKRE)){done=true;q=m[3]||m[5];strong=!!(m[1]||m[4])}
+ if(q){const {W,amount}=itemWords(q);const R=W.length?findItems(W,!done):[];
+  if(R.length===1)return setItem(R[0].n,R[0].i,done,amount);
+  if(R.length>1){const n=R[0].n;itemQ={noteId:n.id,idx:R.map(x=>x.i).slice(0,3),done};curNote=n.id;return '¿Cuál: '+joinO(itemQ.idx.map(i=>lc(n.items[i].t)))+'?'}
+  const other=W.length?findItems(W,done):[];if(other.length){const it=other[0].n.items[other[0].i];return done?cap(lc(it.t))+' ya estaba tachado. '+leftMsg(other[0].n):cap(lc(it.t))+' no estaba tachado.'}
+  const cur=curNote&&S.notes.find(n=>n.id===curNote);if(strong&&cur&&cur.fmt==='check'&&amount==null&&W.length)return 'No encontré '+clean(q)+' en '+cur.title+'.'}
+ if(/^(que mas|que mas (tengo|hay|me falta|falta)( que| para| por)?( comprar| hacer)?|que me falta( por)?( comprar| hacer)?|que falta( por)?( comprar| hacer)?|que me queda por (comprar|hacer)|que mas me queda( por comprar| por hacer)?)$/.test(t)){
+  const cur=curNote&&S.notes.find(n=>n.id===curNote);if(cur)return readAgain(cur);const q2=/hacer/.test(t)?'hacer':'comprar';return pickFrom(q2,'read')}
+ let rq=null;if(m=t.match(/^(?:leer|lea|leame|lee|leeme|digame|dime|que dice)(?: me)?(?: la| mi)? (?:nota|lista)\b ?(.*)$/))rq=m[1];
+ else if(m=t.match(/^(?:que|cuales) (?:cosas )?(?:tengo|hay|tenia)(?: que)?(?: en| para| por| de)?(?: la| mi)?(?: (?:nota|lista))?(?: de| del)? ?(.*)$/)){rq=m[1];if(/\b(pagar|pago|pagos|presupuesto|gast|automatic|categor)/.test(rq))rq=null}
+ if(rq!=null){if(!rq.trim()){const cur=curNote&&S.notes.find(n=>n.id===curNote);if(cur)return readOut(cur);return startPick('read')}if(!visibleNotes().length)return noNotes();
+  const L=visibleNotes(),R=rankNotes(rq,L);if(R.length&&R[0].s>=100)return readOut(R[0].n);return pickFrom(rq,'read')}
+ return _hNV9(raw)};
+const _oaf=openForAppend;openForAppend=function(n){curNote=n.id;return _oaf(n)};
+/* Pegar lista */
+function splitPasted(x){return String(x||'').split(/\r?\n|[,;•·]|\s+-\s+/).map(s=>s.replace(/^\s*([-*•·☐☑✅✔️▪️◦]+|\d+[.)-])\s*/u,'').replace(/[\u2610-\u2612\u2705\u2714\uFE0F]/g,'').trim()).filter(s=>s&&/[\p{L}\p{N}]/u.test(s))}
+function addPasted(n,text){const ex=new Set(n.items.map(i=>norm(i.t)));let k=0;splitPasted(text).forEach(s=>{if(!ex.has(norm(s))){n.items.push({t:s,done:false});ex.add(norm(s));k++}});if(k){n.updated=new Date().toISOString();save();renderNotes()}return k}
+const _rN9=renderNotes;renderNotes=function(){_rN9();document.querySelectorAll('#nList .note').forEach(c=>{const n=S.notes.find(x=>x.id===c.dataset.id);if(n&&n.fmt==='check'){const b=document.createElement('button');b.type='button';b.className='btn sec';b.dataset.paste=n.id;b.textContent='Pegar lista';c.appendChild(b)}})};
+$('nList').addEventListener('click',e=>{const b=e.target.closest('[data-paste]');if(!b)return;const n=S.notes.find(x=>x.id===b.dataset.paste);if(!n)return;
+ dlg(`<h2>Pegar lista en «${esc(n.title)}»</h2><p class="small">Pegue aquí el mensaje (por ejemplo de WhatsApp). Cada línea, coma o viñeta será un elemento.</p><textarea id="pasteTx" rows="8"></textarea><div class="row"><button type="button" class="btn" id="pasteOk">Agregar</button><button type="button" class="btn sec" id="pasteNo">Cancelar</button></div>`,f=>{
+  try{navigator.clipboard&&navigator.clipboard.readText&&navigator.clipboard.readText().then(x=>{if(x&&!$('pasteTx').value)$('pasteTx').value=x}).catch(()=>{})}catch(_){}
+  f.querySelector('#pasteNo').onclick=()=>$('dlg').close();f.querySelector('#pasteOk').onclick=()=>{const k=addPasted(n,$('pasteTx').value);$('dlg').close();curNote=n.id;const r=k?'Agregué '+k+' elemento'+(k>1?'s':'')+' a '+n.title+'.':'No encontré elementos nuevos.';$('interim').textContent=r;speak(r)}})});
+renderNotes();
+
+window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn},get noteFlow(){return nf},get curNote(){return curNote},splitPasted};
 })();
 </script>
 </body>
