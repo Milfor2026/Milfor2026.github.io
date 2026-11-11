@@ -127,6 +127,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
    <li>«abrir nota viaje» o «agregar a la nota viaje», o toque la nota en la lista → dicte → «guardar nota»</li>
    <li>Leer sin editar: «léame la nota del mercado», «¿qué tengo en cosas por hacer?», «¿qué tengo pendiente?». En listas de verificación lee solo lo que falta.</li>
    <li>Tachar: «ya compré los huevos», «ya tengo las uvas», «ya hice X», «listo X», «tache X» → «¿qué más?» o «¿qué me falta?» para oír lo que queda. Desmarcar: «todavía no tengo los huevos». Con monto («ya compré leche por 5 dólares») pregunta si lo anota como gasto.</li>
+   <li>Borrar un elemento (con la nota abierta o después de leerla): «elimine hacer mercado», «quite las uvas», «podría eliminar …», «saque X de la lista tareas». Si hay varios parecidos le pregunta cuál; «deshacer» lo recupera.</li>
    <li>En una lista de verificación, el botón <b>Pegar lista</b> agrega el mensaje de WhatsApp (una línea, coma o viñeta por elemento).</li></ul></details>
   <details><summary><b>Carro</b></summary><ul class="small" style="color:var(--tx)"><li>En Mantenimiento: «carro cambio de aceite 45000 millas 60 dólares»</li></ul></details>
   <p class="small">Si el micrófono no responde: use Google Chrome (en Samsung Internet suele fallar), permita el micrófono y verifique que tenga internet.</p></div>
@@ -914,7 +915,7 @@ const _hNV9=handleNoteVoice;handleNoteVoice=function(raw){const t=nrm(raw).repla
   const cur=curNote&&S.notes.find(n=>n.id===curNote);if(strong&&cur&&cur.fmt==='check'&&amount==null&&W.length)return 'No encontré '+clean(q)+' en '+cur.title+'.'}
  if(/^(que mas|que mas (tengo|hay|me falta|falta)( que| para| por)?( comprar| hacer)?|que me falta( por)?( comprar| hacer)?|que falta( por)?( comprar| hacer)?|que me queda por (comprar|hacer)|que mas me queda( por comprar| por hacer)?)$/.test(t)){
   const cur=curNote&&S.notes.find(n=>n.id===curNote);if(cur)return readAgain(cur);const q2=/hacer/.test(t)?'hacer':'comprar';return pickFrom(q2,'read')}
- let rq=null;if(m=t.match(/^(?:leer|lea|leame|lee|leeme|digame|dime|que dice)(?: me)?(?: la| mi)? (?:nota|lista)\b ?(.*)$/))rq=m[1];
+ let rq=null;if(m=t.match(/^(?:leer|lea|leame|lee|leeme|leerme|leermela|digame|dime|decirme|que dice)(?: me)?(?: la| mi)? (?:nota|lista)\b ?(.*)$/))rq=m[1];
  else if(m=t.match(/^(?:que|cuales) (?:cosas )?(?:tengo|hay|tenia)(?: que)?(?: en| para| por| de)?(?: la| mi)?(?: (?:nota|lista))?(?: de| del)? ?(.*)$/)){rq=m[1];if(/\b(pagar|pago|pagos|presupuesto|gast|automatic|categor)/.test(rq))rq=null}
  if(rq!=null){if(!rq.trim()){const cur=curNote&&S.notes.find(n=>n.id===curNote);if(cur)return readOut(cur);return startPick('read')}if(!visibleNotes().length)return noNotes();
   const L=visibleNotes(),R=rankNotes(rq,L);if(R.length&&R[0].s>=100)return readOut(R[0].n);return pickFrom(rq,'read')}
@@ -929,6 +930,39 @@ $('nList').addEventListener('click',e=>{const b=e.target.closest('[data-paste]')
   try{navigator.clipboard&&navigator.clipboard.readText&&navigator.clipboard.readText().then(x=>{if(x&&!$('pasteTx').value)$('pasteTx').value=x}).catch(()=>{})}catch(_){}
   f.querySelector('#pasteNo').onclick=()=>$('dlg').close();f.querySelector('#pasteOk').onclick=()=>{const k=addPasted(n,$('pasteTx').value);$('dlg').close();curNote=n.id;const r=k?'Agregué '+k+' elemento'+(k>1?'s':'')+' a '+n.title+'.':'No encontré elementos nuevos.';$('interim').textContent=r;speak(r)}})});
 renderNotes();
+
+/* ===== v11 borrar elementos por voz, cortesía y nunca silencio ===== */
+const POLITE=/^\s*(?:(?:por\s+favor|porfa|favor\s+de|me\s+hace\s+el\s+favor\s+de|h[aá]game\s+el\s+favor\s+de|hazme\s+el\s+favor\s+de|me\s+podr[ií]a|me\s+puede|podr[ií]as?|puedes?|pudiera|pudieras|quisiera\s+que|usted\s+puede)[\s,]+)+/i;
+const WAKE=/^\s*(oye|hey|oiga|ok)[\s,]+app\b[\s,.:]*/i;
+const stripPolite=x=>String(x||'').replace(WAKE,'').replace(POLITE,'').replace(/[\s,]+por\s+favor[\s.!]*$/i,'').trim();
+const IDEL=/^(elimine|elimina|eliminar|eliminame|elimineme|borre|borra|borrar|borrame|borreme|quite|quita|quitar|quitame|quiteme|saque|saca|sacar|sacame|saqueme)\s+(.+)$/;
+let delQ=null;
+function delCands(W,n0){const C=[];const add=(kind,n,i,t)=>C.push({kind,n,i,t,s:itemScore(W,{t})});
+ if(n0){n0.items.forEach((it,i)=>add('note',n0,i,it.t));if(vd&&vd.noteId===n0.id)vd.items.forEach((t,i)=>add('draft',null,i,t))}
+ else if(vd){vd.items.forEach((t,i)=>add('draft',null,i,t));const n=vd.noteId&&S.notes.find(x=>x.id===vd.noteId);if(n)n.items.forEach((it,i)=>add('note',n,i,it.t))}
+ else{const cur=curNote&&S.notes.find(x=>x.id===curNote&&visibleNotes().includes(x));const pools=cur?[cur]:visibleNotes().filter(n=>n.fmt!=='normal').sort((a,b)=>b.updated.localeCompare(a.updated));
+  for(const n of pools){n.items.forEach((it,i)=>add('note',n,i,it.t));if(C.some(x=>x.s>=0.5))break}}
+ const R=C.filter(x=>x.s>=0.5).sort((a,b)=>b.s-a.s);return R.filter(x=>x.s===(R[0]||{}).s)}
+function remainCount(c){if(vd){const n=vd.noteId&&S.notes.find(x=>x.id===vd.noteId);return vd.items.length+(n?n.items.length:0)}return c.n.items.length}
+function delItem(c){let t;if(c.kind==='draft'){t=vd.items.splice(c.i,1)[0];const V=vd;draftUI();pushUndo('Borrado: '+t,()=>{V.items.splice(c.i,0,t);if(vd===V)draftUI()})}
+ else{const n=c.n,it=n.items.splice(c.i,1)[0];t=it.t;n.updated=new Date().toISOString();if(!vd)curNote=n.id;save();renderNotes();pushUndo('Borrado: '+t,()=>{n.items.splice(Math.min(c.i,n.items.length),0,it)})}
+ const N=remainCount(c);return 'Listo, borré “'+lc(t)+'”. '+(N===0?'La lista quedó vacía.':N===1?'Queda 1.':'Quedan '+N+'.')}
+function itemDelCmd(st){const t=nrm(st).replace(/\s+/g,' ').trim();
+ if(delQ){const Q=delQ;delQ=null;const {W}=itemWords(st);let best=null;const sc=Q.map(c=>itemScore(W,{t:c.t})),mx=Math.max(0,...sc);if(mx>=0.5&&sc.filter(x=>x===mx).length===1)best=Q[sc.indexOf(mx)];
+  if(!best)for(let k=0;k<Q.length&&k<3;k++)if(ORD[k].test(t)){best=Q[k];break}if(best)return delItem(best)}
+ if(DELRE.test(t)||/^(borrar|borra|borre) (eso|esto|todo)\b/.test(t)||/^quita?r? la marca\b/.test(t))return null;const m=t.match(IDEL);if(!m)return null;
+ let q=clean(st.replace(/^\s*\S+\s+/,'')),n0=null;const sp=q.match(/^(.*?)\s+(?:de|en|del)\s+(?:la\s+|mi\s+)?(?:lista|nota)\s+(?:de\s+|del\s+)?(.+)$/i);
+ if(sp){const R=rankNotes(sp[2],visibleNotes());if(R.length&&R[0].s>=40){n0=R[0].n;q=clean(sp[1])}}
+ const {W}=itemWords(q);if(!W.length)return null;const C=delCands(W,n0);
+ if(C.length===1)return delItem(C[0]);
+ if(C.length>1){delQ=C.slice(0,3);return '¿Cuál quiere borrar: '+joinO(delQ.map(c=>lc(c.t)))+'?'}
+ if(vd)return null;
+ const own=S.notes.filter(n=>n.owner===S.current),R=rankNotes(q,own);if(R.length&&R[0].s>=60)return pickFrom(q,'del');
+ const cur=n0||(curNote&&S.notes.find(x=>x.id===curNote));return {miss:'No encontré “'+lc(q)+'”'+(cur?' en '+cur.title:'')+'. ¿Me lo repite?'}}
+const _hT10=handleTranscript;handleTranscript=function(text){if(!text||!String(text).trim())return null;const st=stripPolite(text);if(!st)return null;
+ let miss=null;if(!nf){const r0=itemDelCmd(st);if(typeof r0==='string'){S.lastActivity=Date.now();$('interim').textContent=r0;speak(r0);return r0}if(r0&&r0.miss)miss=r0.miss}
+ let pass=st;if(vd&&!nf){const base=String(text).replace(WAKE,'').trim();pass=(st!==base&&/^(guardar|guarda|terminar|listo|cancelar|borrar|descartar|compartir|t[ií]tulo)\b/i.test(st))?st:text}
+ const r=_hT10(pass);if(r==null&&!vd){const msg=miss||'No le entendí. ¿Me lo repite, por favor?';$('interim').textContent=msg;speak(msg);return msg}return r};
 
 window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn},get noteFlow(){return nf},get curNote(){return curNote},splitPasted};
 })();
