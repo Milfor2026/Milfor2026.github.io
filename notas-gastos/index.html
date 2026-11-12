@@ -87,7 +87,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v16</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v17</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -140,6 +140,11 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
    <li>Borrar un elemento (con la nota abierta o después de leerla): «borrar», «eliminar», «quitar», «sacar», «suprimir», «descartar» y el producto («quite huevos», «saque las uvas», «bórrelo», «podría eliminar…»). Responde: «Eliminé uvas. Le quedan aguacate, pan, leche y queso.» Para deshacer lo último que dictó: «borre lo último», «elimine lo último», «quite lo último», «eso no» o «deshacer»; responde «Borré X. Le quedan…». Si hay varios parecidos le pregunta cuál. Entiende infinitivo, tú o usted, y formas con enclítico.</li>
    <li>Si duda, diga «qué le puedo decir», «ayuda» o «cómo funciona»: la app le lee una guía corta (también visible en la nota). La primera vez que abre una nota le dice: «Si necesita ayuda, diga: qué le puedo decir». Para terminar: «cerrar nota».</li>
    <li>En una lista de verificación, el botón <b>Pegar lista</b> agrega el mensaje de WhatsApp (una línea, coma o viñeta por elemento).</li></ul></details>
+  <details><summary><b>Recordatorios y resumen</b></summary><ul class="small" style="color:var(--tx)">
+   <li>Recordatorio con hora: «recuérdame a las seis que saque la basura», «recuérdeme mañana a las 8 de la mañana llamar al banco», «avíseme a las 3:30 pm…», «en 20 minutos recuérdame…». Confirma: «Listo, le recuerdo hoy a las 6 de la tarde: sacar la basura.» Si no dice la hora, «recuérdeme qué tengo» sigue leyendo la lista.</li>
+   <li>Mientras la app está abierta, el aviso se oye, vibra y sale una notificación. Si la app estaba cerrada, al abrirla le cuenta los que se vencieron. Después de crear uno, toque <b>Agregar al calendario</b> para que le suene aunque la app esté cerrada (en Android abre Google Calendar; en iPhone descarga un archivo de calendario).</li>
+   <li>«¿Qué recordatorios tengo?» los lista. «Borre el recordatorio de la basura» o «cancele el recordatorio…» lo quita. En Notas aparece la lista con un botón Borrar.</li>
+   <li>Resumen del día: «¿qué anoté hoy?», «resumen del día», «qué hice hoy» le lee lo que agregó o tachó hoy, los gastos del día y los recordatorios que le quedan. Después de las 7 de la noche, la app se lo ofrece una vez al día.</li></ul></details>
   <details><summary><b>Carro</b></summary><ul class="small" style="color:var(--tx)"><li>En Mantenimiento: «carro cambio de aceite 45000 millas 60 dólares»</li></ul></details>
   <p class="small">Si el micrófono no responde: use Google Chrome (en Samsung Internet suele fallar), permita el micrófono y verifique que tenga internet.</p></div>
  <div class="card"><h2>Perfil</h2><label>Nombre</label><input id="pName"><label>Color</label><div class="colors" id="pColors"></div>
@@ -159,7 +164,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v16</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v17</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -1049,8 +1054,8 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v16';
-const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo o cuénteme qué tengo. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar.';
+const APPVER='v17';
+const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo o cuénteme qué tengo. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
 let lastSpoken='',lastSpokenAt=0,vLog=[],_tryAlt=false;
@@ -1335,7 +1340,223 @@ const _hT15=handleTranscript;handleTranscript=function(text,opt){if(!text||!Stri
  return _hT15(text,opt)};
 
 
+/* ===== v17 recordatorios y resumen del día ===== */
+const REMKEY=null;
+function remAll(){if(!S.reminders)S.reminders=[];return S.reminders}
+function remMine(){return remAll().filter(r=>r.owner===S.current&&!r.cancelled)}
+function remPend(){return remMine().filter(r=>!r.fired)}
+function localISO(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())}
+function toNow(x){if(x instanceof Date)return new Date(x.getTime());if(x==null||x==='')return new Date();const s=String(x);if(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(s)&&!/[zZ]|[+-]\d{2}:\d{2}$/.test(s)){const m=s.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):?(\d{2})?/);return new Date(+m[1],+m[2]-1,+m[3],+m[4],+m[5],+(m[6]||0))}return new Date(s)}
+const HW={una:1,un:1,uno:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10,once:11,doce:12,trece:13,catorce:14,quince:15,dieciseis:16,diecisiete:17,dieciocho:18,diecinueve:19,veinte:20,veintiun:21,veintiuno:21,veintiuna:21,veintidos:22,veintitres:23,veinticuatro:24};
+const MW={cero:0,cinco:5,diez:10,cuarto:15,quince:15,veinte:20,veinticinco:25,media:30,treinta:30,treintaicinco:35,treintaycinco:35,cuarenta:40,cuarentaicinco:45,cincuenta:50,cincuentaicinco:55};
+const NW={cero:0,un:1,una:1,uno:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10,once:11,doce:12,trece:13,catorce:14,quince:15,dieciseis:16,diecisiete:17,dieciocho:18,diecinueve:19,veinte:20,veintiun:21,veintiuno:21,veintiuna:21,veintidos:22,veintitres:23,veinticuatro:24,veinticinco:25,veintiseis:26,veintisiete:27,veintiocho:28,veintinueve:29,treinta:30,cuarenta:40,cincuenta:50,sesenta:60};
+function numW(s){s=nrm(s).replace(/\s+/g,' ').trim();if(/^\d+$/.test(s))return +s;if(NW[s]!=null)return NW[s];const m=s.match(/^(\w+)\s+y\s+(\w+)$/);if(m&&NW[m[1]]!=null&&NW[m[2]]!=null)return NW[m[1]]+NW[m[2]];return null}
+const DOW={domingo:0,lunes:1,martes:2,miercoles:3,jueves:4,viernes:5,sabado:6};
+const REMV=/\b(recuerdame|recuerdeme|recuerdemelo|recuerdamelo|recuerde|recuerda|recordar|recordarme|recordeme|avisame|aviseme|avisemelo|avisamelo|avise|avisa|avisar|avisarme|alertame|alerteme|alarme|alarmame)\b/;
+const READONLY=/\b(que tengo|que tiene|que hay|que me falta|que falta|que queda|que quedan|lo que tengo|la lista|la nota|que tengo en|que tiene el)\b/;
+function period24(h,per){h=+h;if(per==='am'||per==='manana'||per==='madrugada'){if(h===12)return per==='manana'?12:0;return h}if(per==='pm'||per==='tarde'||per==='noche'){if(h===12)return per==='noche'?0:12;return h<12?h+12:h}return h}
+function makeAt(now,dayAdd,h,min){return new Date(now.getFullYear(),now.getMonth(),now.getDate()+dayAdd,h,min,0,0)}
+function extractDay(t){let day=null,wd=null,span='';
+ if(/\bpasado\s+manana\b/.test(t)){day=2;span='pasado manana'}
+ else{const t2=t.replace(/\bde\s+la\s+manana\b/g,' ').replace(/\besta\s+manana\b/g,' ');if(/\bmanana\b/.test(t2)){day=1;span='manana'}}
+ if(/\bhoy\b/.test(t)&&day==null){day=0;span='hoy'}
+ const wm=t.match(/\b(?:el|este|esta|proximo|proxima)\s+(domingo|lunes|martes|miercoles|jueves|viernes|sabado)\b/);
+ if(wm){wd=DOW[wm[1]];span=wm[0]}
+ return {day,wd,span}}
+function extractPeriod(t){let per=null;
+ if(/\bde\s+la\s+madrugada\b/.test(t)||/\besta\s+madrugada\b/.test(t))per='madrugada';
+ else if(/\bde\s+la\s+manana\b/.test(t)||/\besta\s+manana\b/.test(t))per='manana';
+ else if(/\bde\s+la\s+tarde\b/.test(t)||/\besta\s+tarde\b/.test(t))per='tarde';
+ else if(/\bde\s+la\s+noche\b/.test(t)||/\besta\s+noche\b/.test(t))per='noche';
+ else if(/\b(p\.?\s*m\.?|pm)\b/.test(t))per='pm';
+ else if(/\b(a\.?\s*m\.?|am)\b/.test(t))per='am';
+ return per}
+function extractClock(t){
+ let m=t.match(/\b(?:al?\s+)?mediodia\b/);if(m)return {h:12,min:0,per:'pm',span:m[0]};
+ m=t.match(/\b(?:a\s+la\s+)?medianoche\b/);if(m)return {h:0,min:0,per:'noche',span:m[0]};
+ m=t.match(/\ba\s+las?\s+(\d{1,2})(?:[:\.]|\s+)(\d{2})\s*(?:horas?\s*)?(a\.?\s*m\.?|p\.?\s*m\.?|am|pm)?\b/);
+ if(m&&+m[2]<=59){let per=null;if(m[3])per=/p/.test(m[3])?'pm':'am';return {h:+m[1],min:+m[2],per,span:m[0]}}
+ m=t.match(/\ba\s+las?\s+(\d{1,2})\s*(a\.?\s*m\.?|p\.?\s*m\.?|am|pm)\b/);
+ if(m)return {h:+m[1],min:0,per:/p/.test(m[2])?'pm':'am',span:m[0]};
+ const HR='(una|un|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|trece|catorce|quince|dieciseis|diecisiete|dieciocho|diecinueve|veinte|veintiuna|veintiuno|veintidos|veintitres|\\d{1,2})';
+ const MN='(media|cuarto|cinco|diez|quince|veinte|veinticinco|treinta|treinta y cinco|cuarenta|cuarenta y cinco|cincuenta|\\d{1,2})';
+ m=t.match(new RegExp('\\ba\\s+las?\\s+'+HR+'\\s+menos\\s+(cuarto|diez|cinco|quince)\\b'));
+ if(m){let h=HW[m[1]]!=null?HW[m[1]]:+m[1];const sub=m[2]==='cuarto'||m[2]==='quince'?15:(+m[2]||MW[m[2]]||0);let min=60-sub;h=(h-1+24)%24;if(h===0)h=12;return {h,min,per:null,span:m[0],menos:true}}
+ m=t.match(new RegExp('\\ba\\s+las?\\s+'+HR+'(?:\\s+y\\s+'+MN+')?\\b'));
+ if(m){const h=HW[m[1]]!=null?HW[m[1]]:+m[1];let min=0;if(m[2]){min=MW[nrm(m[2]).replace(/ /g,'')];if(min==null)min=numW(m[2]);if(min==null)min=+m[2]||0}return {h,min,per:null,span:m[0]}}
+ m=t.match(/\ba\s+las?\s+(\d{1,2})\b/);if(m)return {h:+m[1],min:0,per:null,span:m[0]};
+ return null}
+function extractRel(t,now){
+ let m=t.match(/\ben\s+media\s+hora\b/);if(m)return {at:new Date(now.getTime()+30*60000),span:m[0],rel:true};
+ m=t.match(/\ben\s+(un\s+)?rato\b/);if(m)return {at:new Date(now.getTime()+15*60000),span:m[0],rel:true};
+ m=t.match(/\ben\s+(una?|media|\d+|\w+(?:\s+y\s+\w+)?)\s+(minutos?|horas?)\b/);
+ if(m){let amt;if(m[1]==='media')amt=0.5;else amt=numW(m[1]);if(amt==null)return null;const ms=m[2].startsWith('hora')?amt*3600000:amt*60000;return {at:new Date(now.getTime()+Math.round(ms)),span:m[0],rel:true}}
+ return null}
+function resolveAt(now,day,wd,h,min,per){
+ const hours=[];
+ if(per){let x=period24(h,per);hours.push(x)}
+ else if(h>=13&&h<=23)hours.push(h);
+ else if(h===12)hours.push(12,0);
+ else if(h===0)hours.push(0,12);
+ else hours.push(h,h+12);
+ const cands=[];
+ const push=(baseDay,hr)=>{cands.push(makeAt(now,baseDay,hr,min))};
+ if(wd!=null){let diff=(wd-now.getDay()+7)%7;hours.forEach(hr=>{push(diff,hr);if(diff===0)push(7,hr)})}
+ else if(day!=null){hours.forEach(hr=>{push(day,hr);if(day===0)push(1,hr)})}
+ else {hours.forEach(hr=>{push(0,hr);push(1,hr)})}
+ cands.sort((a,b)=>a-b);
+ const slop=now.getTime()+2000;
+ const fut=cands.find(d=>d.getTime()>slop);
+ return fut||cands[cands.length-1]}
+function parseTime(text,now){now=toNow(now);const t=nrm(String(text||'')).replace(/\s+/g,' ').trim();if(!t)return null;
+ const rel=extractRel(t,now);if(rel)return {at:rel.at,local:localISO(rel.at),rel:true,span:rel.span};
+ const ck=extractClock(t);if(!ck)return null;
+ const per=ck.per||extractPeriod(t);
+ const dy=extractDay(t);
+ const at=resolveAt(now,dy.day,dy.wd,ck.h,ck.min,per);
+ if(!at)return null;
+ return {at,local:localISO(at),rel:false,span:ck.span,h:ck.h,min:ck.min,per,day:dy.day}}
+function hasTimeExpr(t){t=nrm(t);return !!(extractClock(t)||extractRel(t,new Date())||/\b(a\s+las?\s+|en\s+\w+\s+(minuto|hora)|mediodia|medianoche|de\s+la\s+(manana|tarde|noche))\b/.test(t))}
+const TASKF={saque:'sacar',saques:'sacar',llame:'llamar',llames:'llamar',compre:'comprar',compres:'comprar',pague:'pagar',pagues:'pagar',lleve:'llevar',traiga:'traer',abra:'abrir',cierre:'cerrar',borre:'borrar',tache:'tachar',saque:'sacar',apague:'apagar',prenda:'prender',encienda:'encender',salga:'salir',vaya:'ir',haga:'hacer',tome:'tomar',deje:'dejar',ponga:'poner',meta:'meter',revise:'revisar',llame:'llamar'};
+function cleanTask(s){s=String(s||'').replace(/\s+/g,' ').trim();s=s.replace(/^(que|de|para|por|sobre|acerca de|el|la|lo)\s+/i,'');s=s.replace(/\b(por favor|porfa)\b/gi,'').replace(/\s+/g,' ').trim();
+ const w=s.split(/\s+/);if(w[0]&&TASKF[nrm(w[0])])w[0]=TASKF[nrm(w[0])];return w.join(' ').replace(/[.,;:]+$/,'').trim()}
+function stripTimeBits(t){t=nrm(t).replace(/\s+/g,' ');
+ t=t.replace(REMV,' ');
+ t=t.replace(/\bpasado\s+manana\b|\bhoy\b|\ben\s+media\s+hora\b|\ben\s+(un\s+)?rato\b|\ben\s+\S+(?:\s+y\s+\S+)?\s+(minutos?|horas?)\b/g,' ');
+ t=t.replace(/\b(?:el|este|esta|proximo|proxima)\s+(domingo|lunes|martes|miercoles|jueves|viernes|sabado)\b|\b(domingo|lunes|martes|miercoles|jueves|viernes|sabado)\b/g,' ');
+ t=t.replace(/\b(?:al?\s+)?mediodia\b|\b(?:a\s+la\s+)?medianoche\b/g,' ');
+ t=t.replace(/\ba\s+las?\s+\S+(?:\s+menos\s+\S+)?(?:\s+y\s+\S+)?\s*(?:a\.?\s*m\.?|p\.?\s*m\.?|am|pm)?/g,' ');
+ t=t.replace(/\bde\s+la\s+(manana|tarde|noche|madrugada)\b|\besta\s+(manana|tarde|noche|madrugada)\b|\b(a\.?\s*m\.?|p\.?\s*m\.?|am|pm)\b/g,' ');
+ t=t.replace(/\bmanana\b/g,' ');
+ return t.replace(/\s+/g,' ').trim()}
+function parseReminder(raw,now){const st=typeof cleanHeard==='function'?cleanHeard(typeof stripPolite==='function'?stripPolite(raw):raw):String(raw||'');const t=nrm(st).replace(/\s+/g,' ').trim();if(!t)return null;
+ if(!REMV.test(t))return null;
+ if(!hasTimeExpr(t))return null;
+ if(READONLY.test(t)&&!/\b(a\s+las?|en\s+\w+\s+(minuto|hora)|mediodia|medianoche|de\s+la\s+(manana|tarde|noche))\b/.test(t.replace(READONLY,' ')))return null;
+ const tm=parseTime(t,now);if(!tm)return null;
+ let task=cleanTask(stripTimeBits(st));
+ if(!task||task.length<2)task=cleanTask(stripTimeBits(t));
+ if(!task)return {at:tm.at,local:tm.local,task:'',when:formatWhen(tm.at,toNow(now))};
+ return {at:tm.at,local:tm.local,task,when:formatWhen(tm.at,toNow(now))}}
+function formatWhen(at,now){now=now||new Date();const same=at.getFullYear()===now.getFullYear()&&at.getMonth()===now.getMonth()&&at.getDate()===now.getDate();
+ const tom=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1);const isTom=at.getFullYear()===tom.getFullYear()&&at.getMonth()===tom.getMonth()&&at.getDate()===tom.getDate();
+ const h=at.getHours(),min=at.getMinutes();let h12=h%12;if(!h12)h12=12;
+ const per=h===0||h>=19?'de la noche':h===12?'del día':h<12?'de la mañana':'de la tarde';
+ const clock=min?(h12+':'+(min<10?'0':'')+min):String(h12);
+ const art=h12===1?'a la ':'a las ';
+ const hora=art+clock+(h===0&&!min?' de la noche (medianoche)':h===12&&!min?' del día':(' '+per));
+ if(same)return 'hoy '+hora;
+ if(isTom)return 'mañana '+hora;
+ const dn=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'][at.getDay()];
+ return 'el '+dn+' '+hora}
+function sayRemConfirm(p){const task=p.task||'eso';return 'Listo, le recuerdo '+p.when+': '+task+'.'}
+
+let lastRem=null,remTimers={},askSum=false;
+function remSave(){try{save()}catch(e){}try{renderRem()}catch(e){}try{scheduleAll()}catch(e){}}
+function addReminder(task,at,opt){const r={id:uid(),owner:S.current,text:String(task||'').trim(),at:(at instanceof Date?at.toISOString():at),created:new Date().toISOString(),fired:false,cancelled:false};remAll().push(r);lastRem=r;remSave();try{wantNotif()}catch(e){}try{trySWTrigger(r)}catch(e){}return r}
+function wantNotif(){if(!('Notification' in window))return;if(Notification.permission==='default')Notification.requestPermission().catch(()=>{})}
+function trySWTrigger(r){if(typeof TimestampTrigger==='undefined')return;const ts=Date.parse(r.at);if(!(ts>Date.now()))return;
+ navigator.serviceWorker&&navigator.serviceWorker.ready.then(reg=>{if(reg&&reg.showNotification)return reg.showNotification('Recordatorio',{body:r.text,tag:'rem-'+r.id,icon:'./icon-192.png',showTrigger:new TimestampTrigger(ts)})}).catch(()=>{})}
+function scheduleAll(){Object.keys(remTimers).forEach(id=>{clearTimeout(remTimers[id]);delete remTimers[id]});
+ const now=Date.now();remPend().forEach(r=>{const ts=Date.parse(r.at)-now;if(ts<=0)return;if(ts>2147480000)return;remTimers[r.id]=setTimeout(()=>fireRem(r.id),ts)})}
+function fireRem(id){const r=remAll().find(x=>x.id===id);if(!r||r.fired||r.cancelled)return;r.fired=true;r.firedAt=new Date().toISOString();try{save()}catch(e){}try{renderRem()}catch(e){}
+ const msg='Recordatorio: '+r.text+'.';try{$('interim').textContent=msg;speak(msg)}catch(e){}
+ try{navigator.vibrate&&navigator.vibrate([300,150,300,150,300])}catch(e){}
+ try{if('Notification' in window&&Notification.permission==='granted')new Notification('Recordatorio',{body:r.text,icon:'./icon-192.png',tag:'rem-'+r.id})}catch(e){}}
+function catchUpRem(){const now=Date.now();const due=remPend().filter(r=>Date.parse(r.at)<=now);
+ if(!due.length){scheduleAll();return}due.forEach(r=>{r.fired=true;r.firedAt=new Date().toISOString();r.missed=true});try{save()}catch(e){}
+ const msg=due.length===1?('Se le venció un recordatorio: '+due[0].text+'.'):('Se le vencieron '+due.length+' recordatorios: '+joinY(due.map(r=>r.text))+'.');
+ setTimeout(()=>{try{$('interim').textContent=msg;if(typeof micOn!=='undefined'&&micOn)speak(msg)}catch(e){}try{renderRem()}catch(e){}},600);
+ scheduleAll()}
+function listRemMsg(){const L=remPend().slice().sort((a,b)=>Date.parse(a.at)-Date.parse(b.at));if(!L.length)return 'No tiene recordatorios pendientes.';
+ return (L.length===1?'Tiene 1 recordatorio: ':'Tiene '+L.length+' recordatorios: ')+L.map(r=>formatWhen(new Date(r.at))+', '+r.text).join('; ')+'.'}
+function delRemByQ(q){q=nrm(q||'').replace(/^(el|la|los|las|de|del|para|por)\s+/,'');const L=remPend();if(!L.length)return 'No tiene recordatorios pendientes.';
+ if(!q||/^(ese|esa|el ultimo|lo ultimo|ultimo)$/.test(q)){const r=L.slice().sort((a,b)=>Date.parse(b.created)-Date.parse(a.created))[0];r.cancelled=true;remSave();return 'Cancelé el recordatorio: '+r.text+'.'}
+ let best=null,bs=0;L.forEach(r=>{const w=nrm(r.text);let s=0;if(w===q)s=3;else if(w.includes(q)||q.includes(w))s=2;else if(q.split(/\s+/).filter(x=>x.length>2&&w.includes(x)).length)s=1;if(s>bs){bs=s;best=r}});
+ if(!best||bs<1)return 'No encontré ese recordatorio.';best.cancelled=true;remSave();return 'Cancelé el recordatorio: '+best.text+'.'}
+function doRemindUtter(raw,now){const p=parseReminder(raw,now);if(!p)return null;if(!p.task)return '¿Qué le recuerdo '+p.when+'?';
+ const r=addReminder(p.task,p.at);showCalBan(r);const msg=sayRemConfirm(p);return msg+' Si quiere que le suene aunque la app esté cerrada, toque Agregar al calendario.'}
+
+function icsOf(r){const d=new Date(r.at),e=new Date(d.getTime()+15*60000);
+ const fmt=x=>x.getFullYear()+pad(x.getMonth()+1)+pad(x.getDate())+'T'+pad(x.getHours())+pad(x.getMinutes())+'00';
+ const escI=s=>String(s||'').replace(/[,;\\]/g,'\\$&').replace(/\n/g,'\\n');
+ return 'BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Notas y Gastos//ES\r\nBEGIN:VEVENT\r\nUID:'+r.id+'@gastosvoz\r\nDTSTAMP:'+fmt(new Date())+'\r\nDTSTART:'+fmt(d)+'\r\nDTEND:'+fmt(e)+'\r\nSUMMARY:'+escI(r.text)+'\r\nDESCRIPTION:'+escI(r.text)+'\r\nBEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:'+escI(r.text)+'\r\nTRIGGER:PT0S\r\nEND:VALARM\r\nBEGIN:VALARM\r\nACTION:AUDIO\r\nTRIGGER:PT0S\r\nEND:VALARM\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n'}
+function gcalUrl(r){const d=new Date(r.at),e=new Date(d.getTime()+15*60000);
+ const fmt=x=>x.getFullYear()+pad(x.getMonth()+1)+pad(x.getDate())+'T'+pad(x.getHours())+pad(x.getMinutes())+'00';
+ return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(r.text||'Recordatorio')+'&dates='+fmt(d)+'/'+fmt(e)+'&details='+encodeURIComponent(r.text||'')}
+function openCal(r){if(!r)return;if(typeof isIOS==='function'?isIOS():false){const blob=new Blob([icsOf(r)],{type:'text/calendar;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='recordatorio.ics';document.body.appendChild(a);a.click();setTimeout(()=>{try{URL.revokeObjectURL(a.href);a.remove()}catch(e){}},1500)}
+ else window.open(gcalUrl(r),'_blank','noopener')}
+function showCalBan(r){lastRem=r;let b=$('calBan');if(!b){b=document.createElement('div');b.id='calBan';b.style.cssText='position:fixed;left:8px;right:8px;bottom:calc(160px + env(safe-area-inset-bottom));background:#1f3a5f;color:#fff;border-radius:12px;padding:10px;z-index:21;display:flex;gap:8px;align-items:center;box-shadow:0 4px 14px #0004';b.innerHTML='<div style="flex:1;font-size:14px">Para que le suene con la app cerrada</div><button type="button" class="btn" id="calAdd">Agregar al calendario</button><button type="button" class="btn sec" id="calX">Listo</button>';(document.body||document.documentElement).appendChild(b);b.querySelector('#calAdd').onclick=()=>{if(lastRem)openCal(lastRem)};b.querySelector('#calX').onclick=()=>{b.classList.add('hide')}}
+ b.classList.remove('hide')}
+function renderRem(){let c=$('remCard');if(!c){c=document.createElement('div');c.id='remCard';c.className='card';c.innerHTML='<h2>Recordatorios</h2><div id="remList"></div>';const tab=$('tab-notas');if(tab){const list=$('nList');tab.insertBefore(c,list||null)}}
+ const L=remPend().slice().sort((a,b)=>Date.parse(a.at)-Date.parse(b.at));c.classList.toggle('hide',!L.length&&tab!==undefined);
+ const el=$('remList');if(!el)return;if(!L.length){el.innerHTML='<p class="small">No tiene recordatorios pendientes.</p>';return}
+ el.innerHTML=L.map(r=>'<div class="row" style="align-items:center;margin:6px 0" data-rid="'+r.id+'"><div style="flex:1">'+esc(r.text)+'<div class="small">'+esc(formatWhen(new Date(r.at)))+'</div></div><button type="button" class="btn sec" data-rdel="'+r.id+'">Borrar</button></div>').join('');
+ el.onclick=e=>{const id=e.target&&e.target.dataset&&e.target.dataset.rdel;if(!id)return;const r=remAll().find(x=>x.id===id);if(r){r.cancelled=true;remSave()}}}
+
+/* ----- timestamps on items ----- */
+const _si17=setItem;setItem=function(n,i,done,amount){const it=n.items[i];if(it){if(done)it.doneAt=it.doneAt||new Date().toISOString();else delete it.doneAt}return _si17(n,i,done,amount)};
+const _ai17=addItems;addItems=function(target,list){const n=target&&target!=='draft'?target:(vd&&vd.noteId&&S.notes.find(x=>x.id===vd.noteId));const before=n&&n.items?n.items.length:0;const r=_ai17(target,list);try{const nn=target&&target!=='draft'?target:(vd&&vd.noteId&&S.notes.find(x=>x.id===vd.noteId));if(nn&&nn.items){const now=new Date().toISOString();nn.items.forEach((it,i)=>{if(i>=before&&!it.addedAt)it.addedAt=now});try{save()}catch(e){}}}catch(e){}return r};
+const _fl17=flushDraftToNote;flushDraftToNote=function(){const n0=vd&&vd.noteId&&S.notes.find(x=>x.id===vd.noteId);const before=n0&&n0.items?n0.items.length:0;const r=_fl17();try{if(r&&r.items){const now=new Date().toISOString();if(!n0)r.items.forEach(it=>{if(!it.addedAt)it.addedAt=now});else r.items.forEach((it,i)=>{if(i>=before&&!it.addedAt)it.addedAt=now});if(r&&!r._bodyAt&&vd&&false){}try{save()}catch(e){}}}catch(e){}return r};
+
+function isTodayISO(iso,now){if(!iso)return false;now=now||new Date();const d=toNow(iso);return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth()&&d.getDate()===now.getDate()}
+function dayKey(now){now=now||new Date();return now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())}
+function dailySummary(now){now=toNow(now);const day=dayKey(now);const notes=S.notes.filter(n=>n.owner===S.current||(n.shared||[]).includes(S.current));
+ const created=notes.filter(n=>isTodayISO(n.created,now));
+ const added=[];const ticked=[];
+ notes.forEach(n=>{(n.items||[]).forEach(it=>{
+  const addAt=it.addedAt||(it.doneAt?null:n.updated);
+  if(isTodayISO(it.addedAt,now)||(!it.addedAt&&isTodayISO(n.created,now)))added.push({n,it});
+  else if(!it.addedAt&&isTodayISO(n.updated,now)&&!it.done){/* don't assume updated means added */}
+  if(it.done&&(isTodayISO(it.doneAt,now)||(!it.doneAt&&isTodayISO(n.updated,now))))ticked.push({n,it});
+ })});
+ const p=P();const ex=(p.expenses||[]).filter(e=>e.date===day||isTodayISO(e.created,now));
+ const tot=ex.reduce((s,e)=>s+(+e.amount||0),0);
+ const remsToday=remPend().filter(r=>isTodayISO(r.at,now)).sort((a,b)=>Date.parse(a.at)-Date.parse(b.at));
+ const bits=[];
+ if(created.length)bits.push('creó '+(created.length===1?'la nota '+created[0].title:'las notas '+joinY(created.map(n=>n.title))));
+ const addG={};added.forEach(({n,it})=>{(addG[n.title]=addG[n.title]||[]).push(lc(it.t))});
+ const addParts=Object.keys(addG).map(t=>'en '+t+': '+joinY(addG[t]));
+ if(addParts.length)bits.push('agregó '+addParts.join('; '));
+ const ticG={};ticked.forEach(({n,it})=>{(ticG[n.title]=ticG[n.title]||[]).push(lc(it.t))});
+ const ticParts=Object.keys(ticG).map(t=>joinY(ticG[t])+(Object.keys(ticG).length>1?' en '+t:''));
+ if(ticParts.length)bits.push('tachó '+ticParts.join('; '));
+ if(ex.length){const det=ex.length<=4?(' ('+joinY(ex.map(e=>{const c=(p.cats.find(x=>x.id===e.catId)||{}).name||'';return (c?c+', ':'')+(e.note?e.note+', ':'')+say$(e.amount)}))+')'):'';bits.push('gastó '+say$(tot)+det)}
+ if(remsToday.length)bits.push('le queda'+(remsToday.length>1?'n':'')+' '+remsToday.length+' recordatorio'+(remsToday.length>1?'s':'')+': '+joinY(remsToday.map(r=>r.text+' ('+formatWhen(new Date(r.at),now)+')')));
+ if(!bits.length)return 'Hoy no anotó nada todavía.';
+ return 'Hoy '+bits.join('. ').replace(/^Hoy /,'Hoy ')+'.'}
+// tidy first letter already "Hoy"
+
+function offerKey(){return 'sumOffered:'+(S.current||'')+':'+dayKey()}
+function offerDailySummary(force){const now=new Date();if(!force&&now.getHours()<19)return;
+ try{if(!force&&localStorage.getItem(offerKey()))return}catch(e){}
+ try{localStorage.setItem(offerKey(),'1')}catch(e){}
+ if(typeof micOn!=='undefined'&&micOn&&typeof speaking!=='undefined'){askSum=true;const q='¿Quiere que le lea el resumen del día?';try{$('interim').textContent=q;speak(q)}catch(e){}return q}
+ showSumBan();return null}
+function showSumBan(){let b=$('sumBan');if(!b){b=document.createElement('div');b.id='sumBan';b.style.cssText='position:fixed;left:8px;right:8px;top:calc(8px + env(safe-area-inset-top));background:#2e7d32;color:#fff;border-radius:12px;padding:10px;z-index:22;display:flex;gap:8px;align-items:center;box-shadow:0 4px 14px #0004';b.innerHTML='<div style="flex:1;font-size:15px">¿Quiere que le lea el resumen del día?</div><button type="button" class="btn" id="sumGo">Resumen del día</button><button type="button" class="btn sec" id="sumNo">No</button>';(document.body||document.documentElement).appendChild(b);b.querySelector('#sumGo').onclick=()=>{b.classList.add('hide');const m=dailySummary();try{$('interim').textContent=m;speak(m)}catch(e){}};b.querySelector('#sumNo').onclick=()=>b.classList.add('hide')}
+ b.classList.remove('hide')}
+function isSumQ(t){t=nrm(t).replace(/\s+/g,' ').trim();return /^(el |un |mi )?(resumen)( del dia| de hoy| hoy)?$/.test(t)||/^(que )?(anote|hice|paso)( hoy| el dia)?$/.test(t)||/^(que anote hoy|que anote el dia|resumen del dia|resumen de hoy|resumen hoy|que hice hoy|que hice el dia|como me fue hoy|que paso hoy|que anote)$/.test(t)}
+function isListRem(t){t=nrm(t).replace(/\s+/g,' ').trim();return /^(que |cuales |mis )?(recordatorios|avisos|alarmas)( tengo| hay| quedan| pendientes)?$/.test(t)||/^que recordatorios\b/.test(t)}
+function isDelRem(t){t=nrm(t).replace(/\s+/g,' ').trim();const m=t.match(/^(borre|borra|borrar|elimine|elimina|eliminar|quite|quita|cancel[eao]|cancele|cancela|cancelar)\s+(el |la |los |las |mi |mis )?(recordatorio|recordatorios|aviso|alarma)s?\b(?:\s+(de|del|para|por))?\s*(.*)$/);return m?cleanTask((m[m.length-1]||'').replace(/^(de|del|para|por)\s+/,'')):null}
+
+const _hT16=handleTranscript;handleTranscript=function(text,opt){if(!text||!String(text).trim())return _hT16(text,opt);
+ const raw=String(text);const st=typeof cleanHeard==='function'?cleanHeard(typeof stripPolite==='function'?stripPolite(raw):raw):raw;const t=nrm(st||raw).replace(/\s+/g,' ').trim();
+ const out=x=>{if(typeof _tryAlt!=='undefined'&&_tryAlt)return x;S.lastActivity=Date.now();$('interim').textContent=x;speak(x);try{logVoice(st||raw,[],x)}catch(e){}return x};
+ if(askSum){if(/^(si|claro|dale|ok|okay|bueno|sí|quiero|lea|lealo|leame)$/.test(t)){askSum=false;return out(dailySummary())}if(/^(no|despues|ahora no|luego|nop)$/.test(t)){askSum=false;return out('Está bien.')}}
+ if(isSumQ(t))return out(dailySummary());
+ if(isListRem(t))return out(listRemMsg());
+ const dq=isDelRem(t);if(dq!=null)return out(delRemByQ(dq));
+ const rr=doRemindUtter(raw);if(rr)return out(rr);
+ return _hT16(text,opt)};
+
+try{renderRem();catchUpRem();setTimeout(()=>offerDailySummary(false),1200)}catch(e){}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){try{catchUpRem();offerDailySummary(false)}catch(e){}}});
+
+
 window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn},get noteFlow(){return nf},get curNote(){return curNote},splitPasted,get voiceLog(){return vLog},get lastHeard(){return ($("heard")||{}).textContent||""},handleHeard,cleanHeard,__setLastSpoken(t){lastSpoken=t;lastSpokenAt=Date.now()},GUIDE,APPVER,parseNoteAct};
+Object.assign(window.App,{parseTime,parseReminder,addReminder,listReminders:listRemMsg,dailySummary,checkReminders:catchUpRem,fireReminder:fireRem,formatWhen,openCalendar:openCal,offerDailySummary,gcalUrl,icsOf});
+Object.defineProperties(window.App,{reminders:{get(){return remMine()},enumerable:true},lastReminder:{get(){return lastRem},enumerable:true},allReminders:{get(){return remAll()},enumerable:true}});
+
 })();
 </script>
 </body>
