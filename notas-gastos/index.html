@@ -87,7 +87,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v14</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v15</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -132,12 +132,12 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
    <li>«título …» · «compartir con esposa» (privada si no lo dice)</li>
    <li>«crear lista de compras» → cada frase es un elemento («leche», «pan») → «guardar lista»</li>
    <li>«abrir nota viaje» o «agregar a la nota viaje», o toque la nota en la lista → dicte → «guardar nota»</li>
-   <li>Oír la lista (con la nota abierta, muchas formas): «cuénteme qué tengo», «repítame lo que tengo», «dígame», «¿qué tiene el mercado?», «oír la lista», «léame», «la lista». Responde: «Tiene aguacate, pan, leche y queso.» (solo lo que falta; si ya tachó algunos, lo menciona).</li>
-   <li>Tachar: «ya tengo huevos», «ya compré las uvas», «listo X», «tache X». Responde: «Listo, huevos tachado. Le quedan pan, leche y queso.» (si se acabó: «Ya no le queda nada.»). Desmarcar: «todavía no tengo los huevos». Con monto («ya compré leche por 5 dólares») pregunta si lo anota como gasto.</li>
-   <li>Agregar a la nota activa (abierta o la última que leyó): «agregar leche», «agregue pan y huevos», «también café», «ponga arroz a la lista tareas». Si no hay nota activa le pregunta a cuál. Lo repetido no se duplica.</li>
+   <li>Oír la lista (con la nota abierta, muchas formas): «cuénteme qué tengo», «repítame lo que tengo», «dígame», «¿qué tiene el mercado?», «oír la lista», «léame», «la lista», «escuchar la lista», «recuérdame qué tengo». Responde: «Tiene aguacate, pan, leche y queso.» (solo lo que falta; si ya tachó algunos, lo menciona).</li>
+   <li>Tachar (reversible): «tache», «subraye», «raye», «marque», «chulee», «palomee» y el producto; también «ya tengo huevos», «ya compré las uvas», «ya cogí pan», «listo queso». Responde: «Listo, taché huevos. Le quedan pan, leche y queso.» (si se acabó: «Ya no le queda nada.»). Desmarcar: «todavía no tengo los huevos». Con monto («ya compré leche por 5 dólares») pregunta si lo anota como gasto.</li>
+   <li>Agregar a la nota activa (abierta o la última que leyó): «agregar», «añadir», «aumentar», «sumar», «poner», «meter», «anotar», «incluir», «apuntar» y el producto («aumente leche», «también café», «ponga arroz», «me falta pan»). «Falta tomate» o «me falta pan» lo agrega solo si no es una pregunta («¿qué me falta?» lee lo pendiente). Si no hay nota activa le pregunta a cuál. Lo repetido no se duplica. «Sumar gasto» o «anote mercado veinte» siguen siendo gastos.</li>
    <li>Con una nota abierta: «¿qué queda?», «¿qué me falta?», «¿qué llevo?», «léame la lista» le lee lo pendiente; las preguntas nunca se anotan como texto.</li>
    <li>«quiero eliminar algo» → la app pregunta «¿Qué quiere borrar?» y le lee lo pendiente; conteste el nombre o «el segundo». «quiero agregar algo» → «¿Qué quiere agregar?». También entiende «quiero…», «necesito…», «me gustaría…», «voy a…».</li>
-   <li>Borrar un elemento (con la nota abierta o después de leerla): «elimine hacer mercado», «quite las uvas», «podría eliminar …», «saque X de la lista tareas». Si hay varios parecidos le pregunta cuál; «deshacer» lo recupera.</li>
+   <li>Borrar un elemento (con la nota abierta o después de leerla): «borrar», «eliminar», «quitar», «sacar», «suprimir», «descartar» y el producto («quite huevos», «saque las uvas», «bórrelo», «podría eliminar…»). Responde: «Eliminé uvas. Le quedan aguacate, pan, leche y queso.» Si hay varios parecidos le pregunta cuál; «deshacer» lo recupera. Entiende infinitivo, tú o usted, y formas con enclítico.</li>
    <li>Si duda, diga «qué le puedo decir», «ayuda» o «cómo funciona»: la app le lee una guía corta (también visible en la nota). La primera vez que abre una nota le dice: «Si necesita ayuda, diga: qué le puedo decir». Para terminar: «cerrar nota».</li>
    <li>En una lista de verificación, el botón <b>Pegar lista</b> agrega el mensaje de WhatsApp (una línea, coma o viñeta por elemento).</li></ul></details>
   <details><summary><b>Carro</b></summary><ul class="small" style="color:var(--tx)"><li>En Mantenimiento: «carro cambio de aceite 45000 millas 60 dólares»</li></ul></details>
@@ -159,7 +159,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v14</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v15</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -1049,7 +1049,7 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v14';
+const APPVER='v15';
 const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo o cuénteme qué tengo. Para terminar, diga cerrar nota.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
@@ -1097,7 +1097,7 @@ function viejaStart(){const L=recentOf(visibleNotes(),12);if(!L.length)return no
 const _readOut14=readOut;readOut=function(n){curNote=n.id;guideUI();if(n.fmt!=='check'&&n.fmt!=='num'&&n.fmt!=='bullet')return _readOut14(n);return leftover(viewNow(n)).tiene};
 const _readAgain14=readAgain;readAgain=function(n){curNote=n.id;guideUI();if(n.fmt!=='check')return _readAgain14(n);const L=leftover(viewNow(n));return L.empty?'Ya no le queda nada.':L.quedan};
 const _pend14=pendRead;pendRead=function(t){const a=activeNote();if(!a)return null;const v=a.draft?draftView():a.n;if(!a.draft)curNote=a.n.id;guideUI();if(v.fmt!=='check'&&v.fmt!=='num'&&v.fmt!=='bullet')return leftover(v).tiene;
- const L=leftover(v);if(/\b(falta|faltan|queda|quedan|mas|llevo)\b/.test(nrm(t)))return L.empty?'Ya no le queda nada.':L.quedan;if(/^(que tengo|que hay|lea|leame|leer|leeme|cuent|diga|dime|repit|oir|la lista)/.test(nrm(t)))return L.tiene;return L.empty?'Ya no le queda nada.':L.quedan};
+ const L=leftover(v);if(/\b(falta|faltan|queda|quedan|mas|llevo)\b/.test(nrm(t)))return L.empty?'Ya no le queda nada.':L.quedan;if(/^(que tengo|que hay|lea|leame|leer|leeme|cuent|diga|dime|repit|oir|escuch|recuerd|la lista)/.test(nrm(t)))return L.tiene;return L.empty?'Ya no le queda nada.':L.quedan};
 const _set14=setItem;setItem=function(n,i,done,amount){const it=n.items[i],r=_set14(n,i,done,amount),L=leftover(viewNow(n));
  let msg=done?('Listo, '+lc(it.t)+' tachado. '+(L.empty?'Ya no le queda nada.':L.quedan)):('Listo, desmarqué '+lc(it.t)+'. '+(L.empty?'Ya no le queda nada.':L.quedan));
  if(done&&askExp)msg+=' ¿Lo anoto también como gasto de '+askExp.amount+' dólares?';return msg};
@@ -1208,7 +1208,65 @@ guideUI();renderVozLog();
  try{navigator.serviceWorker.getRegistration&&navigator.serviceWorker.getRegistration().then(g=>g&&g.update()).catch(()=>{});
   navigator.serviceWorker.addEventListener('controllerchange',()=>{try{if(sessionStorage.getItem('gastosVoz.swReloaded'))return;sessionStorage.setItem('gastosVoz.swReloaded','1');location.reload()}catch(e){}})}catch(e){}})();
 
-window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn},get noteFlow(){return nf},get curNote(){return curNote},splitPasted,get voiceLog(){return vLog},get lastHeard(){return ($("heard")||{}).textContent||""},handleHeard,cleanHeard,__setLastSpoken(t){lastSpoken=t;lastSpokenAt=Date.now()},GUIDE,APPVER};
+/* ===== v15 sinónimos flexibles ===== */
+const ENC=['','lo','la','los','las','le','les','me','te','se','nos','melo','mela','melos','melas','selo','sela','selos','selas','telo','tela','tele','noslo','nosla'];
+function allForms(bases){const o=new Set();bases.forEach(b=>{const x=nrm(b);ENC.forEach(e=>o.add(x+e))});return o}
+function arF(inf){const s=inf.slice(0,-2);return[inf,s+'a',s+'as',s+'e',s+'en',s+'o',s+'ad',s+'amos',s+'ame',s+'eme',s+'ale',s+'ele',s+'alo',s+'elo']}
+function irF(inf){const s=inf.slice(0,-2);const c=s.endsWith('c')?s.slice(0,-1)+'z':s;return[inf,s+'e',s+'es',s+'a',s+'an',s+'o',s+'id',s+'imos',s+'eme',s+'ame',s+'ele',s+'ale']}
+function erF(inf){const s=inf.slice(0,-2);return[inf,s+'e',s+'es',s+'a',s+'an',s+'o',s+'ed',s+'emos',s+'eme',s+'ame',s+'ele',s+'ale']}
+const DELV=allForms(['borrar','eliminar','quitar','sacar','suprimir','descartar',...arF('borrar'),...arF('eliminar'),...arF('quitar'),...arF('sacar'),...arF('descartar'),...irF('suprimir'),'suprime','suprima','supriman','suprimeme','suprimame','borralo','borrelo','quitalo','quitalo','quitelo','saquelo','saqualo','saquemelo'].filter(Boolean));
+const TICKV=allForms(['tachar','subrayar','rayar','marcar','chulear','palomear',...arF('tachar'),...arF('subrayar'),...arF('rayar'),...arF('marcar'),'chulea','chulee','chuleen','chulear','palomea','palomee','palomeen','palomear','tacheme','tachame','subrayeme','marqueme','marque','marquen']);
+const ADDV=allForms(['agregar','anadir','aumentar','sumar','poner','meter','anotar','incluir','apuntar',...arF('agregar'),...arF('aumentar'),...arF('sumar'),...arF('anotar'),...arF('apuntar'),...irF('anadir'),'anade','anada','anadan','anadale','anadele',...erF('meter'),'mete','meta','metan','metele',...irF('incluir'),'incluye','incluya','incluyan','incluyalo','poner','pon','ponga','pongan','ponle','pongale','pongalo','ponlo','pongame','pone','pongo','tambien']);
+const READV=allForms(['escuchar','recordar',...arF('escuchar'),...arF('recordar'),'escuchame','escucheme','escuchala','recuerdame','recuerdeme','recuerdamelo','recuerdemelo','recuerdela']);
+function hasV(set,w){w=nrm(w).replace(/^(el|la|los|las)$/,'');if(!w)return false;if(set.has(w))return true;for(const e of ENC){if(e&&w.endsWith(e)&&set.has(w.slice(0,-e.length)))return true}return false}
+function isFinAct(t,raw){t=nrm(t);if(/\b(pago automatico|presupuesto|categoria|un gasto|el gasto|los gastos)\b/.test(t))return true;if(/^(sumar|suma|sume|anotar|anote|anota|agregar|agregue|agrega|apuntar|apunte|apunta|anadir|anada|anade)\s+(gasto|gastos|un gasto|el gasto)\b/.test(t))return true;
+ if(/^(anote|anota|anotar|apunte|apunta|apuntar|sume|suma|sumar|agregue|agrega|agregar)\s+/.test(t)){try{const T=tokenize(raw||t);if(typeof firstAmount==='function'&&firstAmount(T,0,new Set())&&typeof findCatIn==='function'&&findCatIn(T,P()))return true;if(parseExpenses(raw||t).length)return true}catch(e){}}
+ return false}
+function parseNoteAct(raw){const st=cleanHeard(typeof stripPolite==='function'?stripPolite(raw):raw);const t=nrm(st).replace(/\s+/g,' ').trim();if(!t)return null;
+ if(isFinAct(t,st)||isFinAct(t,raw))return null;
+ if(isQuestion(st||raw)&&/^(que|cuanto|cuanta|cuantos|cuantas|cual|cuales|como|donde|cuando)\b/.test(t))return null;
+ let m=t.match(/^(?:me |nos |le |les )?(?:tambien )?falta(?:n)?(?: tambien)? (.+)$/);
+ if(m&&m[1]&&!/^(por|de|pagar|pago)\b/.test(m[1])&&!/\b(pagar|pago|pagos)\b/.test(m[1]))return{act:'add',q:clean(m[1])};
+ m=t.match(/^ya (?:compre|tengo|cogi|consegui|hice|lleve|traje|agarre|recogi)\s+(.+)$/);if(m)return{act:'tick',q:clean(m[1])};
+ m=t.match(/^listo\s+(.+)$/);if(m&&!/^(guardar|nota|lista|terminar)$/.test(nrm(m[1])))return{act:'tick',q:clean(m[1])};
+ const W=t.split(/\s+/);if(!W.length)return null;
+ let act=null;if(hasV(DELV,W[0]))act='del';else if(hasV(TICKV,W[0]))act='tick';else if(hasV(ADDV,W[0]))act='add';else if(hasV(READV,W[0]))act='read';
+ if(!act)return null;
+ if(act==='add'&&/^((a|en)\s+((la|mi|el)\s+)?(nota|lista)\b)/.test(W.slice(1).join(' ')))return null;
+ if(act==='del'&&/^((la|una|el)\s+)?(nota|lista)\b/.test(W.slice(1).join(' ')))return null;
+ if(act==='del'&&/^(eso|esto|todo)$/.test(W.slice(1).join(' ')))return null;
+ let restOrig=String(st||'');
+ restOrig=restOrig.replace(/^\s*\S+\s*/,'').trim();
+ const rest=nrm(restOrig).replace(/\s+/g,' ').trim();
+ if(!rest||/^(algo|algo mas|una cosa|otra cosa|cosa|cosas|un renglon|renglon|un item|item|un elemento|elemento|un producto|una linea|un articulo|alguno|alguna)$/.test(rest))return{act,q:null,vague:true,raw:''};
+ return{act,q:clean(restOrig),vague:false,raw:restOrig}}
+
+const _set15=setItem;setItem=function(n,i,done,amount){const it=n.items[i],r=_set15(n,i,done,amount),L=leftover(viewNow(n));
+ let msg=done?('Listo, taché '+lc(it.t)+'. '+(L.empty?'Ya no le queda nada.':L.quedan)):('Listo, desmarqué '+lc(it.t)+'. '+(L.empty?'Ya no le queda nada.':L.quedan));
+ if(done&&askExp)msg+=' ¿Lo anoto también como gasto de '+askExp.amount+' dólares?';return msg};
+const _already=null;
+function doNoteAct(a,raw){if(!a)return null;
+ if(a.act==='read'){if(a.q){const named=typeof noteFromUtterance==='function'?noteFromUtterance(a.q,a.q):null;if(named){curNote=named.id;guideUI();return sayList(named)}}return activeNote()?pendRead(raw||'que tengo'): (a.q?pickFrom(a.q,'read'):startPick('read'))}
+ if(a.vague){if(a.act==='del')return askDelete('');if(a.act==='add'){askAdd=true;const n=activeNote();return '¿Qué quiere agregar?'+(n&&n.n&&!n.draft?' Lo pongo en '+n.n.title+'.':'')}if(a.act==='tick')return '¿Cuál producto ya tiene? Diga el nombre.'}
+ if(a.act==='del'){const r=itemDelCmd('eliminar '+(a.q||''));if(typeof r==='string')return r;if(r&&r.miss)return r.miss;return 'No encontré “'+lc(a.q)+'”.'}
+ if(a.act==='tick'){const {W,amount}=itemWords(a.q);const R=W.length?findItems(W,false):[];
+  if(R.length===1)return setItem(R[0].n,R[0].i,true,amount);
+  if(R.length>1){const n=R[0].n;itemQ={noteId:n.id,idx:R.map(x=>x.i).slice(0,3),done:true};curNote=n.id;return '¿Cuál: '+joinO(itemQ.idx.map(i=>lc(n.items[i].t)))+'?'}
+  const other=W.length?findItems(W,true):[];if(other.length){const it=other[0].n.items[other[0].i];return cap(lc(it.t))+' ya estaba tachado. '+leftover(viewNow(other[0].n)).quedan}
+  const cur=curNote&&S.notes.find(n=>n.id===curNote);if(amount)return null;return 'No encontré '+lc(clean(a.q))+(cur?' en '+cur.title:'')+'.'}
+ if(a.act==='add'){const qq=a.raw||a.q||'';const r=addCmd('agregar '+qq);if(r)return r;const an=activeNote();if(!an)return '¿A qué nota lo agrego?';return addItems(an.draft?'draft':an.n,typeof splitAdd==='function'?splitAdd(qq):[cap(qq)])}}
+function wantsReadMore(t){t=nrm(t);return/\b(escuchar|escuchame|escucheme|escucha|escuche|recordar|recuerdame|recuerdeme|recuerda|recuerde|recuerdamelo)\b/.test(t)}
+const _wL15=wantsList;wantsList=function(t){if(_wL15(t))return true;t=nrm(t).replace(/\s+/g,' ').trim();return wantsReadMore(t)&&(/\b(que|lo que|lista|nota|tengo|tiene|hay|mercado)\b/.test(t)||/^(escucha|escuche|recuerde|recuerda|recuerdame|escuchame)$/.test(t))}
+
+const _hT14=handleTranscript;handleTranscript=function(text,opt){if(!text||!String(text).trim())return null;
+ const raw=String(text),st=cleanHeard(typeof stripPolite==='function'?stripPolite(raw):raw);const t=nrm(st||raw).replace(/\s+/g,' ').trim();
+ const out=x=>{if(typeof _tryAlt!=='undefined'&&_tryAlt)return x;S.lastActivity=Date.now();$('interim').textContent=x;speak(x);try{logVoice(st||raw,[],x)}catch(e){}return x};
+ if(/^(deshacer|deshace|deshaga|undo)$/.test(t))return out(doUndo());
+ if(nf&&nf.step&&nf.step!=='do')return _hT14(text,opt);
+ if(!isFinAct(t,st)&&!isFinAct(t,raw)){const a=parseNoteAct(raw);if(a&&(a.act!=='read'||activeNote()||a.q)){const r=doNoteAct(a,st||raw);if(r)return out(r)}}
+ return _hT14(text,opt)};
+
+window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn},get noteFlow(){return nf},get curNote(){return curNote},splitPasted,get voiceLog(){return vLog},get lastHeard(){return ($("heard")||{}).textContent||""},handleHeard,cleanHeard,__setLastSpoken(t){lastSpoken=t;lastSpokenAt=Date.now()},GUIDE,APPVER,parseNoteAct};
 })();
 </script>
 </body>
