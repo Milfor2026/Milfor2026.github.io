@@ -87,7 +87,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v17</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v18</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -136,7 +136,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
    <li>Tachar (reversible): «tache», «subraye», «raye», «marque», «chulee», «palomee» y el producto; también «ya tengo huevos», «ya compré las uvas», «ya cogí pan», «listo queso». Responde: «Listo, taché huevos. Le quedan pan, leche y queso.» (si se acabó: «Ya no le queda nada.»). Desmarcar: «todavía no tengo los huevos». Con monto («ya compré leche por 5 dólares») pregunta si lo anota como gasto.</li>
    <li>Agregar a la nota activa (abierta o la última que leyó): «agregar», «añadir», «aumentar», «sumar», «poner», «meter», «anotar», «incluir», «apuntar» y el producto («aumente leche», «también café», «ponga arroz», «me falta pan»). «Falta tomate» o «me falta pan» lo agrega solo si no es una pregunta («¿qué me falta?» lee lo pendiente). Si no hay nota activa le pregunta a cuál. Lo repetido no se duplica. «Sumar gasto» o «anote mercado veinte» siguen siendo gastos.</li>
    <li>Con una nota abierta: «¿qué queda?», «¿qué me falta?», «¿qué llevo?», «léame la lista» le lee lo pendiente; las preguntas nunca se anotan como texto.</li>
-   <li>«quiero eliminar algo» → la app pregunta «¿Qué quiere borrar?» y le lee lo pendiente; conteste el nombre o «el segundo». «quiero agregar algo» → «¿Qué quiere agregar?». También entiende «quiero…», «necesito…», «me gustaría…», «voy a…».</li>
+   <li>«quiero eliminar algo» → la primera vez pregunta «¿Qué quiere borrar?» y le lee lo pendiente; las siguientes veces, en la misma nota, solo pregunta sin repetir la lista. Conteste el nombre o «el segundo». «quiero agregar algo» → «¿Qué quiere agregar?». También entiende «quiero…», «necesito…», «me gustaría…», «voy a…».</li>
    <li>Borrar un elemento (con la nota abierta o después de leerla): «borrar», «eliminar», «quitar», «sacar», «suprimir», «descartar» y el producto («quite huevos», «saque las uvas», «bórrelo», «podría eliminar…»). Responde: «Eliminé uvas. Le quedan aguacate, pan, leche y queso.» Para deshacer lo último que dictó: «borre lo último», «elimine lo último», «quite lo último», «eso no» o «deshacer»; responde «Borré X. Le quedan…». Si hay varios parecidos le pregunta cuál. Entiende infinitivo, tú o usted, y formas con enclítico.</li>
    <li>Si duda, diga «qué le puedo decir», «ayuda» o «cómo funciona»: la app le lee una guía corta (también visible en la nota). La primera vez que abre una nota le dice: «Si necesita ayuda, diga: qué le puedo decir». Para terminar: «cerrar nota».</li>
    <li>En una lista de verificación, el botón <b>Pegar lista</b> agrega el mensaje de WhatsApp (una línea, coma o viñeta por elemento).</li></ul></details>
@@ -164,7 +164,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v17</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v18</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -1054,7 +1054,7 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v17';
+const APPVER='v18';
 const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo o cuénteme qué tengo. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
@@ -1551,6 +1551,48 @@ const _hT16=handleTranscript;handleTranscript=function(text,opt){if(!text||!Stri
 
 try{renderRem();catchUpRem();setTimeout(()=>offerDailySummary(false),1200)}catch(e){}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){try{catchUpRem();offerDailySummary(false)}catch(e){}}});
+
+
+/* ===== v18: leer la lista al borrar solo la primera vez ===== */
+let delListedKey=null;
+function delNoteKey(){
+  if(vd&&vd.noteId)return vd.noteId;
+  if(curNote)return curNote;
+  if(vd)return 'draft:'+(vd.title||'new');
+  try{const a=activeNote();if(a&&a.n)return a.n.id}catch(e){}
+  return null;
+}
+function resetDelListed(){delListedKey=null}
+const _askDel18=askDelete;
+askDelete=function(pre){
+  const L=delList();
+  askDel={list:L,tries:0};
+  const names=L.map(c=>lc(c.t));
+  const key=delNoteKey();
+  const already=key!=null&&delListedKey===key;
+  let msg=(pre?pre+' ':'')+'¿Qué quiere borrar?';
+  if(!names.length)return msg+(activeNote()?' La lista está vacía.':' Dígame el elemento y la lista.');
+  if(!already){
+    if(key!=null)delListedKey=key;
+    msg+=' Tiene: '+(names.length>8?names.slice(0,8).join(', ')+' y '+(names.length-8)+' más':joinY(names))+'.';
+  }
+  return msg;
+};
+const _ads18=askDelStep;
+askDelStep=function(st){
+  const t=nrm(st).replace(/\s+/g,' ').trim();
+  if(askDel&&typeof VDEL!=='undefined'&&VDEL.test(t)){
+    const prev=askDel.tries||0;
+    const r=askDelete('');
+    if(askDel)askDel.tries=prev;
+    return r;
+  }
+  return _ads18(st);
+};
+const _cn18=closeNote;
+closeNote=function(){resetDelListed();return _cn18.apply(this,arguments)};
+const _can18=cancelOpenNote;
+cancelOpenNote=function(){resetDelListed();return _can18.apply(this,arguments)};
 
 
 window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn},get noteFlow(){return nf},get curNote(){return curNote},splitPasted,get voiceLog(){return vLog},get lastHeard(){return ($("heard")||{}).textContent||""},handleHeard,cleanHeard,__setLastSpoken(t){lastSpoken=t;lastSpokenAt=Date.now()},GUIDE,APPVER,parseNoteAct};
