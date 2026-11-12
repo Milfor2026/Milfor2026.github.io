@@ -87,7 +87,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v18</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v19</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -164,7 +164,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v18</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v19</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -1054,7 +1054,7 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v18';
+const APPVER='v19';
 const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo o cuénteme qué tengo. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
@@ -1274,7 +1274,7 @@ const _hT14=handleTranscript;handleTranscript=function(text,opt){if(!text||!Stri
 /* ===== v16 autosave inmediato, grabar y borrar lo último ===== */
 const DKEY="gastosVoz.draft";
 let lastDict=null;
-function persistSess(){try{if(!vd){localStorage.removeItem(DKEY);return}localStorage.setItem(DKEY,JSON.stringify({profile:S.current,vd:{fmt:vd.fmt,title:vd.title,body:vd.body||"",items:vd.items||[],shared:vd.shared||[],noteId:vd.noteId||null}}))}catch(e){}}
+function persistSess(){try{if(!vd){localStorage.removeItem(DKEY);return}localStorage.setItem(DKEY,JSON.stringify({at:Date.now(),profile:S.current,vd:{fmt:vd.fmt,title:vd.title,body:vd.body||"",items:vd.items||[],shared:vd.shared||[],noteId:vd.noteId||null}}))}catch(e){}}
 function clearSess(){try{localStorage.removeItem(DKEY)}catch(e){}}
 function flushDraftToNote(){if(!vd)return null;
  let n=vd.noteId&&S.notes.find(x=>x.id===vd.noteId);
@@ -1318,13 +1318,21 @@ const _sv16=saveDraft;saveDraft=function(){return confirmSaved()};
 closeNote=function(){let r="";if(vd){const n=flushDraftToNote();if(n)r="Nota guardada: "+n.title+".";else r="La nota estaba vacía; no la guardé.";vd=null;clearSess();draftUI()}curNote=null;nf=null;nfUI();askDel=null;askAdd=null;itemQ=null;delQ=null;guideUI();return (r&&!/^No hay/.test(r)?r+" ":"")+"Cerré la nota."};
 try{$("draftSave").onclick=()=>speak(confirmSaved());$("draftCancel").onclick=()=>speak(cancelOpenNote())}catch(e){}
 
+function showRecBan(msg){try{let b=$("recBan");if(!b){b=document.createElement("div");b.id="recBan";b.setAttribute("role","status");b.style.cssText="position:fixed;left:8px;right:8px;top:calc(8px + env(safe-area-inset-top));background:#1f3a5f;color:#fff;border-radius:10px;padding:8px 12px;z-index:22;font-size:14px;box-shadow:0 4px 14px #0004";(document.body||document.documentElement).appendChild(b)}b.textContent=msg;b.classList.remove("hide");setTimeout(()=>{try{b.remove()}catch(e){}},8000)}catch(e){}}
 function recoverDraft(){let raw=null;try{raw=JSON.parse(localStorage.getItem(DKEY)||"null")}catch(e){raw=null}if(!raw||!raw.vd)return;
  if(raw.profile&&S.current&&raw.profile!==S.current)return;
+ if(raw.at&&(Date.now()-raw.at)>2*60*60*1000)return;
  const d=raw.vd;vd={fmt:d.fmt||"check",title:d.title||"",body:d.body||"",items:d.items||[],shared:d.shared||[],noteId:d.noteId||null};
- const n=flushDraftToNote();
- if(!n){vd=null;clearSess();draftUI();return}
- vd={fmt:n.fmt,title:n.title,body:"",items:[],shared:[],noteId:n.id};persistSess();curNote=n.id;draftUI();guideUI();
- try{let b=$("recBan");if(!b){b=document.createElement("div");b.id="recBan";b.setAttribute("role","status");b.style.cssText="position:fixed;left:8px;right:8px;top:calc(8px + env(safe-area-inset-top));background:#1f3a5f;color:#fff;border-radius:10px;padding:8px 12px;z-index:22;font-size:14px;box-shadow:0 4px 14px #0004";(document.body||document.documentElement).appendChild(b)}b.textContent="Recuperé lo que estaba dictando en "+n.title+".";b.classList.remove("hide");setTimeout(()=>{try{b.remove()}catch(e){}},8000)}catch(e){}}
+ const n=vd.noteId&&S.notes.find(x=>x.id===vd.noteId);
+ if(n){
+  try{flushDraftToNote()}catch(e){}
+  const nn=S.notes.find(x=>x.id===vd.noteId)||n;
+  vd={fmt:nn.fmt,title:nn.title,body:"",items:[],shared:vd.shared||[],noteId:nn.id};persistSess();curNote=nn.id;draftUI();guideUI();
+  showRecBan("Recuperé lo que estaba dictando en "+nn.title+".");return}
+ if(!vd.title&&!vd.body&&!(vd.items&&vd.items.length)){vd=null;clearSess();draftUI();return}
+ persistSess();draftUI();guideUI();
+ showRecBan("Sigue abierta la nota que estaba dictando"+(vd.title?": "+vd.title:"")+".");
+}
 try{recoverDraft()}catch(e){}
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden"){try{flushDraftToNote();persistSess();save()}catch(e){}}});
 window.addEventListener("pagehide",()=>{try{flushDraftToNote();persistSess();save()}catch(e){}});
@@ -1595,9 +1603,69 @@ const _can18=cancelOpenNote;
 cancelOpenNote=function(){resetDelListed();return _can18.apply(this,arguments)};
 
 
+/* ===== v19: pantalla encendida y volver a la misma nota ===== */
+const CTXKEY='gastosVoz.view';
+const WL_IDLE=5*60*1000;
+const CTX_TTL=2*60*60*1000;
+let wl=null,wlLogOnce=false,_nowFn=()=>Date.now();
+function nowMs(){return _nowFn()}
+function isWorkOpen(){if(typeof micOn!=='undefined'&&micOn)return true;if(vd||curNote||nf)return true;if(typeof noteDraftEdit!=='undefined'&&noteDraftEdit)return true;if(typeof maintEdit!=='undefined'&&maintEdit)return true;try{const d=$('dlg');if(d&&d.open&&!$('lkOk'))return true}catch(e){}return false}
+function isWakeBusy(){return isWorkOpen()||((nowMs()-(S.lastActivity||0))<WL_IDLE)}
+function releaseWL(){try{if(wl&&!wl.released)wl.release()}catch(e){}wl=null}
+async function acquireWL(){try{
+  if(document.visibilityState!=='visible')return false;
+  if(!isWakeBusy()){releaseWL();return false}
+  const api=navigator.wakeLock;
+  if(!api||typeof api.request!=='function'){if(!wlLogOnce){wlLogOnce=true;try{logVoice('(sistema)','','Bloqueo de pantalla no disponible en este teléfono.')}catch(e){}}return false}
+  if(wl&&!wl.released)return true;
+  wl=await api.request('screen');
+  try{wl.addEventListener('release',()=>{wl=null})}catch(e){}
+  return true;
+ }catch(e){wl=null;if(!wlLogOnce){wlLogOnce=true;try{logVoice('(sistema)','','No se pudo mantener la pantalla encendida.')}catch(x){}}return false}}
+function touchAct(){S.lastActivity=nowMs();try{acquireWL()}catch(e){}}
+function collectCtx(){let dlg=null;try{if($('dlg')&&$('dlg').open&&!$('lkOk')){const h=$('dlgForm')&&$('dlgForm').querySelector('h2');dlg={kind:'dlg',title:h?(h.textContent||'').split('—')[0].trim():''}}}catch(e){}
+ return{at:nowMs(),profile:S.current,tab,curNote:curNote||null,noteId:(vd&&vd.noteId)||curNote||null,nf:nf?JSON.parse(JSON.stringify(nf)):null,month:typeof month!=='undefined'?month:null,noteDraftEdit:typeof noteDraftEdit!=='undefined'?noteDraftEdit:null,scroll:{x:window.scrollX||0,y:window.scrollY||0},dlg}}
+function persistView(){try{const all=JSON.parse(localStorage.getItem(CTXKEY)||'{}');all[S.current||'_']=collectCtx();localStorage.setItem(CTXKEY,JSON.stringify(all))}catch(e){}}
+let _restoring=false;
+function fillEditForm(n){if(!n)return;noteDraftEdit=n.id;$('nFmt').value=n.fmt;fmtChange();$('nTit').value=n.title;$('nBody').value=n.fmt==='normal'?n.body:n.items.map(i=>i.t).join('\n');renderShare(n.shared);$('nTitle').textContent='Editar nota'}
+function restoreView(){try{
+  if(S.firstRun)return false;
+  const all=JSON.parse(localStorage.getItem(CTXKEY)||'{}');
+  const c=all[S.current||'_'];
+  if(!c||!c.at||(nowMs()-c.at)>CTX_TTL)return false;
+  const hadNote=!!curNote,hadVd=!!vd,hadNf=!!nf;
+  _restoring=true;
+  if(c.month)month=c.month;
+  if(c.tab)setTab(c.tab);
+  if(!hadNote&&c.curNote&&S.notes.find(n=>n.id===c.curNote)){curNote=c.curNote;try{guideUI();renderNotes()}catch(e){}}
+  if(!hadVd&&!hadNf&&c.nf&&typeof c.nf==='object'){nf=c.nf;try{nfUI()}catch(e){}}
+  if(c.noteDraftEdit&&c.tab==='notas'){const n=S.notes.find(x=>x.id===c.noteDraftEdit);if(n)try{fillEditForm(n)}catch(e){}}
+  if(c.scroll)setTimeout(()=>{try{window.scrollTo(c.scroll.x||0,c.scroll.y||0)}catch(e){}},60);
+  S.lastActivity=nowMs();
+  _restoring=false;
+  return true;
+ }catch(e){_restoring=false;return false}}
+
+const _st19=setTab;setTab=function(t){_st19(t);if(!_restoring){try{persistView()}catch(e){}}try{acquireWL()}catch(e){}};
+const _cn19=closeNote;closeNote=function(){const r=_cn19.apply(this,arguments);try{persistView()}catch(e){}return r};
+const _lp19=lockProfile;lockProfile=function(){try{persistView()}catch(e){}releaseWL();const r=_lp19.apply(this,arguments);try{const btn=$('lkOk');if(btn){const prev=btn.onclick;btn.onclick=function(ev){if(prev)prev.call(this,ev);if(!locked){try{restoreView();acquireWL()}catch(e){}}}}}catch(e){}return r};
+
+['pointerdown','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,()=>{try{touchAct();persistView()}catch(e){}},{passive:true}));
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='hidden'){try{persistView()}catch(e){}releaseWL()}
+  else{try{acquireWL()}catch(e){}}
+});
+window.addEventListener('pagehide',()=>{try{persistView()}catch(e){}});
+setInterval(()=>{try{if(!isWakeBusy())releaseWL();else acquireWL()}catch(e){}},30000);
+try{const okv=restoreView();if(!okv&&(vd||curNote)&&tab==='fin'){_restoring=true;setTab('notas');_restoring=false}try{guideUI();draftUI()}catch(e){}acquireWL()}catch(e){}
+
+
 window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn},get noteFlow(){return nf},get curNote(){return curNote},splitPasted,get voiceLog(){return vLog},get lastHeard(){return ($("heard")||{}).textContent||""},handleHeard,cleanHeard,__setLastSpoken(t){lastSpoken=t;lastSpokenAt=Date.now()},GUIDE,APPVER,parseNoteAct};
 Object.assign(window.App,{parseTime,parseReminder,addReminder,listReminders:listRemMsg,dailySummary,checkReminders:catchUpRem,fireReminder:fireRem,formatWhen,openCalendar:openCal,offerDailySummary,gcalUrl,icsOf});
 Object.defineProperties(window.App,{reminders:{get(){return remMine()},enumerable:true},lastReminder:{get(){return lastRem},enumerable:true},allReminders:{get(){return remAll()},enumerable:true}});
+Object.assign(window.App,{persistView,restoreView,acquireWakeLock:acquireWL,releaseWakeLock:releaseWL,isWakeBusy,__setNow(t){if(t==null)_nowFn=()=>Date.now();else _nowFn=()=>t},__now:nowMs});
+Object.defineProperties(window.App,{wakeLockOn:{get(){return !!(wl&&!wl.released)},enumerable:true},workOpen:{get(){return isWorkOpen()},enumerable:true},tab:{get(){return tab},enumerable:true}});
+
 
 })();
 </script>
