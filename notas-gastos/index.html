@@ -204,10 +204,17 @@ body.hc header select{background:#fff;color:#111}
 #nfBan{position:fixed;left:10px;right:10px;bottom:calc(136px + env(safe-area-inset-bottom));background:linear-gradient(160deg,#2a4e7a,#1f3a5f);color:#fff;border-radius:16px;padding:12px 14px;z-index:21;box-shadow:0 8px 22px #1f3a5f66}
 #nfBan.hide{display:none!important}#nfBan .btn{margin:4px 4px 0 0;padding:10px 12px}#nfBan input{margin-top:4px}
 
-#tabla tr.cat td:first-child{position:relative;padding-right:52px}
-#tabla tr.cat td:first-child>span:has([data-bed]){position:absolute;right:2px;top:10px;margin:0;white-space:nowrap}
-#tabla tr.cat .bed{border-radius:12px;box-shadow:none;background:#efe6d8;color:#2a1f16;margin:0!important}
+#tabla tr.cat td:first-child{position:relative;padding-right:8px}
+#tabla tr.cat td:first-child>span:has([data-bed]){position:static;right:auto;top:auto;display:inline-flex;margin:8px 0 0;white-space:nowrap}
+#tabla tr.cat .bed{display:inline-flex;align-items:center;justify-content:center;margin:8px 0 4px!important;min-width:44px;min-height:44px;padding:8px 16px!important;font-size:15px;font-weight:800;letter-spacing:.02em;line-height:1.2;border-radius:14px;border:0;background:var(--acc)!important;color:#fff!important;box-shadow:0 2px 8px #0003}
+#tabla tr.cat td.bed-amt{cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-weight:800;border-radius:10px}
+#tabla tr.cat td.bed-amt:hover,#tabla tr.cat td.bed-amt:active{background:color-mix(in srgb,var(--acc) 12%,transparent)}
+body.hc #tabla tr.cat .bed{background:#fff!important;color:#000!important;outline:2px solid #fff}
 #tabla tr.sinp-row td:first-child{padding-bottom:10px}
+#suTip{margin-top:14px;padding:12px 14px;background:color-mix(in srgb,var(--acc) 10%,var(--card));border-radius:14px;border:1px solid color-mix(in srgb,var(--acc) 25%,var(--line))}
+#suTip p{margin:0 0 8px;font-weight:700;font-size:16px;color:var(--tx)}
+#suTip ul{margin:0;padding-left:1.2em}
+#suTip li{margin:6px 0;font-size:15px;line-height:1.45;color:var(--tx)}
 #banners{max-width:760px;margin:0 auto}
 #instBanner{color:#5c3d00}
 
@@ -230,7 +237,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
  <div class="card"><h2>Buscar gastos</h2><div class="row"><input id="histQ" placeholder="Nota o monto (ej. arena o 20.50)"><button class="btn" id="histGo" style="flex:0 0 auto">Buscar</button></div><div id="histRes"></div></div>
  </div>
  <div class="card hide" id="setup"></div>
- <div class="card" id="presCard"><h2>Presupuesto del mes</h2><table id="tabla"></table><p class="small">Toque una categoría para ver, editar o borrar sus gastos.</p></div>
+ <div class="card" id="presCard"><h2>Presupuesto del mes</h2><table id="tabla"></table><p class="small">Toque <b>Editar</b> o el monto para cambiar el presupuesto. Toque el nombre de una categoría para ver, editar o borrar sus gastos.</p></div>
  <div class="card"><h2>Resumen del mes</h2><div id="resumen"></div><p class="small">Fijos y variables deben quedar en cero al pagarse; solo gastos y ciegos pueden terminar por encima o por debajo.</p></div>
  <div class="card"><h2>Agregar gasto o pago</h2>
   <div class="row"><div><label>Categoría</label><select id="gCat"></select></div><div><label>Monto (USD)</label><input id="gMonto" inputmode="decimal" placeholder="0.00"></div></div>
@@ -239,7 +246,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v21</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v22</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -272,7 +279,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   <details><summary><b>Presupuesto y pagos</b></summary><ul class="small" style="color:var(--tx)">
    <li>«presupuesto de mercado 600» · «cambiar presupuesto de gatitos a 80» · «subir mercado a 500» · «el presupuesto de luz ahora es 120»</li>
    <li>«crear categoría farmacia con 80» (si ya existía, actualiza el monto desde este mes, sin borrar nada)</li>
-   <li>En <b>Presupuesto</b>, el lápiz ✎ de cada categoría cambia el monto o el nombre. El cambio vale desde este mes; los meses anteriores no se modifican. Si un gasto quedó sin categoría o sin monto, la fila aparece en rojo como «sin presupuesto»; tóquela y elija <b>Crear presupuesto</b> o páselo a otra categoría.</li>
+   <li>En <b>Presupuesto</b>, el botón <b>✎ Editar</b> de cada categoría (o toque el monto) cambia el presupuesto o el nombre. El cambio vale desde este mes; los meses anteriores no se modifican. Si un gasto quedó sin categoría o sin monto, la fila aparece en rojo como «sin presupuesto»; tóquela y elija <b>Crear presupuesto</b> o páselo a otra categoría.</li>
    <li>Para editar un gasto: toque la categoría, luego <b>Editar</b> (monto, categoría, fecha o nota). Por voz: «cambiar el gasto de arena a 15» o «cambiar gasto de mercado 40 a 45».</li>
    <li>«ya pagué el agua el 3 de noviembre, fueron ciento cuarenta» · «ya se pagó Netflix»</li>
    <li>«pago automático Netflix 21.61 el día 24» · «quitar pago automático Netflix» · «¿qué pagos automáticos tengo?»</li></ul></details>
@@ -283,7 +290,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
    <li>Abrir: diga el nombre o de qué trata («lo de la bicicleta») o toque la nota. Si hay varias parecidas, le pregunta cuál.</li>
    <li>«borrar nota paseos» (pide confirmar; «deshacer» la recupera) · «cambiar nombre de la nota paseos»</li>
    <li>Después dicte (en listas, un elemento por frase). Todo se guarda solo, en cuanto lo dice; no hace falta decir «guardar». «Guarde», «grabar» o «grábelo» confirman «Ya está guardado» y la nota sigue abierta. «Cerrar nota» o «terminar» guardan y cierran. «Cancelar nota» cierra: si era una nota nueva ya guardada, la deja como está; si no había contenido, no crea la nota.</li>
-   <li>«título …» · «compartir con esposa» (privada si no lo dice)</li>
+   <li>«título …» · «compartir con Beatriz» (también «esposa», «Camila», «hija uno», «Daniela» o «hija 2»; privada si no lo dice)</li>
    <li>«crear lista de compras» → cada frase es un elemento («leche», «pan») → «guardar lista»</li>
    <li>«abrir nota viaje» o «agregar a la nota viaje», o toque la nota en la lista → dicte → «guardar nota»</li>
    <li>Oír la lista (con la nota abierta, muchas formas): «cuénteme qué tengo», «repítame lo que tengo», «dígame», «¿qué tiene el mercado?», «oír la lista», «léame», «la lista», «escuchar la lista», «recuérdame qué tengo». Responde: «Tiene aguacate, pan, leche y queso.» (solo lo que falta; si ya tachó algunos, lo menciona).</li>
@@ -318,7 +325,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v21</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v22</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -351,8 +358,13 @@ const MTYPES=['Cambio de aceite','Frenos','Batería','Llantas','Otro'];
 
 function seedCats(){return [['Mercado',600],['Gatitos',150],['IA',110,'',['inteligencia artificial']],['Ayuda',136],['Otros',250],['Wells Fargo',520,'',['wf','wells']],['Lucía',230],['Agua',50],['BofA',85,'7 y 14',['bank of america','bofa']],['AAA',26,'13',['triple a']],['Casa',1470.47,'15'],['Cigna',40.80,'18'],['Time Investment',106.40,'19',['time']],['State Farm',226.52,'24',['sf']],['Netflix',21.61,'24'],['Funerario',75.52,'27',['occidental life','occidental']]].map(c=>{const T={Casa:'fijo','Wells Fargo':'fijo',BofA:'fijo',AAA:'fijo',Cigna:'fijo','Time Investment':'fijo','State Farm':'fijo',Netflix:'fijo',Funerario:'fijo',Agua:'variable',Gatitos:'ciego',IA:'ciego',Otros:'ciego'};const o={id:uid(),name:c[0],budget:c[1],due:c[2]||'',aliases:c[3]||[],type:T[c[0]]||'gasto',carry:false,cycle:0,capOn:false,monthAmt:{}};if(c[0]==='Agua'){o.carry=true;o.cycle=3;o.carryStart=today().slice(0,7)}return o})}
 function newProfile(name,color,seed){return {id:uid(),name,color,pin:'',income:seed?5392.48:0,cats:seed?seedCats():[],expenses:[],books:[{id:uid(),name:'Carro'}],maint:[]}}
-function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.profiles)return d}catch(e){}
- const p=[newProfile('Ricardo','azul',true),newProfile('Esposa','rojo'),newProfile('Hija 1','amarillo'),newProfile('Hija 2','verde')];
+function migrateProfileNames(d){if(!d||!d.profiles)return d;
+ const MAP={'esposa':'Beatriz','hija 1':'Camila','hija uno':'Camila','hija 2':'Daniela','hija dos':'Daniela'};
+ const ROLE={'esposa':'esposa','beatriz':'esposa','hija 1':'hija1','hija uno':'hija1','camila':'hija1','hija 2':'hija2','hija dos':'hija2','daniela':'hija2','ricardo':'owner'};
+ d.profiles.forEach(p=>{const n=norm(p.name||'').replace(/\s+/g,' ').trim();if(MAP[n])p.name=MAP[n];if(!p.role){const n2=norm(p.name||'').replace(/\s+/g,' ').trim();p.role=ROLE[n]||ROLE[n2]||p.role}});
+ return d}
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.profiles)return migrateProfileNames(d)}catch(e){}
+ const p=[newProfile('Ricardo','azul',true),newProfile('Beatriz','rojo'),newProfile('Camila','amarillo'),newProfile('Daniela','verde')];p[0].role='owner';p[1].role='esposa';p[2].role='hija1';p[3].role='hija2';
  return {profiles:p,notes:[],current:p[0].id,mute:false,firstRun:true}}
 let S=load();const save=()=>localStorage.setItem(KEY,JSON.stringify(S));save();
 const P=()=>S.profiles.find(p=>p.id===S.current)||S.profiles[0];
@@ -1208,7 +1220,7 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v21';
+const APPVER='v22';
 const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo o cuénteme qué tengo. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
@@ -1982,6 +1994,108 @@ Object.assign(window.App,{parseTime,parseReminder,addReminder,listReminders:list
 Object.defineProperties(window.App,{reminders:{get(){return remMine()},enumerable:true},lastReminder:{get(){return lastRem},enumerable:true},allReminders:{get(){return remAll()},enumerable:true}});
 Object.assign(window.App,{persistView,restoreView,acquireWakeLock:acquireWL,releaseWakeLock:releaseWL,isWakeBusy,__setNow(t){if(t==null)_nowFn=()=>Date.now();else _nowFn=()=>t},__now:nowMs});
 Object.assign(window.App,{setBudgetFrom,recoverOrphans,openBudgetEdit,baseBudget,handleBudgetEdit});
+
+
+/* ===== v22: botón Editar visible, nombres de familia, prioridad de presupuesto ===== */
+const PROF_ALIASES={esposa:['esposa','beatriz','mi esposa'],hija1:['hija 1','hija uno','hija1','camila','mi hija camila'],hija2:['hija 2','hija dos','hija2','daniela','mi hija daniela'],owner:['ricardo']};
+const _sft22=shareFromText;
+shareFromText=function(rest){const ids=_sft22(rest)||[];
+ const t=' '+nrm(rest).replace(/\buno\b/g,'1').replace(/\bdos\b/g,'2').replace(/\btres\b/g,'3')+' ';
+ (S.profiles||[]).forEach(p=>{if(p.id===S.current)return;
+  const als=PROF_ALIASES[p.role]||[];
+  als.forEach(a=>{if(t.includes(' '+nrm(a).trim()+' '))ids.push(p.id)});
+  ['esposa','beatriz','camila','daniela','hija 1','hija 2'].forEach(a=>{if(norm(p.name)===norm(a.replace(/\s+/g,' '))&&t.includes(' '+nrm(a).replace(/\buno\b/g,'1').replace(/\bdos\b/g,'2').trim()+' '))ids.push(p.id)});
+ });
+ return [...new Set(ids)]};
+
+const _sbf22=setBudgetFrom;
+setBudgetFrom=function(c,amount,fromM){const r=_sbf22(c,amount,fromM);
+ try{if(c&&c.type==='ciego'&&+r.amount>0)c.capOn=true}catch(e){}
+ return r};
+
+const _bm22=budgetMsg;
+budgetMsg=function(c,old,amount){let m=_bm22(c,old,amount);try{if(c&&c.type==='ciego'&&c.capOn)m+=' Ahora tiene tope.'}catch(e){}return m};
+
+function anyAmountTok(T){for(let i=0;i<T.length;i++){const a=(typeof parseAmount==='function'&&parseAmount(T,i))||(typeof firstAmount==='function'&&firstAmount(T,i));if(a&&a.v>0)return a}return null}
+function isBudgetQuestion(t){return /^(cuanto|cuanta|cuantos|cuantas|como voy|como va|como vamos|que me queda|que queda|cual|cuales|donde|cuando)\b/.test(t)||/\b(cuanto me queda|cuanto gaste|cuanto llevo)\b/.test(t)}
+function isBudgetEditUtter(raw){const st=typeof stripPolite==='function'?stripPolite(raw):raw;const cleaned=typeof cleanHeard==='function'?cleanHeard(st):st;const t=nrm(cleaned||raw).replace(/\s+/g,' ').trim();
+ if(!/\bpresupuesto\b/.test(t))return false;if(isBudgetQuestion(t))return false;const T=tokenize(cleaned||raw);return !!anyAmountTok(T)}
+function nameAfterPresupuesto(T,raw){let k=T.indexOf('presupuesto')+1;if(k<1)return '';if(['de','para','del','a'].includes(T[k]))k++;
+ const skip=new Set(['a','en','de','por','ahora','es','son','queda','quedan','con','al','mes','el','la','los','las','un','una','del','para','mi','su']);
+ const w=[];for(let i=k;i<T.length;i++){if(typeof parseAmount==='function'&&parseAmount(T,i))break;const nxt=(typeof parseAmount==='function'&&parseAmount(T,i+1))||(typeof firstAmount==='function'&&firstAmount(T,i+1));if(skip.has(T[i])&&nxt)continue;if(skip.has(T[i])&&w.length)continue;if(!skip.has(T[i]))w.push(T[i])}
+ return clean(w.join(' '))}
+
+const _hbe22=handleBudgetEdit;
+handleBudgetEdit=function(raw){const raw2=typeof stripPolite==='function'?stripPolite(raw):raw;
+ const p=P(),T=tokenize(raw2),t=T.join(' ');
+ const cr=parseCrearCat(raw2);if(cr)return cr.msg||cr.err;
+ const isPres=/\bpresupuesto\b/.test(t)&&!isBudgetQuestion(t);
+ const isShort=/^(cambiar|cambia|cambie|poner|pone|ponga|subir|sube|suba|bajar|baja|baje|actualizar|actualice|aumentar|aumente|aumenta|reducir|reduzca|dejar|deje)\b/.test(t)&&!/\b(categoria|nota|gasto|recordatorio|pago)\b/.test(t);
+ if(isPres||isShort){
+  let c=null,j=0;
+  if(isPres){let k=T.indexOf('presupuesto')+1;if(k>0&&['de','para','del'].includes(T[k]))k++;for(let i=k;i<T.length;i++){const mm=catAt(p,T,i);if(mm){c=mm.c;j=mm.n;break}}}
+  if(!c){for(let i=0;i<T.length;i++){const mm=catAt(p,T,i);if(mm){c=mm.c;j=mm.n;break}}}
+  let a=null;if(c){while(['a','en','de','por','ahora','es','son','queda','quedan','quedaen'].includes(T[j]))j++;a=parseAmount(T,j)||firstAmount(T,j)}
+  if(!a)a=anyAmountTok(T);
+  if(!c){
+   if(isPres&&a){const nm=nameAfterPresupuesto(T,raw2);if(!nm)return 'Diga el nombre de la categoría y el monto, por ejemplo: cambiar presupuesto de farmacia a 80.';
+    c=newCat(p,nm,a.v,'gasto');c.capOn=true;const {old,amount}=setBudgetFrom(c,a.v);save();render();
+    return 'Creé la categoría '+c.name+' con '+say$(amount)+' al mes a partir de '+mesLabel(month)+'.'}
+   return isPres?'No encontré esa categoría. Diga: crear categoría y el nombre con el monto.':(isShort?null:_hbe22(raw))}
+  if(!a)return isPres?('Diga el monto, por ejemplo: presupuesto de '+c.name+' 600.'):null;
+  const {old,amount}=setBudgetFrom(c,a.v);save();render();return budgetMsg(c,old,amount)}
+ return handleEditExpVoice(raw)};
+
+function tryBudgetPriority(raw){if(!isBudgetEditUtter(raw))return null;
+ try{const r=handleBudgetEdit(raw);if(r!=null){try{if(typeof nf!=='undefined'&&nf&&nf.step){/* no tragar el flujo de notas: soltarlo para no dejar al usuario preso */nf=null;if(typeof nfUI==='function')nfUI()}}catch(e){}return r}}catch(e){}
+ return null}
+
+decorateBudgetTable=function(){const p=P();
+ document.querySelectorAll('#tabla tr.cat').forEach(tr=>{
+  const c=p.cats.find(x=>x.id===tr.dataset.cat);if(!c)return;
+  const s=catStat(p,c,month);
+  const td=tr.cells[0];
+  const btn=document.createElement('button');btn.type='button';btn.className='btn bed';btn.dataset.bed=c.id;btn.setAttribute('aria-label','Editar presupuesto de '+c.name);btn.textContent='✎ Editar';
+  td.appendChild(btn);
+  const amt=tr.cells[1];
+  if(amt){amt.dataset.bed=c.id;amt.classList.add('bed-amt');amt.setAttribute('role','button');amt.setAttribute('tabindex','0');amt.setAttribute('aria-label','Editar presupuesto de '+c.name);amt.title='Toque para editar el presupuesto'}
+  if(noBudget(c,s)){
+   tr.classList.add('sinp-row');
+   const tag=document.createElement('span');tag.className='tag';tag.style.cssText='background:#fdecea;color:var(--red);font-weight:700';tag.textContent='sin presupuesto';
+   td.appendChild(tag);
+   const as=document.createElement('button');as.type='button';as.className='btn';as.dataset.bed=c.id;as.textContent='Asignar presupuesto';as.style.cssText='margin:6px 0 0;min-height:44px';
+   td.appendChild(as);
+   if(tr.cells[1]){tr.cells[1].innerHTML='<span class="neg">—</span>';tr.cells[1].dataset.bed=c.id;tr.cells[1].classList.add('bed-amt')}
+   if(tr.cells[3])tr.cells[3].classList.add('neg');
+  }
+ })}
+
+const _rsu22=renderSetup;
+renderSetup=function(){_rsu22();try{
+  const el=$('setup');if(!el||el.classList.contains('hide')||$('suTip'))return;
+  const tip=document.createElement('div');tip.id='suTip';
+  tip.innerHTML='<p>Para armar su presupuesto por primera vez</p><ul>'+
+   '<li>Arriba, en <b>Perfil</b>, elija su nombre: <b>Beatriz</b>, <b>Camila</b> o <b>Daniela</b>.</li>'+
+   '<li>Escriba aquí cada categoría con su monto y toque <b>Guardar presupuesto</b>. Para otra fila, toque <b>+ Agregar otra</b>.</li>'+
+   '<li>También puede decir: «crear categoría farmacia con 80».</li>'+
+   '<li>Para cambiar un monto, toque <b>✎ Editar</b> (o el monto) o diga «cambiar presupuesto de farmacia a 100».</li>'+
+   '<li>Si aparece el botón <b>Usar las 16 categorías de ejemplo</b>, puede usarlo.</li>'+
+   '<li>Para un gasto: «farmacia veinte» y luego «guardar». Cuando quiera un resumen, pregunte «¿cómo voy?».</li></ul>';
+  el.appendChild(tip);
+ }catch(e){}};
+
+const _rn22=render;
+render=function(){try{migrateProfileNames(S)}catch(e){}_rn22.apply(this,arguments)};
+
+const _hT22=handleTranscript;
+handleTranscript=function(text,opt){if(!text||!String(text).trim())return _hT22(text,opt);
+ const raw=String(text);
+ try{const r0=tryBudgetPriority(raw);if(r0!=null){S.lastActivity=Date.now();try{$('interim').textContent=r0;if(typeof speak==='function')speak(r0);if(typeof logVoice==='function')logVoice((typeof cleanHeard==='function'?cleanHeard(raw):raw),[],r0)}catch(e){}return r0}}catch(e){}
+ return _hT22(text,opt)};
+
+try{migrateProfileNames(S)}catch(e){}
+try{Object.assign(window.App,{setBudgetFrom,handleBudgetEdit,migrateProfileNames,isBudgetEditUtter,tryBudgetPriority,shareFromText,handleTranscript})}catch(e){}
+
 
 Object.defineProperties(window.App,{wakeLockOn:{get(){return !!(wl&&!wl.released)},enumerable:true},workOpen:{get(){return isWorkOpen()},enumerable:true},tab:{get(){return tab},enumerable:true}});
 
