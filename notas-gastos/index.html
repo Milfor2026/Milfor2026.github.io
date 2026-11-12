@@ -87,7 +87,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v15</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v16</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -128,7 +128,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
    <li>Vieja: le lee los nombres («Tiene: Mercado, Cosas por hacer…»), elija por nombre, tema o número. Luego pregunta «¿Qué quiere hacer: oír la lista, eliminar algo o agregar algo?».</li>
    <li>Abrir: diga el nombre o de qué trata («lo de la bicicleta») o toque la nota. Si hay varias parecidas, le pregunta cuál.</li>
    <li>«borrar nota paseos» (pide confirmar; «deshacer» la recupera) · «cambiar nombre de la nota paseos»</li>
-   <li>Después dicte (en listas, un elemento por frase) → «guardar nota» o «cancelar nota». Si el nombre ya existe, le pregunta si la abre (sí / no).</li>
+   <li>Después dicte (en listas, un elemento por frase). Todo se guarda solo, en cuanto lo dice; no hace falta decir «guardar». «Guarde», «grabar» o «grábelo» confirman «Ya está guardado» y la nota sigue abierta. «Cerrar nota» o «terminar» guardan y cierran. «Cancelar nota» cierra: si era una nota nueva ya guardada, la deja como está; si no había contenido, no crea la nota.</li>
    <li>«título …» · «compartir con esposa» (privada si no lo dice)</li>
    <li>«crear lista de compras» → cada frase es un elemento («leche», «pan») → «guardar lista»</li>
    <li>«abrir nota viaje» o «agregar a la nota viaje», o toque la nota en la lista → dicte → «guardar nota»</li>
@@ -137,7 +137,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
    <li>Agregar a la nota activa (abierta o la última que leyó): «agregar», «añadir», «aumentar», «sumar», «poner», «meter», «anotar», «incluir», «apuntar» y el producto («aumente leche», «también café», «ponga arroz», «me falta pan»). «Falta tomate» o «me falta pan» lo agrega solo si no es una pregunta («¿qué me falta?» lee lo pendiente). Si no hay nota activa le pregunta a cuál. Lo repetido no se duplica. «Sumar gasto» o «anote mercado veinte» siguen siendo gastos.</li>
    <li>Con una nota abierta: «¿qué queda?», «¿qué me falta?», «¿qué llevo?», «léame la lista» le lee lo pendiente; las preguntas nunca se anotan como texto.</li>
    <li>«quiero eliminar algo» → la app pregunta «¿Qué quiere borrar?» y le lee lo pendiente; conteste el nombre o «el segundo». «quiero agregar algo» → «¿Qué quiere agregar?». También entiende «quiero…», «necesito…», «me gustaría…», «voy a…».</li>
-   <li>Borrar un elemento (con la nota abierta o después de leerla): «borrar», «eliminar», «quitar», «sacar», «suprimir», «descartar» y el producto («quite huevos», «saque las uvas», «bórrelo», «podría eliminar…»). Responde: «Eliminé uvas. Le quedan aguacate, pan, leche y queso.» Si hay varios parecidos le pregunta cuál; «deshacer» lo recupera. Entiende infinitivo, tú o usted, y formas con enclítico.</li>
+   <li>Borrar un elemento (con la nota abierta o después de leerla): «borrar», «eliminar», «quitar», «sacar», «suprimir», «descartar» y el producto («quite huevos», «saque las uvas», «bórrelo», «podría eliminar…»). Responde: «Eliminé uvas. Le quedan aguacate, pan, leche y queso.» Para deshacer lo último que dictó: «borre lo último», «elimine lo último», «quite lo último», «eso no» o «deshacer»; responde «Borré X. Le quedan…». Si hay varios parecidos le pregunta cuál. Entiende infinitivo, tú o usted, y formas con enclítico.</li>
    <li>Si duda, diga «qué le puedo decir», «ayuda» o «cómo funciona»: la app le lee una guía corta (también visible en la nota). La primera vez que abre una nota le dice: «Si necesita ayuda, diga: qué le puedo decir». Para terminar: «cerrar nota».</li>
    <li>En una lista de verificación, el botón <b>Pegar lista</b> agrega el mensaje de WhatsApp (una línea, coma o viñeta por elemento).</li></ul></details>
   <details><summary><b>Carro</b></summary><ul class="small" style="color:var(--tx)"><li>En Mantenimiento: «carro cambio de aceite 45000 millas 60 dólares»</li></ul></details>
@@ -159,7 +159,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v15</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v16</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -714,9 +714,9 @@ function handleNoteVoice(raw){const t=nrm(raw).replace(/\s+/g,' ').trim(),rr=raw
  if(m=t.match(/^leer (la )?(nota|lista)\b/)){return readNote(findNote(after(/^leer (la )?(nota|lista)\b/)))}
  if(m=t.match(/^(crear|nueva|hacer) lista( numerada| de vinetas)?\b/)){const fmt=m[2]===' numerada'?'num':m[2]===' de vinetas'?'bullet':'check';let rest=after(/^(crear|nueva|hacer) lista( numerada| de vinetas)?\b/);
   let title=rest;if(/^titulo\b/i.test(norm(rest)))title=clean(rest.replace(/^t[ií]tulo/i,''));else if(/^de\s/i.test(rest))title='Lista '+rest;
-  startDraft(fmt,title);return (fmt==='check'?'Lista':'Lista '+(fmt==='num'?'numerada':'de viñetas'))+' nueva'+(vd.title?': '+vd.title:'')+'. Diga cada elemento. Al terminar diga guardar lista.'}
+  startDraft(fmt,title);return (fmt==='check'?'Lista':'Lista '+(fmt==='num'?'numerada':'de viñetas'))+' nueva'+(vd.title?': '+vd.title:'')+'. Diga cada elemento. Se guarda solo. Diga guarde para confirmar, o cerrar nota para terminar.'}
  if(m=t.match(/^(crear|nueva|hacer) nota\b/)){let rest=after(/^(crear|nueva|hacer) nota\b/);if(/^titulo\b/i.test(norm(rest)))rest=rest.replace(/^t[ií]tulo/i,'');startDraft('normal',rest);
-  return vd.title?'Nota nueva: '+vd.title+'. Dicte el texto. Al terminar diga guardar nota.':'Nota nueva. Diga título y el nombre, o empiece a dictar. Al terminar diga guardar nota.'}
+  return vd.title?'Nota nueva: '+vd.title+'. Dicte el texto. Se guarda solo. Diga guarde para confirmar, o cerrar nota para terminar.':'Nota nueva. Diga título y el nombre, o empiece a dictar. Se guarda solo. Diga guarde para confirmar, o cerrar nota para terminar.'}
  if(m=t.match(/^(agregar|anadir|sumar) a la (nota|lista)\b|^abrir (la )?(nota|lista)\b/)){const q=after(/^(agregar|anadir|sumar) a la (nota|lista)\b|^abrir (la )?(nota|lista)\b/);const n=findNote(q);if(!n)return 'No encontré la nota '+q+'. Diga crear nota para hacer una nueva.';
   if(n.owner!==S.current)return 'Esa nota es compartida por otra persona; solo puede leerla.';vd={fmt:n.fmt,title:n.title,body:'',items:[],shared:[],noteId:n.id};draftUI();return 'Abrí '+n.title+'. Dicte lo que quiera agregar y diga guardar nota.'}
  if(!vd){if(/^(guardar|cancelar) (la )?(nota|lista)\b/.test(t))return 'No hay ninguna nota abierta.';return null}
@@ -793,8 +793,8 @@ function nfUI(){const b=$('nfBan');if(!nf){b.classList.add('hide');setMic();retu
  else if(nf.step==='name'){$('nfQ').textContent=QNAME+' ('+FMTN[nf.fmt]+')';$('nfOpts').innerHTML='<input id="nfName" placeholder="Nombre de la nota"><button type="button" class="btn" data-nfn="1">Aceptar</button><button type="button" class="btn sec" data-nfx="1">Cancelar</button>'}
  else if(nf.step==='exists'){$('nfQ').textContent='Ya existe la nota «'+nf.title+'». ¿La abro?';$('nfOpts').innerHTML='<button type="button" class="btn" data-nfy="1">Sí, abrirla</button><button type="button" class="btn sec" data-nfno="1">No</button>'}
  setMic()}
-function openForAppend(n){vd={fmt:n.fmt,title:n.title,body:'',items:[],shared:[],noteId:n.id};nf=null;nfUI();draftUI();return 'Abrí '+n.title+'. '+(n.fmt==='normal'?'Dicte el texto':'Diga cada elemento, uno por frase')+'. Al terminar diga guardar nota.'}
-function beginDraft(){const f=nf.fmt,t=nf.title;nf=null;nfUI();startDraft(f,t);return cap(FMTN[f])+' «'+t+'» lista. '+(f==='normal'?'Dicte el texto':'Diga cada elemento, uno por frase')+'. Al terminar diga guardar nota.'}
+function openForAppend(n){vd={fmt:n.fmt,title:n.title,body:'',items:[],shared:[],noteId:n.id};nf=null;nfUI();draftUI();return 'Abrí '+n.title+'. '+(n.fmt==='normal'?'Dicte el texto':'Diga cada elemento, uno por frase')+'. Se guarda solo. Diga guarde para confirmar, o cerrar nota para terminar.'}
+function beginDraft(){const f=nf.fmt,t=nf.title;nf=null;nfUI();startDraft(f,t);return cap(FMTN[f])+' «'+t+'» lista. '+(f==='normal'?'Dicte el texto':'Diga cada elemento, uno por frase')+'. Se guarda solo. Diga guarde para confirmar, o cerrar nota para terminar.'}
 function afterName(){const ex=ownByName(nf.title);if(ex){nf.step='exists';nf.existing=ex.id;nfUI();return 'Ya existe una nota llamada '+nf.title+'. ¿La abro? Diga sí o no.'}return beginDraft()}
 function startFlow(title){nf={step:'type',title:clean(title||''),fmt:null};nfUI();return QTYPE}
 function flowStep(raw){const t=nrm(raw).replace(/\s+/g,' ').trim();if(!t)return null;
@@ -1049,8 +1049,8 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v15';
-const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo o cuénteme qué tengo. Para terminar, diga cerrar nota.';
+const APPVER='v16';
+const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo o cuénteme qué tengo. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
 let lastSpoken='',lastSpokenAt=0,vLog=[],_tryAlt=false;
@@ -1265,6 +1265,75 @@ const _hT14=handleTranscript;handleTranscript=function(text,opt){if(!text||!Stri
  if(nf&&nf.step&&nf.step!=='do')return _hT14(text,opt);
  if(!isFinAct(t,st)&&!isFinAct(t,raw)){const a=parseNoteAct(raw);if(a&&(a.act!=='read'||activeNote()||a.q)){const r=doNoteAct(a,st||raw);if(r)return out(r)}}
  return _hT14(text,opt)};
+
+/* ===== v16 autosave inmediato, grabar y borrar lo último ===== */
+const DKEY="gastosVoz.draft";
+let lastDict=null;
+function persistSess(){try{if(!vd){localStorage.removeItem(DKEY);return}localStorage.setItem(DKEY,JSON.stringify({profile:S.current,vd:{fmt:vd.fmt,title:vd.title,body:vd.body||"",items:vd.items||[],shared:vd.shared||[],noteId:vd.noteId||null}}))}catch(e){}}
+function clearSess(){try{localStorage.removeItem(DKEY)}catch(e){}}
+function flushDraftToNote(){if(!vd)return null;
+ let n=vd.noteId&&S.notes.find(x=>x.id===vd.noteId);
+ const has=!!(vd.body||(vd.items&&vd.items.length));
+ if(!n){if(!has)return null;const now=new Date().toISOString();n={id:uid(),owner:S.current,fmt:vd.fmt,title:vd.title||(vd.fmt==="normal"?(vd.body||"").split(/\s+/).filter(Boolean).slice(0,5).join(" ")||"Nota":"Lista"),body:vd.fmt==="normal"?(vd.body||""):"",items:(vd.items||[]).map(t=>({t:typeof t==="string"?t:(t.t||""),done:!!(t&&t.done)})),shared:vd.shared||[],created:now,updated:now};S.notes.push(n);vd.noteId=n.id;vd.title=n.title;vd.body="";vd.items=[];if(vd.shared)n.shared=vd.shared;save();renderNotes();persistSess();try{draftUI()}catch(e){}return n}
+ if(vd.title)n.title=vd.title;if(vd.shared&&vd.shared.length)n.shared=[...new Set([...(n.shared||[]),...vd.shared])];
+ if(has){if(n.fmt==="normal"||vd.fmt==="normal"){if(vd.body)n.body=(n.body?n.body+(n.body.endsWith("\n")?"":" "):"")+vd.body;vd.body=""}else{n.items.push(...vd.items.map(t=>({t:typeof t==="string"?t:(t.t||""),done:!!(t&&t.done)})));vd.items=[]}n.updated=new Date().toISOString();save();renderNotes()}
+ else if(vd.title||(vd.shared&&vd.shared.length)){n.updated=new Date().toISOString();save();renderNotes()}
+ persistSess();try{draftUI()}catch(e){}return n}
+function confirmSaved(){if(!vd&&!curNote)return "No hay ninguna nota abierta.";
+ if(vd){const n=flushDraftToNote();if(!n)return "Todavía no hay nada que guardar. Diga el contenido; se guarda solo.";vd={fmt:n.fmt,title:n.title,body:"",items:[],shared:[],noteId:n.id};persistSess();draftUI();guideUI();const who=(n.shared&&n.shared.length)?" Compartida con "+n.shared.map(id=>{const p=S.profiles.find(x=>x.id===id);return p?p.name:""}).filter(Boolean).join(" y ")+".":"";return "Ya está guardado. Sigue abierta la nota "+n.title+"."+who}
+ const n=S.notes.find(x=>x.id===curNote);if(!n)return "No hay ninguna nota abierta.";return "Ya está guardado. Sigue abierta la nota "+n.title+"."}
+function cancelOpenNote(){if(!vd)return "No hay ninguna nota abierta.";const n=vd.noteId&&S.notes.find(x=>x.id===vd.noteId);const title=n?n.title:(vd.title||"");vd=null;clearSess();draftUI();guideUI();if(n)return "La nota "+title+" ya quedó guardada. La dejé cerrada.";return "Nota cancelada. No quedó nada guardado."}
+function undoLastDict(){const nid=(lastDict&&lastDict.noteId)||(vd&&vd.noteId)||curNote;const n=nid&&S.notes.find(x=>x.id===nid);
+ if(!n)return "No hay nada que deshacer.";
+ if(n.fmt==="normal"||(lastDict&&lastDict.kind==="body")){const piece=lastDict&&lastDict.text;if(!piece||!n.body)return "No hay nada que deshacer.";const i=n.body.lastIndexOf(piece);if(i<0)return "No hay nada que deshacer.";n.body=(n.body.slice(0,i)+n.body.slice(i+piece.length)).replace(/\s+/g," ").trim();n.updated=new Date().toISOString();save();renderNotes();lastDict=null;undoStack=null;try{$("toast").classList.remove("show")}catch(e){}return "Borré "+lc(piece)+"."+(n.body?"":" La nota quedó vacía.")}
+ let idx=-1;if(lastDict&&lastDict.texts&&lastDict.texts.length){const want=norm(lastDict.texts[lastDict.texts.length-1]);for(let i=n.items.length-1;i>=0;i--)if(norm(n.items[i].t)===want){idx=i;break}}
+ if(idx<0&&n.items.length)idx=n.items.length-1;if(idx<0)return "No hay nada que deshacer.";
+ const it=n.items.splice(idx,1)[0];n.updated=new Date().toISOString();save();renderNotes();lastDict=null;undoStack=null;try{$("toast").classList.remove("show")}catch(e){}
+ const L=typeof leftover==="function"?leftover(typeof viewNow==="function"?viewNow(n):n):null;
+ return "Borré "+lc(it.t)+". "+(L?(L.empty?"Ya no le queda nada.":L.quedan):"")}
+function isSaveCmd(t){t=nrm(t).replace(/\s+/g," ").trim();return /^(grabar|grabe|graba|grabelo|grabalo|grabela|grabala|grabemelo|grabamelo|guardar|guarde|guarda|guardelo|guardalo|guardela|guardala|guardemelo|salvar|salve|salva|salvelo|salvalo|salvarlo)(( la)? (nota|lista))?$/.test(t)}
+function isLastCmd(t){t=nrm(t).replace(/\s+/g," ").trim();return /^(borre|borra|borrar|elimine|elimina|eliminar|quite|quita|quitar)(lo|la|le|me)? lo ultimo$/.test(t)||/^(eso no|eso no era|eso no es|eso no fue)$/.test(t)}
+
+const _atd16=addToDraft;addToDraft=function(raw){if(!vd)return _atd16(raw);
+ const beforeBody=vd.body||"",beforeN=(vd.items||[]).length;const r=_atd16(raw);
+ const addedItems=(vd.items||[]).slice(beforeN).map(t=>typeof t==="string"?t:(t.t||""));
+ let addedBody="";if(vd.fmt==="normal"&&vd.body&&vd.body!==beforeBody)addedBody=String(vd.body).slice(beforeBody.length).trim();
+ const n=flushDraftToNote();
+ if(n&&addedItems.length){lastDict={kind:"items",texts:addedItems,noteId:n.id};const objs=n.items.slice(-addedItems.length);pushUndo("Agregado: "+addedItems.join(", "),()=>{n.items=n.items.filter(it=>!objs.includes(it));save();renderNotes()})}
+ if(n&&addedBody){lastDict={kind:"body",text:addedBody,noteId:n.id};pushUndo("Agregado: "+addedBody,()=>{const i=(n.body||"").lastIndexOf(addedBody);if(i>=0)n.body=(n.body.slice(0,i)+n.body.slice(i+addedBody.length)).replace(/\s+/g," ").trim();save();renderNotes()})}
+ persistSess();return r};
+const _ai16=addItems;addItems=function(target,list){if(target==="draft"&&vd){if(!vd.noteId){if(list&&list.length){const now=new Date().toISOString();const n={id:uid(),owner:S.current,fmt:vd.fmt,title:vd.title||"Lista",body:"",items:[],shared:vd.shared||[],created:now,updated:now};S.notes.push(n);vd.noteId=n.id;vd.title=n.title;save();renderNotes()}}
+  const n=vd.noteId&&S.notes.find(x=>x.id===vd.noteId);if(n){const before=n.items.length,bb=n.body||"";const r=_ai16(n,list);if(n.fmt==="normal"&&n.body!==bb)lastDict={kind:"body",text:String(n.body||"").slice(bb.length).trim(),noteId:n.id};else{const added=n.items.slice(before).map(i=>i.t);if(added.length)lastDict={kind:"items",texts:added,noteId:n.id}}persistSess();draftUI();return r}}
+ const r=_ai16(target,list);if(target&&target!=="draft"&&target.id&&list&&list.length){lastDict={kind:target.fmt==="normal"?"body":"items",texts:list,text:Array.isArray(list)?list.join(", "):String(list),noteId:target.id}}return r};
+
+const _sd16=startDraft;startDraft=function(fmt,title){const r=_sd16(fmt,title);persistSess();return r};
+const _ofa16=typeof openForAppend==="function"?openForAppend:null;if(_ofa16)openForAppend=function(n){const r=_ofa16(n);persistSess();return String(r||"").replace(/Al terminar diga guardar nota\./g,"Se guarda solo. Diga guarde para confirmar, o cerrar nota para terminar.")};
+const _dui16=draftUI;draftUI=function(){if(vd&&vd.noteId){const n=S.notes.find(x=>x.id===vd.noteId);if(n){let ch=false;if(vd.title&&vd.title!==n.title){n.title=vd.title;ch=true}if(vd.shared&&vd.shared.length){const mer=[...new Set([...(n.shared||[]),...vd.shared])];if(mer.length!==(n.shared||[]).length||mer.some((id,i)=>id!==(n.shared||[])[i])){n.shared=mer;ch=true}}if(ch){n.updated=new Date().toISOString();save();try{renderNotes()}catch(e){}}}}_dui16();if(vd){try{const info=$("draftInfo");if(info){info.textContent=info.textContent.replace(/— diga «guardar nota» o «cancelar nota»/," — se guarda solo; diga «guarde» para confirmar o «cerrar nota» para terminar")}}catch(e){}}persistSess()};
+const _sv16=saveDraft;saveDraft=function(){return confirmSaved()};
+closeNote=function(){let r="";if(vd){const n=flushDraftToNote();if(n)r="Nota guardada: "+n.title+".";else r="La nota estaba vacía; no la guardé.";vd=null;clearSess();draftUI()}curNote=null;nf=null;nfUI();askDel=null;askAdd=null;itemQ=null;delQ=null;guideUI();return (r&&!/^No hay/.test(r)?r+" ":"")+"Cerré la nota."};
+try{$("draftSave").onclick=()=>speak(confirmSaved());$("draftCancel").onclick=()=>speak(cancelOpenNote())}catch(e){}
+
+function recoverDraft(){let raw=null;try{raw=JSON.parse(localStorage.getItem(DKEY)||"null")}catch(e){raw=null}if(!raw||!raw.vd)return;
+ if(raw.profile&&S.current&&raw.profile!==S.current)return;
+ const d=raw.vd;vd={fmt:d.fmt||"check",title:d.title||"",body:d.body||"",items:d.items||[],shared:d.shared||[],noteId:d.noteId||null};
+ const n=flushDraftToNote();
+ if(!n){vd=null;clearSess();draftUI();return}
+ vd={fmt:n.fmt,title:n.title,body:"",items:[],shared:[],noteId:n.id};persistSess();curNote=n.id;draftUI();guideUI();
+ try{let b=$("recBan");if(!b){b=document.createElement("div");b.id="recBan";b.setAttribute("role","status");b.style.cssText="position:fixed;left:8px;right:8px;top:calc(8px + env(safe-area-inset-top));background:#1f3a5f;color:#fff;border-radius:10px;padding:8px 12px;z-index:22;font-size:14px;box-shadow:0 4px 14px #0004";(document.body||document.documentElement).appendChild(b)}b.textContent="Recuperé lo que estaba dictando en "+n.title+".";b.classList.remove("hide");setTimeout(()=>{try{b.remove()}catch(e){}},8000)}catch(e){}}
+try{recoverDraft()}catch(e){}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden"){try{flushDraftToNote();persistSess();save()}catch(e){}}});
+window.addEventListener("pagehide",()=>{try{flushDraftToNote();persistSess();save()}catch(e){}});
+
+const _hT15=handleTranscript;handleTranscript=function(text,opt){if(!text||!String(text).trim())return _hT15(text,opt);
+ const raw=String(text);const st=typeof cleanHeard==="function"?cleanHeard(typeof stripPolite==="function"?stripPolite(raw):raw):(typeof stripPolite==="function"?stripPolite(raw):raw);const t=nrm(st||raw).replace(/\s+/g," ").trim();
+ const out=x=>{if(typeof _tryAlt!=="undefined"&&_tryAlt)return x;S.lastActivity=Date.now();$("interim").textContent=x;speak(x);try{logVoice(st||raw,[],x)}catch(e){}return x};
+ if(isLastCmd(t)&&(vd||curNote||lastDict))return out(undoLastDict());
+ if(/^(deshacer|deshace|deshaga|undo)$/.test(t)){if(undoStack&&/^Agregado/.test(undoStack.label||"")){const what=undoStack.label.replace(/^Agregado:\s*/,"");const nid=(lastDict&&lastDict.noteId)||(vd&&vd.noteId)||curNote;undoStack.fn();undoStack=null;try{clearTimeout(undoTimer);$("toast").classList.remove("show")}catch(e){}save();render();lastDict=null;const n=nid&&S.notes.find(x=>x.id===nid);const L=n&&typeof leftover==="function"?leftover(typeof viewNow==="function"?viewNow(n):n):null;const names=what.split(/\s*,\s*|\s+y\s+/).filter(Boolean);const x=names.length>1&&typeof joinY==="function"?joinY(names.map(lc)):lc(names[0]||what);return out("Borré "+x+". "+(L?(L.empty?"Ya no le queda nada.":L.quedan):""))}return out(doUndo())}
+ if(/^(cancelar|borrar|descartar)( la)? (nota|lista)$/.test(t)&&vd)return out(cancelOpenNote());
+ if(/^(terminar|termine|termina|cerrar( la)? nota|cierre( la)? nota|cerrar)$/.test(t)&&(vd||curNote))return out(closeNote());
+ if(isSaveCmd(t)){if(vd||curNote)return out(confirmSaved());if(typeof pending!=="undefined"&&pending&&pending.length)return _hT15(text,opt);return out("No hay ninguna nota abierta.")}
+ return _hT15(text,opt)};
+
 
 window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn},get noteFlow(){return nf},get curNote(){return curNote},splitPasted,get voiceLog(){return vLog},get lastHeard(){return ($("heard")||{}).textContent||""},handleHeard,cleanHeard,__setLastSpoken(t){lastSpoken=t;lastSpokenAt=Date.now()},GUIDE,APPVER,parseNoteAct};
 })();
