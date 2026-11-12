@@ -87,7 +87,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v19</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v20</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -118,8 +118,10 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
    <li>«¿cuánto me queda en mercado?» · «¿cuánto gasté en otros?» · «porcentaje de mercado»</li>
    <li>«¿cuánto me queda en total?» · «¿cómo voy?» · «¿qué me falta pagar?» · «¿cuánto gasté en arena?»</li></ul></details>
   <details><summary><b>Presupuesto y pagos</b></summary><ul class="small" style="color:var(--tx)">
-   <li>«presupuesto de mercado 600» · «cambiar presupuesto de gatitos a 180»</li>
-   <li>«crear categoría farmacia con 80»</li>
+   <li>«presupuesto de mercado 600» · «cambiar presupuesto de gatitos a 80» · «subir mercado a 500» · «el presupuesto de luz ahora es 120»</li>
+   <li>«crear categoría farmacia con 80» (si ya existía, actualiza el monto desde este mes, sin borrar nada)</li>
+   <li>En <b>Presupuesto</b>, el lápiz ✎ de cada categoría cambia el monto o el nombre. El cambio vale desde este mes; los meses anteriores no se modifican. Si un gasto quedó sin categoría o sin monto, la fila aparece en rojo como «sin presupuesto»; tóquela y elija <b>Crear presupuesto</b> o páselo a otra categoría.</li>
+   <li>Para editar un gasto: toque la categoría, luego <b>Editar</b> (monto, categoría, fecha o nota). Por voz: «cambiar el gasto de arena a 15» o «cambiar gasto de mercado 40 a 45».</li>
    <li>«ya pagué el agua el 3 de noviembre, fueron ciento cuarenta» · «ya se pagó Netflix»</li>
    <li>«pago automático Netflix 21.61 el día 24» · «quitar pago automático Netflix» · «¿qué pagos automáticos tengo?»</li></ul></details>
   <details><summary><b>Notas y listas (manos libres)</b></summary><ul class="small" style="color:var(--tx)">
@@ -164,7 +166,7 @@ body.hc .bar{background:#333}.delta.up{color:var(--red)}.delta.down{color:var(--
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v19</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v20</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -1054,7 +1056,7 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v19';
+const APPVER='v20';
 const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo o cuénteme qué tengo. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
@@ -1660,10 +1662,175 @@ setInterval(()=>{try{if(!isWakeBusy())releaseWL();else acquireWL()}catch(e){}},3
 try{const okv=restoreView();if(!okv&&(vd||curNote)&&tab==='fin'){_restoring=true;setTab('notas');_restoring=false}try{guideUI();draftUI()}catch(e){}acquireWL()}catch(e){}
 
 
+/* ===== v20: editar presupuesto y recuperar categorías huérfanas ===== */
+function baseBudget(c,m){if(!c)return 0;if(c.monthAmt&&c.monthAmt[m]!=null)return +c.monthAmt[m];
+ const revs=c.revs||[];if(revs.length){let amt=+revs[0].amount||0;for(const r of revs){if(r.from<=m)amt=+r.amount}return amt}
+ return +c.budget||0}
+function setBudgetFrom(c,amount,fromM){fromM=fromM||month;amount=r2(+amount||0);
+ const old=baseBudget(c,fromM);
+ c.revs=(c.revs&&c.revs.length)?c.revs.slice():[{from:'0000-01',amount:+c.budget||0}];
+ c.revs=c.revs.filter(r=>r.from<fromM);
+ if(!c.revs.length)c.revs.push({from:'0000-01',amount:old});
+ c.revs.push({from:fromM,amount});
+ c.budget=amount;
+ if(c.monthAmt&&c.monthAmt[fromM]!=null)c.monthAmt[fromM]=amount;
+ if(c.recovered)c.recovered=false;
+ return {old,amount,from:fromM}}
+function mesLabel(m){const[y,x]=(m||month).split('-').map(Number);const n=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][(x||1)-1]||m;return n+' de '+y}
+function recoverOrphans(p){p=p||P();if(!p||!p.expenses)return 0;
+ const ids=new Set((p.cats||[]).map(c=>c.id));let n=0;
+ const groups={};p.expenses.forEach(e=>{if(!e.catId||ids.has(e.catId))return;(groups[e.catId]=groups[e.catId]||[]).push(e)});
+ Object.keys(groups).forEach(id=>{const es=groups[id];let name=(es.map(e=>e.catName).find(x=>x&&String(x).trim())||'').trim()||'Sin presupuesto';
+  let nm=name,i=2;while(p.cats.some(c=>norm(c.name)===norm(nm))){nm=name+' ('+i+')';i++}
+  p.cats.push({id,name:cap(nm),budget:0,due:'',aliases:[],type:'gasto',carry:false,cycle:0,capOn:false,auto:false,monthAmt:{},recovered:true});
+  ids.add(id);n++});
+ if(n)save();return n}
+function noBudget(c,s){if(!c)return true;if(c.recovered)return true;if(s&&s.noCap)return false;return !s||!(s.b>0)}
+function budgetMsg(c,old,amount){return 'Presupuesto de '+c.name+': '+say$(amount)+' al mes (antes '+say$(old)+'). A partir de '+mesLabel(month)+'.'}
+
+const _cs20=catStat;
+catStat=function(p,c,m){if(!c)return {b:0,g:0,s:0,exp:0,type:'gasto',paid:false,noCap:false,mismatch:false,payDate:null,pct:gPct(0,0),orphan:true};
+ const savedB=c.budget,savedMA=c.monthAmt;const used=baseBudget(c,m);
+ try{if(!(c.monthAmt&&c.monthAmt[m]!=null))c.budget=used;const s=_cs20(p,c,m);if(c.recovered||(!(s.b>0)&&!s.noCap))s.missing=!0;return s}
+ finally{c.budget=savedB;c.monthAmt=savedMA}}
+function gPct(g,b){return b>0?Math.round(g/b*100):(g?100:0)}
+
+const _ae20=addExpense;
+addExpense=function(p,catId,amount,date,note){const e=_ae20(p,catId,amount,date,note);try{const x=e||p.expenses[p.expenses.length-1];const c=p.cats.find(z=>z.id===catId);if(x&&c&&!x.catName)x.catName=c.name}catch(err){}return e};
+
+function openBudgetEdit(id,opts){const p=P();recoverOrphans(p);const c=p.cats.find(x=>x.id===id);if(!c)return;
+ const s=catStat(p,c,month);const crear=noBudget(c,s);
+ dlg(`<h2>${crear?'Crear presupuesto para '+esc(c.name):'Editar '+esc(c.name)}</h2>
+  <p class="small">El monto vale desde ${esc(mesLabel(month))} en adelante. Los meses anteriores no se modifican.</p>
+  <label>Nombre</label><input id="bName" value="${esc(c.name)}">
+  <label>Presupuesto mensual (USD)</label><input id="bAmt" inputmode="decimal" value="${s.b||c.budget||''}" placeholder="0.00">
+  <button type="button" class="btn" id="bOk">${crear?'Crear presupuesto':'Guardar'}</button>
+  <button type="button" class="btn sec" id="bCancel">Cancelar</button>`,
+ f=>{$('bOk').onclick=()=>{const nm=($('bName').value||'').trim();const v=parseFloat(String($('bAmt').value).replace(/[$,]/g,''));if(!(v>=0)||isNaN(v))return alert('Diga un monto válido.');
+   if(nm&&nm!==c.name){if(p.cats.some(x=>x.id!==c.id&&norm(x.name)===norm(nm)))return alert('Ya existe una categoría con ese nombre.');c.name=nm}
+   setBudgetFrom(c,v);save();render();$('dlg').close()};
+  $('bCancel').onclick=()=>$('dlg').close()})}
+
+function enhanceCatDlg(id){const p=P(),c=p.cats.find(x=>x.id===id);if(!c)return;const s=catStat(p,c,month);
+ if(!noBudget(c,s))return;
+ const form=$('dlgForm');if(!form)return;
+ if($('mkBud'))return;
+ const ban=document.createElement('div');ban.style.cssText='background:#fdecea;border-radius:10px;padding:10px 12px;margin:0 0 10px';
+ const others=p.cats.filter(x=>x.id!==c.id).map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');
+ ban.innerHTML=`<p style="margin:0 0 8px;font-weight:700;color:var(--red)">Esta categoría está sin presupuesto.</p>
+  <button type="button" class="btn" id="mkBud">Crear presupuesto para ${esc(c.name)}</button>
+  ${others?`<label style="margin-top:8px">O pasar estos gastos a otra categoría</label><div class="row"><select id="reCat">${others}</select><button type="button" class="btn sec" id="reOk" style="flex:0 0 auto">Pasar gastos</button></div>`:''}`;
+ form.insertBefore(ban,form.firstChild);
+ $('mkBud').onclick=()=>openBudgetEdit(id,{crear:true});
+ const rk=$('reOk');if(rk)rk.onclick=()=>{const nid=$('reCat').value;const dest=p.cats.find(x=>x.id===nid);if(!dest)return;
+  const n=p.expenses.filter(e=>e.catId===c.id).length;
+  if(!confirm('¿Pasar '+n+' gasto'+(n===1?'':'s')+' a '+dest.name+'?'))return;
+  p.expenses.forEach(e=>{if(e.catId===c.id){e.catId=dest.id;e.catName=dest.name}});
+  p.cats=p.cats.filter(x=>x.id!==c.id);save();render();$('dlg').close()}}
+
+const _oc20=openCat;
+openCat=function(id){try{recoverOrphans(P())}catch(e){}
+ const p=P(),c=p.cats.find(x=>x.id===id);if(!c){try{alert('No encontré esa categoría.')}catch(e){}return}
+ _oc20(id);try{enhanceCatDlg(id)}catch(e){}};
+
+function decorateBudgetTable(){const p=P();
+ document.querySelectorAll('#tabla tr.cat').forEach(tr=>{
+  const c=p.cats.find(x=>x.id===tr.dataset.cat);if(!c)return;
+  const s=catStat(p,c,month);
+  const td=tr.cells[0];
+  const btn=document.createElement('button');btn.type='button';btn.className='btn sec bed';btn.dataset.bed=c.id;btn.setAttribute('aria-label','Editar presupuesto de '+c.name);btn.textContent='✎';btn.style.cssText='flex:0 0 auto;min-width:40px;min-height:40px;padding:4px 8px;margin:4px 0 0 6px;font-size:18px;line-height:1';
+  const wrap=document.createElement('span');wrap.style.cssText='white-space:nowrap';wrap.appendChild(btn);td.appendChild(wrap);
+  if(noBudget(c,s)){
+   tr.classList.add('sinp-row');
+   const tag=document.createElement('span');tag.className='tag';tag.style.cssText='background:#fdecea;color:var(--red);font-weight:700';tag.textContent='sin presupuesto';
+   td.appendChild(tag);
+   const as=document.createElement('button');as.type='button';as.className='btn';as.dataset.bed=c.id;as.textContent='Asignar presupuesto';as.style.cssText='margin:6px 0 0;min-height:40px';
+   td.appendChild(as);
+   if(tr.cells[1])tr.cells[1].innerHTML='<span class="neg">—</span>';
+   if(tr.cells[3]){tr.cells[3].classList.add('neg');}
+  }
+ })}
+
+const _rf20=renderFin;
+renderFin=function(){try{recoverOrphans(P())}catch(e){}_rf20();try{decorateBudgetTable()}catch(e){}};
+
+(function hookTabla(){const t=$('tabla');if(!t||t._v20)return;t._v20=true;const prev=t.onclick;
+ t.onclick=function(e){const b=e.target.closest('[data-bed]');if(b){e.preventDefault();e.stopPropagation();openBudgetEdit(b.dataset.bed);return}if(prev)prev.call(this,e)}})();
+
+function hookCatSave(){const el=$('catEd');if(!el||el._v20)return;el._v20=true;const prev=el.onclick;
+ el.onclick=function(e){const p=P();const before=Object.fromEntries(p.cats.map(c=>[c.id,c.budget]));
+  if(prev)prev.call(this,e);
+  if(e.target&&e.target.id==='catSave'){p.cats.forEach(c=>{if(before[c.id]!=null&&r2(c.budget)!==r2(before[c.id])){const nv=c.budget;c.budget=before[c.id];setBudgetFrom(c,nv)}})}}}
+const _ra20=renderAj;renderAj=function(){_ra20();try{hookCatSave()}catch(e){}};
+
+function parseCrearCat(raw){const p=P(),T=tokenize(raw),t=T.join(' ');
+ if(!/^(crear|nueva|agregar|anadir) (una )?categoria\b/.test(t))return null;
+ const RW=tokenizeRaw(raw);let W=RW.length===T.length?RW:T;let k=T.indexOf('categoria')+1;let U=T.slice(k),UW=W.slice(k);
+ const type=['fijo','variable','ciego','gasto'].find(x=>U.includes(x));const ci=U.indexOf('con');const a=firstAmount(U,ci>=0?ci+1:0);let end=ci>=0?ci:(a?a.i:U.length);
+ let nameW=UW.slice(0,end).filter((w,i)=>!['fijo','variable','ciego','de','tipo'].includes(norm(U[i]))||i===0);const name=clean(nameW.join(' '));
+ if(!name)return {err:'Diga el nombre, por ejemplo: crear categoría farmacia con 80.'};
+ const ex=p.cats.find(c=>norm(c.name)===norm(name));
+ if(ex){if(!a)return {err:'Ya existe la categoría '+ex.name+'. Diga el monto, por ejemplo: crear categoría '+ex.name+' con 50.'};
+  const {old,amount}=setBudgetFrom(ex,a.v);save();render();return {msg:'La categoría '+ex.name+' ya existía. '+budgetMsg(ex,old,amount)}}
+ return null}
+
+function handleBudgetEdit(raw){const p=P(),T=tokenize(raw),t=T.join(' ');
+ const cr=parseCrearCat(raw);if(cr)return cr.msg||cr.err;
+ const isPres=/^(cambiar |poner |subir |bajar |actualizar |dejar )?(el )?presupuesto (de|para|del)\b/.test(t)||/^el presupuesto (de|para|del)\b/.test(t);
+ const isShort=/^(cambiar|poner|subir|bajar|actualizar|aumentar|reducir)\b/.test(t)&&!/\b(categoria|nota|gasto|recordatorio|pago)\b/.test(t);
+ if(isPres||isShort){
+  let c=null,j=0;
+  if(isPres){let k=T.indexOf('presupuesto')+1;if(['de','para','del'].includes(T[k]))k++;for(let i=k;i<T.length;i++){const mm=catAt(p,T,i);if(mm){c=mm.c;j=mm.n;break}}}
+  if(!c){for(let i=0;i<T.length;i++){const mm=catAt(p,T,i);if(mm){c=mm.c;j=mm.n;break}}}
+  if(!c)return isPres?'No encontré esa categoría. Diga: crear categoría y el nombre con el monto.':null;
+  while(['a','en','de','por','ahora','es','son','queda','quedan','quedaen'].includes(T[j]))j++;
+  const a=parseAmount(T,j)||firstAmount(T,j);if(!a)return isPres?('Diga el monto, por ejemplo: presupuesto de '+c.name+' 600.'):null;
+  const {old,amount}=setBudgetFrom(c,a.v);save();render();return budgetMsg(c,old,amount)}
+ return handleEditExpVoice(raw)}
+
+function handleEditExpVoice(raw){const p=P(),T=tokenize(raw),t=T.join(' ');
+ if(!/^(cambiar|editar|actualizar|corregir) (el )?(gasto|compra|pago)\b/.test(t)&&!/^el gasto\b/.test(t)&&!/^pasar (el )?gasto\b/.test(t))return null;
+ const reas=/^pasar\b/.test(t)||/\ba la categoria\b|\ba categoria\b|cambiar categoria/.test(t);
+ let dest=null;
+ if(reas){const ix=T.lastIndexOf('categoria');const U=ix>=0?T.slice(ix+1):T.slice(Math.max(0,T.lastIndexOf('a')+1));
+  for(let i=0;i<U.length;i++){const mm=catAt(p,U,i);if(mm)dest=mm.c}}
+ let c=null;for(let i=0;i<T.length;i++){const mm=catAt(p,T,i);if(mm&&(!dest||mm.c.id!==dest.id)){c=mm.c;break}}
+ const aAll=[];for(let i=0;i<T.length;i++){const a=parseAmount(T,i);if(a&&a.v>0){aAll.push(a);i=a.n-1}}
+ const FILL=new Set(['cambiar','editar','actualizar','corregir','pasar','el','la','los','las','de','del','al','a','gasto','compra','pago','ahora','es','son','en','por','con','categoria','este','mes','quedó','quedo','queda']);
+ const destW=dest?norm(dest.name).split(/\s+/):[];
+ const words=T.filter(w=>!FILL.has(w)&&!isNumTok(w)&&!destW.includes(norm(w)));
+ const q=words.join(' ');
+ let cands=p.expenses.filter(e=>e.month===month);
+ if(c)cands=cands.filter(e=>e.catId===c.id);
+ if(q){const nq=norm(q);const byNote=cands.filter(e=>norm(e.note||'').includes(nq));if(byNote.length)cands=byNote}
+ if(aAll.length>=2){const oldA=aAll[0].v;const hit=cands.filter(e=>Math.abs(e.amount-oldA)<0.009);if(hit.length)cands=hit}
+ if(!cands.length)return 'No encontré ese gasto este mes.';
+ cands.sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.created||'').localeCompare(a.created||''));
+ const e=cands[0];
+ if(reas){const dest=(()=>{const ix=T.lastIndexOf('categoria');const U=ix>=0?T.slice(ix+1):T;let d=null;for(let i=0;i<U.length;i++){const mm=catAt(p,U,i);if(mm&&mm.c.id!==e.catId)d=mm.c}return d})();
+  if(!dest)return 'Diga a qué categoría lo paso, por ejemplo: pasar el gasto de arena a mercado.';
+  const prev=(p.cats.find(x=>x.id===e.catId)||{}).name||e.catName||'';
+  e.catId=dest.id;e.catName=dest.name;save();render();
+  return 'Listo, el gasto de '+say$(e.amount)+(e.note?', '+e.note:'')+' pasó de '+prev+' a '+dest.name+'.'}
+ const nv=aAll.length?aAll[aAll.length-1].v:null;
+ if(!(nv>0))return 'Diga el monto nuevo, por ejemplo: cambiar el gasto de '+(e.note||(p.cats.find(x=>x.id===e.catId)||{}).name||'ese gasto')+' a 15.';
+ const old=e.amount;e.amount=r2(nv);save();render();
+ const cn=(p.cats.find(x=>x.id===e.catId)||{}).name||e.catName||'';
+ return 'Listo, el gasto de '+cn+(e.note?', '+e.note:'')+' quedó en '+say$(e.amount)+' (antes '+say$(old)+').'}
+
+const _hb20=handleBudget;
+handleBudget=function(raw){try{const r=handleBudgetEdit(raw);if(r!=null)return r}catch(e){}return _hb20(raw)};
+
+try{const st=document.createElement('style');st.textContent='#tabla tr.cat .bed{vertical-align:middle}#tabla tr.sinp-row td:first-child{padding-bottom:8px}';document.head.appendChild(st)}catch(e){}
+try{recoverOrphans(P())}catch(e){}
+try{hookCatSave()}catch(e){}
+
 window.App={parseExpenses:t=>parseExpenses(t).map(e=>[e.cat,e.amount]),parseExpensesN:t=>parseExpenses(t).map(e=>[e.cat,e.amount,e.note]),openCat:n=>openCat(P().cats.find(c=>c.name===n).id),answerQuery:t=>answerQuery(t,P()),handleTranscript,setTab,get state(){return S},setState:x=>{Object.assign(S,x);save()},get pending(){return pending},setMonth:m=>{month=m;render()},totals:()=>totals(P(),month),catStat:n=>{const p=P(),c=p.cats.find(c=>c.name===n);return catStat(p,c,month)},pendingPays:()=>pendingPays(P(),month).map(c=>c.name),doUndo,searchHist,dueSoon:()=>dueSoon(P()).map(x=>x.c.name),runAutoPays:()=>{const n=runAutoPays(P());if(n)save();render();return n},lockProfile,buildSummaryCanvas,renderBanners,drawChart:()=>drawChart(P()),pushUndo,isIOS:()=>isIOS,isStandalone,saveBlob,unlockVoice,doInstall,get draft(){return vd},get awaitAmt(){return awaitAmt},get micOn(){return micOn},get noteFlow(){return nf},get curNote(){return curNote},splitPasted,get voiceLog(){return vLog},get lastHeard(){return ($("heard")||{}).textContent||""},handleHeard,cleanHeard,__setLastSpoken(t){lastSpoken=t;lastSpokenAt=Date.now()},GUIDE,APPVER,parseNoteAct};
 Object.assign(window.App,{parseTime,parseReminder,addReminder,listReminders:listRemMsg,dailySummary,checkReminders:catchUpRem,fireReminder:fireRem,formatWhen,openCalendar:openCal,offerDailySummary,gcalUrl,icsOf});
 Object.defineProperties(window.App,{reminders:{get(){return remMine()},enumerable:true},lastReminder:{get(){return lastRem},enumerable:true},allReminders:{get(){return remAll()},enumerable:true}});
 Object.assign(window.App,{persistView,restoreView,acquireWakeLock:acquireWL,releaseWakeLock:releaseWL,isWakeBusy,__setNow(t){if(t==null)_nowFn=()=>Date.now();else _nowFn=()=>t},__now:nowMs});
+Object.assign(window.App,{setBudgetFrom,recoverOrphans,openBudgetEdit,baseBudget,handleBudgetEdit});
+
 Object.defineProperties(window.App,{wakeLockOn:{get(){return !!(wl&&!wl.released)},enumerable:true},workOpen:{get(){return isWorkOpen()},enumerable:true},tab:{get(){return tab},enumerable:true}});
 
 
