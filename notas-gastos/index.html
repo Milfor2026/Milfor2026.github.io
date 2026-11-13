@@ -211,6 +211,10 @@ body.hc header select{background:#fff;color:#111}
 #tabla tr.cat td.bed-amt:hover,#tabla tr.cat td.bed-amt:active{background:color-mix(in srgb,var(--acc) 12%,transparent)}
 body.hc #tabla tr.cat .bed{background:#fff!important;color:#000!important;outline:2px solid #fff}
 #tabla tr.sinp-row td:first-child{padding-bottom:10px}
+#gFecha,#eFecha{min-height:44px;font-size:16px;font-weight:700}
+#gFechaHint{margin:6px 0 8px;color:var(--mut)}
+#addGastoCard label[for=gFecha]{font-weight:800}
+
 #suTip{margin-top:14px;padding:12px 14px;background:color-mix(in srgb,var(--acc) 10%,var(--card));border-radius:14px;border:1px solid color-mix(in srgb,var(--acc) 25%,var(--line))}
 #suTip p{margin:0 0 8px;font-weight:700;font-size:16px;color:var(--tx)}
 #suTip ul{margin:0;padding-left:1.2em}
@@ -231,6 +235,12 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 <section id="tab-fin">
  <div class="card"><div class="row"><div><label>Mes</label><input type="month" id="mes"></div></div></div>
  <div id="pendBox"></div>
+ <div class="card" id="addGastoCard"><h2>Agregar gasto o pago</h2>
+  <div class="row"><div><label>Categoría</label><select id="gCat"></select></div><div><label>Monto (USD)</label><input id="gMonto" inputmode="decimal" placeholder="0.00"></div></div>
+  <div class="row"><div><label for="gFecha">Fecha del gasto</label><input type="date" id="gFecha" aria-label="Fecha del gasto"></div><div><label>Nota</label><input id="gNota"></div></div>
+  <p class="small" id="gFechaHint">Por defecto es hoy. Si elige otro día, el gasto se cuenta en ese mes.</p>
+  <div id="gChips"></div>
+  <button class="btn" id="gAdd">Guardar gasto</button></div>
  <div id="featExtra">
  <div class="card"><h2>Comparación y gráfica</h2><canvas id="chart" width="720" height="220" style="width:100%;height:auto;background:#fafafa;border-radius:8px"></canvas><div id="cmpBox" class="small" style="margin-top:8px;color:var(--tx)"></div>
   <div class="row" style="margin-top:8px"><button class="btn sec" id="expImg">Guardar resumen (PNG)</button><button class="btn sec" id="expPdf">Imprimir / PDF</button><button class="btn sec" id="expShare">Compartir resumen</button></div></div>
@@ -239,14 +249,11 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
  <div class="card hide" id="setup"></div>
  <div class="card" id="presCard"><h2>Presupuesto del mes</h2><table id="tabla"></table><p class="small">Toque <b>Editar</b> o el monto para cambiar el presupuesto. Toque el nombre de una categoría para ver, editar o borrar sus gastos.</p></div>
  <div class="card"><h2>Resumen del mes</h2><div id="resumen"></div><p class="small">Fijos y variables deben quedar en cero al pagarse; solo gastos y ciegos pueden terminar por encima o por debajo.</p></div>
- <div class="card"><h2>Agregar gasto o pago</h2>
-  <div class="row"><div><label>Categoría</label><select id="gCat"></select></div><div><label>Monto (USD)</label><input id="gMonto" inputmode="decimal" placeholder="0.00"></div></div>
-  <div class="row"><div><label>Fecha</label><input type="date" id="gFecha"></div><div><label>Nota</label><input id="gNota"></div></div><div id="gChips"></div>
-  <button class="btn" id="gAdd">Guardar gasto</button></div>
+
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v22</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v23</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -280,7 +287,8 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
    <li>«presupuesto de mercado 600» · «cambiar presupuesto de gatitos a 80» · «subir mercado a 500» · «el presupuesto de luz ahora es 120»</li>
    <li>«crear categoría farmacia con 80» (si ya existía, actualiza el monto desde este mes, sin borrar nada)</li>
    <li>En <b>Presupuesto</b>, el botón <b>✎ Editar</b> de cada categoría (o toque el monto) cambia el presupuesto o el nombre. El cambio vale desde este mes; los meses anteriores no se modifican. Si un gasto quedó sin categoría o sin monto, la fila aparece en rojo como «sin presupuesto»; tóquela y elija <b>Crear presupuesto</b> o páselo a otra categoría.</li>
-   <li>Para editar un gasto: toque la categoría, luego <b>Editar</b> (monto, categoría, fecha o nota). Por voz: «cambiar el gasto de arena a 15» o «cambiar gasto de mercado 40 a 45».</li>
+   <li>Para editar un gasto: toque la categoría, luego <b>Editar</b> (monto, categoría, fecha o nota). Por voz: «cambiar el gasto de arena a 15» o «cambiar gasto de mercado 40 a 45». También: «cambiar la fecha del gasto de teléfono al 2 de noviembre».</li>
+   <li>Fecha de un gasto o pago: puede decirla en la frase, por ejemplo «pagué Casa 80 el 2 de noviembre», «el día 3», «ayer», «anteayer» o «el lunes pasado». Si no la dice, la app pregunta «¿De qué fecha es? Diga hoy o el día»; si no responde, dice «hoy» o «guardar», queda con la fecha de hoy y no se pierde el gasto. En <b>Agregar gasto o pago</b> elija la <b>Fecha del gasto</b> (por defecto es hoy); al editar un gasto también puede cambiar la fecha. Un gasto de otro mes se ve en el presupuesto de ese mes.</li>
    <li>«ya pagué el agua el 3 de noviembre, fueron ciento cuarenta» · «ya se pagó Netflix»</li>
    <li>«pago automático Netflix 21.61 el día 24» · «quitar pago automático Netflix» · «¿qué pagos automáticos tengo?»</li></ul></details>
   <details><summary><b>Notas y listas (manos libres)</b></summary><ul class="small" style="color:var(--tx)">
@@ -325,7 +333,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v22</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v23</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -537,7 +545,7 @@ function openCat(id){const p=P(),c=p.cats.find(c=>c.id===id),list=p.expenses.fil
  const cs=catStat(p,c,month);dlg(`<h2>${esc(c.name)} — ${month}</h2><p class=small>${TYPES[c.type||'gasto']}</p>${(c.type==='variable'||c.type==='fijo')?`<label>Monto esperado este mes (ajuste cuando llegue el recibo)</label><div class=row><input id=cExp inputmode=decimal value="${cs.exp}"><button type=button class=btn id=cExpOk style="flex:0 0 auto">Ajustar</button></div>`:''}${list.length?list.map(e=>`<div class="card" style="box-shadow:none;border:1px solid #eee"><b>${money(e.amount)}</b> · ${fmtDate(e.date)}<br><span class="small">${esc(e.note)}</span><br><button type="button" class="btn sec" data-ed="${e.id}">Editar</button><button type="button" class="btn del" data-del="${e.id}">Borrar</button></div>`).join(''):'<p>No hay gastos este mes.</p>'}<button class="btn sec">Cerrar</button>`,
  f=>{const ce=$('cExpOk');if(ce)ce.onclick=()=>{const v=parseFloat($('cExp').value);if(v>=0){c.monthAmt=c.monthAmt||{};c.monthAmt[month]=r2(v);save();render();openCat(id)}};f.onclick=ev=>{const d=ev.target.dataset;if(d.del){if(confirm('¿Borrar este gasto?')){p.expenses=p.expenses.filter(x=>x.id!==d.del);save();render();openCat(id)}}if(d.ed)editExp(d.ed)}})}
 function editExp(eid){const p=P(),e=p.expenses.find(x=>x.id===eid);
- dlg(`<h2>Editar gasto</h2><label>Categoría</label><select id="eCat">${p.cats.map(c=>`<option value="${c.id}"${c.id===e.catId?' selected':''}>${esc(c.name)}</option>`).join('')}</select><label>Monto</label><input id="eMonto" value="${e.amount}" inputmode="decimal"><label>Fecha</label><input type="date" id="eFecha" value="${e.date}"><label>Mes del presupuesto</label><input type="month" id="eMes" value="${e.month}"><label>Nota</label><input id="eNota" value="${esc(e.note)}">${chipsHtml(noteSugs(p,e.catId),'eNota')}<button type="button" class="btn" id="eOk">Guardar cambios</button><button class="btn sec">Cancelar</button>`,
+ dlg(`<h2>Editar gasto</h2><label>Categoría</label><select id="eCat">${p.cats.map(c=>`<option value="${c.id}"${c.id===e.catId?' selected':''}>${esc(c.name)}</option>`).join('')}</select><label>Monto</label><input id="eMonto" value="${e.amount}" inputmode="decimal"><label>Fecha del gasto</label><input type="date" id="eFecha" value="${e.date}"><label>Mes del presupuesto</label><input type="month" id="eMes" value="${e.month}"><label>Nota</label><input id="eNota" value="${esc(e.note)}">${chipsHtml(noteSugs(p,e.catId),'eNota')}<button type="button" class="btn" id="eOk">Guardar cambios</button><button class="btn sec">Cancelar</button>`,
  f=>{$('eOk').onclick=()=>{const v=parseFloat($('eMonto').value);if(!(v>0))return alert('Monto inválido');if(!confirm('¿Guardar los cambios?'))return;Object.assign(e,{catId:$('eCat').value,amount:r2(v),date:$('eFecha').value,month:$('eMes').value||e.month,note:$('eNota').value});save();render();$('dlg').close()}})}
 function dlg(html,init){const d=$('dlg');$('dlgForm').innerHTML=html;$('dlgForm').onclick=null;init&&init($('dlgForm'));if(!d.open)d.showModal()}
 
@@ -1220,7 +1228,7 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v22';
+const APPVER='v23';
 const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo o cuénteme qué tengo. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
@@ -2095,6 +2103,200 @@ handleTranscript=function(text,opt){if(!text||!String(text).trim())return _hT22(
 
 try{migrateProfileNames(S)}catch(e){}
 try{Object.assign(window.App,{setBudgetFrom,handleBudgetEdit,migrateProfileNames,isBudgetEditUtter,tryBudgetPriority,shareFromText,handleTranscript})}catch(e){}
+
+
+
+
+/* ===== v23: fecha de gastos y pagos (voz y toque) ===== */
+let awaitDate=null,dateAskTimer=null,dateAskMs=12000;
+const DOWS23={domingo:0,lunes:1,martes:2,miercoles:3,jueves:4,viernes:5,sabado:6};
+function isoFromD(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+function validYMD(y,m,d){const t=new Date(y,m-1,d);return t.getFullYear()===y&&t.getMonth()===m-1&&t.getDate()===d}
+function clampDate(iso){if(!iso||!/^\d{4}-\d{2}-\d{2}$/.test(iso))return {date:today(),capped:null};
+ const[y,m,d]=iso.split('-').map(Number);if(!validYMD(y,m,d))return {date:null,capped:'invalid'};
+ let dt=new Date(y,m-1,d),capped=null;
+ const hi=new Date();hi.setHours(12,0,0,0);hi.setDate(hi.getDate()+90);
+ const lo=new Date();lo.setHours(12,0,0,0);lo.setFullYear(lo.getFullYear()-3);
+ dt.setHours(12,0,0,0);
+ if(dt>hi){dt=new Date(hi);capped='future'}if(dt<lo){dt=new Date(lo);capped='past'}
+ return {date:isoFromD(dt),capped}}
+function parseDateTokens(T){T=T||[];
+ const tryDay=(d,mo,yr,from,to)=>{
+  const[y0,m0]=(month||today().slice(0,7)).split('-').map(Number);
+  let y=yr!=null?yr:y0,m=mo!=null?mo:(m0-1);
+  if(yr==null&&mo!=null&&mo>m0-1+2)y=y0-1;
+  if(!validYMD(y,m+1,d))return {err:'invalid',span:[from,to]};
+  const r=clampDate(y+'-'+pad(m+1)+'-'+pad(d));return {date:r.date,span:[from,to],capped:r.capped,err:r.date?null:'invalid'}}
+ for(let i=0;i<T.length;i++){
+  if(T[i]==='anteayer'||(T[i]==='antes'&&T[i+1]==='de'&&T[i+2]==='ayer')){const d=new Date();d.setDate(d.getDate()-2);return {date:isoFromD(d),span:[i,T[i]==='anteayer'?i+1:i+3]}}
+  if(T[i]==='ayer'){const d=new Date();d.setDate(d.getDate()-1);return {date:isoFromD(d),span:[i,i+1]}}
+  if(T[i]==='hoy')return {date:today(),span:[i,i+1]}
+  if(T[i]==='manana'){const d=new Date();d.setDate(d.getDate()+1);const r=clampDate(isoFromD(d));return {date:r.date,span:[i,i+1],capped:r.capped}}
+  /* solo «el lunes», «el lunes pasado», «el pasado lunes» (no un miércoles suelto en el nombre de una nota) */
+  if(T[i]==='el'){let j=i+1,pasado=false,dow=null;
+   if(T[j]==='pasado'&&DOWS23[T[j+1]]!=null){pasado=true;dow=DOWS23[T[j+1]];j+=2}
+   else if(DOWS23[T[j]]!=null){dow=DOWS23[T[j]];j++;if(T[j]==='pasado'){pasado=true;j++}}
+   if(dow!=null){const now=new Date(),cur=now.getDay();let back;
+    if(pasado)back=cur===dow?7:((cur-dow+7)%7||7);else back=(cur-dow+7)%7;
+    const d=new Date();d.setDate(d.getDate()-back);return {date:isoFromD(d),span:[i,j]}}}
+  /* el día 3 / día 3 / el 3 de noviembre / 3 de noviembre / el 3 / el primero */
+  let k=i,hasEl=false,hasDia=false;
+  if(T[k]==='el'){hasEl=true;k++}
+  if(T[k]==='dia'){hasDia=true;k++}
+  const a=parseNum(T,k)||(T[k]==='primero'?{v:1,n:k+1}:null);
+  if(a&&a.v>=1&&a.v<=31&&Number.isInteger(a.v)&&(hasEl||hasDia||(T[a.n]==='de'&&MESES.includes(T[a.n+1])))){
+   let n=a.n,mo=null,yr=null;
+   if(T[n]==='de'&&MESES.includes(T[n+1])){mo=MESES.indexOf(T[n+1]);n+=2;if(T[n]==='de'&&/^\d{4}$/.test(T[n+1])){yr=+T[n+1];n+=2}}
+   if(hasEl||hasDia||mo!=null)return tryDay(a.v,mo,yr,i,n)
+  }
+ }
+ return null}
+function stripDateFromText(text){const T=tokenize(text);const dt=parseDateTokens(T);if(!dt||!dt.span||dt.err)return {text,dt:dt&&!dt.err?dt:null};
+ const T2=T.slice(0,dt.span[0]).concat(T.slice(dt.span[1]));return {text:T2.join(' '),dt}}
+function capMsg(capped,date){if(capped==='future')return ' Esa fecha era muy adelante; la dejé en '+fmtDate(date)+'.';if(capped==='past')return ' Esa fecha era muy antigua; la dejé en '+fmtDate(date)+'.';if(capped==='invalid')return ' Esa fecha no existe.';return ''}
+function otherMonthNote(iso){if(!iso)return '';const mo=iso.slice(0,7);if(mo===(month||today().slice(0,7)))return '';return ' Lo verá en el presupuesto de '+mesLabel(mo)+'.'}
+
+const _pe23=parseExpenses;
+parseExpenses=function(text,p){const {text:t2,dt}=stripDateFromText(text);const out=_pe23(t2,p||P());
+ if(dt&&dt.date&&out.length)out.forEach(e=>{e.date=dt.date;e.dateFromVoice=true;if(dt.capped)e.dateCapped=dt.capped});
+ return out};
+
+const _pp23=parsePayment;
+parsePayment=function(text,p){const T=tokenize(text);const dt=parseDateTokens(T);const r=_pp23(text,p);
+ if(r&&!r.err){if(dt&&dt.date&&!dt.err){r.date=dt.date;r.dateFromVoice=true;if(dt.capped)r.dateCapped=dt.capped}else r.dateFromVoice=false}
+ return r};
+
+function clearDateAsk(){awaitDate=null;if(dateAskTimer){clearTimeout(dateAskTimer);dateAskTimer=null}}
+function startDateAsk(){if(dateAskTimer)clearTimeout(dateAskTimer);dateAskTimer=setTimeout(()=>{if(!awaitDate)return;const m=finishDateAsk(today(),'silence');try{$('interim').textContent=m;if(typeof speak==='function')speak(m);if(typeof logVoice==='function')logVoice('[silencio fecha]',[],m)}catch(e){}},dateAskMs)}
+function finishDateAsk(iso,how){const ad=awaitDate;clearDateAsk();if(!ad)return '';
+ const items=ad.items||[];
+ items.forEach(e=>{if(e){e.date=iso;if(how!=='silence')e.dateFromVoice=true}});
+ if(ad.mode==='saved'){items.forEach(e=>{if(e){e.date=iso;e.month=iso.slice(0,7)}});try{save();render()}catch(x){}
+  return how==='silence'?'Quedó con fecha de hoy.':'Listo, quedó con fecha del '+fmtDate(iso)+'.'+otherMonthNote(iso)}
+ try{renderPending()}catch(x){}
+ if(how==='silence')return 'Quedó con fecha de hoy. Diga guardar o corregir.';
+ return 'Fecha: '+fmtDate(iso)+'. Diga guardar o corregir.'+otherMonthNote(iso)}
+function loneDay(raw){const T=tokenize(raw);if(!T.length)return null;
+ const a=parseNum(T,0)||(T[0]==='primero'?{v:1,n:1}:null);
+ if(a&&a.v>=1&&a.v<=31&&Number.isInteger(a.v)&&a.n>=T.length){
+  const[y,mm]=(month||today().slice(0,7)).split('-').map(Number);
+  if(!validYMD(y,mm,a.v))return {err:'invalid'};
+  const r=clampDate(y+'-'+pad(mm)+'-'+pad(a.v));return r.date?r:{err:'invalid'}
+ }
+ return null}
+function isDateAnswer(raw){const T=tokenize(raw);const t=(typeof nrm==='function'?nrm(raw):norm(raw)).replace(/\s+/g,' ').trim();
+ if(/^(hoy|ayer|anteayer|manana|hoy mismo|es hoy|de hoy|antes de ayer)(\s+(por favor|porfa))?$/.test(t))return {ok:true,dt:parseDateTokens(T)||{date:t.includes('hoy')?today():null}};
+ const ld=loneDay(raw);if(ld&&(ld.date||ld.err))return {ok:true,dt:ld};
+ const dt=parseDateTokens(T);if(!dt||(!dt.date&&!dt.err))return {ok:false};
+ const FILL=new Set(['fue','fui','es','era','del','de','el','la','los','las','dia','fecha','en','por','favor','porfa','ese','esa','eso','entonces','pues','ok','okay','si']);
+ const extra=T.filter((w,i)=>!(dt.span&&i>=dt.span[0]&&i<dt.span[1])&&!FILL.has(w));
+ return {ok:extra.length===0,dt}}
+function handleAwaitDate(raw){if(!awaitDate)return null;
+ const t=(typeof nrm==='function'?nrm(raw):norm(raw)).replace(/\s+/g,' ').trim();
+ if(/^(cancelar|corregir|borrar eso|olvidalo|olvidelo|nada)$/.test(t)){const ad=awaitDate;clearDateAsk();
+  if(ad.mode==='pending'){pending=pending.filter(x=>!(ad.items||[]).includes(x));try{renderPending()}catch(e){}return 'Listo, descarté los gastos pendientes.'}
+  return 'Dejé la fecha como estaba.'}
+ if(/^(guardar|guarda|guardalo|confirmar|confirmo)$/.test(t)){const ad=awaitDate,items=ad.items||[];items.forEach(e=>{if(e&&!e.date)e.date=today()});clearDateAsk();
+  if(ad.mode==='saved')return 'Quedó con fecha de hoy.';
+  return (typeof savePending==='function'?savePending():'')}
+ if(/^(hoy)$/.test(t)||/^es hoy$/.test(t)||/^de hoy$/.test(t)||/^hoy mismo$/.test(t))return finishDateAsk(today(),'hoy');
+ /* una orden nueva (otro gasto o un pago) no se toma como respuesta: hoy para lo anterior y seguir */
+ try{if(/\b(pague|pagamos|se pago|pagado|pago de)\b/.test(t)||parseExpenses(raw,P()).length){finishDateAsk(today(),'silence');return null}}catch(e){}
+ const ans=isDateAnswer(raw);
+ if(ans.ok&&ans.dt&&ans.dt.err==='invalid')return 'Esa fecha no existe. Diga hoy, ayer o el día, por ejemplo el 2 de noviembre.';
+ if(ans.ok&&ans.dt&&ans.dt.date){const r=clampDate(ans.dt.date);if(!r.date)return 'Esa fecha no existe. Diga hoy o el día, por ejemplo el 2 de noviembre.';
+  const msg=finishDateAsk(r.date,'date');return msg+capMsg(r.capped||ans.dt.capped,r.date)}
+ /* no es una fecha: no bloquear; dejar hoy y dejar pasar la frase */
+ finishDateAsk(today(),'silence');
+ return null}
+
+function maybeAskDate(neu,msg,mode){if(!neu||!neu.length)return msg;
+ if(neu.every(e=>e.dateFromVoice))return msg;
+ awaitDate={items:neu,mode:mode||'pending'};startDateAsk();
+ const base=String(msg||'').replace(/\s*Diga guardar o corregir\.?\s*$/,'');
+ return (base?base+' ':'')+'¿De qué fecha es? Diga hoy o el día.'}
+
+const _hf23=handleFinance;
+handleFinance=function(text){const t=norm(text);const before=pending.slice();const hadSave=/\b(guardar|guarda|guardalo|confirmar|confirmo)\b/.test(t);
+ const r=_hf23(text);
+ if(hadSave||!r)return r;
+ const neu=pending.filter(x=>!before.includes(x));
+ if(!neu.length)return r;
+ if(/descarté|No hay gastos|No reconocí|No encontré|No sé el monto/.test(r))return r;
+ return maybeAskDate(neu,r,'pending')}
+
+const _as23=autoSave;
+autoSave=function(p,c,amount,note,date){const iso=date||(month===today().slice(0,7)?today():month+'-01');
+ const e=addExpense(p,c.id,amount,iso,note||'');if(date)e.dateFromVoice=true;save();render();pushUndo('Gasto guardado',()=>{const pr=P();pr.expenses=pr.expenses.filter(x=>x.id!==e.id)});
+ const s=catStat(p,c,e.month||month);let m='Guardado: '+c.name+(note?', '+note:'')+', '+say$(amount)+'.';if(!s.noCap&&s.type==='gasto'){m+=' Le quedan '+say$(s.s)+'.';if(s.g>s.b)m+=' Atención: se pasó del presupuesto.';else if(s.pct>=80)m+=' Ya pasó del 80 por ciento.'}
+ m+=' Si está mal diga deshacer.';
+ if(!date)m=maybeAskDate([e],m,'saved');
+ return m};
+
+const _ha23=handleHormiga;
+handleHormiga=function(raw){const {text:t2,dt}=stripDateFromText(raw);
+ const r=_ha23(dt&&dt.date?t2:raw);
+ if(!r)return r;
+ if(dt&&dt.date){try{const pr=P();const e=pr.expenses[pr.expenses.length-1];if(e){e.date=dt.date;e.month=dt.date.slice(0,7);e.dateFromVoice=true;save();render();clearDateAsk()}
+  return String(r).replace(/\s*¿De qué fecha es\? Diga hoy o el día\.?/,'')+' Fecha: '+fmtDate(dt.date)+'.'+capMsg(dt.capped,dt.date)+otherMonthNote(dt.date)}catch(e){}}
+ return r};
+
+function handleEditDateVoice(raw){const p=P(),T=tokenize(raw),t=T.join(' ');
+ if(!/^(cambiar|editar|actualizar|corregir) (la )?(fecha)\b/.test(t)&&!/^cambiarle la fecha\b/.test(t)&&!/^la fecha (del|de el|de)\b/.test(t))return null;
+ const dt=parseDateTokens(T);
+ if(!dt||!dt.date)return 'Diga la fecha, por ejemplo: cambiar la fecha del gasto de mercado al 2 de noviembre.';
+ if(dt.err==='invalid')return 'Esa fecha no existe. Diga el día, por ejemplo el 2 de noviembre.';
+ const r=clampDate(dt.date);if(!r.date)return 'Esa fecha no existe.';
+ const FILL=new Set(['cambiar','cambiarle','editar','actualizar','corregir','la','el','los','las','de','del','al','a','gasto','compra','pago','fecha','ahora','es','en','por','con','dia','pasado']);
+ MESES.forEach(x=>FILL.add(x));
+ const words=T.filter((w,i)=>{if(dt.span&&i>=dt.span[0]&&i<dt.span[1])return false;return !FILL.has(w)&&!(typeof isNumTok==='function'&&isNumTok(w))});
+ const q=words.join(' ');
+ let c=null;for(let i=0;i<T.length;i++){if(dt.span&&i>=dt.span[0]&&i<dt.span[1])continue;const mm=catAt(p,T,i);if(mm){c=mm.c;break}}
+ let cands=p.expenses.slice();
+ if(c)cands=cands.filter(e=>e.catId===c.id);
+ if(q){const nq=norm(q);const by=cands.filter(e=>norm(e.note||'').includes(nq)||norm((p.cats.find(x=>x.id===e.catId)||{}).name||'').includes(nq));if(by.length)cands=by}
+ if(!cands.length)return 'No encontré ese gasto. Diga la categoría o la nota, por ejemplo: cambiar la fecha del gasto de mercado al 2 de noviembre.';
+ cands.sort((a,b)=>(b.created||'').localeCompare(a.created||'')||(b.date||'').localeCompare(a.date||''));
+ const e=cands[0];const old=e.date;e.date=r.date;e.month=r.date.slice(0,7);save();render();
+ const cn=(p.cats.find(x=>x.id===e.catId)||{}).name||e.catName||'';
+ let msg='Listo, el gasto de '+cn+(e.note?', '+e.note:'')+' quedó con fecha del '+fmtDate(e.date)+(old?' (antes '+fmtDate(old)+')':'')+'.';
+ if(e.month!==(month||''))msg+=' Lo verá en el presupuesto de '+mesLabel(e.month)+'.';
+ return msg+capMsg(r.capped||dt.capped,r.date)}
+
+/* toque: sincronizar mes al cambiar la fecha; límites del calendario */
+function dateBounds(){const hi=new Date();hi.setDate(hi.getDate()+90);const lo=new Date();lo.setFullYear(lo.getFullYear()-3);return {min:isoFromD(lo),max:isoFromD(hi)}}
+function setupDateInputs(){try{const b=dateBounds();['gFecha','eFecha'].forEach(id=>{const el=$(id);if(!el)return;el.min=b.min;el.max=b.max;if(!el.value)el.value=today()})}catch(e){}}
+document.addEventListener('change',e=>{if(!e.target)return;
+ if(e.target.id==='eFecha'&&$('eMes')&&e.target.value){$('eMes').value=e.target.value.slice(0,7)}
+ if(e.target.id==='gFecha'&&e.target.value){const r=clampDate(e.target.value);if(r.date&&r.date!==e.target.value)e.target.value=r.date}});
+document.addEventListener('click',e=>{if(e.target&&e.target.id==='eOk'){try{if($('eFecha')&&$('eFecha').value&&$('eMes'))$('eMes').value=$('eFecha').value.slice(0,7)}catch(x){}}},true);
+const _rf23=renderFin;
+renderFin=function(){_rf23();try{setupDateInputs()}catch(e){}};
+try{setupDateInputs()}catch(e){}
+const _ga=($('gAdd')||{}).onclick;
+if(_ga)$('gAdd').onclick=function(){const f=$('gFecha')&&$('gFecha').value;_ga.apply(this,arguments);try{$('gFecha').value=today()}catch(e){}};
+
+const _ht23=handleTranscript;
+handleTranscript=function(text,opt){if(!text||!String(text).trim())return _ht23(text,opt);
+ const raw=String(text);
+ try{if(awaitDate){const r0=handleAwaitDate(raw);if(r0!=null){S.lastActivity=Date.now();try{$('interim').textContent=r0;if(typeof speak==='function')speak(r0);if(typeof logVoice==='function')logVoice((typeof cleanHeard==='function'?cleanHeard(raw):raw),[],r0)}catch(e){}return r0}}}catch(e){}
+ try{const r1=handleEditDateVoice(raw);if(r1!=null){S.lastActivity=Date.now();try{$('interim').textContent=r1;if(typeof speak==='function')speak(r1);if(typeof logVoice==='function')logVoice((typeof cleanHeard==='function'?cleanHeard(raw):raw),[],r1)}catch(e){}return r1}}catch(e){}
+ return _ht23(text,opt)};
+
+/* no auto-bloquear el perfil mientras el micrófono está escuchando (al volante); «Bloquear ahora» sí funciona */
+const _lp23=lockProfile;
+lockProfile=function(force){if(!force&&typeof micOn!=='undefined'&&micOn){try{S.lastActivity=Date.now()}catch(e){}return}return _lp23.apply(this,arguments)};
+const _ln23=($('lockNow')||{}).onclick;
+if($('lockNow'))$('lockNow').onclick=function(){lockProfile(true)};
+try{
+ Object.assign(window.App,{handleTranscript,handleEditDateVoice,handleAwaitDate,clearDateAsk,parseDateTokens,clampDate});
+ Object.defineProperties(window.App,{
+  awaitDate:{get(){return awaitDate},enumerable:true},
+  _dateAskMs:{get(){return dateAskMs},set(v){dateAskMs=+v||12000},enumerable:true}
+ });
+ window.App.__fireDateSilence=function(){if(dateAskTimer){clearTimeout(dateAskTimer);dateAskTimer=null}if(awaitDate){const m=finishDateAsk(today(),'silence');try{$('interim').textContent=m;if(typeof speak==='function')speak(m)}catch(e){}return m}return null};
+}catch(e){}
+try{setupDateInputs()}catch(e){}
 
 
 Object.defineProperties(window.App,{wakeLockOn:{get(){return !!(wl&&!wl.released)},enumerable:true},workOpen:{get(){return isWorkOpen()},enumerable:true},tab:{get(){return tab},enumerable:true}});
