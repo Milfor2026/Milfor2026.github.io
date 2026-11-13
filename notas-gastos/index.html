@@ -253,7 +253,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v23</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v24</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -306,7 +306,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
    <li>Agregar a la nota activa (abierta o la última que leyó): «agregar», «añadir», «aumentar», «sumar», «poner», «meter», «anotar», «incluir», «apuntar» y el producto («aumente leche», «también café», «ponga arroz», «me falta pan»). «Falta tomate» o «me falta pan» lo agrega solo si no es una pregunta («¿qué me falta?» lee lo pendiente). Si no hay nota activa le pregunta a cuál. Lo repetido no se duplica. «Sumar gasto» o «anote mercado veinte» siguen siendo gastos.</li>
    <li>Con una nota abierta: «¿qué queda?», «¿qué me falta?», «¿qué llevo?», «léame la lista» le lee lo pendiente; las preguntas nunca se anotan como texto.</li>
    <li>«quiero eliminar algo» → la primera vez pregunta «¿Qué quiere borrar?» y le lee lo pendiente; las siguientes veces, en la misma nota, solo pregunta sin repetir la lista. Conteste el nombre o «el segundo». «quiero agregar algo» → «¿Qué quiere agregar?». También entiende «quiero…», «necesito…», «me gustaría…», «voy a…».</li>
-   <li>Borrar un elemento (con la nota abierta o después de leerla): «borrar», «eliminar», «quitar», «sacar», «suprimir», «descartar» y el producto («quite huevos», «saque las uvas», «bórrelo», «podría eliminar…»). Responde: «Eliminé uvas. Le quedan aguacate, pan, leche y queso.» Para deshacer lo último que dictó: «borre lo último», «elimine lo último», «quite lo último», «eso no» o «deshacer»; responde «Borré X. Le quedan…». Si hay varios parecidos le pregunta cuál. Entiende infinitivo, tú o usted, y formas con enclítico.</li>
+   <li>Borrar un elemento (con la nota abierta o después de leerla): «borrar», «eliminar», «quitar», «sacar», «suprimir», «descartar» y el producto («quite huevos», «saque las uvas», «bórrelo», «podría eliminar…»). Responde: «Listo, eliminado uvas. ¿Qué más quiere eliminar?» (no vuelve a leer la lista; para oírla, diga «repítame la lista»). Para deshacer lo último que dictó: «borre lo último», «elimine lo último», «quite lo último», «eso no» o «deshacer»; responde «Borré X» sin volver a leer la lista. Si hay varios parecidos le pregunta cuál. Entiende infinitivo, tú o usted, y formas con enclítico.</li>
    <li>Si duda, diga «qué le puedo decir», «ayuda» o «cómo funciona»: la app le lee una guía corta (también visible en la nota). La primera vez que abre una nota le dice: «Si necesita ayuda, diga: qué le puedo decir». Para terminar: «cerrar nota».</li>
    <li>En una lista de verificación, el botón <b>Pegar lista</b> agrega el mensaje de WhatsApp (una línea, coma o viñeta por elemento).</li></ul></details>
   <details><summary><b>Recordatorios y resumen</b></summary><ul class="small" style="color:var(--tx)">
@@ -333,7 +333,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v23</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v24</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -1228,8 +1228,8 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v23';
-const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo o cuénteme qué tengo. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
+const APPVER='v24';
+const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo, cuénteme qué tengo o repítame la lista. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
 let lastSpoken='',lastSpokenAt=0,vLog=[],_tryAlt=false;
@@ -2297,6 +2297,58 @@ try{
  window.App.__fireDateSilence=function(){if(dateAskTimer){clearTimeout(dateAskTimer);dateAskTimer=null}if(awaitDate){const m=finishDateAsk(today(),'silence');try{$('interim').textContent=m;if(typeof speak==='function')speak(m)}catch(e){}return m}return null};
 }catch(e){}
 try{setupDateInputs()}catch(e){}
+
+
+
+/* ===== v24: al borrar un elemento no se vuelve a leer la lista ===== */
+function delDoneMsg(name,empty){
+  const n=lc(name||'el elemento');
+  if(empty)return 'Listo, eliminado '+n+'. Ya no le queda nada.';
+  return 'Listo, eliminado '+n+'. ¿Qué más quiere eliminar?';
+}
+const _del24=delItem;
+delItem=function(c){
+  _del24(c);
+  const t=c&&c.t;
+  let v;try{if(c&&c.kind==='draft')v=draftView();else v=viewNow(c&&c.n)}catch(e){v=null}
+  const L=typeof leftover==='function'&&v?leftover(v):{empty:false};
+  return delDoneMsg(t,L.empty);
+};
+const _uld24=undoLastDict;
+undoLastDict=function(){
+  const r=_uld24.apply(this,arguments);
+  if(!r||typeof r!=='string')return r;
+  const m=r.match(/^Borré\s+(.+?)\.\s*/);
+  if(!m)return r.replace(/\s*Le quedan[^.]*\./g,'').trim();
+  const empty=/Ya no le queda nada|quedó vacía|quedó vacio/i.test(r);
+  /* deshacer lo último: no relee la lista; no entra al “qué más quiere eliminar” */
+  return empty?('Borré '+m[1]+'. Ya no le queda nada.'):('Borré '+m[1]+'.');
+};
+function hintRepeat(msg){
+  let m=String(msg||'').replace(/\s*Tiene:.*$/,'');
+  m=m.replace(/\s*¿Me lo repite,?\s*por favor\??\s*$/,'').replace(/\s*¿Me lo repite\??\s*$/,'');
+  if(/repítame la lista|repitame la lista/i.test(m))return m;
+  return m.replace(/\s*$/, '')+(m.endsWith('.')?' ':'')+'Diga repítame la lista si quiere oírla.';
+}
+const _idc24=itemDelCmd;
+itemDelCmd=function(st){
+  const r=_idc24.apply(this,arguments);
+  if(r&&typeof r==='object'&&r.miss)r.miss=hintRepeat(r.miss);
+  return r;
+};
+const _ads24=askDelStep;
+askDelStep=function(st){
+  const r=_ads24.apply(this,arguments);
+  if(typeof r==='string'&&/No encontré/.test(r))return hintRepeat(r);
+  return r;
+};
+const _ask24=askDelete;
+askDelete=function(pre){
+  const r=_ask24.apply(this,arguments);
+  if(pre&&/No encontré/.test(String(pre))&&typeof r==='string')return hintRepeat(r);
+  return r;
+};
+try{Object.assign(window.App,{delItem,itemDelCmd,askDelete,askDelStep,undoLastDict,handleTranscript,delDoneMsg})}catch(e){}
 
 
 Object.defineProperties(window.App,{wakeLockOn:{get(){return !!(wl&&!wl.released)},enumerable:true},workOpen:{get(){return isWorkOpen()},enumerable:true},tab:{get(){return tab},enumerable:true}});
