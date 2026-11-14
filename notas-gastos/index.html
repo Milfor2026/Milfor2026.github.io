@@ -276,7 +276,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v25</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v26</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -356,7 +356,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v25</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v26</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -1251,7 +1251,7 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v25';
+const APPVER='v26';
 const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo, cuénteme qué tengo o repítame la lista. Para una tabla, diga crear tabla, el nombre y las columnas. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
@@ -2377,6 +2377,9 @@ try{Object.assign(window.App,{delItem,itemDelCmd,askDelete,askDelStep,undoLastDi
 
 /* ===== v25: notas tipo «tabla» (columnas de texto, sin cálculos) ===== */
 let curTbl=null,tblFlow=null,tblNew=null,tblTimer=null,tblIdleMs=90000;
+/* v26: posición para seguir después de un silencio/terminar, y captura del «no le entendí» */
+let tblResume=null,tblLastAt=0,tblCap=null;const TBL_WIN=30*60000;
+const tblMark=()=>{tblLastAt=Date.now()};
 const TBL_MAX=5;
 const isTbl=n=>!!(n&&n.fmt==='tabla');
 function tblNotes(){return visibleNotes().filter(isTbl)}
@@ -2389,7 +2392,7 @@ function tblSplit(txt,forceWords){let s=String(txt||'').replace(/[:;]/g,',').tri
  const hasSep=/,|\bcoma\b|\bsiguiente\b/i.test(s);
  let parts=s.split(/\s*,\s*|\s+coma\s+|\s*\bcoma\b\s*|\s+siguiente\s+|\s*\bsiguiente\b\s*/i).map(x=>clean(x)).filter(Boolean);
  if(parts.length){const last=parts[parts.length-1];const mm=last.match(/^(.+?)\s+y\s+(.+)$/i);if(mm&&(hasSep||forceWords)){parts.splice(parts.length-1,1,clean(mm[1]),clean(mm[2]))}}
- if(!hasSep&&forceWords)parts=s.split(/\s+y\s+|\s+/i).map(clean).filter(Boolean);
+ if(!hasSep&&forceWords){const w=s.split(/\s+y\s+|\s+/i).map(clean).filter(Boolean);const g=[];for(let i=0;i<w.length;i++){const x=w[i];if(/^(de|del|para|por|con|la|el|las|los)$/i.test(x)&&g.length&&i<w.length-1){g[g.length-1]+=' '+x+' '+w[i+1];i++}else g.push(x)}parts=forceWords==='raw'?w:g}
  return parts}
 const NUMW={dos:2,tres:3,cuatro:4,cinco:5,uno:1,una:1,seis:6};
 function tblCreate(title,cols){const now=new Date().toISOString();
@@ -2399,15 +2402,16 @@ function tblByName(q){const L=tblNotes();if(!L.length)return null;const nq=nrm(q
  const ex=L.find(n=>nrm(n.title).trim()===nq);if(ex)return ex;
  const R=rankNotes(q,L);return R.length&&R[0].s>=40?R[0].n:null}
 function tblStopTimer(){if(tblTimer){clearTimeout(tblTimer);tblTimer=null}}
-function tblArm(){tblStopTimer();tblTimer=setTimeout(()=>{if(!tblFlow)return;const m=tblEndFlow(true);try{$('interim').textContent=m;if(typeof micOn!=='undefined'&&micOn)speak(m);logVoice('[silencio tabla]',[],m)}catch(e){}},tblIdleMs)}
+function tblArm(){tblMark();tblStopTimer();tblTimer=setTimeout(()=>{if(!tblFlow)return;const m=tblEndFlow(true);try{$('interim').textContent=m;if(typeof micOn!=='undefined'&&micOn)speak(m);logVoice('[silencio tabla]',[],m)}catch(e){}},tblIdleMs)}
 function tblAsk(){const n=tblCur();if(!n||!tblFlow)return '';tblArm();return '¿'+n.cols[tblFlow.col]+'?'}
 function tblStartRow(pre){const n=tblCur();if(!n)return pre||'';tblFlow={row:null,col:0,step:'col'};return (pre?pre+' ':'')+'Nueva fila. '+tblAsk()}
 function tblRowSay(n,r){return n.cols.map((c,j)=>r[j]?r[j]:null).filter(Boolean).join(', ')||'vacía'}
-function tblEndFlow(silence){const n=tblCur();const F=tblFlow;tblFlow=null;tblStopTimer();
+function tblEndFlow(silence){const n=tblCur();const F=tblFlow;tblFlow=null;tblStopTimer();tblMark();
+ tblResume=(silence&&n&&F&&F.step==='col'&&F.row!=null&&n.rows[F.row]&&n.rows[F.row].some(x=>x&&String(x).trim()))?{id:n.id,row:F.row,col:F.col}:(n?{id:n.id,row:null,col:0}:null);
  if(n&&F&&F.row!=null){const r=n.rows[F.row];if(r&&!r.some(x=>x&&String(x).trim())){n.rows.splice(F.row,1);tblTouch(n)}}
  if(!n)return 'Listo.';
  const k=n.rows.length;
- if(silence)return 'Dejé la tabla '+n.title+' abierta, con '+k+(k===1?' fila':' filas')+'. Lo que dijo quedó guardado. Para seguir, diga agregar fila.';
+ if(silence)return 'Dejé la tabla '+n.title+' abierta, con '+k+(k===1?' fila':' filas')+'. Lo que dijo quedó guardado. Para seguir, diga el dato que sigue o agregar fila.';
  return 'Listo. La tabla '+n.title+' tiene '+k+(k===1?' fila.':' filas.')}
 function tblPutVal(v){const n=tblCur();const F=tblFlow;if(!n||!F)return null;
  if(F.row==null){n.rows.push(n.cols.map(()=>''));F.row=n.rows.length-1}
@@ -2423,13 +2427,13 @@ function tblFindRow(n,q){const W=toks(q).filter(w=>!STOPW.has(w));if(!W.length)r
 function tblReadRow(n,i){const r=n.rows[i];return n.cols.map((c,j)=>c+' '+(r[j]||'vacío')).join(', ')+'.'}
 function tblReadAll(n){if(!n.rows.length)return 'La tabla '+n.title+' está vacía. Columnas: '+joinY(n.cols.map(lc))+'.';
  return n.title+', '+n.rows.length+(n.rows.length===1?' fila. ':' filas. ')+n.rows.map((r,i)=>'Fila '+(i+1)+': '+tblReadRow(n,i)).join(' ')}
-function tblOpen(n,ask){tblFix(n);curTbl=n.id;tblFlow=null;tblStopTimer();tblNew=null;
+function tblOpen(n,ask){tblFix(n);curTbl=n.id;tblFlow=null;tblStopTimer();tblNew=null;tblResume=null;tblMark();try{addQ=null;askAdd=null;askDel=null;delQ=null;itemQ=null}catch(e){}
  if(vd){try{saveDraft()}catch(e){vd=null}try{draftUI()}catch(e){}}curNote=null;nf=null;try{nfUI()}catch(e){}
  if(tab!=='notas')setTab('notas');try{renderNotes()}catch(e){}
  const k=n.rows.length,pre='Abrí la tabla '+n.title+'. Tiene '+k+(k===1?' fila.':' filas.');
  if(ask)return tblStartRow(pre);
  return pre+' Para llenar otra, diga agregar fila.'}
-function tblCloseAll(){const n=tblCur();tblFlow=null;tblStopTimer();curTbl=null;tblNew=null;return n?'Cerré la tabla '+n.title+'.':'Cerré la tabla.'}
+function tblCloseAll(){const n=tblCur();tblFlow=null;tblStopTimer();curTbl=null;tblNew=null;tblResume=null;return n?'Cerré la tabla '+n.title+'.':'Cerré la tabla.'}
 function tblParseCreate(raw){const st=cleanHeard(stripPolite(raw));const t=nrm(st).replace(/\s+/g,' ').trim();
  const m=t.match(/^(?:quiero |necesito |voy a )?(?:crear|crea|cree|nueva|nuevo|hacer|haga|abrir una nueva|abra una nueva|abrir una|abra una)( una)? tabla\b/);if(!m)return null;
  let rest=st.replace(/^\s*(?:quiero |necesito |voy a )?\S+(?:\s+una)?(?:\s+nueva)?\s+tabla\b/i,'').trim();
@@ -2439,7 +2443,7 @@ function tblParseCreate(raw){const st=cleanHeard(stripPolite(raw));const t=nrm(s
  if(cm){title=cm[1];colTxt=cm[2]}else if(/^\s*(?:de\s+)?(\d|dos|tres|cuatro|cinco)\s+columnas/i.test(rest)){title='';colTxt=rest}
  const nm=colTxt.match(/^(?:las\s+)?(\d+|dos|tres|cuatro|cinco|uno|una|seis)?\s*columnas?\b[\s:,]*(?:que se llaman\s+|llamadas\s+)?(.*)$/i);
  let names=[];if(nm){if(nm[1])num=/^\d+$/.test(nm[1])?+nm[1]:NUMW[nrm(nm[1])];names=nm[2]?tblSplit(nm[2],false):[]}
- if(names.length&&num&&names.length<num){const w=tblSplit(nm[2],true);if(w.length===num)names=w}
+ if(names.length&&num&&names.length<num){const w=tblSplit(nm[2],true);const w2=tblSplit(nm[2],'raw');if(w.length===num)names=w;else if(w2.length===num)names=w2}
  if(names.length&&!num&&names.length<2){const w=tblSplit(nm[2],true);if(w.length>=2&&w.length<=TBL_MAX)names=w}
  return {title:clean(title.replace(/[.,]+$/,'')),num,names}}
 function tblCreateStep(p){
@@ -2456,7 +2460,7 @@ function tblNewStep(raw){const st=cleanHeard(stripPolite(raw)),t=nrm(st).trim();
   return tblCreateStep({title,num:tblNew.num,names:tblNew.names||[]}).msg}
  if(tblNew.step==='cols'){let txt=st.replace(/^(?:las\s+)?(?:columnas\s+)?(?:son\s+)?/i,'');let num=tblNew.num;
   const nm=txt.match(/^(\d+|dos|tres|cuatro|cinco)\s+columnas?\b[\s:,]*(.*)$/i);if(nm){num=/^\d+$/.test(nm[1])?+nm[1]:NUMW[nrm(nm[1])];txt=nm[2]}
-  let names=tblSplit(txt,false);if(num&&names.length<num){const w=tblSplit(txt,true);if(w.length===num)names=w}
+  let names=tblSplit(txt,false);if(num&&names.length<num){const w=tblSplit(txt,true);const w2=tblSplit(txt,'raw');if(w.length===num)names=w;else if(w2.length===num)names=w2}
   if(!num&&names.length<2){const w=tblSplit(txt,true);if(w.length>=2)names=w}
   if(names.length<2)return 'Necesito al menos 2 columnas. Diga los nombres separados por coma, por ejemplo: tienda, cuenta y clave.';
   if(names.length>TBL_MAX)return 'La tabla puede tener hasta '+TBL_MAX+' columnas. Diga los nombres otra vez.';
@@ -2494,7 +2498,7 @@ function tblCmd(raw){const st=cleanHeard(stripPolite(raw));const t=nrm(st).repla
  if(m){const i=tblFindRow(x,m[1]);if(i<0)return 'No encontré la fila de '+clean(m[1])+'. Diga leer la tabla si quiere oírla toda.';return 'Fila '+(i+1)+': '+tblReadRow(x,i)}
  m=t.match(/^(?:borrar|borre|borra|eliminar|elimine|elimina|quitar|quite|quita|sacar|saque)\s+(?:la\s+)?fila\s+(?:de\s+|del\s+|numero\s+)?(.+)$/);
  if(m){const i=tblFindRow(x,m[1]);if(i<0)return 'No encontré la fila de '+clean(m[1])+'. Diga leer la tabla si quiere oírla.';
-  const r=x.rows.splice(i,1)[0];tblTouch(x);const X=x;pushUndo('Fila borrada',()=>{X.rows.splice(Math.min(i,X.rows.length),0,r);X.updated=new Date().toISOString()});
+  const r=x.rows.splice(i,1)[0];if(tblFlow&&tblFlow.row!=null&&x.id===curTbl){if(tblFlow.row===i){tblFlow=null;tblStopTimer()}else if(tblFlow.row>i)tblFlow.row--}tblResume=null;tblTouch(x);const X=x;pushUndo('Fila borrada',()=>{X.rows.splice(Math.min(i,X.rows.length),0,r);X.updated=new Date().toISOString()});
   const k=x.rows.length;return 'Listo, eliminada la fila de '+(r[0]||('número '+(i+1)))+'. '+(k?'Quedan '+k+(k===1?' fila.':' filas.'):'La tabla quedó vacía.')}
  if(n&&/^(eliminar|elimine|borrar|borre|quitar|quite)( algo| una fila| una cosa)?$/.test(t))return '¿Qué fila quiere borrar? Diga, por ejemplo: borrar fila de '+(x.rows[0]&&x.rows[0][0]?x.rows[0][0]:'Amazon')+'.';
  m=t.match(/^(?:cambiar|cambie|cambia|corregir|corrija|poner|ponga|actualizar)\s+(?:el\s+|la\s+|los\s+|las\s+)?(.+?)\s+(?:de|del)\s+(.+?)\s+(?:a|por|en)\s+(.+)$/);
@@ -2504,13 +2508,26 @@ function tblCmd(raw){const st=cleanHeard(stripPolite(raw));const t=nrm(st).repla
    return 'Listo: '+lc(x.cols[ci])+' de '+(x.rows[i][0]||('la fila '+(i+1)))+' ahora es '+nv+'.'}}
  if(n&&/^(cerrar nota|terminar|listo terminar)$/.test(t))return tblCloseAll();
  return null}
+const TBLCMD=/^(leer|leame|lea|repitame|repita|cuantas filas|borrar fila|borre la fila|eliminar fila|elimine la fila|agregar fila|agrega fila|agregue fila|abrir tabla|abra la tabla|abrir la tabla|crear tabla|nueva tabla|cerrar tabla|cerrar la tabla|cambiar\s.+\s(de|del)\s.+\s(a|por)\s)/;
+const YESW=new Set('si sii sip claro dale otra otro fila bueno ok okay vale sigamos seguimos siga sigue seguir continuar continue continua continuemos adelante hagale de una por favor porfa supuesto que mas quiero va venga perfecto correcto exacto eso afirmativo senora senor nueva siguiente vamos listo obvio entonces bien muy gracias pues ahi'.split(' '));
+const YESCORE=/\b(si|sii|sip|claro|dale|otra|otro|bueno|ok|okay|vale|sigamos|seguimos|siga|sigue|seguir|continuar|continue|continua|continuemos|adelante|hagale|perfecto|correcto|exacto|afirmativo|siguiente|vamos|obvio)\b/;
+function tblIsYes(t){const w=t.split(' ').filter(Boolean);return w.length>0&&w.length<=7&&YESCORE.test(t)&&w.every(x=>YESW.has(x))}
+function tblIsNo(t){return NOMORE.test(t)||/^(no|nop|nones|ya no|tampoco|no no)( (mas|gracias|senora|senor|por ahora|por hoy|todavia|ahora|ya|eso es todo|es todo|mas filas|otra|quiero|hay mas|nada|nada mas))*$/.test(t)||/^(listo |ya |bueno |ok |no )?(terminar|termine|ya termine|terminamos|eso es todo|es todo|nada mas|ya esta|ya estuvo|fin|salir|parar|cerrar la tabla|cerrar tabla|cerrar nota|no mas)( gracias| ya| por ahora| por hoy| eso es todo| por favor)*$/.test(t)}
+function tblStripYes(st){let v=String(st||'').trim();const m=v.match(/^(?:s[ií]|claro|dale|bueno|ok|okay|vale)(?=[\s,.:;])[\s,.:;]*(?:(?:otra|la siguiente|siguiente)(?:\s+fila)?(?=[\s,.:;])[\s,.:;]*)?(.+)$/i);if(m&&m[1].trim())v=m[1];return v.replace(/^[,.\s]+|[,.\s]+$/g,'')}
+function tblResumeWith(raw){const n=tblCur();if(!n)return null;const st=cleanHeard(stripPolite(raw));let v=st.replace(/^[,.\s]+|[,.\s]+$/g,'');if(!v)return null;v=cap(v);
+ const R=tblResume&&tblResume.id===n.id?tblResume:null;tblResume=null;
+ if(R&&R.row!=null&&n.rows[R.row]&&R.col<n.cols.length&&n.rows[R.row].slice(R.col).every(x=>!x)){tblFlow={row:R.row,col:R.col,step:'col'}}
+ else tblFlow={row:null,col:0,step:'col'};
+ return 'Lo anoté en la tabla '+n.title+'. '+tblPutVal(v)}
 function tblFlowStep(raw){const st=cleanHeard(stripPolite(raw)),t=nrm(st).replace(/\s+/g,' ').trim();const n=tblCur();if(!n){tblFlow=null;return null}
- if(tblFlow.step==='more'){if(YES.test(t)){tblFlow={row:null,col:0,step:'col'};return 'Nueva fila. '+tblAsk()}
-  if(NOMORE.test(t)){const r=tblEndFlow(false);if(/^cerrar/.test(t)){curTbl=null;return r+' Cerré la tabla.'}return r}
-  const c=tblCmd(raw);if(c!=null)return c;tblEndFlow(false);return null}
+ if(tblFlow.step==='more'){
+  if(tblIsNo(t)){const r=tblEndFlow(false);if(/^cerrar/.test(t)){curTbl=null;tblResume=null;return r+' Cerré la tabla.'}return r}
+  if(TBLCMD.test(t)){const c=tblCmd(raw);if(c!=null)return c}
+  if(tblIsYes(t)){tblFlow={row:null,col:0,step:'col'};return 'Nueva fila. '+tblAsk()}
+  const v=tblStripYes(st);tblFlow={row:null,col:0,step:'col'};return tblPutVal(v?cap(v):'')}
  if(/^(cancelar|cancela|cancelar fila|borrar fila|olvidalo)$/.test(t)){const F=tblFlow;tblFlow=null;tblStopTimer();if(F.row!=null){n.rows.splice(F.row,1);tblTouch(n)}return 'Cancelé esa fila.'}
  if(NOMORE.test(t)&&!/^(no|ninguno|ninguna|nada|ya)$/.test(t)||/^(terminar|termine|ya termine|cerrar tabla|cerrar nota|no mas|eso es todo)$/.test(t)){const r=tblEndFlow(false);if(/^cerrar/.test(t)){curTbl=null;return r+' Cerré la tabla.'}return r}
- if(/^(leer|leame|lea|repitame|repita|cuantas filas|borrar fila|borre la fila|eliminar fila|elimine la fila|cambiar\s.+\s(de|del)\s.+\s(a|por)\s)/.test(t)||/^(leer|leame) (la )?(tabla|fila)\b/.test(t)){const c=tblCmd(raw);if(c!=null){tblArm();return c+' '+tblAsk()}}
+ if(/^(leer|leame|lea|repitame|repita|cuantas filas|borrar fila|borre la fila|eliminar fila|elimine la fila|cambiar\s.+\s(de|del)\s.+\s(a|por)\s)/.test(t)||/^(leer|leame) (la )?(tabla|fila)\b/.test(t)){const F=tblFlow;const c=tblCmd(raw);if(c!=null){if(tblFlow&&tblFlow===F){tblArm();return c+' '+tblAsk()}return c}}
  let v=st;if(/^(saltar|salte|siguiente|vacio|vacia|en blanco|ninguno|ninguna|nada|sin dato|no se)$/.test(t))v='';
  v=v.replace(/^[,.\s]+|[,.\s]+$/g,'');if(v)v=cap(v);
  return tblPutVal(v)}
@@ -2525,9 +2542,23 @@ handleTranscript=function(text,opt){if(!text||!String(text).trim())return _ht25(
   if(tblNew){const r=tblNewStep(raw);if(r!=null)return out(r)}
   if(tblFlow&&tblCur()){const r=tblFlowStep(raw);if(r!=null)return out(r)}
   if(!(typeof App!=='undefined'&&App.awaitDate)){const t=nrm(cleanHeard(stripPolite(raw))).replace(/\s+/g,' ').trim();
-   if(/\btablas?\b/.test(t)||(curTbl&&tblCur())){const r=tblCmd(raw);if(r!=null)return out(r)}}
+   if(/\btablas?\b/.test(t)||(curTbl&&tblCur())){const r=tblCmd(raw);if(r!=null){tblMark();return out(r)}}}
  }catch(e){try{logVoice(raw,[],'[error tabla] '+e)}catch(x){}}
+ /* v26: con una tabla abierta, lo que la app no entienda va a la tabla (nunca «No le entendí») */
+ if(curTbl&&tblCur()&&!tblFlow&&!tblNew&&!vd&&!nf&&Date.now()-tblLastAt<TBL_WIN&&!(typeof App!=='undefined'&&App.awaitDate)){
+  tblCap={say:[],log:[]};let r;try{r=_ht25(text,opt)}finally{var C=tblCap;tblCap=null}
+  if(typeof r==='string'&&/^No le entend[ií]/.test(r)){const m=tblResumeWith(raw);if(m)return out(m)}
+  try{C.log.forEach(a=>logVoice.apply(null,a));if(C.say.length)speak(C.say[C.say.length-1])}catch(e){}
+  return r}
  return _ht25(text,opt)};
+const _spk26=speak;speak=function(t){if(tblCap){tblCap.say.push(t);return}return _spk26(t)};
+const _lv26=logVoice;logVoice=function(){if(tblCap){tblCap.log.push([...arguments]);return}return _lv26.apply(null,arguments)};
+/* v26: mientras la tabla pregunta, se usa lo que mostró la pantalla (primera alternativa), no otra que «parezca comando» */
+const _hh26=handleHeard;handleHeard=function(alts){if(!(tblFlow||tblNew)||!tblCur()&&!tblNew)return _hh26(alts);
+ const raw=(alts||[]).filter(a=>a&&String(a).trim());if(!raw.length)return null;
+ const first=raw.find(a=>!isEcho(cleanHeard(a)));if(!first){try{logVoice(raw,[],'[eco ignorado]')}catch(e){}return null}
+ try{showHeard(first,false)}catch(e){}
+ const r=handleTranscript(cleanHeard(first)||first);try{logVoice(raw,raw.slice(1),r)}catch(e){}return r};
 
 /* abrir una tabla desde el flujo de notas (abrir nota X, tocar en la lista) */
 const _ofa25=openForAppend;openForAppend=function(n){if(isTbl(n))return tblOpen(n,false);return _ofa25(n)};
@@ -2571,8 +2602,12 @@ const _ns25=$('nSave').onclick;$('nSave').onclick=function(ev){if($('nFmt').valu
  if(!title)return alert('Ponga un título a la tabla.');if(cols.length<2||cols.length>TBL_MAX)return alert('La tabla necesita de 2 a '+TBL_MAX+' columnas, separadas por coma.');
  const n=tblCreate(title,cols);n.shared=[...$('nShare').querySelectorAll('input:checked')].map(i=>i.value);save();clearNote();renderNotes();
  setTimeout(()=>{const c=document.querySelector(`.note[data-id="${n.id}"]`);if(c)c.scrollIntoView({block:'start'})},40)};
+/* v26: la versión no desaparece del título al guardar una nota con el formulario */
+function ensureVer(){try{const h=$('nTitle');if(h&&!document.getElementById('appVer')){const v=document.createElement('span');v.id='appVer';v.className='ver';v.textContent=APPVER;h.appendChild(v)}}catch(e){}}
+const _cln26=clearNote;clearNote=function(){const r=_cln26.apply(this,arguments);ensureVer();return r};
+const _rn26=renderNotes;renderNotes=function(){const r=_rn26.apply(this,arguments);ensureVer();return r};
 try{renderNotes()}catch(e){}
-try{Object.assign(window.App,{handleTranscript,tblParseCreate,tblSplit,tblReadAll,closeNote,readNote});
+try{Object.assign(window.App,{handleTranscript,handleHeard,tblParseCreate,tblSplit,tblReadAll,closeNote,readNote});
  Object.defineProperties(window.App,{curTable:{get(){return tblCur()},enumerable:true},tableFlow:{get(){return tblFlow},enumerable:true},
   _tblIdleMs:{get(){return tblIdleMs},set(v){tblIdleMs=+v||90000},enumerable:true}});
  window.App.__fireTableSilence=function(){if(!tblFlow)return null;tblStopTimer();const m=tblEndFlow(true);try{$('interim').textContent=m}catch(e){}return m};
