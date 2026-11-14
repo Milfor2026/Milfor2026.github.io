@@ -154,6 +154,18 @@ dialog{border:0;border-radius:22px;width:min(94vw,480px);padding:18px;box-shadow
 dialog::backdrop{background:#2a1a1088;backdrop-filter:blur(4px)}
 .warn{background:#fdecea;color:#7a1c1c;border-radius:14px;padding:12px;font-size:15px;font-weight:650}
 .hide{display:none!important}
+.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0;border:1px solid var(--line);border-radius:14px;background:var(--card,#fff)}
+.tbl{border-collapse:collapse;min-width:100%}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:4px;vertical-align:middle}
+.tbl thead th{background:color-mix(in srgb,var(--acc) 12%,#fff);position:sticky;top:0}
+.tbl input{font-size:16px;min-width:96px;width:100%;border:1px solid transparent;border-radius:10px;padding:8px;background:transparent;color:var(--tx)}
+.tbl input.thead{font-weight:800}
+.tbl input:focus{border-color:var(--acc);background:#fff;outline:none}
+.tbl .tnum{color:#8a7a6a;font-size:13px;text-align:center;width:28px;min-width:28px;padding:0 2px}
+.tbl .tact{width:44px}
+.tbl .tdel{min-width:40px;min-height:40px;border:0;border-radius:10px;background:#fdecea;color:#7a1c1c;font-size:16px}
+.tbtns{display:flex;gap:8px;flex-wrap:wrap}.tbtns .btn{flex:1 1 auto}
+
 .colors button{width:44px;height:44px;border-radius:50%;border:3px solid #fff;margin-right:6px;box-shadow:0 0 0 1px #999}
 .colors button.sel{box-shadow:0 0 0 3px #1c1410}
 
@@ -224,6 +236,17 @@ body.hc #tabla tr.cat .bed{background:#fff!important;color:#000!important;outlin
 
 body.ios #appTop{padding-top:env(safe-area-inset-top)}
 body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
+.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0;border:1px solid var(--line);border-radius:14px;background:var(--card,#fff)}
+.tbl{border-collapse:collapse;min-width:100%}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:4px;vertical-align:middle}
+.tbl thead th{background:#f6ece0}
+.tbl input{font-size:16px;min-width:96px;width:100%;box-sizing:border-box;border:1px solid transparent;border-radius:10px;padding:8px;background:transparent;color:var(--ink)}
+.tbl input.thead{font-weight:800}
+.tbl input:focus{border-color:var(--acc);background:#fff;outline:none}
+.tbl .tnum{color:#8a7a6a;font-size:13px;text-align:center;width:28px;min-width:28px;padding:0 2px}
+.tbl .tact{width:44px}
+.tbl .tdel{min-width:40px;min-height:40px;border:0;border-radius:10px;background:#fdecea;color:#7a1c1c;font-size:16px}
+.tbtns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.tbtns .btn{flex:1 1 auto}
 </style>
 </head>
 <body>
@@ -253,7 +276,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v24</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v25</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -333,7 +356,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v24</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v25</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -1228,8 +1251,8 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v24';
-const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo, cuénteme qué tengo o repítame la lista. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
+const APPVER='v25';
+const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo, cuénteme qué tengo o repítame la lista. Para una tabla, diga crear tabla, el nombre y las columnas. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
 let lastSpoken='',lastSpokenAt=0,vLog=[],_tryAlt=false;
@@ -2349,6 +2372,211 @@ askDelete=function(pre){
   return r;
 };
 try{Object.assign(window.App,{delItem,itemDelCmd,askDelete,askDelStep,undoLastDict,handleTranscript,delDoneMsg})}catch(e){}
+
+
+
+/* ===== v25: notas tipo «tabla» (columnas de texto, sin cálculos) ===== */
+let curTbl=null,tblFlow=null,tblNew=null,tblTimer=null,tblIdleMs=90000;
+const TBL_MAX=5;
+const isTbl=n=>!!(n&&n.fmt==='tabla');
+function tblNotes(){return visibleNotes().filter(isTbl)}
+function tblGet(id){return S.notes.find(x=>x.id===id&&isTbl(x))||null}
+function tblCur(){return curTbl?tblGet(curTbl):null}
+function tblFix(n){if(!Array.isArray(n.cols))n.cols=['Columna 1','Columna 2'];if(!Array.isArray(n.rows))n.rows=[];if(!Array.isArray(n.items))n.items=[];if(typeof n.body!=='string')n.body='';return n}
+function tblTouch(n){n.updated=new Date().toISOString();save();try{renderNotes()}catch(e){}}
+function tblCol(c){return cap(clean(String(c||'')))}
+function tblSplit(txt,forceWords){let s=String(txt||'').replace(/[:;]/g,',').trim();
+ const hasSep=/,|\bcoma\b|\bsiguiente\b/i.test(s);
+ let parts=s.split(/\s*,\s*|\s+coma\s+|\s*\bcoma\b\s*|\s+siguiente\s+|\s*\bsiguiente\b\s*/i).map(x=>clean(x)).filter(Boolean);
+ if(parts.length){const last=parts[parts.length-1];const mm=last.match(/^(.+?)\s+y\s+(.+)$/i);if(mm&&(hasSep||forceWords)){parts.splice(parts.length-1,1,clean(mm[1]),clean(mm[2]))}}
+ if(!hasSep&&forceWords)parts=s.split(/\s+y\s+|\s+/i).map(clean).filter(Boolean);
+ return parts}
+const NUMW={dos:2,tres:3,cuatro:4,cinco:5,uno:1,una:1,seis:6};
+function tblCreate(title,cols){const now=new Date().toISOString();
+ const n={id:uid(),owner:S.current,fmt:'tabla',title:cap(clean(title)),body:'',items:[],cols:cols.map(tblCol),rows:[],shared:[],created:now,updated:now};
+ S.notes.push(n);save();try{renderNotes()}catch(e){}return n}
+function tblByName(q){const L=tblNotes();if(!L.length)return null;const nq=nrm(q).replace(/\s+/g,' ').trim();if(!nq)return null;
+ const ex=L.find(n=>nrm(n.title).trim()===nq);if(ex)return ex;
+ const R=rankNotes(q,L);return R.length&&R[0].s>=40?R[0].n:null}
+function tblStopTimer(){if(tblTimer){clearTimeout(tblTimer);tblTimer=null}}
+function tblArm(){tblStopTimer();tblTimer=setTimeout(()=>{if(!tblFlow)return;const m=tblEndFlow(true);try{$('interim').textContent=m;if(typeof micOn!=='undefined'&&micOn)speak(m);logVoice('[silencio tabla]',[],m)}catch(e){}},tblIdleMs)}
+function tblAsk(){const n=tblCur();if(!n||!tblFlow)return '';tblArm();return '¿'+n.cols[tblFlow.col]+'?'}
+function tblStartRow(pre){const n=tblCur();if(!n)return pre||'';tblFlow={row:null,col:0,step:'col'};return (pre?pre+' ':'')+'Nueva fila. '+tblAsk()}
+function tblRowSay(n,r){return n.cols.map((c,j)=>r[j]?r[j]:null).filter(Boolean).join(', ')||'vacía'}
+function tblEndFlow(silence){const n=tblCur();const F=tblFlow;tblFlow=null;tblStopTimer();
+ if(n&&F&&F.row!=null){const r=n.rows[F.row];if(r&&!r.some(x=>x&&String(x).trim())){n.rows.splice(F.row,1);tblTouch(n)}}
+ if(!n)return 'Listo.';
+ const k=n.rows.length;
+ if(silence)return 'Dejé la tabla '+n.title+' abierta, con '+k+(k===1?' fila':' filas')+'. Lo que dijo quedó guardado. Para seguir, diga agregar fila.';
+ return 'Listo. La tabla '+n.title+' tiene '+k+(k===1?' fila.':' filas.')}
+function tblPutVal(v){const n=tblCur();const F=tblFlow;if(!n||!F)return null;
+ if(F.row==null){n.rows.push(n.cols.map(()=>''));F.row=n.rows.length-1}
+ n.rows[F.row][F.col]=v;tblTouch(n);
+ F.col++;
+ if(F.col<n.cols.length)return tblAsk();
+ const r=n.rows[F.row];F.step='more';F.col=0;tblArm();
+ return 'Fila '+(F.row+1)+': '+tblRowSay(n,r)+'. ¿Otra fila?'}
+function tblFindRow(n,q){const W=toks(q).filter(w=>!STOPW.has(w));if(!W.length)return -1;
+ const mnum=nrm(q).match(/^(?:la )?(?:fila )?(?:numero )?(\d+)$/);if(mnum){const k=+mnum[1]-1;return k>=0&&k<n.rows.length?k:-1}
+ let best=-1,bs=0;n.rows.forEach((r,i)=>{const T=toks(r.join(' '));let s=0;W.forEach(w=>{if(T.includes(w))s+=2;else if(T.some(t=>t.startsWith(w)||w.startsWith(t)&&t.length>2))s+=1});const f=toks(r[0]||'');if(f.join(' ')===W.join(' '))s+=5;if(s>bs){bs=s;best=i}});
+ return bs>=Math.max(1,W.length)?best:-1}
+function tblReadRow(n,i){const r=n.rows[i];return n.cols.map((c,j)=>c+' '+(r[j]||'vacío')).join(', ')+'.'}
+function tblReadAll(n){if(!n.rows.length)return 'La tabla '+n.title+' está vacía. Columnas: '+joinY(n.cols.map(lc))+'.';
+ return n.title+', '+n.rows.length+(n.rows.length===1?' fila. ':' filas. ')+n.rows.map((r,i)=>'Fila '+(i+1)+': '+tblReadRow(n,i)).join(' ')}
+function tblOpen(n,ask){tblFix(n);curTbl=n.id;tblFlow=null;tblStopTimer();tblNew=null;
+ if(vd){try{saveDraft()}catch(e){vd=null}try{draftUI()}catch(e){}}curNote=null;nf=null;try{nfUI()}catch(e){}
+ if(tab!=='notas')setTab('notas');try{renderNotes()}catch(e){}
+ const k=n.rows.length,pre='Abrí la tabla '+n.title+'. Tiene '+k+(k===1?' fila.':' filas.');
+ if(ask)return tblStartRow(pre);
+ return pre+' Para llenar otra, diga agregar fila.'}
+function tblCloseAll(){const n=tblCur();tblFlow=null;tblStopTimer();curTbl=null;tblNew=null;return n?'Cerré la tabla '+n.title+'.':'Cerré la tabla.'}
+function tblParseCreate(raw){const st=cleanHeard(stripPolite(raw));const t=nrm(st).replace(/\s+/g,' ').trim();
+ const m=t.match(/^(?:quiero |necesito |voy a )?(?:crear|crea|cree|nueva|nuevo|hacer|haga|abrir una nueva|abra una nueva|abrir una|abra una)( una)? tabla\b/);if(!m)return null;
+ let rest=st.replace(/^\s*(?:quiero |necesito |voy a )?\S+(?:\s+una)?(?:\s+nueva)?\s+tabla\b/i,'').trim();
+ rest=rest.replace(/^(?:llamada|que se llame|de nombre|con el nombre|con nombre|nombre)\s+/i,'').trim();
+ let title=rest,colTxt='',num=null;
+ const cm=rest.match(/^(.*?)\s*\bcon\b\s*(.*)$/i);
+ if(cm){title=cm[1];colTxt=cm[2]}else if(/^\s*(?:de\s+)?(\d|dos|tres|cuatro|cinco)\s+columnas/i.test(rest)){title='';colTxt=rest}
+ const nm=colTxt.match(/^(?:las\s+)?(\d+|dos|tres|cuatro|cinco|uno|una|seis)?\s*columnas?\b[\s:,]*(?:que se llaman\s+|llamadas\s+)?(.*)$/i);
+ let names=[];if(nm){if(nm[1])num=/^\d+$/.test(nm[1])?+nm[1]:NUMW[nrm(nm[1])];names=nm[2]?tblSplit(nm[2],false):[]}
+ if(names.length&&num&&names.length<num){const w=tblSplit(nm[2],true);if(w.length===num)names=w}
+ if(names.length&&!num&&names.length<2){const w=tblSplit(nm[2],true);if(w.length>=2&&w.length<=TBL_MAX)names=w}
+ return {title:clean(title.replace(/[.,]+$/,'')),num,names}}
+function tblCreateStep(p){
+ if(p.num!=null&&(p.num<2||p.num>TBL_MAX))return {msg:'La tabla puede tener de 2 a '+TBL_MAX+' columnas. ¿Cuántas columnas quiere y cómo se llaman?',keep:true};
+ if(!p.title){tblNew={step:'name',num:p.num,names:p.names};return {msg:'¿Cómo se llama la tabla?'}}
+ const ex=tblByName(p.title);if(ex&&nrm(ex.title).trim()===nrm(p.title).trim()){tblNew=null;return {msg:'Ya existe la tabla '+ex.title+'. '+tblOpen(ex,true)}}
+ if(!p.names.length||(p.num&&p.names.length!==p.num)||p.names.length<2){tblNew={step:'cols',num:p.num,title:p.title};return {msg:'¿Cuáles son las columnas de '+cap(p.title)+'? Diga los nombres separados por coma, por ejemplo: tienda, cuenta y clave.'}}
+ if(p.names.length>TBL_MAX)return {msg:'La tabla puede tener de 2 a '+TBL_MAX+' columnas. Diga los nombres otra vez.'};
+ tblNew=null;const n=tblCreate(p.title,p.names);
+ return {msg:tblOpen(n,true).replace(/^Abrí la tabla [^.]*\. Tiene 0 filas\./,'Creé la tabla '+n.title+' con '+n.cols.length+' columnas: '+joinY(n.cols.map(lc))+'.')}}
+function tblNewStep(raw){const st=cleanHeard(stripPolite(raw)),t=nrm(st).trim();
+ if(/^(cancelar|cancela|olvidalo|nada|salir)$/.test(t)){tblNew=null;return 'Cancelado.'}
+ if(tblNew.step==='name'){const title=clean(st.replace(/^(se llama|llamada|el nombre es|nombre)\s+/i,''));if(!title)return '¿Cómo se llama la tabla?';
+  return tblCreateStep({title,num:tblNew.num,names:tblNew.names||[]}).msg}
+ if(tblNew.step==='cols'){let txt=st.replace(/^(?:las\s+)?(?:columnas\s+)?(?:son\s+)?/i,'');let num=tblNew.num;
+  const nm=txt.match(/^(\d+|dos|tres|cuatro|cinco)\s+columnas?\b[\s:,]*(.*)$/i);if(nm){num=/^\d+$/.test(nm[1])?+nm[1]:NUMW[nrm(nm[1])];txt=nm[2]}
+  let names=tblSplit(txt,false);if(num&&names.length<num){const w=tblSplit(txt,true);if(w.length===num)names=w}
+  if(!num&&names.length<2){const w=tblSplit(txt,true);if(w.length>=2)names=w}
+  if(names.length<2)return 'Necesito al menos 2 columnas. Diga los nombres separados por coma, por ejemplo: tienda, cuenta y clave.';
+  if(names.length>TBL_MAX)return 'La tabla puede tener hasta '+TBL_MAX+' columnas. Diga los nombres otra vez.';
+  return tblCreateStep({title:tblNew.title,num:names.length,names}).msg}
+ tblNew=null;return null}
+const YES=/^(si|sí|claro|dale|otra|otra fila|otra mas|una mas|bueno|ok|okay|de una|listo si|si otra|si por favor)$/;
+const NOMORE=/^(no|no mas|terminar|termine|termina|listo|ya|ya esta|ya no|nada mas|eso es todo|es todo|fin|cerrar|cerrar tabla|cerrar nota|salir|parar|ninguna|ninguno)$/;
+function tblCmd(raw){const st=cleanHeard(stripPolite(raw));const t=nrm(st).replace(/\s+/g,' ').trim();if(!t)return null;
+ const hasTbl=/\btablas?\b/.test(t);const n=tblCur();
+ if(/\bpresupuesto\b/.test(t)&&/\d|cien|mil/.test(t))return null;
+ /* crear */
+ const pc=tblParseCreate(raw);if(pc){if(vd||nf){if(nf){nf=null;try{nfUI()}catch(e){}}else return 'Tiene una nota abierta. Primero diga cerrar nota y luego crear tabla.'}return tblCreateStep(pc).msg}
+ /* abrir */
+ let m=t.match(/^(?:abrir|abra|abre|abrame|ir a|ver|mostrar|muestre)\s+(?:la\s+)?tabla\s*(?:de\s+|del\s+|llamada\s+)?(.*)$/);
+ if(m){if(!m[1]){const L=tblNotes();if(!L.length)return 'No tiene tablas. Diga crear tabla y el nombre.';return '¿Cuál tabla? Tiene: '+joinO(recentOf(L,3).map(x=>x.title))+'.'}
+  const x=tblByName(m[1]);if(!x){const L=tblNotes();return 'No encontré la tabla '+clean(m[1])+'.'+(L.length?' Sus tablas son: '+joinO(recentOf(L,3).map(y=>y.title))+'.':' Diga crear tabla y el nombre.')}
+  return tblOpen(x,true)}
+ /* leer toda la tabla (explícito) */
+ m=t.match(/^(?:leer|leame|lea|leeme|repitame|repita|repetir|oir|digame|dime|cuenteme)\s+(?:toda\s+)?(?:la\s+)?tabla\s*(?:de\s+|del\s+)?(.*)$/);
+ if(m){const x=m[1]?tblByName(m[1]):n;if(!x)return m[1]?'No encontré la tabla '+clean(m[1])+'.':'¿Cuál tabla? Diga leer la tabla y el nombre.';curTbl=x.id;return tblReadAll(tblFix(x))}
+ if(/^cerrar (la )?tabla$/.test(t)){if(!n)return 'No hay una tabla abierta.';return tblCloseAll()}
+ /* lo siguiente necesita una tabla abierta (o decir «tabla») */
+ let x=n;if(!x&&hasTbl){const mm=t.match(/\btabla\s+(?:de\s+|del\s+)?(.+?)$/);x=mm?tblByName(mm[1]):null}
+ if(!x)return null;tblFix(x);
+ if(/^cuant[ao]s filas\b/.test(t)||/^cuantas hay\b/.test(t)&&n){const k=x.rows.length;return 'La tabla '+x.title+' tiene '+k+(k===1?' fila.':' filas.')}
+ m=t.match(/^(?:agregar|agrega|agregue|anadir|anade|anada|nueva|poner|ponga|meter|otra)\s+(?:una\s+)?fila\b\s*(?:a la tabla\s+\S+\s*)?(.*)$/);
+ if(m){curTbl=x.id;const restRaw=st.replace(/^\s*\S+\s+(?:una\s+)?fila\b\s*/i,'').replace(/^a la tabla\s+\S+\s*/i,'').replace(/^[:,.\s]+/,'');
+  if(!clean(restRaw))return tblStartRow('');
+  const vals=tblSplit(restRaw,false);const row=x.cols.map((c,j)=>vals[j]?cap(vals[j]):'');
+  if(vals.length>x.cols.length)row[x.cols.length-1]=vals.slice(x.cols.length-1).join(', ');
+  x.rows.push(row);tblTouch(x);
+  if(vals.length<x.cols.length){tblFlow={row:x.rows.length-1,col:vals.length,step:'col'};return 'Anoté '+tblRowSay(x,row)+'. '+tblAsk()}
+  return 'Fila '+x.rows.length+': '+tblRowSay(x,row)+'.'}
+ m=t.match(/^(?:leer|leame|lea|digame|dime|repitame)\s+(?:la\s+)?fila\s+(?:de\s+|del\s+|numero\s+)?(.+)$/);
+ if(m){const i=tblFindRow(x,m[1]);if(i<0)return 'No encontré la fila de '+clean(m[1])+'. Diga leer la tabla si quiere oírla toda.';return 'Fila '+(i+1)+': '+tblReadRow(x,i)}
+ m=t.match(/^(?:borrar|borre|borra|eliminar|elimine|elimina|quitar|quite|quita|sacar|saque)\s+(?:la\s+)?fila\s+(?:de\s+|del\s+|numero\s+)?(.+)$/);
+ if(m){const i=tblFindRow(x,m[1]);if(i<0)return 'No encontré la fila de '+clean(m[1])+'. Diga leer la tabla si quiere oírla.';
+  const r=x.rows.splice(i,1)[0];tblTouch(x);const X=x;pushUndo('Fila borrada',()=>{X.rows.splice(Math.min(i,X.rows.length),0,r);X.updated=new Date().toISOString()});
+  const k=x.rows.length;return 'Listo, eliminada la fila de '+(r[0]||('número '+(i+1)))+'. '+(k?'Quedan '+k+(k===1?' fila.':' filas.'):'La tabla quedó vacía.')}
+ if(n&&/^(eliminar|elimine|borrar|borre|quitar|quite)( algo| una fila| una cosa)?$/.test(t))return '¿Qué fila quiere borrar? Diga, por ejemplo: borrar fila de '+(x.rows[0]&&x.rows[0][0]?x.rows[0][0]:'Amazon')+'.';
+ m=t.match(/^(?:cambiar|cambie|cambia|corregir|corrija|poner|ponga|actualizar)\s+(?:el\s+|la\s+|los\s+|las\s+)?(.+?)\s+(?:de|del)\s+(.+?)\s+(?:a|por|en)\s+(.+)$/);
+ if(m){const ci=x.cols.findIndex(c=>nrm(c).trim()===m[1].trim()||nrm(c).trim().replace(/s$/,'')===m[1].trim().replace(/s$/,''));
+  if(ci>=0){const i=tblFindRow(x,m[2]);if(i<0)return 'No encontré la fila de '+clean(m[2])+'.';
+   const mv=st.match(/\s(?:a|por|en)\s+(.+)$/i);const nv=cap(clean(mv?mv[1]:m[3]));const old=x.rows[i][ci];x.rows[i][ci]=nv;tblTouch(x);const X=x;pushUndo('Cambio en la tabla',()=>{X.rows[i][ci]=old});
+   return 'Listo: '+lc(x.cols[ci])+' de '+(x.rows[i][0]||('la fila '+(i+1)))+' ahora es '+nv+'.'}}
+ if(n&&/^(cerrar nota|terminar|listo terminar)$/.test(t))return tblCloseAll();
+ return null}
+function tblFlowStep(raw){const st=cleanHeard(stripPolite(raw)),t=nrm(st).replace(/\s+/g,' ').trim();const n=tblCur();if(!n){tblFlow=null;return null}
+ if(tblFlow.step==='more'){if(YES.test(t)){tblFlow={row:null,col:0,step:'col'};return 'Nueva fila. '+tblAsk()}
+  if(NOMORE.test(t)){const r=tblEndFlow(false);if(/^cerrar/.test(t)){curTbl=null;return r+' Cerré la tabla.'}return r}
+  const c=tblCmd(raw);if(c!=null)return c;tblEndFlow(false);return null}
+ if(/^(cancelar|cancela|cancelar fila|borrar fila|olvidalo)$/.test(t)){const F=tblFlow;tblFlow=null;tblStopTimer();if(F.row!=null){n.rows.splice(F.row,1);tblTouch(n)}return 'Cancelé esa fila.'}
+ if(NOMORE.test(t)&&!/^(no|ninguno|ninguna|nada|ya)$/.test(t)||/^(terminar|termine|ya termine|cerrar tabla|cerrar nota|no mas|eso es todo)$/.test(t)){const r=tblEndFlow(false);if(/^cerrar/.test(t)){curTbl=null;return r+' Cerré la tabla.'}return r}
+ if(/^(leer|leame|lea|repitame|repita|cuantas filas|borrar fila|borre la fila|eliminar fila|elimine la fila|cambiar\s.+\s(de|del)\s.+\s(a|por)\s)/.test(t)||/^(leer|leame) (la )?(tabla|fila)\b/.test(t)){const c=tblCmd(raw);if(c!=null){tblArm();return c+' '+tblAsk()}}
+ let v=st;if(/^(saltar|salte|siguiente|vacio|vacia|en blanco|ninguno|ninguna|nada|sin dato|no se)$/.test(t))v='';
+ v=v.replace(/^[,.\s]+|[,.\s]+$/g,'');if(v)v=cap(v);
+ return tblPutVal(v)}
+
+const _ht25=handleTranscript;
+handleTranscript=function(text,opt){if(!text||!String(text).trim())return _ht25(text,opt);
+ const raw=String(text);
+ const out=x=>{S.lastActivity=Date.now();try{showHeard(raw.trim(),false)}catch(e){}try{$('interim').textContent=x;speak(x);logVoice(cleanHeard(raw)||raw,[],x)}catch(e){}return x};
+ try{if(typeof isEcho==='function'&&isEcho(cleanHeard(raw)))return _ht25(text,opt)}catch(e){}
+ try{
+  if((vd||nf)&&!tblFlow&&!tblNew)curTbl=null;
+  if(tblNew){const r=tblNewStep(raw);if(r!=null)return out(r)}
+  if(tblFlow&&tblCur()){const r=tblFlowStep(raw);if(r!=null)return out(r)}
+  if(!(typeof App!=='undefined'&&App.awaitDate)){const t=nrm(cleanHeard(stripPolite(raw))).replace(/\s+/g,' ').trim();
+   if(/\btablas?\b/.test(t)||(curTbl&&tblCur())){const r=tblCmd(raw);if(r!=null)return out(r)}}
+ }catch(e){try{logVoice(raw,[],'[error tabla] '+e)}catch(x){}}
+ return _ht25(text,opt)};
+
+/* abrir una tabla desde el flujo de notas (abrir nota X, tocar en la lista) */
+const _ofa25=openForAppend;openForAppend=function(n){if(isTbl(n))return tblOpen(n,false);return _ofa25(n)};
+const _rn25=readNote;readNote=function(n){if(isTbl(n))return tblReadAll(tblFix(n));return _rn25(n)};
+const _ro25=readOut;readOut=function(n){if(isTbl(n)){curTbl=n.id;return tblReadAll(tblFix(n))}return _ro25(n)};
+const _av25=afterVieja;afterVieja=function(n){if(isTbl(n)&&n.owner===S.current){nf=null;try{nfUI()}catch(e){}return tblOpen(n,true)}return _av25(n)};
+const _iwo25=isWorkOpen;isWorkOpen=function(){if(tblFlow)return true;return _iwo25()};
+/* «nota nueva» → tipo «tabla» */
+const _fs25=flowStep;flowStep=function(raw){if(nf&&nf.step==='type'&&/\btabla\b/.test(nrm(raw))){const title=nf.title;nf=null;try{nfUI()}catch(e){}return tblCreateStep({title,num:null,names:[]}).msg}return _fs25(raw)};
+const _cn25=closeNote;closeNote=function(){if(curTbl&&!vd){return tblCloseAll()}return _cn25()};
+
+/* pantalla: cuadrícula editable */
+function tblGridHtml(n){tblFix(n);const mine=n.owner===S.current,ro=mine?'':' readonly';
+ return `<div class="tblwrap"><table class="tbl" data-tbl="${n.id}"><thead><tr><th class="tnum">#</th>${n.cols.map((c,j)=>`<th><input class="thead" data-tbl="${n.id}" data-tc="${j}" value="${esc(c)}" aria-label="Nombre de la columna ${j+1}"${ro}></th>`).join('')}${mine?'<th class="tact"></th>':''}</tr></thead><tbody>${n.rows.map((r,i)=>`<tr><td class="tnum">${i+1}</td>${n.cols.map((c,j)=>`<td><input class="tcell" data-tbl="${n.id}" data-tr="${i}" data-tc="${j}" value="${esc(r[j]||'')}" aria-label="${esc(c)}, fila ${i+1}"${ro}></td>`).join('')}${mine?`<td class="tact"><button type="button" class="tdel" data-tbl="${n.id}" data-tdel="${i}" aria-label="Borrar fila ${i+1}">✕</button></td>`:''}</tr>`).join('')||`<tr><td class="tnum"></td><td colspan="${n.cols.length+(mine?1:0)}" class="small">Sin filas todavía. Toque + Fila o diga agregar fila.</td></tr>`}</tbody></table></div>`+
+ (mine?`<div class="tbtns"><button type="button" class="btn" data-tadd="${n.id}">+ Fila</button><button type="button" class="btn sec" data-tsort="${n.id}">Ordenar A-Z</button></div>`:'')}
+const _rN25=renderNotes;renderNotes=function(){const q=norm(($('nSearch')||{}).value||'').trim();const T=S.notes.filter(isTbl);const saved=T.map(n=>n.body);
+ if(q)T.forEach(n=>{tblFix(n);n.body=n.cols.join(' ')+' '+n.rows.map(r=>r.join(' ')).join(' ')});
+ try{_rN25()}finally{T.forEach((n,i)=>{n.body=saved[i]||''})}
+ document.querySelectorAll('#nList .note').forEach(c=>{const n=S.notes.find(x=>x.id===c.dataset.id);if(!isTbl(n))return;c.classList.add('tblnote');
+  c.querySelectorAll(':scope > ul, :scope > ol, [data-edit], [data-paste]').forEach(e=>e.remove());const tg=c.querySelector('.tag');if(tg)tg.textContent='Tabla';
+  const h=c.querySelector('h3');if(h&&!h.textContent.trim())h.textContent='Tabla';
+  const w=document.createElement('div');w.className='tblbox';w.innerHTML=tblGridHtml(n);const del=c.querySelector('[data-delnote]');if(del)c.insertBefore(w,del);else c.appendChild(w)})};
+$('nList').addEventListener('click',e=>{const el=e.target;const card=el.closest&&el.closest('.tblnote');if(!card)return;
+ if(el.closest('[data-delnote]'))return;
+ const add=el.closest('[data-tadd]'),srt=el.closest('[data-tsort]'),del=el.closest('[data-tdel]');
+ if(add||srt||del||el.closest('.tblbox')){e.stopPropagation();e.stopImmediatePropagation()}
+ if(add){const n=tblGet(add.dataset.tadd);if(!n)return;n.rows.push(n.cols.map(()=>''));tblTouch(n);const i=n.rows.length-1;setTimeout(()=>{const f=document.querySelector(`.tcell[data-tbl="${n.id}"][data-tr="${i}"][data-tc="0"]`);if(f)f.focus()},30);return}
+ if(srt){const n=tblGet(srt.dataset.tsort);if(!n)return;const old=n.rows.slice();n.rows.sort((a,b)=>{const x=(a[0]||'').trim(),y=(b[0]||'').trim();if(!x&&y)return 1;if(x&&!y)return -1;return x.localeCompare(y,'es',{sensitivity:'base',numeric:true})});tblTouch(n);pushUndo('Tabla ordenada',()=>{n.rows=old});return}
+ if(del){const n=tblGet(del.dataset.tbl);const i=+del.dataset.tdel;if(!n||!n.rows[i])return;if(!confirm('¿Borrar la fila '+(i+1)+(n.rows[i][0]?' ('+n.rows[i][0]+')':'')+'?'))return;const r=n.rows.splice(i,1)[0];tblTouch(n);pushUndo('Fila borrada',()=>{n.rows.splice(Math.min(i,n.rows.length),0,r)});return}
+},true);
+$('nList').addEventListener('change',e=>{const el=e.target;if(!el.dataset||!el.dataset.tbl)return;const n=tblGet(el.dataset.tbl);if(!n||n.owner!==S.current)return;
+ if(el.classList.contains('tcell')){const i=+el.dataset.tr,j=+el.dataset.tc;if(!n.rows[i])return;n.rows[i][j]=el.value.trim();n.updated=new Date().toISOString();save()}
+ if(el.classList.contains('thead')){const j=+el.dataset.tc;const v=el.value.trim();if(!v){el.value=n.cols[j];return}n.cols[j]=v;n.updated=new Date().toISOString();save()}});
+$('nList').addEventListener('keydown',e=>{const el=e.target;if(e.key==='Enter'&&el.classList&&el.classList.contains('tcell')){e.preventDefault();el.blur()}});
+/* formulario «Nueva nota»: tipo Tabla */
+try{const o=document.createElement('option');o.value='tabla';o.textContent='Tabla (columnas)';$('nFmt').appendChild(o)}catch(e){}
+const _fc25=fmtChange;fmtChange=function(){_fc25();if($('nFmt').value==='tabla'){$('nBodyL').textContent='Columnas (separadas por coma, de 2 a '+TBL_MAX+')';if(!$('nBody').value)$('nBody').placeholder='Tienda, Cuenta, Clave'}else $('nBody').placeholder=''};
+$('nFmt').onchange=fmtChange;
+const _ns25=$('nSave').onclick;$('nSave').onclick=function(ev){if($('nFmt').value!=='tabla')return _ns25.call(this,ev);
+ const title=$('nTit').value.trim();const cols=tblSplit($('nBody').value.replace(/\n/g,','),false);
+ if(!title)return alert('Ponga un título a la tabla.');if(cols.length<2||cols.length>TBL_MAX)return alert('La tabla necesita de 2 a '+TBL_MAX+' columnas, separadas por coma.');
+ const n=tblCreate(title,cols);n.shared=[...$('nShare').querySelectorAll('input:checked')].map(i=>i.value);save();clearNote();renderNotes();
+ setTimeout(()=>{const c=document.querySelector(`.note[data-id="${n.id}"]`);if(c)c.scrollIntoView({block:'start'})},40)};
+try{renderNotes()}catch(e){}
+try{Object.assign(window.App,{handleTranscript,tblParseCreate,tblSplit,tblReadAll,closeNote,readNote});
+ Object.defineProperties(window.App,{curTable:{get(){return tblCur()},enumerable:true},tableFlow:{get(){return tblFlow},enumerable:true},
+  _tblIdleMs:{get(){return tblIdleMs},set(v){tblIdleMs=+v||90000},enumerable:true}});
+ window.App.__fireTableSilence=function(){if(!tblFlow)return null;tblStopTimer();const m=tblEndFlow(true);try{$('interim').textContent=m}catch(e){}return m};
+}catch(e){}
 
 
 Object.defineProperties(window.App,{wakeLockOn:{get(){return !!(wl&&!wl.released)},enumerable:true},workOpen:{get(){return isWorkOpen()},enumerable:true},tab:{get(){return tab},enumerable:true}});
