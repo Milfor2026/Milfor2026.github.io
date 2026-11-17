@@ -188,6 +188,10 @@ body.hc .btn.sec{background:#333;color:#fff;border-color:#555}
 body.hc .pend{background:#3a3208;border-color:#aa0;color:#fff}
 body.hc .bar{background:#333}body.hc .tag{background:#333;color:#fff}
 body.hc header select{background:#fff;color:#111}
+#updBtn{margin:0 8px 0 4px;padding:5px 10px;border:0;border-radius:12px;background:#ffd89a;color:#2a1f16;font-weight:800;font-size:14px;line-height:1.15;display:flex;flex-direction:column;align-items:center;min-height:44px;justify-content:center;cursor:pointer;flex:0 0 auto}
+#updBtn .u2{font-size:12px;font-weight:700;opacity:.8}
+#updMsg{position:fixed;left:10px;right:10px;top:calc(70px + env(safe-area-inset-top));background:#2a1f16;color:#fff;border-radius:12px;padding:12px 14px;z-index:30;font-size:17px;font-weight:700;text-align:center;box-shadow:0 8px 22px #0006}
+#updMsg.hide{display:none}
 .delta.up{color:var(--red)}.delta.down{color:var(--ok)}
 
 @media (prefers-color-scheme:dark){
@@ -250,7 +254,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </style>
 </head>
 <body>
-<div id="appTop"><header><h1>Notas y Gastos</h1><button id="instBtn" class="btn sec hide" style="margin:0;padding:6px 10px">Instalar app</button><select id="profSel" aria-label="Perfil"></select></header>
+<div id="appTop"><header><h1>Notas y Gastos</h1><button id="updBtn" type="button" aria-label="Actualizar la app"><span class="u1">⟳ Actualizar</span><span id="hdrVer" class="u2">v27.2</span></button><button id="instBtn" class="btn sec hide" style="margin:0;padding:6px 10px">Instalar app</button><select id="profSel" aria-label="Perfil"></select></header>
 <div id="instBanner" class="hide" style="background:#fff3cd;padding:8px 12px;font-size:14px">Puede instalar esta app en su pantalla principal. <button class="btn" id="instBanGo" style="padding:6px 10px">Instalar</button> <button class="btn sec" id="instBanX" style="padding:6px 10px">Ahora no</button></div>
 <nav><button data-tab="fin" class="on">Finanzas</button><button data-tab="notas">Notas</button><button data-tab="mant">Mantenimiento</button><button data-tab="aj">Ajustes</button></nav></div>
 <div id="banners"></div>
@@ -276,7 +280,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v27.1</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v27.2</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -356,7 +360,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v27.1</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v27.2</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -1259,7 +1263,7 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v27.1';
+const APPVER='v27.2';
 const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo, cuénteme qué tengo o repítame la lista. Para una tabla, diga crear tabla, el nombre y las columnas. Para vaciar la lista abierta, diga eliminar todas; para borrar una nota completa, diga borrar la nota y el nombre. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
@@ -2741,6 +2745,63 @@ try{Object.assign(window.App,{handleTranscript});Object.defineProperty(window.Ap
  App.__resetSection=resetSection;
  try{const nav=document.querySelector('nav');nav.addEventListener('click',e=>{const b=e.target&&e.target.closest?e.target.closest('[data-tab]'):null;const t=b&&b.dataset.tab;if(t&&t!==tab)resetSection()},true)}catch(e){}
  App.__fixData=fixData;
+})();
+/* ===== v27.2: botón «Actualizar» arriba, con la versión, en todas las secciones ===== */
+(function v272(){
+ let busy=false,hideT=null;
+ function msg(t,ms){let b=$('updMsg');if(!b){b=document.createElement('div');b.id='updMsg';b.setAttribute('role','status');document.body.appendChild(b)}b.textContent=t;b.classList.remove('hide');clearTimeout(hideT);if(ms)hideT=setTimeout(()=>b.classList.add('hide'),ms)}
+ async function latestVer(){try{const r=await fetch('./index.html?u='+Date.now(),{cache:'no-store'});if(!r.ok)return null;const tx=await r.text();const m=tx.match(/const APPVER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
+ async function clearCaches(){try{if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}}
+ function reloadNow(){try{sessionStorage.removeItem('gastosVoz.swReloaded');sessionStorage.setItem('gastosVoz.updAsked',APPVER)}catch(e){}location.reload()}
+ async function checkUpdate(){if(busy)return;busy=true;msg('Buscando actualización…');
+  try{let reg=null;try{reg=('serviceWorker' in navigator)?await navigator.serviceWorker.getRegistration():null}catch(e){}
+   if(reg){try{await reg.update()}catch(e){}}
+   const latest=await latestVer();const w=reg&&(reg.waiting||reg.installing);
+   if((latest&&latest!==APPVER)||(reg&&reg.waiting)){
+    msg('Actualizando a '+(latest||'la versión nueva')+'…');
+    let done=false;const go=()=>{if(done)return;done=true;reloadNow()};
+    try{navigator.serviceWorker&&navigator.serviceWorker.addEventListener('controllerchange',go)}catch(e){}
+    if(w){try{w.postMessage({type:'SKIP_WAITING'})}catch(e){}}
+    await clearCaches();setTimeout(go,w?2500:300);return 'reload'}
+   if(!latest){msg('No pude revisar ahora (¿sin internet?). Tiene la versión '+APPVER+'.',5000);busy=false;return 'offline'}
+   msg('Ya tiene la última versión ('+APPVER+').',4000);busy=false;return 'same'}
+  catch(e){msg('No pude revisar ahora. Tiene la versión '+APPVER+'.',5000);busy=false;return 'error'}}
+ try{$('updBtn').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();checkUpdate()})}catch(e){}
+ try{const a=sessionStorage.getItem('gastosVoz.updAsked');if(a){sessionStorage.removeItem('gastosVoz.updAsked');setTimeout(()=>msg(a!==APPVER?'Listo, ya tiene la versión '+APPVER+'.':'Ya tiene la última versión ('+APPVER+').',4000),400)}}catch(e){}
+ App.checkUpdate=checkUpdate;
+})();
+/* ===== v27.2: saludo en Finanzas y cambiar de sección por voz ===== */
+(function v272b(){
+ const GREET={fin:'Finanzas. ¿Anotar un gasto o ver sus gastos?',mant:'Mantenimiento. Dígame.',aj:'Ajustes.'};
+ let prevTab=tab,voiceNav=false;
+ function greet(t){const g=GREET[t];if(!g)return null;try{unlockVoice()}catch(e){}try{$('interim').textContent=g;speak(g)}catch(e){}try{micOnAuto()}catch(e){}try{setMic()}catch(e){}return g}
+ App.__greet=greet;
+ const nav=document.querySelector('nav');
+ nav.addEventListener('click',e=>{prevTab=tab},true);
+ nav.addEventListener('click',e=>{const b=e.target&&e.target.closest?e.target.closest('[data-tab]'):null;const t=b&&b.dataset.tab;if(!t)return;
+  if(t!=='notas'&&(t!==prevTab||voiceNav))greet(t)});
+ function busyQ(){try{return !!(nf||cq||vd||awaitDate||awaitAmt||tblFlow||tblNew||addQ||askDel||askAdd||delQ||itemQ)}catch(e){return true}}
+ const SEC={notas:'notas',nota:'notas',finanzas:'fin',finanza:'fin',gastos:'fin',presupuesto:'fin',cuentas:'fin',mantenimiento:'mant',ajustes:'aj',configuracion:'aj'};
+ const PRE=/^(?:ir a|vamos a|vaya a|pasar a|pase a|cambiar a|cambie a|abrir|abra|abre|mostrar|muestreme|ensename|ver|volver a|regresar a)\s+(?:la\s+|las\s+|los\s+|el\s+)?(?:seccion\s+(?:de\s+)?|pestana\s+(?:de\s+)?)?(\S+)$/;
+ const BARE=/^(?:la\s+|las\s+)?(?:seccion\s+(?:de\s+)?)?(notas|finanzas|gastos|presupuesto|mantenimiento|ajustes|configuracion)$/;
+ const VERG=/^(?:ver|veame|muestreme|mostrar|leer|leame|deme|digame)?\s*(?:mis|sus|los)?\s*gastos(?: del mes| de este mes)?$|^cuanto (?:he gastado|gaste|llevo gastado|llevo)(?: este mes| en el mes)?$/;
+ const ANOT=/^(?:anotar|anote|apuntar|agregar|registrar)?\s*(?:un|el)?\s*gasto(?: nuevo)?$/;
+ function go(t){voiceNav=true;try{const b=document.querySelector('nav button[data-tab="'+t+'"]');b.click()}finally{voiceNav=false}
+  if(t==='notas'){try{return $('interim').textContent||''}catch(e){return ''}}return GREET[t]}
+ const _ht272=handleTranscript;handleTranscript=function(text,opt){try{const raw=String(text||'');const tt=nrm(cleanHeard(stripPolite(raw))).replace(/[.,;:!?¡¿]/g,'').replace(/\s+/g,' ').trim();
+   if(tt&&!(typeof isEcho==='function'&&isEcho(cleanHeard(raw)))){
+    let m=tt.match(PRE),sec=m&&SEC[m[1]];
+    if(!sec&&!busyQ()){m=tt.match(BARE);sec=m&&SEC[m[1]];if(sec==='fin'&&m[1]!=='finanzas'&&tab==='fin')sec=null}
+    if(sec&&!cq){S.lastActivity=Date.now();try{showHeard(raw.trim(),false)}catch(e){}const r=go(sec);try{logVoice(raw,[],r)}catch(e){}return r}
+    if(tab==='fin'&&!busyQ()){
+     if(VERG.test(tt))return _ht272('resumen del mes',opt);
+     if(ANOT.test(tt)){const r='Dígame la categoría y el monto. Por ejemplo: mercado 20.';try{$('interim').textContent=r;speak(r);logVoice(raw,[],r)}catch(e){}return r}}}}
+  catch(e){}
+  return _ht272(text,opt)};
+ /* al abrir la app en Finanzas, saludar una vez (si no hay otra pregunta en curso) */
+ /* al abrir la app en Finanzas: saluda la primera vez que toca el micrófono (el teléfono no deja hablar antes de un toque) */
+ let greeted=false;nav.addEventListener('click',()=>{greeted=true});
+ $('mic').addEventListener('click',()=>{if(greeted)return;greeted=true;setTimeout(()=>{try{if(tab==='fin'&&micOn&&!busyQ()&&!document.querySelector('dialog[open]'))greet('fin')}catch(e){}},250)});
 })();
 Object.assign(window.App,{handleTranscript,handleHeard});
 Object.defineProperties(window.App,{wakeLockOn:{get(){return !!(wl&&!wl.released)},enumerable:true},workOpen:{get(){return isWorkOpen()},enumerable:true},tab:{get(){return tab},enumerable:true}});
