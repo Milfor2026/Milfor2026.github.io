@@ -254,7 +254,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </style>
 </head>
 <body>
-<div id="appTop"><header><h1>Notas y Gastos</h1><button id="updBtn" type="button" aria-label="Actualizar la app"><span class="u1">⟳ Actualizar</span><span id="hdrVer" class="u2">v28</span></button><button id="instBtn" class="btn sec hide" style="margin:0;padding:6px 10px">Instalar app</button><select id="profSel" aria-label="Perfil"></select></header>
+<div id="appTop"><header><h1>Notas y Gastos</h1><button id="updBtn" type="button" aria-label="Actualizar la app"><span class="u1">⟳ Actualizar</span><span id="hdrVer" class="u2">v28.1</span></button><button id="instBtn" class="btn sec hide" style="margin:0;padding:6px 10px">Instalar app</button><select id="profSel" aria-label="Perfil"></select></header>
 <div id="instBanner" class="hide" style="background:#fff3cd;padding:8px 12px;font-size:14px">Puede instalar esta app en su pantalla principal. <button class="btn" id="instBanGo" style="padding:6px 10px">Instalar</button> <button class="btn sec" id="instBanX" style="padding:6px 10px">Ahora no</button></div>
 <nav><button data-tab="fin" class="on">Finanzas</button><button data-tab="notas">Notas</button><button data-tab="mant">Mantenimiento</button><button data-tab="aj">Ajustes</button></nav></div>
 <div id="banners"></div>
@@ -280,7 +280,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v28</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v28.1</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -360,7 +360,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v28</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v28.1</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -486,11 +486,20 @@ function answerQuery(text,p){const t=norm(text).replace(/[¿?¡!.,]/g,' ').repla
  if(/gaste|gastado|llevo/.test(t))return 'En '+c.name+' lleva gastado '+say$(s.g)+' de '+say$(s.b)+', el '+s.pct+' por ciento.';
  return 'En '+c.name+' le quedan '+say$(s.s)+'. Lleva el '+s.pct+' por ciento.'}
 function addExpense(p,catId,amount,date,note){const d=date||today();p.expenses.push({id:uid(),catId,amount:r2(amount),date:d,month:(date?d.slice(0,7):month),note:note||'',created:new Date().toISOString()})}
+
+/* v28.1: después de guardar, una sola frase corta: cuánto lleva gastado, el porcentaje y cuánto le queda (presupuesto de la categoría) */
+function spentMsg(s){if(!s)return '';
+ if(s.noCap||!(s.b>0))return ' Lleva gastado '+say$(s.g)+' este mes.';
+ const pct=Math.round(s.g/s.b*100);
+ if(s.g>s.b+0.004)return ' Lleva gastado '+say$(s.g)+' este mes, el '+pct+' por ciento. Se pasó por '+say$(r2(s.g-s.b))+'.';
+ return ' Lleva gastado '+say$(s.g)+' este mes, el '+pct+' por ciento. Le quedan '+say$(r2(s.b-s.g))+'.'}
+function monthMsg(p){try{const x=totals(p,month);if(!(x.b>0))return ' Este mes lleva gastado '+say$(x.g)+' en total.';const pct=Math.round(x.g/x.b*100);
+ return ' Este mes lleva gastado '+say$(x.g)+' en total, el '+pct+' por ciento.'+(x.g>x.b+0.004?' Se pasó por '+say$(r2(x.g-x.b))+'.':' Le quedan '+say$(r2(x.b-x.g))+'.')}catch(e){return ''}}
 function savePending(){if(!pending.length)return 'No hay gastos pendientes.';const p=P();const msgs=[];
  for(const x of pending){addExpense(p,x.catId,x.amount,x.date||(month===today().slice(0,7)?today():month+'-01'),x.kind==='pago'?'pago confirmado por voz':(x.note||''));const c=p.cats.find(c=>c.id===x.catId),s=catStat(p,c,x.date?x.date.slice(0,7):month);
-  if(x.kind==='pago'){msgs.push('Pago confirmado: '+c.name+', '+say$(x.amount)+'.'+(s.mismatch?' El monto no coincide con lo esperado ('+say$(s.exp)+').':'')+(c.carry?' Saldo acumulado: '+say$(s.s)+'.':''));continue}
-  let m='Guardado: '+c.name+', '+say$(x.amount)+(x.note?', '+x.note:'')+(s.noCap?'. Lleva '+say$(s.g)+' este mes.':'. Le quedan '+say$(s.s)+', lleva el '+s.pct+' por ciento.');
-  if(s.noCap||s.type==='fijo'||s.type==='variable'){}else if(s.g>s.b)m+=' Atención: se pasó del presupuesto por '+say$(-s.s)+'.';else if(s.pct>=80)m+=' Atención: ya pasó del 80 por ciento.';msgs.push(m)}
+  if(x.kind==='pago'){msgs.push('Pago confirmado: '+c.name+', '+say$(x.amount)+'.'+(s.mismatch?' El monto no coincide con lo esperado ('+say$(s.exp)+').':'')+(c.carry?' Saldo acumulado: '+say$(s.s)+'.':'')+monthMsg(p));continue}
+  let m='Guardado: '+c.name+', '+say$(x.amount)+(x.note?', '+x.note:'')+'.';
+  if(s.type==='fijo'||s.type==='variable')m+=monthMsg(p);else m+=spentMsg(s);msgs.push(m)}
  pending=[];save();render();return msgs.join(' ')}
 function handleFinance(text){const p=P(),t=norm(text);const out=[];
  const qa=answerQuery(text,p);if(qa)return qa;
@@ -947,7 +956,7 @@ function newCat(p,name,budget,type){const c={id:uid(),name:cap(clean(name)),budg
 function catAt(p,T,i){return matchCat(T,i,catKeys(p))}
 function firstAmount(T,from,skip){for(let i=from||0;i<T.length;i++){if(skip&&skip.has(i))continue;const a=parseAmount(T,i);if(a&&a.v>0)return {...a,i}}return null}
 function autoSave(p,c,amount,note){const e=addExpense(p,c.id,amount,month===today().slice(0,7)?today():month+'-01',note||'');save();render();pushUndo('Gasto guardado',()=>{const pr=P();pr.expenses=pr.expenses.filter(x=>x.id!==e.id)});
- const s=catStat(p,c,month);let m='Guardado: '+c.name+(note?', '+note:'')+', '+say$(amount)+'.';if(!s.noCap&&s.type==='gasto'){m+=' Le quedan '+say$(s.s)+'.';if(s.g>s.b)m+=' Atención: se pasó del presupuesto.';else if(s.pct>=80)m+=' Ya pasó del 80 por ciento.'}return m+' Si está mal diga deshacer.'}
+ const s=catStat(p,c,month);let m='Guardado: '+c.name+(note?', '+note:'')+', '+say$(amount)+'.';if(s.type==='gasto'||s.noCap)m+=spentMsg(s);else m+=monthMsg(p);return m+' Si está mal diga deshacer.'}
 function hormigaCat(p){return p.cats.find(c=>norm(c.name)==='gastos hormiga')||newCat(p,'Gastos hormiga',0,'ciego')}
 function handleHormiga(raw){const p=P();const T=tokenize(raw);if(!/^(gaste|gasto|compre)$/.test(T[0]||''))return null;let W=tokenizeRaw(raw);if(W.length!==T.length)W=T;
  if(T[0]==='gasto'&&(T[1]==='hormiga'))T.splice(1,1),W.splice(1,1);
@@ -1263,7 +1272,7 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v28';
+const APPVER='v28.1';
 const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo, cuénteme qué tengo o repítame la lista. Para una tabla, diga crear tabla, el nombre y las columnas. Para vaciar la lista abierta, diga eliminar todas; para borrar una nota completa, diga borrar la nota y el nombre. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
@@ -2263,7 +2272,7 @@ handleFinance=function(text){const t=norm(text);const before=pending.slice();con
 const _as23=autoSave;
 autoSave=function(p,c,amount,note,date){const iso=date||(month===today().slice(0,7)?today():month+'-01');
  const e=addExpense(p,c.id,amount,iso,note||'');if(date)e.dateFromVoice=true;save();render();pushUndo('Gasto guardado',()=>{const pr=P();pr.expenses=pr.expenses.filter(x=>x.id!==e.id)});
- const s=catStat(p,c,e.month||month);let m='Guardado: '+c.name+(note?', '+note:'')+', '+say$(amount)+'.';if(!s.noCap&&s.type==='gasto'){m+=' Le quedan '+say$(s.s)+'.';if(s.g>s.b)m+=' Atención: se pasó del presupuesto.';else if(s.pct>=80)m+=' Ya pasó del 80 por ciento.'}
+ const s=catStat(p,c,e.month||month);let m='Guardado: '+c.name+(note?', '+note:'')+', '+say$(amount)+'.';if(s.type==='gasto'||s.noCap)m+=spentMsg(s);else m+=monthMsg(p);
  m+=' Si está mal diga deshacer.';
  if(!date)m=maybeAskDate([e],m,'saved');
  return m};
@@ -2721,7 +2730,8 @@ try{Object.assign(window.App,{handleTranscript});Object.defineProperty(window.Ap
   {v:0,w:['factura','recibo','cuenta']},
   {v:0,w:['bici','bicicleta','cicla']},
   {v:0,w:['viaje','paseo','vacaciones','excursion']},
-  {v:0,w:['tarea','pendiente','quehacer','hacer']}];
+  {v:0,w:['tarea','pendiente','quehacer','hacer']},
+  {v:0,w:['gasolina','combustible','tanqueo','tanquear','nafta']}];
  function key(w){w=String(w||'');if(w.length>4&&/es$/.test(w)&&/[lrndjz]es$/.test(w))w=w.slice(0,-2);else if(w.length>3&&/s$/.test(w))w=w.slice(0,-1);
   return w.replace(/ch/g,'X').replace(/h/g,'').replace(/ll/g,'y').replace(/v/g,'b').replace(/z/g,'s').replace(/c([ei])/g,'s$1').replace(/qu/g,'k').replace(/c/g,'k').replace(/g([ei])/g,'j$1').replace(/(.)\1+/g,'$1')}
  const GK=GROUPS.map(g=>({v:g.v,k:g.w.map(m=>key(m.replace(/\s+/g,'')))}));
@@ -3101,6 +3111,61 @@ try{Object.assign(window.App,{handleTranscript});Object.defineProperty(window.Ap
  /* al abrir la app en Finanzas: saluda la primera vez que toca el micrófono (el teléfono no deja hablar antes de un toque) */
  let greeted=false;nav.addEventListener('click',()=>{greeted=true});
  $('mic').addEventListener('click',()=>{if(greeted)return;greeted=true;setTimeout(()=>{try{if(tab==='fin'&&micOn&&!busyQ()&&!document.querySelector('dialog[open]'))greet('fin')}catch(e){}},250)});
+})();
+/* ===== v28.1: lo gastado y el porcentaje al guardar (también con el botón) y revisar una categoría por voz ===== */
+(function v281(){
+ function say281(r,raw){try{$('interim').textContent=r;speak(r);if(raw!=null)logVoice(raw,[],r)}catch(e){}return r}
+ /* botón «Guardar gasto»: decir y mostrar la misma frase corta */
+ try{const b=$('gAdd'),old=b.onclick;if(old)b.onclick=function(){const before=P().expenses.map(e=>e.id);const r=old.apply(this,arguments);
+  try{const p=P();const e=p.expenses.find(x=>!before.includes(x.id));if(e){const c=p.cats.find(z=>z.id===e.catId);if(c){const s=catStat(p,c,e.month);
+   const m='Guardado: '+c.name+', '+say$(e.amount)+'.'+((s.type==='fijo'||s.type==='variable')?monthMsg(p):spentMsg(s));try{unlockVoice()}catch(x){}say281(m)}}}catch(x){}return r}}catch(e){}
+ /* revisar una categoría: cada pago del mes (fecha y monto), el total y lo que queda */
+ const MES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+ function dWords(d){const m=String(d||'').match(/^(\d{4})-(\d\d)-(\d\d)/);return m?(+m[3])+' de '+MES[+m[2]-1]:String(d||'')}
+ function catFind(q){const p=P();const L=(p.cats||[]).filter(c=>c&&c.name);const nq=nrm(q).trim();if(!nq||!L.length)return {none:1};
+  const ex=L.find(c=>nrm(c.name)===nq);if(ex)return {one:ex};
+  const sc=App.__cscore||((a,b)=>nrm(b).includes(nrm(a))?1:0);
+  const R=L.map(c=>({c,s:sc(q,c.name)})).filter(x=>x.s>=0.5).sort((a,b)=>b.s-a.s);
+  if(!R.length){try{const c=findCatIn(tokenize(q),p);if(c)return {one:c}}catch(e){}return {none:1}}
+  if(R.length>1&&R[0].s-R[1].s<0.08)return {tie:[R[0].c,R[1].c]};return {one:R[0].c}}
+ function review(c){const p=P();const L=p.expenses.filter(e=>e.catId===c.id&&e.month===month).sort((a,b)=>String(a.date).localeCompare(String(b.date))||String(a.created||'').localeCompare(String(b.created||'')));
+  if(!L.length)return {say:'No tiene pagos de '+lc(c.name)+' este mes.'};
+  const s=catStat(p,c,month);const g=r2(L.reduce((a,e)=>a+e.amount,0));
+  let tail='Total: '+say$(g)+'.';
+  if(s.type==='fijo'||s.type==='variable'){}
+  else if(s.noCap||!(s.b>0)){}
+  else if(s.g>s.b+0.004)tail+=' Se pasó del presupuesto por '+say$(r2(s.g-s.b))+'.';
+  else tail+=' Le quedan '+say$(r2(s.b-s.g))+' del presupuesto.';
+  const line=e=>dWords(e.date)+', '+say$(e.amount)+'.';
+  const sp=L.length>10?L.slice(-10).map(line).join(' ')+' Y '+(L.length-10)+' más.':L.map(line).join(' ');
+  const screen=c.name+':\n'+L.map(e=>dWords(e.date)+' — '+money(e.amount)+(e.note?' ('+e.note+')':'')).join('\n')+'\n'+tail;
+  return {say:sp+' '+tail,screen}}
+ let pend=null;
+ const RV1=/^(?:revis(?:e|a|ar|eme|ame|emelo|amelo)|cheque(?:e|a|ar|eme|ame)|mir(?:e|a|ar|eme|ame))\s+(?:(?:los|las|mis|sus)\s+)?(?:(?:pagos|gastos|movimientos|compras|cuentas)\s+)?(?:(?:de|del|en)\s+)?(?:(?:el|la|los|las|lo de|lo del)\s+)?(.+)$/;
+ const RV2=/^(?:(?:ver|veame|muestreme|muestrame|digame|dime|leame|leeme|lea|quiero ver|cuales son|cuales fueron)\s+)?(?:(?:los|las|mis|sus)\s+)?(?:pagos|gastos|movimientos)\s+(?:de|del|en)\s+(?:(?:el|la|los|las)\s+)?(.+)$/;
+ const RV3=/^cuanto\s+(?:llevo|llevo gastado|he gastado|gaste|va|van)\s+(?:en|de)\s+(?:(?:el|la|los|las|lo de)\s+)?(.+)$/;
+ const NOTCAT=/^(?:este mes|mes|del mes|hoy|ayer|la semana|esta semana|todo|todos|total|mis gastos|gastos|notas?|la nota|la lista)$/;
+ function busy(){try{return !!(nf||cq||vd||awaitDate||awaitAmt||tblFlow||tblNew||addQ||askDel||askAdd||delQ||itemQ||(App.__c28&&App.__c28()))}catch(e){return true}}
+ function show(r,raw){try{$('interim').style.whiteSpace='pre-line';$('interim').textContent=r.screen||r.say}catch(e){}try{speak(r.say);logVoice(raw,[],r.say)}catch(e){}try{S.lastActivity=Date.now();showHeard(String(raw).trim(),false)}catch(e){}return r.say}
+ function answer(c,raw){pend=null;return show(review(c),raw)}
+ const _ht281=handleTranscript;handleTranscript=function(text,opt){
+  try{const raw=String(text||'');const t=nrm(cleanHeard(stripPolite(raw))).replace(/[.,;:!?¡¿]/g,' ').replace(/\s+/g,' ').trim();
+   if(t&&!(typeof _tryAlt!=='undefined'&&_tryAlt)&&!(typeof isEcho==='function'&&isEcho(cleanHeard(raw)))){
+    if(pend&&Date.now()-pend.at<60000&&tab==='fin'){const L=pend.opts.map(id=>P().cats.find(c=>c.id===id)).filter(Boolean);pend=null;
+     const sc=App.__cscore||(()=>0);const R=L.map(c=>({c,s:sc(t,c.name)})).sort((a,b)=>b.s-a.s);if(R.length&&R[0].s>=0.3&&(R.length<2||R[0].s>R[1].s))return answer(R[0].c,raw)}
+    else pend=null;
+    let m=null,kind=0;
+    if((m=t.match(RV2)))kind=2;else if(tab==='fin'&&(m=t.match(RV1)))kind=1;else if(tab==='fin'&&(m=t.match(RV3)))kind=3;
+    if(m&&!cq&&!awaitDate&&!awaitAmt&&!tblFlow&&!tblNew&&(tab==='fin'||kind===2&&!busy())){const q=m[1].replace(/\s+(?:este mes|del mes|de este mes)$/,'').trim();
+     if(q&&!NOTCAT.test(q)){const f=catFind(q);
+      /* «cuánto llevo en X»: solo si X es una categoría (si no, sigue la búsqueda por nota de antes) */
+      if(kind===3&&!(f.one&&(nrm(f.one.name)===nrm(q)||q.split(' ').length<=nrm(f.one.name).split(' ').length)))return _ht281(text,opt);
+      if(f.one)return answer(f.one,raw);
+      if(f.tie){pend={opts:f.tie.map(c=>c.id),at:Date.now()};return show({say:'¿'+f.tie[0].name+' o '+lc(f.tie[1].name)+'?'},raw)}
+      if(tab==='fin')return show({say:'No encontré esa categoría.'},raw)}}}}
+  catch(e){try{console.warn('v28.1',e)}catch(x){}}
+  return _ht281(text,opt)};
+ App.__review=n=>{const f=catFind(n);return f.one?review(f.one):f};
 })();
 Object.assign(window.App,{handleTranscript,handleHeard});
 Object.defineProperties(window.App,{wakeLockOn:{get(){return !!(wl&&!wl.released)},enumerable:true},workOpen:{get(){return isWorkOpen()},enumerable:true},tab:{get(){return tab},enumerable:true}});
