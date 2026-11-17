@@ -276,7 +276,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v26</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v27</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -356,7 +356,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v26</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v27</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -1251,8 +1251,8 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v26';
-const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo, cuénteme qué tengo o repítame la lista. Para una tabla, diga crear tabla, el nombre y las columnas. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
+const APPVER='v27';
+const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo, cuénteme qué tengo o repítame la lista. Para una tabla, diga crear tabla, el nombre y las columnas. Para vaciar la lista abierta, diga eliminar todas; para borrar una nota completa, diga borrar la nota y el nombre. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
 let lastSpoken='',lastSpokenAt=0,vLog=[],_tryAlt=false;
@@ -2612,6 +2612,79 @@ try{Object.assign(window.App,{handleTranscript,handleHeard,tblParseCreate,tblSpl
   _tblIdleMs:{get(){return tblIdleMs},set(v){tblIdleMs=+v||90000},enumerable:true}});
  window.App.__fireTableSilence=function(){if(!tblFlow)return null;tblStopTimer();const m=tblEndFlow(true);try{$('interim').textContent=m}catch(e){}return m};
 }catch(e){}
+
+
+
+/* ===== v27: vaciar una lista («eliminar todas») y borrar una nota completa por voz ===== */
+let cq=null,cqTimer=null;const CQ_MS=30000;
+function undoLong(label,fn){pushUndo(label,fn);clearTimeout(undoTimer);undoTimer=setTimeout(()=>{undoStack=null;$('toast').classList.remove('show')},60000)}
+const CLRW='(?:todas?|todos?|todo|todito|toda la lista|la lista completa|toda la nota|todo lo de la lista|todo eso|todas las cosas|todos los elementos|todas las tareas|todos los items|todos los articulos|todas las filas|todo lo que hay|todo lo que tengo)';
+const CLR_RE=new RegExp('^(?:eliminar|elimine|elimina|eliminelas|eliminelos|borrar|borre|borra|borrelas|borrelos|quitar|quite|quita|quitelas|quitelos|sacar|saque|limpiar|limpie|vaciar|vacie|vacia)\\s+'+CLRW+'(?:\\s+(?:de|en)\\s+(?:la|esta)\\s+(?:lista|nota|tabla))?$');
+const VAC_RE=/^(?:vaciar|vacie|vacia|limpiar|limpie|limpia)\s+(?:la|esta)\s+(?:lista|nota)$/;
+const ROWS_RE=/^(?:eliminar|elimine|borrar|borre|quitar|quite|vaciar|vacie)\s+(?:todas las filas|toda la tabla|la tabla completa|todo lo de la tabla)$|^(?:vaciar|vacie|limpiar|limpie)\s+(?:la|esta)\s+tabla$/;
+const DELN_RE=/^(?:borrar|borre|borra|borrame|eliminar|elimine|elimina|quitar|quite|botar|bote)\s+(?:(?:la|esta|toda la|la)\s+)?(nota|tabla|lista)(?:\s+completa)?(?:\s+(?:de\s+|del\s+|llamada\s+)?(.+?))?(?:\s+completa)?$/;
+const YES27=/^(si|sii|sip|claro|dale|ok|okay|bueno|seguro|correcto|hagale|borrala|borralo|borralas|borrelas|borrela|borrelo|si borrala|si borrar|si borre|si por favor|si senor|si senora|si claro|claro que si|de una|afirmativo|eliminela|eliminelas|vacíela|vaciela)\b/;
+function cqArm(){clearTimeout(cqTimer);cqTimer=setTimeout(()=>{if(!cq)return;cq=null;const m='No borré nada.';try{$('interim').textContent=m;if(typeof micOn!=='undefined'&&micOn)speak(m);logVoice('[silencio borrar]',[],m)}catch(e){}},CQ_MS)}
+function cqSet(o){cq=o;cqArm();return o.ask}
+function openTarget(){const a=activeNote();if(a&&a.draft&&!a.n)return {draft:true,n:null};if(a&&a.n)return {draft:!!a.draft,n:a.n};return null}
+function itemCount(tg){if(!tg)return 0;let k=0;if(tg.n)k+=(tg.n.items||[]).length;if(tg.draft&&vd)k+=(vd.items||[]).length;return k}
+function noteName(tg){return tg&&tg.n?tg.n.title:(vd&&vd.title)||'esta nota'}
+function askClearItems(){const T=tblCur&&tblCur();if(T&&!vd)return askClearRows(T);
+ const tg=openTarget();if(!tg)return 'Primero abra la nota. Por ejemplo: léame la nota cosas por hacer. Después diga eliminar todas.';
+ if(tg.n&&tg.n.fmt==='normal'&&!(vd&&vd.items&&vd.items.length))return 'Esa nota es de texto, no tiene lista. Si quiere borrarla completa, diga borrar esta nota.';
+ const k=itemCount(tg);if(!k)return 'La nota '+noteName(tg)+' ya está vacía.';
+ if(tg.n&&tg.n.owner!==S.current)return 'Esa nota se la compartieron; solo quien la creó puede vaciarla.';
+ return cqSet({kind:'items',id:tg.n?tg.n.id:null,ask:(k===1?'¿Borro el único elemento de ':'¿Borro los '+k+' elementos de ')+noteName(tg)+'? Diga sí o no.'})}
+function askClearRows(T){tblFix(T);const k=T.rows.length;if(!k)return 'La tabla '+T.title+' ya está vacía.';if(T.owner!==S.current)return 'Esa tabla se la compartieron; solo quien la creó puede vaciarla.';
+ if(tblFlow){tblFlow=null;tblStopTimer()}return cqSet({kind:'rows',id:T.id,ask:(k===1?'¿Borro la única fila':'¿Borro las '+k+' filas')+' de la tabla '+T.title+'? Diga sí o no.'})}
+function findNoteByName(q,isTab){const L=visibleNotes().filter(n=>isTab?n.fmt==='tabla':true);if(!L.length)return null;const nq=nrm(q).replace(/\s+/g,' ').trim();
+ const ex=L.find(n=>nrm(n.title).replace(/\s+/g,' ').trim()===nq);if(ex)return ex;const R=rankNotes(q,L);return R.length&&R[0].s>=40?R[0].n:null}
+function askDeleteNote(kind,name){let n=null;const isTab=kind==='tabla';
+ const nm=clean(String(name||'').replace(/^(esta|este|la|el)\s+/i,''));
+ if(!nm||/^(esta|este|actual|abierta)$/i.test(nm)){const T=tblCur&&tblCur();if(T&&(isTab||!vd))n=T;else{const tg=openTarget();if(tg&&tg.n)n=tg.n;else if(tg&&tg.draft){return cqSet({kind:'draft',id:null,ask:'¿Borro la nota '+noteName(tg)+' completa? Diga sí o no.'})}}
+  if(!n)return isTab?'¿Cuál tabla quiere borrar? Diga borrar la tabla y el nombre.':'¿Cuál nota quiere borrar? Diga borrar la nota y el nombre.'}
+ else{n=findNoteByName(nm,isTab);if(!n){const L=visibleNotes().filter(x=>isTab?x.fmt==='tabla':true);return 'No encontré '+(isTab?'la tabla ':'la nota ')+nm+'.'+(L.length?' '+(isTab?'Sus tablas son: ':'Sus notas son: ')+joinO(recentOf(L,3).map(x=>x.title))+'.':'')}}
+ if(n.owner!==S.current)return 'Esa nota se la compartieron; solo quien la creó puede borrarla.';
+ const what=n.fmt==='tabla'?'la tabla ':'la nota ';
+ return cqSet({kind:'note',id:n.id,ask:'¿Borro '+what+n.title+' completa? Diga sí o no.'})}
+function closeIfOpen(id){if(vd&&vd.noteId===id){vd=null;try{draftUI()}catch(e){}}if(curNote===id)curNote=null;if(curTbl===id){curTbl=null;tblFlow=null;tblStopTimer();tblResume=null}nf=null;try{nfUI()}catch(e){}askDel=null;askAdd=null;addQ=null;delQ=null;itemQ=null}
+function doCq(){const c=cq;cq=null;clearTimeout(cqTimer);
+ if(c.kind==='items'){const n=c.id?S.notes.find(x=>x.id===c.id):null;const oldI=n?n.items.slice():[];const oldV=vd&&vd.items?vd.items.slice():[];const keepVd=vd;
+  if(n){n.items=[];n.updated=new Date().toISOString()}if(vd)vd.items=[];save();renderNotes();try{draftUI()}catch(e){}
+  undoLong('Lista vaciada',()=>{if(n)n.items=oldI.concat(n.items);if(keepVd&&vd===keepVd)vd.items=oldV.concat(vd.items||[])});
+  return 'Listo, la nota '+(n?n.title:(vd&&vd.title)||'')+' quedó vacía. Si fue un error, diga deshacer.'}
+ if(c.kind==='rows'){const T=tblGet(c.id);if(!T)return 'Esa tabla ya no existe.';const old=T.rows.slice();T.rows=[];tblTouch(T);undoLong('Tabla vaciada',()=>{T.rows=old.concat(T.rows)});
+  return 'Listo, la tabla '+T.title+' quedó vacía. Si fue un error, diga deshacer.'}
+ if(c.kind==='draft'){const t=vd&&vd.title;vd=null;try{draftUI()}catch(e){}return 'Listo, borré la nota '+(t||'')+'.'}
+ if(c.kind==='note'){const n=S.notes.find(x=>x.id===c.id);if(!n)return 'Esa nota ya no existe.';const i=S.notes.indexOf(n);closeIfOpen(n.id);S.notes.splice(i,1);save();renderNotes();
+  undoLong(n.fmt==='tabla'?'Tabla borrada':'Nota borrada',()=>{S.notes.splice(Math.min(i,S.notes.length),0,n)});
+  return 'Listo, borré '+(n.fmt==='tabla'?'la tabla ':'la nota ')+n.title+'. Si fue un error, diga deshacer.'}
+ return 'Listo.'}
+const _ht27=handleTranscript;
+handleTranscript=function(text,opt){if(!text||!String(text).trim())return _ht27(text,opt);const raw=String(text);
+ const out=x=>{S.lastActivity=Date.now();try{showHeard(raw.trim(),false)}catch(e){}try{$('interim').textContent=x;speak(x);logVoice(cleanHeard(raw)||raw,[],x)}catch(e){}return x};
+ try{if(typeof isEcho==='function'&&isEcho(cleanHeard(raw)))return _ht27(text,opt)}catch(e){}
+ try{const st=cleanHeard(stripPolite(raw));const t=nrm(st).replace(/\s+/g,' ').trim();
+  if(cq){if(YES27.test(t)&&!/^si no\b/.test(t))return out(doCq());cq=null;clearTimeout(cqTimer);return out('Está bien, no borré nada.')}
+  if(!(typeof App!=='undefined'&&App.awaitDate)&&!tblNew){
+   if(ROWS_RE.test(t)){const T=tblCur&&tblCur();if(T)return out(askClearRows(T));const m=t.match(/tabla\s+(.+)$/);}
+   if(CLR_RE.test(t)||VAC_RE.test(t))return out(askClearItems());
+   if(askDel&&/^(todas?|todos?|todo|todo eso|toda la lista|todas las cosas|todo todo)$/.test(t)){askDel=null;return out(askClearItems())}
+   const m=t.match(DELN_RE);
+   if(m&&!(m[1]==='lista'&&!m[2])){const kind=m[1]==='tabla'?'tabla':'nota';const T=tblCur&&tblCur();
+    if(m[1]==='lista'&&m[2])return out(askDeleteNote('nota',m[2]));
+    if(kind==='nota'&&!m[2]&&T&&!vd)return out(askDeleteNote('tabla',''));
+    return out(askDeleteNote(kind,m[2]||''))}
+   if(m&&m[1]==='lista'&&!m[2]&&(vd||curNote))return out(askClearItems());
+  }
+ }catch(e){try{logVoice(raw,[],'[error borrar] '+e)}catch(x){}}
+ return _ht27(text,opt)};
+/* pantalla: «Borrar» en cada nota pregunta por el nombre y deja deshacer */
+$('nList').addEventListener('click',e=>{const d=e.target.closest&&e.target.closest('[data-delnote]');if(!d)return;e.stopPropagation();e.stopImmediatePropagation();e.preventDefault();
+ const n=S.notes.find(x=>x.id===d.dataset.delnote);if(!n)return;const what=n.fmt==='tabla'?'la tabla':'la nota';
+ if(!confirm('¿Borrar '+what+' «'+n.title+'» completa?'))return;const i=S.notes.indexOf(n);closeIfOpen(n.id);S.notes.splice(i,1);save();renderNotes();
+ undoLong(n.fmt==='tabla'?'Tabla borrada':'Nota borrada',()=>{S.notes.splice(Math.min(i,S.notes.length),0,n)})},true);
+try{Object.assign(window.App,{handleTranscript});Object.defineProperty(window.App,'clearAsk',{get(){return cq},enumerable:true});window.App.__fireClearSilence=function(){if(!cq)return null;clearTimeout(cqTimer);cq=null;return 'No borré nada.'}}catch(e){}
 
 
 Object.defineProperties(window.App,{wakeLockOn:{get(){return !!(wl&&!wl.released)},enumerable:true},workOpen:{get(){return isWorkOpen()},enumerable:true},tab:{get(){return tab},enumerable:true}});
