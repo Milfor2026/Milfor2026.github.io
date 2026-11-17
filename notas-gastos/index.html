@@ -276,7 +276,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v27</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v27.1</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -356,7 +356,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v27</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v27.1</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -397,7 +397,15 @@ function migrateProfileNames(d){if(!d||!d.profiles)return d;
 function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.profiles)return migrateProfileNames(d)}catch(e){}
  const p=[newProfile('Ricardo','azul',true),newProfile('Beatriz','rojo'),newProfile('Camila','amarillo'),newProfile('Daniela','verde')];p[0].role='owner';p[1].role='esposa';p[2].role='hija1';p[3].role='hija2';
  return {profiles:p,notes:[],current:p[0].id,mute:false,firstRun:true}}
-let S=load();const save=()=>localStorage.setItem(KEY,JSON.stringify(S));save();
+function fixNotes0(S){try{if(!S||typeof S!=='object')return S;if(!Array.isArray(S.notes))S.notes=[];const now=new Date().toISOString();
+ S.notes=S.notes.filter(n=>n&&typeof n==='object');
+ S.notes.forEach(n=>{if(!n.id)n.id=uid();if(typeof n.title!=='string')n.title=String(n.title==null?'':n.title);if(typeof n.body!=='string')n.body=n.body==null?'':String(n.body);
+  if(!Array.isArray(n.items))n.items=[];n.items=n.items.filter(i=>i!=null).map(i=>typeof i==='object'?(typeof i.t==='string'?i:Object.assign(i,{t:String(i.t==null?'':i.t)})):{t:String(i),done:false});
+  if(!Array.isArray(n.shared))n.shared=[];if(typeof n.updated!=='string')n.updated=typeof n.created==='string'?n.created:now;if(typeof n.created!=='string')n.created=n.updated;
+  if(!n.owner)n.owner=S.current;if(!n.fmt)n.fmt='normal';
+  if(n.fmt==='tabla'){if(!Array.isArray(n.cols)||!n.cols.length)n.cols=['Columna 1','Columna 2'];n.cols=n.cols.map(c=>typeof c==='string'?c:String((c&&(c.name||c.t))||'Columna'));
+   if(!Array.isArray(n.rows))n.rows=[];n.rows=n.rows.filter(r=>r!=null).map(r=>Array.isArray(r)?r.map(c=>c==null?'':String(c)):[String(r)])}})}catch(e){}return S}
+let S=fixNotes0(load());const save=()=>localStorage.setItem(KEY,JSON.stringify(S));save();
 const P=()=>S.profiles.find(p=>p.id===S.current)||S.profiles[0];
 let tab='fin',month=today().slice(0,7),pending=[],noteDraftEdit=null,maintEdit=null;
 
@@ -1251,7 +1259,7 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v27';
+const APPVER='v27.1';
 const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo, cuénteme qué tengo o repítame la lista. Para una tabla, diga crear tabla, el nombre y las columnas. Para vaciar la lista abierta, diga eliminar todas; para borrar una nota completa, diga borrar la nota y el nombre. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
@@ -2687,6 +2695,54 @@ $('nList').addEventListener('click',e=>{const d=e.target.closest&&e.target.close
 try{Object.assign(window.App,{handleTranscript});Object.defineProperty(window.App,'clearAsk',{get(){return cq},enumerable:true});window.App.__fireClearSilence=function(){if(!cq)return null;clearTimeout(cqTimer);cq=null;return 'No borré nada.'}}catch(e){}
 
 
+/* ===== v27.1: blindaje anti-congelamiento (voz, toque y datos guardados) ===== */
+(function v271(){
+ /* 1) datos: reparar formas raras sin borrar nada */
+ function fixData(){try{fixNotes0(S);return true}catch(e){return false}}
+ fixData();try{save()}catch(e){}
+ /* 2) reinicio suave del estado de conversación (nunca toca las notas) */
+ function softReset(){try{nf=null}catch(e){}try{cq=null;clearTimeout(cqTimer)}catch(e){}try{tblFlow=null;tblNew=null}catch(e){}
+  try{askDel=null;askAdd=null;addQ=null;delQ=null;itemQ=null}catch(e){}try{nfUI()}catch(e){try{$('nfBan').classList.add('hide')}catch(x){}}}
+ let lastTrap=0;function trap(e){const t=Date.now();if(t-lastTrap<1500)return;lastTrap=t;softReset();
+  try{speaking=false;clearTimeout(stuckTimer)}catch(x){}
+  try{$('interim').textContent='Perdón, se me trabó. Dígame otra vez.'}catch(x){}try{fixData()}catch(x){}
+  try{speak('Perdón, se me trabó. Dígame otra vez.')}catch(x){}}
+ App.__softReset=softReset;
+ const _ht271=handleTranscript;handleTranscript=function(){try{return _ht271.apply(this,arguments)}catch(e){try{console.warn('v27.1',e)}catch(x){}trap(e);return null}};
+ if(typeof handleHeard==='function'){const _hh271=handleHeard;handleHeard=function(){try{return _hh271.apply(this,arguments)}catch(e){try{console.warn('v27.1',e)}catch(x){}trap(e);return null}}}
+ try{const ob=$('nfOpts'),oc=ob.onclick;if(oc)ob.onclick=function(e){try{return oc.call(this,e)}catch(x){trap(x)}}}catch(e){}
+ addEventListener('error',e=>{try{if(speaking&&!speechSynthesis.speaking&&!speechSynthesis.pending){speaking=false;clearTimeout(stuckTimer);setMic();if(micOn)startRec()}}catch(x){}});
+ /* 3) voz: si el teléfono se traga la frase o no avisa que terminó, seguir escuchando */
+ let spokeAt=0,spokeLen=0;
+ function unstick(){if(!speaking)return;speaking=false;try{clearTimeout(stuckTimer)}catch(e){}try{setMic()}catch(e){}if(micOn&&!isIOS)setTimeout(()=>{try{startRec()}catch(e){}},150)}
+ App.__unstick=unstick;
+ const _spk271=speak;speak=function(t){const r=_spk271.apply(this,arguments);if(speaking){spokeAt=Date.now();spokeLen=String(t||'').length;
+   try{clearTimeout(stuckTimer);stuckTimer=setTimeout(unstick,Math.min(Math.max(3000,spokeLen*80)+2500,15000))}catch(e){}
+   const at=spokeAt;setTimeout(()=>{try{if(speaking&&spokeAt===at&&'speechSynthesis' in window&&!speechSynthesis.speaking&&!speechSynthesis.pending)unstick()}catch(e){}},2500)}
+  return r};
+ /* tocar la pantalla mientras habla: se calla y vuelve a escuchar */
+ document.addEventListener('pointerdown',e=>{if(!speaking)return;if(e.target&&e.target.closest&&e.target.closest('#mic'))return;try{speechSynthesis.cancel()}catch(x){}unstick()},true);
+ try{const mb=$('mic'),mc=mb.onclick;mb.onclick=function(e){if(speaking){try{speechSynthesis.cancel()}catch(x){}micOn=true;unstick();setMic();return}return mc.call(this,e)}}catch(e){}
+ /* 4) micrófono: si se queda colgado sin eventos, reiniciarlo */
+ let recEv=Date.now(),recObj=null;
+ const _sr271=startRec;startRec=function(){const r0=rec;_sr271.apply(this,arguments);if(rec&&rec!==r0){recObj=rec;recEv=Date.now();const r=rec;
+   ['onstart','onresult','onerror','onend','onspeechstart','onaudiostart'].forEach(k=>{const f=r[k];r[k]=function(e){recEv=Date.now();if(f)return f.apply(this,arguments)}})}};
+ setInterval(()=>{try{if(document.visibilityState!=='visible'||isIOS)return;
+   if(speaking&&spokeAt&&Date.now()-spokeAt>16000)unstick();
+   if(micOn&&!speaking){if(!rec){startRec()}else if(Date.now()-recEv>25000){const r=rec;rec=null;try{r.abort()}catch(e){}startRec()}}}catch(e){}},3000);
+ /* 5) cambiar de sección arriba (Finanzas, Notas…) borra la conversación pendiente de la sección anterior */
+ function resetSection(){try{speechSynthesis.cancel()}catch(e){}unstick();
+  try{if(awaitDate){clearTimeout(dateAskTimer);tblCap={say:[],log:[]};try{finishDateAsk(today(),'silence')}finally{tblCap=null}}}catch(e){try{tblCap=null}catch(x){}}
+  try{awaitDate=null;clearTimeout(dateAskTimer)}catch(e){}try{awaitAmt=null}catch(e){}try{askSum=false}catch(e){}try{askExp=null}catch(e){}
+  try{if(curTbl||tblFlow||tblNew)tblCloseAll()}catch(e){}
+  try{if(vd||curNote||nf){tblCap={say:[],log:[]};try{closeNote()}finally{tblCap=null}}}catch(e){try{tblCap=null}catch(x){}}
+  softReset();try{curNote=null;delListedKey=null}catch(e){}
+  try{$('interim').textContent=''}catch(e){}try{setMic()}catch(e){}}
+ App.__resetSection=resetSection;
+ try{const nav=document.querySelector('nav');nav.addEventListener('click',e=>{const b=e.target&&e.target.closest?e.target.closest('[data-tab]'):null;const t=b&&b.dataset.tab;if(t&&t!==tab)resetSection()},true)}catch(e){}
+ App.__fixData=fixData;
+})();
+Object.assign(window.App,{handleTranscript,handleHeard});
 Object.defineProperties(window.App,{wakeLockOn:{get(){return !!(wl&&!wl.released)},enumerable:true},workOpen:{get(){return isWorkOpen()},enumerable:true},tab:{get(){return tab},enumerable:true}});
 
 
