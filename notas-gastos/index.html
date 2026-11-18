@@ -254,7 +254,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </style>
 </head>
 <body>
-<div id="appTop"><header><h1>Notas y Gastos</h1><button id="updBtn" type="button" aria-label="Actualizar la app"><span class="u1">⟳ Actualizar</span><span id="hdrVer" class="u2">v28.1</span></button><button id="instBtn" class="btn sec hide" style="margin:0;padding:6px 10px">Instalar app</button><select id="profSel" aria-label="Perfil"></select></header>
+<div id="appTop"><header><h1>Notas y Gastos</h1><button id="updBtn" type="button" aria-label="Actualizar la app"><span class="u1">⟳ Actualizar</span><span id="hdrVer" class="u2">v28.2</span></button><button id="instBtn" class="btn sec hide" style="margin:0;padding:6px 10px">Instalar app</button><select id="profSel" aria-label="Perfil"></select></header>
 <div id="instBanner" class="hide" style="background:#fff3cd;padding:8px 12px;font-size:14px">Puede instalar esta app en su pantalla principal. <button class="btn" id="instBanGo" style="padding:6px 10px">Instalar</button> <button class="btn sec" id="instBanX" style="padding:6px 10px">Ahora no</button></div>
 <nav><button data-tab="fin" class="on">Finanzas</button><button data-tab="notas">Notas</button><button data-tab="mant">Mantenimiento</button><button data-tab="aj">Ajustes</button></nav></div>
 <div id="banners"></div>
@@ -280,7 +280,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v28.1</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v28.2</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -325,6 +325,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
    <li>Abrir: diga el nombre o de qué trata («lo de la bicicleta») o toque la nota. Si hay varias parecidas, le pregunta cuál.</li>
    <li>«borrar nota paseos» (pide confirmar; «deshacer» la recupera) · «cambiar nombre de la nota paseos»</li>
    <li>Después dicte (en listas, un elemento por frase). Todo se guarda solo, en cuanto lo dice; no hace falta decir «guardar». «Guarde», «grabar» o «grábelo» confirman «Ya está guardado» y la nota sigue abierta. «Cerrar nota» o «terminar» guardan y cierran. «Cancelar nota» cierra: si era una nota nueva ya guardada, la deja como está; si no había contenido, no crea la nota.</li>
+   <li>«mandar esta nota por WhatsApp» o «mandar la nota mercado por WhatsApp»: sale el botón verde <b>Enviar por WhatsApp</b>; tóquelo y elija a la persona. «pantalla completa» o «modo lectura»: muestra solo la nota, en letra grande, para tomar una captura; para salir toque la ✕ de la esquina, use el gesto de atrás o diga «salir».</li>
    <li>«título …» · «compartir con Beatriz» (también «esposa», «Camila», «hija uno», «Daniela» o «hija 2»; privada si no lo dice)</li>
    <li>«crear lista de compras» → cada frase es un elemento («leche», «pan») → «guardar lista»</li>
    <li>«abrir nota viaje» o «agregar a la nota viaje», o toque la nota en la lista → dicte → «guardar nota»</li>
@@ -360,7 +361,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v28.1</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v28.2</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -1272,7 +1273,7 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v28.1';
+const APPVER='v28.2';
 const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo, cuénteme qué tengo o repítame la lista. Para una tabla, diga crear tabla, el nombre y las columnas. Para vaciar la lista abierta, diga eliminar todas; para borrar una nota completa, diga borrar la nota y el nombre. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
@@ -3166,6 +3167,126 @@ try{Object.assign(window.App,{handleTranscript});Object.defineProperty(window.Ap
   catch(e){try{console.warn('v28.1',e)}catch(x){}}
   return _ht281(text,opt)};
  App.__review=n=>{const f=catFind(n);return f.one?review(f.one):f};
+})();
+/* ===== v28.2: enviar una nota por WhatsApp y pantalla completa (modo lectura) para captura limpia ===== */
+(function v282(){
+ const escH=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+ function titleOf(n){return String((n&&n.title)||(typeof fmtLabel==='function'?fmtLabel(n.fmt):'Nota')||'Nota').trim()}
+ /* texto plano de una nota: título y luego un elemento por línea */
+ function noteText(n){if(!n)return '';const L=[titleOf(n)];const items=Array.isArray(n.items)?n.items.filter(i=>i&&String(i.t||'').trim()):[];
+  if(n.fmt==='tabla'){const cols=Array.isArray(n.cols)?n.cols:[];const rows=Array.isArray(n.rows)?n.rows:[];
+   rows.forEach(r=>{const parts=cols.map((c,i)=>{const v=String((r&&r[i])||'').trim();return v?(c?c+': ':'')+v:''}).filter(Boolean);if(parts.length)L.push('• '+parts.join(' · '))});
+   if(!rows.length)L.push('(tabla vacía)')}
+  else if(n.fmt==='normal'){String(n.body||'').split('\n').forEach(x=>{if(x.trim())L.push(x.trim())});if(items.length&&!String(n.body||'').trim())items.forEach(i=>L.push('• '+i.t))}
+  else if(n.fmt==='num')items.forEach((i,k)=>L.push((k+1)+'. '+(i.done?'✓ ':'')+i.t));
+  else items.forEach(i=>L.push((i.done?'✓ ':'• ')+i.t));
+  return L.join('\n')}
+ App.__noteText=noteText;
+ const WAURL=t=>'https://wa.me/?text='+encodeURIComponent(t);
+ let lastWA=null;App.__lastWA=()=>lastWA;
+ async function shareText(t,fromDlg){lastWA={text:t,via:null};
+  if(navigator.share){try{await navigator.share({text:t});lastWA.via='share';try{if($('dlg').open&&$('dlg').dataset.wa)$('dlg').close()}catch(e){}return 'share'}catch(e){if(e&&e.name==='AbortError'){lastWA.via='abort';return 'abort'}}}
+  lastWA.via='wa.me';try{window.open(WAURL(t),'_blank')}catch(e){}
+  if(!fromDlg)openWaDlg(t,true);else{const h=document.getElementById('waHint');if(h)h.textContent='Si WhatsApp no se abrió, toque «Copiar texto» y péguelo en el chat.'}
+  return 'wa.me'}
+ function copyText(t){const done=()=>{const h=document.getElementById('waHint');if(h)h.textContent='Copiado. Abra WhatsApp, deje el dedo en la cajita de escribir y toque «Pegar».'};
+  try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,()=>{fallback();done()});return}}catch(e){}fallback();done();
+  function fallback(){try{const a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}catch(e){}}}
+ function openWaDlg(t,afterFail){const d=$('dlg'),f=$('dlgForm');try{if(d.open)d.close()}catch(e){}d.dataset.wa='1';
+  f.innerHTML=`<h2 style="margin:0 0 8px">Enviar por WhatsApp</h2><pre id="waPrev" style="white-space:pre-wrap;max-height:40vh;overflow:auto;background:#f6f1e7;border-radius:12px;padding:10px;font:inherit;font-size:15px;margin:0 0 10px">${escH(t)}</pre>
+  <p id="waHint" class="small" style="margin:0 0 8px">${afterFail?'Si WhatsApp no se abrió, toque «Copiar texto» y péguelo en el chat.':'Toque el botón verde y elija WhatsApp y a la persona.'}</p>
+  <button type="button" class="btn wa" id="waGo" style="width:100%;font-size:20px;padding:16px">Enviar por WhatsApp</button>
+  <button type="button" class="btn sec" id="waCopy">Copiar texto</button><button type="button" class="btn sec" id="waNo">Cancelar</button>`;
+  f.querySelector('#waGo').onclick=()=>shareText(t,true);f.querySelector('#waCopy').onclick=()=>copyText(t);f.querySelector('#waNo').onclick=()=>d.close();
+  d.addEventListener('close',()=>{delete d.dataset.wa},{once:true});
+  try{d.showModal()}catch(e){try{d.show()}catch(x){}}}
+ App.__waDlgOpen=()=>{try{return !!($('dlg').open&&$('dlg').dataset.wa)}catch(e){return false}};
+ /* ----- modo lectura ----- */
+ const css=document.createElement('style');css.textContent=`.btn.wa{background:#1f9d55;color:#fff;box-shadow:0 3px 10px #1f9d5540}
+ body.reading{overflow:hidden}body.reading>*:not(#readMode){visibility:hidden!important}
+ #readMode{position:fixed;inset:0;z-index:2147483000;background:#FFFDF8;color:#1b1b1b;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(22px + env(safe-area-inset-top)) 22px calc(30px + env(safe-area-inset-bottom));box-sizing:border-box;visibility:visible!important}
+ #readMode.hide{display:none}#readMode h1{font-size:32px;line-height:1.2;margin:0 44px 16px 0;color:#111}
+ #readMode .ri{font-size:25px;line-height:1.4;padding:7px 0;border-bottom:1px solid #eee6d6;word-wrap:break-word}#readMode .ri.done{color:#7a7a7a;text-decoration:line-through}
+ #readMode .rb{font-size:25px;line-height:1.45;white-space:pre-wrap}#readMode table{border-collapse:collapse;width:100%;font-size:21px}#readMode th,#readMode td{border:1px solid #ddd2bd;padding:8px;text-align:left;vertical-align:top}#readMode th{background:#f3ecdf}
+ #readX{position:fixed;top:calc(8px + env(safe-area-inset-top));right:8px;width:40px;height:40px;border-radius:20px;border:0;background:#0000001a;color:#333;font-size:20px;line-height:40px;padding:0;transition:opacity .5s;z-index:2147483001}
+ #readX.fade{opacity:0;pointer-events:none}`;document.head.appendChild(css);
+ const rm=document.createElement('div');rm.id='readMode';rm.className='hide';rm.setAttribute('role','document');
+ rm.innerHTML='<button type="button" id="readX" aria-label="Salir de pantalla completa">✕</button><div id="readBody"></div>';document.body.appendChild(rm);
+ let reading=null,fadeT=null;
+ function showX(){const x=$('readX');x.classList.remove('fade');clearTimeout(fadeT);fadeT=setTimeout(()=>x.classList.add('fade'),2500)}
+ function bodyHTML(n){let h='<h1>'+escH(titleOf(n))+'</h1>';const items=Array.isArray(n.items)?n.items.filter(i=>i&&String(i.t||'').trim()):[];
+  if(n.fmt==='tabla'){const cols=n.cols||[],rows=n.rows||[];h+='<table><tr>'+cols.map(c=>'<th>'+escH(c)+'</th>').join('')+'</tr>'+rows.map(r=>'<tr>'+cols.map((c,i)=>'<td>'+escH((r&&r[i])||'')+'</td>').join('')+'</tr>').join('')+'</table>'}
+  else if(n.fmt==='normal'&&String(n.body||'').trim())h+='<div class="rb">'+escH(n.body)+'</div>';
+  else h+=items.map((i,k)=>'<div class="ri'+(i.done?' done':'')+'">'+(n.fmt==='num'?(k+1)+'. ':(i.done?'✓ ':'• '))+escH(i.t)+'</div>').join('');
+  return h}
+ function enterRead(n,gesture){if(!n)return false;if(reading)exitRead(true);
+  reading={id:n.id,mic:!!micOn,y:window.scrollY,fs:false};$('readBody').innerHTML=bodyHTML(n);rm.classList.remove('hide');rm.scrollTop=0;document.body.classList.add('reading');showX();
+  try{history.pushState({readMode:1},'')}catch(e){}
+  if(gesture){try{const el=document.documentElement;const p=el.requestFullscreen&&el.requestFullscreen({navigationUI:'hide'});if(p&&p.then)p.then(()=>{if(reading)reading.fs=true},()=>{})}catch(e){}}
+  return true}
+ function exitRead(fromPop){if(!reading)return false;const r=reading;reading=null;clearTimeout(fadeT);rm.classList.add('hide');$('readBody').innerHTML='';document.body.classList.remove('reading');
+  try{if(document.fullscreenElement)document.exitFullscreen().catch(()=>{})}catch(e){}
+  if(!fromPop){try{if(history.state&&history.state.readMode)history.back()}catch(e){}}
+  try{window.scrollTo(0,r.y||0)}catch(e){}
+  /* volver a escuchar como estaba */
+  try{if(r.mic){if(!micOn){micOn=true}setMic();if(!rec&&!speaking)startRec()}else setMic()}catch(e){}
+  return true}
+ App.__reading=()=>reading?reading.id:null;App.__exitRead=()=>exitRead(false);
+ $('readX').addEventListener('click',e=>{e.stopPropagation();exitRead(false)});
+ rm.addEventListener('click',()=>showX());rm.addEventListener('touchstart',()=>showX(),{passive:true});
+ window.addEventListener('popstate',()=>{if(reading)exitRead(true)});
+ document.addEventListener('fullscreenchange',()=>{if(reading&&reading.fs&&!document.fullscreenElement)exitRead(false)});
+ /* mientras lee, nada de encender el micrófono solo */
+ try{const _moa=micOnAuto;micOnAuto=function(){if(reading)return;return _moa.apply(this,arguments)}}catch(e){}
+ /* ----- botones en cada nota ----- */
+ const _rn282=renderNotes;renderNotes=function(){_rn282.apply(this,arguments);try{document.querySelectorAll('#nList .note').forEach(c=>{if(c.querySelector('[data-wa]'))return;const id=c.dataset.id;
+   const a=document.createElement('button');a.type='button';a.className='btn wa';a.dataset.wa=id;a.textContent='Enviar por WhatsApp';
+   const b=document.createElement('button');b.type='button';b.className='btn sec';b.dataset.full=id;b.textContent='⛶ Pantalla completa';
+   const row=document.createElement('div');row.className='noteAct282';row.append(a,b);const h=c.querySelector('h3');
+   /* debajo del título, para que se vean sin bajar en notas largas */
+   const after=c.querySelector('.small')||h;if(after&&after.nextSibling)c.insertBefore(row,after.nextSibling);else c.appendChild(row)})}catch(e){}};
+ $('nList').addEventListener('click',e=>{const w=e.target.closest('[data-wa]'),f=e.target.closest('[data-full]');if(!w&&!f)return;e.stopPropagation();
+  const id=(w||f).dataset[w?'wa':'full'];const n=S.notes.find(x=>x.id===id);if(!n)return;
+  if(w)shareText(noteText(n),false);else enterRead(n,true)},true);
+ try{renderNotes()}catch(e){}
+ /* ----- voz ----- */
+ const WA=/\b(?:whatsapp|whats app|wasap|wassap|guasap|guassap|guatsap|watsap|wasa|uatsap|whatsap)\b/;
+ const VERB=/^(?:quiero\s+|puede\s+|podria\s+)?(?:mandar|mande|manda|mandame|mandeme|enviar|envie|envia|enviame|envieme|compartir|comparta|comparte|compartame|pasar|pase|pasame)\b/;
+ const THIS=/^(?:quiero\s+)?(?:mandar|mande|manda|enviar|envie|envia)\s+(?:esta|la)\s+nota$/;
+ const FULL=/^(?:(?:poner|ponga|pon|abrir|abra|mostrar|muestreme|ver|leer|lea|leame)\s+(?:en\s+|la\s+nota\s+en\s+|la\s+)?)?(?:pantalla completa|modo lectura|modo de lectura)(?:\s+(?:de\s+|con\s+)?(?:la\s+)?(?:nota\s+)?(.+))?$/;
+ const FULL2=/^(?:(?:poner|ponga|abrir|abra|mostrar|muestreme|ver|leer|lea)\s+)?(?:la\s+)?nota\s+(.+?)\s+en\s+(?:pantalla completa|modo lectura)$/;
+ const EXIT=/^(?:salir|salga|salgase|salgamos|cerrar|cierre|cierra|quitar|quite|volver|vuelva|regresar|regrese|listo|ya|terminar|termine)(?:\s+(?:de\s+)?(?:la\s+|el\s+)?(?:pantalla completa|modo lectura|lectura|pantalla))?$|^(?:salir|cerrar|quitar)\s+(?:la\s+)?pantalla completa$/;
+ const NOWORD=/^(?:no|cancelar|cancele|cerrar|cierre|nada|dejelo|deje asi)$/;
+ let pend=null;
+ function out(r,raw,silent){try{$('interim').textContent=r;if(!silent)speak(r);logVoice(raw,[],r)}catch(e){}try{S.lastActivity=Date.now();showHeard(String(raw).trim(),false)}catch(e){}return r}
+ function curOpen(){try{if(typeof vd!=="undefined"&&vd){const v=draftView();if(v&&(v.items&&v.items.length||v.body))return v;if(vd.noteId)return S.notes.find(x=>x.id===vd.noteId)||null;return null}}catch(e){}
+  try{const a=activeNote();if(a&&a.n)return a.n}catch(e){}return null}
+ function byName(q){q=String(q||'').replace(/^(?:la|el|mi)\s+/,'').replace(/^nota\s+/,'').replace(/^(?:de|del)\s+/,'').trim();if(!q||/^(?:esta|la|nota|esta nota|mi nota)$/.test(q))return null;
+  try{return findNoteByName(q,false)||(typeof noteFromUtterance==='function'?noteFromUtterance(q,q):null)}catch(e){return null}}
+ function doWA(n,raw){curNote=n.id||curNote;openWaDlg(noteText(n),false);return out('Listo. Toque el botón verde para enviarla.',raw)}
+ function doFull(n,raw){try{if(n.id&&!(typeof vd!=='undefined'&&vd))curNote=n.id}catch(e){}const r='Pantalla completa. Para salir, toque la equis o diga salir.';out(r,raw);enterRead(n,false);return r}
+ function waTarget(t){let s=t.replace(VERB,' ').replace(/\b(?:por|a|al|en|via|con|para)\s+(?:el\s+|la\s+)?(?:whatsapp|whats app|wasap|wassap|guasap|guassap|guatsap|watsap|wasa|uatsap|whatsap)\b/,' ').replace(WA,' ');
+  s=s.replace(/\b(?:a|para)\s+(?:mi|su)\s+\w+(?:\s+\w+)?$/,' ').replace(/\b(?:a|para)\s+(?:beatriz|camila|daniela|mi esposa|mi hermano|mi hermana)\b/,' ').replace(/\s+/g,' ').trim();return s}
+ const _ht282=handleTranscript;handleTranscript=function(text,opt){
+  try{const raw=String(text||'');const t=nrm(cleanHeard(stripPolite(raw))).replace(/[.,;:!?¡¿]/g,' ').replace(/\s+/g,' ').trim();
+   if(t&&!(typeof _tryAlt!=='undefined'&&_tryAlt)&&!(typeof isEcho==='function'&&isEcho(cleanHeard(raw)))){
+    /* en modo lectura solo se escucha «salir»; lo demás no hace nada (pantalla limpia) */
+    if(reading){if(EXIT.test(t)){exitRead(false);return out('Listo.',raw)}return ''}
+    if(App.__waDlgOpen()){if(NOWORD.test(t)){$('dlg').close();return out('Listo, no la envié.',raw)}
+     if(/^(?:si|enviar|envie|enviala|mandala|mandar|dale|ok|okay|listo)$/.test(t))return out('Toque el botón verde para enviarla.',raw)}
+    if(pend&&Date.now()-pend.at<60000){const k=pend.kind;pend=null;if(NOWORD.test(t)||EXIT.test(t))return out('Listo.',raw);const n=byName(t);if(n)return k==='wa'?doWA(n,raw):doFull(n,raw);
+     if(t.split(' ').length<=4&&!WA.test(t)&&!FULL.test(t))return out('No encontré la nota '+t+'.',raw)}
+    pend=null;
+    const isWA=(WA.test(t)&&VERB.test(t)&&!/^compartir con\b/.test(t))||THIS.test(t)||/^(?:mandar|enviar|compartir)\s+(?:esta\s+)?nota\s+por\s+/.test(t)&&WA.test(t);
+    if(isWA){const q=waTarget(t);let n=null;const generic=!q||/^(?:esta|la|mi)?\s*nota$|^(?:esto|esta|eso|esa)$/.test(q);
+     if(!generic){n=byName(q);if(!n)return out('No encontré la nota '+q.replace(/^(?:la\s+)?nota\s+/,'')+'.',raw)}else n=curOpen();
+     if(!n){pend={kind:'wa',at:Date.now()};return out('¿Cuál nota?',raw)}return doWA(n,raw)}
+    let m=t.match(FULL2)||t.match(FULL);
+    if(m){let n=null;const q=(m[1]||'').trim();if(q&&!/^(?:esta|la|esta nota|la nota|nota)$/.test(q)){n=byName(q);if(!n)return out('No encontré la nota '+q+'.',raw)}else n=curOpen();
+     if(!n){pend={kind:'full',at:Date.now()};return out('¿Cuál nota?',raw)}return doFull(n,raw)}}}
+  catch(e){try{console.warn('v28.2',e)}catch(x){}}
+  return _ht282(text,opt)};
+ App.__enterRead=(id)=>{const n=S.notes.find(x=>x.id===id);return enterRead(n,false)};
 })();
 Object.assign(window.App,{handleTranscript,handleHeard});
 Object.defineProperties(window.App,{wakeLockOn:{get(){return !!(wl&&!wl.released)},enumerable:true},workOpen:{get(){return isWorkOpen()},enumerable:true},tab:{get(){return tab},enumerable:true}});
