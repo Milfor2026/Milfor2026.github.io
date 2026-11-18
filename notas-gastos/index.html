@@ -254,7 +254,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </style>
 </head>
 <body>
-<div id="appTop"><header><h1>Notas y Gastos</h1><button id="updBtn" type="button" aria-label="Actualizar la app"><span class="u1">⟳ Actualizar</span><span id="hdrVer" class="u2">v28.2</span></button><button id="instBtn" class="btn sec hide" style="margin:0;padding:6px 10px">Instalar app</button><select id="profSel" aria-label="Perfil"></select></header>
+<div id="appTop"><header><h1>Notas y Gastos</h1><button id="updBtn" type="button" aria-label="Actualizar la app"><span class="u1">⟳ Actualizar</span><span id="hdrVer" class="u2">v28.3</span></button><button id="instBtn" class="btn sec hide" style="margin:0;padding:6px 10px">Instalar app</button><select id="profSel" aria-label="Perfil"></select></header>
 <div id="instBanner" class="hide" style="background:#fff3cd;padding:8px 12px;font-size:14px">Puede instalar esta app en su pantalla principal. <button class="btn" id="instBanGo" style="padding:6px 10px">Instalar</button> <button class="btn sec" id="instBanX" style="padding:6px 10px">Ahora no</button></div>
 <nav><button data-tab="fin" class="on">Finanzas</button><button data-tab="notas">Notas</button><button data-tab="mant">Mantenimiento</button><button data-tab="aj">Ajustes</button></nav></div>
 <div id="banners"></div>
@@ -280,7 +280,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v28.2</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v28.3</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -361,7 +361,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v28.2</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v28.3</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -1273,7 +1273,7 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v28.2';
+const APPVER='v28.3';
 const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo, cuénteme qué tengo o repítame la lista. Para una tabla, diga crear tabla, el nombre y las columnas. Para vaciar la lista abierta, diga eliminar todas; para borrar una nota completa, diga borrar la nota y el nombre. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
@@ -2786,7 +2786,8 @@ try{Object.assign(window.App,{handleTranscript});Object.defineProperty(window.Ap
  function setC(o){c28=Object.assign({at:Date.now()},o)}
  function liveC(){if(c28&&Date.now()-c28.at>C28_MS)c28=null;return c28}
  App.__c28=()=>liveC();App.__c28reset=()=>{c28=null};
- function lastNote(){const L=visibleNotes();if(!L.length)return null;const r=L.slice().sort((a,b)=>String(b.updated||'').localeCompare(String(a.updated||'')))[0];const n=S.lastNoteId&&L.find(x=>x.id===S.lastNoteId);if(n&&String(S.lastNoteAt||'')>=String(r.updated||''))return n;return r}
+ /* v28.3: «nota vieja» salta las notas vacías (si hay alguna con contenido) */
+ function lastNote(){const L0=visibleNotes();if(!L0.length)return null;const full=n=>n.fmt==='tabla'?!!(n.rows&&n.rows.length):!!((n.items&&n.items.some(i=>i&&String(i.t||'').trim()))||String(n.body||'').trim());const L=L0.some(full)?L0.filter(full):L0;const r=L.slice().sort((a,b)=>String(b.updated||'').localeCompare(String(a.updated||'')))[0];const n=S.lastNoteId&&L.find(x=>x.id===S.lastNoteId);if(n&&String(S.lastNoteAt||'')>=String(r.updated||''))return n;return r}
  function markUsed(n){try{if(n&&n.id){S.lastNoteId=n.id;S.lastNoteAt=new Date().toISOString();save()}}catch(e){}}
  function dropTable(){try{if(curTbl||tblFlow||tblNew){curTbl=null;tblFlow=null;tblNew=null;tblResume=null;tblStopTimer()}}catch(e){}}
  const _oaf28=openForAppend;openForAppend=function(n){if(n&&!isTbl(n))dropTable();markUsed(n);return _oaf28(n)};
@@ -3192,13 +3193,14 @@ try{Object.assign(window.App,{handleTranscript});Object.defineProperty(window.Ap
  function copyText(t){const done=()=>{const h=document.getElementById('waHint');if(h)h.textContent='Copiado. Abra WhatsApp, deje el dedo en la cajita de escribir y toque «Pegar».'};
   try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,()=>{fallback();done()});return}}catch(e){}fallback();done();
   function fallback(){try{const a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}catch(e){}}}
- function openWaDlg(t,afterFail){const d=$('dlg'),f=$('dlgForm');try{if(d.open)d.close()}catch(e){}d.dataset.wa='1';
+ function openWaDlg(t,afterFail){const d=$('dlg'),f=$('dlgForm');try{if(d.open)d.close()}catch(e){}const tok=String(Date.now())+Math.random();d.dataset.wa=tok;
   f.innerHTML=`<h2 style="margin:0 0 8px">Enviar por WhatsApp</h2><pre id="waPrev" style="white-space:pre-wrap;max-height:40vh;overflow:auto;background:#f6f1e7;border-radius:12px;padding:10px;font:inherit;font-size:15px;margin:0 0 10px">${escH(t)}</pre>
   <p id="waHint" class="small" style="margin:0 0 8px">${afterFail?'Si WhatsApp no se abrió, toque «Copiar texto» y péguelo en el chat.':'Toque el botón verde y elija WhatsApp y a la persona.'}</p>
   <button type="button" class="btn wa" id="waGo" style="width:100%;font-size:20px;padding:16px">Enviar por WhatsApp</button>
   <button type="button" class="btn sec" id="waCopy">Copiar texto</button><button type="button" class="btn sec" id="waNo">Cancelar</button>`;
   f.querySelector('#waGo').onclick=()=>shareText(t,true);f.querySelector('#waCopy').onclick=()=>copyText(t);f.querySelector('#waNo').onclick=()=>d.close();
-  d.addEventListener('close',()=>{delete d.dataset.wa},{once:true});
+  /* v28.3: el aviso de cierre del diálogo anterior no debe borrar la marca del nuevo */
+  d.addEventListener('close',function h(){if(d.open)return;d.removeEventListener('close',h);if(d.dataset.wa===tok)delete d.dataset.wa});
   try{d.showModal()}catch(e){try{d.show()}catch(x){}}}
  App.__waDlgOpen=()=>{try{return !!($('dlg').open&&$('dlg').dataset.wa)}catch(e){return false}};
  /* ----- modo lectura ----- */
@@ -3287,6 +3289,26 @@ try{Object.assign(window.App,{handleTranscript});Object.defineProperty(window.Ap
   catch(e){try{console.warn('v28.2',e)}catch(x){}}
   return _ht282(text,opt)};
  App.__enterRead=(id)=>{const n=S.notes.find(x=>x.id===id);return enterRead(n,false)};
+})();
+/* ===== v28.3: la tarjeta verde de dictado queda como una franja delgada que no tapa la nota ===== */
+(function v283(){
+ const css=document.createElement('style');css.textContent=`#draftBan.slim{padding:5px 6px 5px 12px;border-radius:12px;gap:6px;box-shadow:0 2px 8px #0003;align-items:center}
+ #draftBan.slim>div{min-width:0}#draftBan.slim #draftInfo{display:none}#draftBan.slim.open #draftInfo{display:block;white-space:normal}
+ #draftBan.slim #draftTitle{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+ #draftBan.slim .btn{min-height:34px;padding:4px 12px;font-size:14px;flex:0 0 auto}#draftBan.slim #draftCancel{width:36px;padding:0;font-size:16px}
+ body.drafting{padding-bottom:calc(200px + env(safe-area-inset-bottom))}`;document.head.appendChild(css);
+ const b=$('draftBan'),cx=$('draftCancel');try{cx.textContent='✕';cx.setAttribute('aria-label','Cancelar');cx.title='Cancelar'}catch(e){}
+ $('draftTitle').addEventListener('click',()=>b.classList.toggle('open'));
+ function dock(){try{const mb=$('micbar');if(!mb||b.classList.contains('hide'))return;const top=mb.getBoundingClientRect().top;if(top>0&&top<=innerHeight)b.style.bottom=Math.max(0,Math.round(innerHeight-top+6))+'px'}catch(e){}}
+ addEventListener('resize',dock);
+ let lastVd=null;
+ const _dui283=draftUI;draftUI=function(){const r=_dui283.apply(this,arguments);try{
+   const on=!!vd;b.classList.toggle('slim',on);document.body.classList.toggle('drafting',on);if(!on){b.classList.remove('open');lastVd=null;return r}
+   dock();const fresh=vd!==lastVd;lastVd=vd;const id=vd.noteId||null;
+   /* solo al abrir una nota que ya existía para dictar: mostrar su tarjeta (con sus botones) */
+   if(fresh&&id&&tab==='notas'){setTimeout(()=>{try{const c=document.querySelector('#nList .note[data-id="'+id+'"]');if(c&&c.scrollIntoView)c.scrollIntoView({block:'start'})}catch(e){}},60)}
+   }catch(e){}return r};
+ try{draftUI()}catch(e){}
 })();
 Object.assign(window.App,{handleTranscript,handleHeard});
 Object.defineProperties(window.App,{wakeLockOn:{get(){return !!(wl&&!wl.released)},enumerable:true},workOpen:{get(){return isWorkOpen()},enumerable:true},tab:{get(){return tab},enumerable:true}});
