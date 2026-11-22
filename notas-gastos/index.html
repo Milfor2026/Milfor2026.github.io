@@ -254,7 +254,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </style>
 </head>
 <body>
-<div id="appTop"><header><h1>Notas y Gastos</h1><button id="updBtn" type="button" aria-label="Actualizar la app"><span class="u1">⟳ Actualizar</span><span id="hdrVer" class="u2">v28.3.1</span></button><button id="instBtn" class="btn sec hide" style="margin:0;padding:6px 10px">Instalar app</button><select id="profSel" aria-label="Perfil"></select></header>
+<div id="appTop"><header><h1>Notas y Gastos</h1><button id="updBtn" type="button" aria-label="Actualizar la app"><span class="u1">⟳ Actualizar</span><span id="hdrVer" class="u2">v28.3.2</span></button><button id="instBtn" class="btn sec hide" style="margin:0;padding:6px 10px">Instalar app</button><select id="profSel" aria-label="Perfil"></select></header>
 <div id="instBanner" class="hide" style="background:#fff3cd;padding:8px 12px;font-size:14px">Puede instalar esta app en su pantalla principal. <button class="btn" id="instBanGo" style="padding:6px 10px">Instalar</button> <button class="btn sec" id="instBanX" style="padding:6px 10px">Ahora no</button></div>
 <nav><button data-tab="fin" class="on">Finanzas</button><button data-tab="notas">Notas</button><button data-tab="mant">Mantenimiento</button><button data-tab="aj">Ajustes</button></nav></div>
 <div id="banners"></div>
@@ -280,7 +280,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
 </section>
 <section id="tab-notas" class="hide">
  <div id="nGuide" class="card hide"><details open><summary>Qué le puede decir</summary><div id="nGuideTx"></div></details></div>
- <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v28.3.1</span></h2>
+ <div class="card"><h2 id="nTitle">Nueva nota <span id="appVer" class="ver">v28.3.2</span></h2>
   <label>Formato</label><select id="nFmt"><option value="normal">Nota normal</option><option value="check">Lista de verificación</option><option value="num">Lista numerada</option><option value="bullet">Lista de viñetas</option></select>
   <label>Título</label><input id="nTit">
   <label id="nBodyL">Texto</label><textarea id="nBody"></textarea>
@@ -361,7 +361,7 @@ body.ios #micbar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   <p class="small">Solo nombres, montos, tipos y vencimientos. No se copian gastos ni notas.</p>
   <button class="btn sec" id="copyBudget">Copiar categorías</button></div>
  <div class="card" id="vozLogCard"><h2>Registro de voz</h2><p class="small">Las últimas 50 frases que oyó la app y lo que respondió. Si algo falla, toque <b>Copiar/Compartir registro</b> y envíeselo a quien le ayuda.</p><div id="vozLog"></div><button type="button" class="btn" id="vozLogShare">Copiar/Compartir registro</button> <button type="button" class="btn sec" id="vozLogClr">Borrar registro</button></div>
- <div class="card"><h2>Aplicación <span class="ver">v28.3.1</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
+ <div class="card"><h2>Aplicación <span class="ver">v28.3.2</span></h2><button class="btn" id="ajInst">Instalar app</button><button class="btn sec" id="ajShare">Compartir app</button><p class="small" id="instState"></p></div>
  <div class="card" id="iosTips"><h2>iPhone / iPad</h2><div class="warn" id="iosTipBody">En iPhone es mejor instalar la app en la pantalla de inicio (Safari → Compartir → Agregar a pantalla de inicio). Así conserva mejor sus datos. Ojo: lo que guarde en Safari y lo que guarde en el ícono de la pantalla de inicio son almacenes distintos; use Exportar / Importar para pasar datos de uno a otro.</div>
  <div id="iosDictBox" class="hide" style="margin-top:8px"><label>Dictado con teclado (recomendado en iPhone)</label><div class="row"><input id="iosKbd" placeholder="Toque el micrófono del teclado y dicte…"><button class="btn" id="iosKbdGo" style="flex:0 0 auto">Enviar</button></div>
  <p class="small">Si el micrófono de la app no funciona: Ajustes → General → Teclado → Dictado, y Ajustes → Safari → Micrófono → Permitir.</p></div></div>
@@ -802,7 +802,8 @@ const isIOS=(()=>{const ua=navigator.userAgent||'';const iOSDevice=/iPad|iPhone|
 const isSafari=/Safari/.test(navigator.userAgent||'')&&!/CriOS|FxiOS|EdgiOS|OPiOS|Chrome/.test(navigator.userAgent||'');
 if(isIOS){if(S.iosInit==null){S.wakeOn=false;S.iosInit=true;save()}document.body.classList.add('ios');if($('iosMicHint'))$('iosMicHint').classList.remove('hide');if($('iosDictBox'))$('iosDictBox').classList.remove('hide')}
 let voiceUnlocked=false;
-function unlockVoice(){if(voiceUnlocked||!('speechSynthesis' in window))return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u);voiceUnlocked=true}catch(e){}}
+/* v28.3.2: solo cuenta como desbloqueada si se llamó durante un toque real (si no, el próximo toque la vuelve a desbloquear) */
+function unlockVoice(){if(voiceUnlocked||!('speechSynthesis' in window))return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u);const ua=navigator.userActivation;if(!ua||ua.isActive||ua.hasBeenActive)voiceUnlocked=true}catch(e){}}
 document.addEventListener('pointerdown',unlockVoice,{once:true,passive:true});
 document.addEventListener('touchstart',unlockVoice,{once:true,passive:true});
 
@@ -1273,7 +1274,7 @@ const _hT12=handleTranscript;handleTranscript=function(text){if(!text||!String(t
  return _hT12(text)};
 
 /* ===== v14 conversación de notas, guía y robustez ===== */
-const APPVER='v28.3.1';
+const APPVER='v28.3.2';
 const GUIDE='Para borrar, diga borre o elimine y el producto, por ejemplo: borre huevos. Para agregar, diga agregue o añada y el producto, por ejemplo: agregue leche. Para tachar lo que ya cogió, diga ya tengo y el producto. Para oír la lista, diga qué tengo, cuénteme qué tengo o repítame la lista. Para una tabla, diga crear tabla, el nombre y las columnas. Para vaciar la lista abierta, diga eliminar todas; para borrar una nota completa, diga borrar la nota y el nombre. Todo se guarda solo; diga guarde para confirmar, o cerrar nota para terminar. Para un recordatorio, diga recuérdame a las seis y lo que tiene que hacer.';
 const HINT=' Si necesita ayuda, diga: qué le puedo decir.';
 const HELPRE=/^(que le puedo decir|que puedo decir|que puedo decirle|que me puede decir|ayuda|ayudeme|ayudame|como funciona|como se usa|que digo|que le digo|que le puedo pedir|comandos)$/;
@@ -2563,7 +2564,7 @@ handleTranscript=function(text,opt){if(!text||!String(text).trim())return _ht25(
   if((vd||nf)&&!tblFlow&&!tblNew)curTbl=null;
   if(tblNew){const r=tblNewStep(raw);if(r!=null)return out(r)}
   if(tblFlow&&tblCur()){const r=tblFlowStep(raw);if(r!=null)return out(r)}
-  if(!(typeof App!=='undefined'&&App.awaitDate)){const t=nrm(cleanHeard(stripPolite(raw))).replace(/\s+/g,' ').trim();
+  if(!(typeof App!=='undefined'&&App.awaitDate)){const t=norm(stripPolite(cleanHeard(raw))).replace(/\s+/g,' ').trim();
    if(/\btablas?\b/.test(t)||(curTbl&&tblCur())){const r=tblCmd(raw);if(r!=null){tblMark();return out(r)}}}
  }catch(e){try{logVoice(raw,[],'[error tabla] '+e)}catch(x){}}
  /* v26: con una tabla abierta, lo que la app no entienda va a la tabla (nunca «No le entendí») */
@@ -3151,7 +3152,7 @@ try{Object.assign(window.App,{handleTranscript});Object.defineProperty(window.Ap
  function show(r,raw){try{$('interim').style.whiteSpace='pre-line';$('interim').textContent=r.screen||r.say}catch(e){}try{speak(r.say);logVoice(raw,[],r.say)}catch(e){}try{S.lastActivity=Date.now();showHeard(String(raw).trim(),false)}catch(e){}return r.say}
  function answer(c,raw){pend=null;return show(review(c),raw)}
  const _ht281=handleTranscript;handleTranscript=function(text,opt){
-  try{const raw=String(text||'');const t=nrm(cleanHeard(stripPolite(raw))).replace(/[.,;:!?¡¿]/g,' ').replace(/\s+/g,' ').trim();
+  try{const raw=String(text||'');const t=norm(stripPolite(cleanHeard(raw))).replace(/[.,;:!?¡¿]/g,' ').replace(/\s+/g,' ').trim();
    if(t&&!(typeof _tryAlt!=='undefined'&&_tryAlt)&&!(typeof isEcho==='function'&&isEcho(cleanHeard(raw)))){
     if(pend&&Date.now()-pend.at<60000&&tab==='fin'){const L=pend.opts.map(id=>P().cats.find(c=>c.id===id)).filter(Boolean);pend=null;
      const sc=App.__cscore||(()=>0);const R=L.map(c=>({c,s:sc(t,c.name)})).sort((a,b)=>b.s-a.s);if(R.length&&R[0].s>=0.3&&(R.length<2||R[0].s>R[1].s))return answer(R[0].c,raw)}
@@ -3270,7 +3271,7 @@ try{Object.assign(window.App,{handleTranscript});Object.defineProperty(window.Ap
  function waTarget(t){let s=t.replace(VERB,' ').replace(/\b(?:por|a|al|en|via|con|para)\s+(?:el\s+|la\s+)?(?:whatsapp|whats app|wasap|wassap|guasap|guassap|guatsap|watsap|wasa|uatsap|whatsap)\b/,' ').replace(WA,' ');
   s=s.replace(/\b(?:a|para)\s+(?:mi|su)\s+\w+(?:\s+\w+)?$/,' ').replace(/\b(?:a|para)\s+(?:beatriz|camila|daniela|mi esposa|mi hermano|mi hermana)\b/,' ').replace(/\s+/g,' ').trim();return s}
  const _ht282=handleTranscript;handleTranscript=function(text,opt){
-  try{const raw=String(text||'');const t=nrm(cleanHeard(stripPolite(raw))).replace(/[.,;:!?¡¿]/g,' ').replace(/\s+/g,' ').trim();
+  try{const raw=String(text||'');const t=norm(stripPolite(cleanHeard(raw))).replace(/[.,;:!?¡¿]/g,' ').replace(/\s+/g,' ').trim();
    if(t&&!(typeof _tryAlt!=='undefined'&&_tryAlt)&&!(typeof isEcho==='function'&&isEcho(cleanHeard(raw)))){
     /* en modo lectura solo se escucha «salir»; lo demás no hace nada (pantalla limpia) */
     if(reading){if(EXIT.test(t)){exitRead(false);return out('Listo.',raw)}return ''}
@@ -3331,12 +3332,63 @@ try{Object.assign(window.App,{handleTranscript});Object.defineProperty(window.Ap
  /* fecha que llega tarde: si ya pasó la pregunta (quedó hoy) y aún hay un gasto sin guardar, «hoy», «ayer» o «el 15» todavía cambian la fecha */
  const LATE=/^(?:es\s+|de\s+|fue\s+)?(?:hoy|hoy mismo|ayer|anteayer|antes de ayer|el\s+(?:dia\s+)?(?:\d{1,2}|primero|[a-z]+)(?:\s+de\s+[a-z]+)?|\d{1,2}\s+de\s+[a-z]+)$/;
  const _ht2831=handleTranscript;handleTranscript=function(text,opt){
-  try{const raw=String(text||'');const t=nrm(cleanHeard(stripPolite(raw))).replace(/[.,;:!?¡¿]/g,' ').replace(/\s+/g,' ').trim();
+  try{const raw=String(text||'');const t=norm(stripPolite(cleanHeard(raw))).replace(/[.,;:!?¡¿]/g,' ').replace(/\s+/g,' ').trim();
    if(t&&!(typeof _tryAlt!=='undefined'&&_tryAlt)&&tab==='fin'&&!awaitDate&&!awaitAmt&&pending&&pending.length&&LATE.test(t)&&!(App.__reading&&App.__reading())){
     const d=isDateAnswer(raw);if(d&&d.ok&&d.dt&&d.dt.date&&!d.dt.err){const iso=d.dt.date;pending.forEach(e=>{if(e){e.date=iso;e.dateFromVoice=true}});try{renderPending()}catch(e){}
      const r='Fecha: '+fmtDate(iso)+'. Diga guardar o corregir.'+otherMonthNote(iso);try{$('interim').textContent=r;speak(r);logVoice(raw,[],r);showHeard(raw.trim(),false)}catch(e){}return r}}}
   catch(e){}
   return _ht2831(text,opt)};
+})();
+/* ===== v28.3.2: al abrir, ninguna sección marcada: «¿Qué quiere hacer? ¿Finanzas o notas?»; aviso si la voz está silenciada ===== */
+(function v2832(){
+ const Q='¿Qué quiere hacer?';
+ const css=document.createElement('style');css.textContent=`#tab-inicio{padding:8px 0}#tab-inicio .card{text-align:center}#tab-inicio h2{font-size:26px;margin:6px 0 16px}
+ #tab-inicio .big{display:block;width:100%;font-size:24px;padding:22px 10px;margin:0 0 12px}#tab-inicio .small2{display:flex;gap:8px}#tab-inicio .small2 .btn{flex:1}
+ #muteNote{background:#fff3cd;color:#5c4400;border-radius:12px;padding:10px;margin:0 0 12px;font-size:16px}`;document.head.appendChild(css);
+ const sec=document.createElement('section');sec.id='tab-inicio';sec.className='hide';
+ sec.innerHTML=`<div class="card"><h2 id="startQ">${Q}</h2><div id="muteNote" class="hide">La voz de la app está silenciada. Diga «activar voz» o quite la marca en Ajustes → Voz.</div>
+  <button type="button" class="btn big" data-start="fin">Finanzas</button><button type="button" class="btn big" data-start="notas">Notas</button>
+  <div class="small2"><button type="button" class="btn sec" data-start="mant">Mantenimiento</button><button type="button" class="btn sec" data-start="aj">Ajustes</button></div>
+  <p class="small" id="startHint" style="margin-top:12px">Toque la pantalla o el micrófono y le hablo.</p></div>`;
+ const fin=$('tab-fin');fin.parentNode.insertBefore(sec,fin);
+ let start=false,asked=false;
+ function muteUI(){try{$('muteNote').classList.toggle('hide',!S.mute)}catch(e){}}
+ const _st2832=setTab;setTab=function(t){if(t==='inicio'){start=true;_st2832.call(this,'inicio');sec.classList.remove('hide');muteUI();return}
+  if(start){start=false;sec.classList.add('hide')}return _st2832.apply(this,arguments)};
+ App.__start=()=>start;
+ function navTo(t){const b=document.querySelector('nav button[data-tab="'+t+'"]');if(b)b.click();try{if(t==='notas')return $('interim').textContent||''}catch(e){}return ''}
+ sec.addEventListener('click',e=>{const b=e.target.closest('[data-start]');if(!b)return;navTo(b.dataset.start)});
+ function ask(){asked=true;try{$('interim').textContent=Q}catch(e){}try{speak(Q)}catch(e){}return Q}
+ App.__askStart=ask;
+ /* el teléfono no deja hablar hasta el primer toque: el primer toque (o el micrófono) hace la pregunta y prende el micrófono */
+ function firstTouch(e){if(!start||asked)return;const tg=e.target;if(tg&&tg.closest&&tg.closest('[data-start],nav button,#updBtn,select,input,dialog'))return;
+  const isMic=!!(tg&&tg.closest&&tg.closest('#mic'));asked=true;
+  setTimeout(()=>{if(!start)return;try{unlockVoice()}catch(x){}ask();if(!isMic){try{micOnAuto()}catch(x){}}},isMic?80:0)}
+ ['pointerup','touchend','keydown'].forEach(ev=>document.addEventListener(ev,firstTouch,true));
+ /* voz en la pantalla de inicio */
+ const FILL=new Set('quiero quisiera vamos voy ir a al ver mirar abrir abra entrar hacer las la los el mis sus en de del por favor seccion pestana me gustaria deseo necesito'.split(' '));
+ const MAP={finanzas:'fin',finanza:'fin',gastos:'fin',gasto:'fin',presupuesto:'fin',cuentas:'fin',plata:'fin',notas:'notas',nota:'notas',listas:'notas',lista:'notas',mantenimiento:'mant',ajustes:'aj',ajuste:'aj',configuracion:'aj'};
+ function secOf(t){const w=t.split(' ').filter(x=>x&&!FILL.has(x));if(w.length!==1)return null;return MAP[w[0]]||null}
+ const UNM=/^(?:activar|active|activa|prender|prenda|encender)\s+(?:la\s+)?voz$|^(?:quitar|quite|quita)\s+(?:el\s+)?silencio(?:\s+de\s+la\s+voz)?$|^(?:hable|hableme|hablame|con voz|voz si|ya puede hablar)$/;
+ const _ht2832=handleTranscript;handleTranscript=function(text,opt){
+  try{const raw=String(text||'');const t=norm(stripPolite(cleanHeard(raw))).replace(/[.,;:!?¡¿]/g,' ').replace(/\s+/g,' ').trim();
+   if(t&&!(typeof _tryAlt!=='undefined'&&_tryAlt)){
+    if(S.mute&&UNM.test(t)){S.mute=false;save();try{$('mute').checked=false}catch(e){}muteUI();setMic();const r='Listo, ya le hablo.';try{$('interim').textContent=r;speak(r);logVoice(raw,[],r)}catch(e){}return r}
+    if(start){const s=secOf(t);try{S.lastActivity=Date.now();showHeard(raw.trim(),false)}catch(e){}
+     if(s){const r=navTo(s)||'';try{logVoice(raw,[],r)}catch(e){}return r}
+     if(/^(?:que|cual|que hay|que puedo hacer|ayuda|hola|buenas|buenos dias|buenas tardes|buenas noches|repita|repitame|como)$/.test(t)){const r=ask();try{logVoice(raw,[],r)}catch(e){}return r}
+     /* cualquier otra orden: se sigue como antes, en Finanzas (por ejemplo «ayuda 20 dólares») */
+     _restoring=true;try{setTab('fin')}finally{_restoring=false}}}}
+  catch(e){}
+  return _ht2832(text,opt)};
+ /* aviso visible cuando la voz está silenciada */
+ const _sm2832=setMic;setMic=function(){_sm2832.apply(this,arguments);try{if(S.mute){const st=$('micstate');if(!/🔇/.test(st.textContent))st.textContent+=' · 🔇 voz silenciada'}}catch(e){}};
+ try{$('mute').addEventListener('change',()=>{muteUI();setMic()})}catch(e){}
+ /* al abrir la app: pantalla de inicio (salvo que haya una nota abierta para seguir dictando) */
+ try{if(!S.firstRun&&!vd&&!(typeof tblFlow!=='undefined'&&tblFlow)){if(nf){nf=null;try{nfUI()}catch(e){}}_restoring=true;try{setTab('inicio')}finally{_restoring=false}
+   /* si el teléfono ya permite hablar (por ejemplo, la app ya se había tocado), pregunta enseguida */
+   setTimeout(()=>{try{const ua=navigator.userActivation;if(start&&!asked&&ua&&ua.hasBeenActive)ask()}catch(e){}},700)}}catch(e){}
+ setMic();
 })();
 Object.assign(window.App,{handleTranscript,handleHeard});
 Object.defineProperties(window.App,{wakeLockOn:{get(){return !!(wl&&!wl.released)},enumerable:true},workOpen:{get(){return isWorkOpen()},enumerable:true},tab:{get(){return tab},enumerable:true}});
