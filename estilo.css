@@ -225,7 +225,7 @@ h2::after{width:180px;height:14px;background:url("data:image/svg+xml,%3Csvg xmln
 .pie .peq a{color:inherit}
 @media (max-width:760px){.aviso-ga{left:10px;right:86px;bottom:12px;max-width:none;font-size:14px;padding:10px 12px}}
 
-/* ===== Correo principal (informacion@eventosmilfor.com) + correos secundarios ===== */
+/* ===== Correo principal + correos secundarios ===== */
 .card-mail{grid-column:1/-1;text-align:center}
 .card-mail .mail-principal{font-size:clamp(19px,4.6vw,24px);font-weight:600;color:var(--n);text-decoration:none;border-bottom:1px solid var(--g);overflow-wrap:anywhere;margin-top:2px}
 .card-mail .mail-principal:hover,.card-mail .mail-principal:focus-visible{color:var(--gd)}
